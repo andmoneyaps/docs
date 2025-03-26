@@ -27,13 +27,12 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-          working-directory: ./Docs
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
       - name: Build with Jekyll
+        working-directory: ./Docs
         run: |
-          cd Docs
           bundle install
           bundle exec jekyll build
         env:

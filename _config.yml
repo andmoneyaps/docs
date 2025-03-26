@@ -1,0 +1,41 @@
+remote_theme: just-the-docs/just-the-docs
+title: AndMoney Public Documentation
+description: Public documentation for AndMoney products and services
+
+# Theme settings
+color_scheme: light
+search_enabled: true
+heading_anchors: true
+
+# Aux links for the upper right navigation
+aux_links:
+  "AndMoney":
+    - "https://andmoney.com"
+
+# Makes Aux links open in a new tab
+aux_links_new_tab: true
+
+# Collections for documentation organization
+collections:
+  bookme:
+    permalink: "/:collection/:path/"
+    output: true
+  present:
+    permalink: "/:collection/:path/"
+    output: true
+  insights:
+    permalink: "/:collection/:path/"
+    output: true
+
+# Define the order of navigation
+nav_order_by_directory: true
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - .gitignore
+  - .jekyll-cache/
+  - .sass-cache/

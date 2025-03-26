@@ -6,8 +6,7 @@ parent: BookMe
 ---
 
 # Installation Marketplace App Offer
-
-## Introduction
+# Introduction
 
 Welcome to the comprehensive documentation for our Azure Managed Application Offer, which is accessible and installable via the Azure Marketplace. This document is designed to guide you through the essential aspects of deploying and managing our application offer, whether you are operating within a single tenant or across multiple tenants.
 
@@ -33,10 +32,11 @@ This documentation is intended for IT professionals, system administrators, and 
 
 By following this documentation, you will be equipped to seamlessly integrate our Azure Managed Application Offer into your existing infrastructure, leveraging its full potential to optimize your cloud operations.
 
+
 ## App Offer structure
 Here is a list of what the App Offer contains by part.
 - **Azure part** (required)
-    - Container App ([Graph-Proxy](graph-proxy))
+    - Container App ([Graph-Proxy](Graph-Proxy.md))
         - Environment Variables
     - Key vault
         - Secret: Client secret
@@ -50,22 +50,24 @@ Here is a list of what the App Offer contains by part.
 
 # Installation
 
-- Azure Managed Application Offer (**App Offer** for shorthand) is accessed and installed through the [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure)
+- Azure Managed Application Offer (**App Offer** for shorthand) is accessed and installed through the [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515).
+
 
 ## Single Tenant Installation
 A single tenant installation is needed when the Azure part and Entra ID part should be deployed together on a single tenant.
-
-> **Important**: Requirements
+> **Requirements**
 >
 > - A managed Identity with the following permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All`.
 > - The user installing the App Offer needs the `Owner` permission in the Resource Group
-
+>
+{style="information"}
 **App Offer:**
-- Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure)
+- Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
 - Select a Managed Identity with the proper permissions.
 - Press Deploy in the App Offer
 
-![Single tenant installation diagram](../assets/images/single-tenant-installation.png)
+<img src="single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+
 
 ## Multi-Tenant Installation
 A multi-tenant installation is needed when the two following conditions are met:
@@ -75,13 +77,13 @@ A multi-tenant installation is needed when the two following conditions are met:
 Using this installation means that the Entra ID resources need to be created by executing additional PowerShell scripts.
 
 **App Offer:**
-- Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure)
+- Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
 - Enable the "Partial Deployment"-option.
     - A partial deployment will only deploy the Azure part, meaning that the Entra ID-part of the installation needs to be installed using PowerShell scripts.
 
 The deployment model can be illustrated in the following way:
 
-![Multi tenant installation diagram](../assets/images/multi-tenant-installation.png)
+<img src="multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 ### Prerequisites
 
@@ -100,7 +102,7 @@ The script checks for these modules and installs/imports them if necessary.
 
 ### Overview of the SCIM Provisioning Script
 
-The provided script [Enable-SCIM-Provisioning.ps1](enable-scim-provisioning) performs the following key actions:
+The provided script [Enable-SCIM-Provisioning.ps1](Enable-SCIM-Provisioning.md) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the required Microsoft Graph modules are installed. 
@@ -121,19 +123,18 @@ The script is parameterized so that you can specify:
 - **Environment** (dev, test, or prod)
 - **ScimToken** (your secret token from &money)
 
-> **Important**: Authentication Required
-> 
 > Before you run the script make sure you are logged in either via the `Connect-MgGraph` cmdlet or by using the Azure CLI.
 > 
 > `Connect-MgGraph -Scopes "Application.ReadWrite.All,Synchronization.ReadWrite.All" -TenantId $TenantId -NoWelcome`
-> 
+>
 > `az login --tenant $TenantId`
+> {style="warning"}
 
 **Entra ID part:**
 - Sign in using a user with the following permissions:
     - `Application.ReadWrite.All`
     - `Synchronization.ReadWrite.All`
-- Execute PowerShell script [Enable-SCIM-Provisioning.ps1](enable-scim-provisioning)
+- Execute PowerShell script [Enable-SCIM-Provisioning.ps1](Enable-SCIM-Provisioning.md)
 - Verify that the following resources are created
   - App Registration for Calendar Access
   - Service Principal for SCIM provisioning

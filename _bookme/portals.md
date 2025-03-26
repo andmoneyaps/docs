@@ -7,6 +7,8 @@ parent: BookMe
 
 # Portals
 
+---
+
 ## Requirements
 
 To fully utilize the function, your company must:
@@ -14,11 +16,16 @@ To fully utilize the function, your company must:
 - Use the latest managed BookMe package 
 - Run on package 1.12 - 1.13 in BookMe's unmanaged package
 
-> **Note**: If your company has not installed any of the mentioned packages, you will only be able to offer the basic functionality.
+> If your company has not installed any of the mentioned packages, you will only be able to offer the basic functionality.
+>
+> {style="note"}
+---
 
 ## Purpose
 
 With Portals, your partners and customers can book meetings with their advisor or selected advisors. Portals enhance your accessibility to customers and ensure that valuable meeting leads are not lost in the process.
+
+---
 
 ## 1. Creating a Portal
 
@@ -53,33 +60,31 @@ With Portals, your partners and customers can book meetings with their advisor o
 
 Note: Before using the portal, it must be configured with your CRM system.
 
+---
 ## Portal Styling
-
 You have the option to style your Portal under **Custom styling**
 
 Example: 
 - Setting background-, stepicon og text color:
 
-```css
---mui-palette-primary-main: #153C56;
+      --mui-palette-primary-main: #153C56;
 
-.MuiStepIcon-root {
-  color: #B5101F;
-}
+      .MuiStepIcon-root {
+      color: #B5101F;
+      }
 
-.MuiTypography-root {
-  color: #B5101F;
-}
+      .MuiTypography-root {
+      color: #B5101F;
+      }
 
-.MuiStepper-root {
-  width: 50%;
-}
-```
-
-> **Warning**: Ensure colors do not obscure button visibility.
-
+      .MuiStepper-root {
+      width: 50%;
+      }
+> Ensure colors do not obscure button visibility.
+>
+> {style="warning"}
+---
 ## Regex validation rules
-
 When setting up your Portal you can choose to add a validation rule for the specific field
 
 The following regex validation rules comes as standalone formulas:
@@ -91,6 +96,7 @@ The following regex validation rules comes as standalone formulas:
 | e-mail              | ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ |
 | Danish phone number | ^\+45\d{8}$                                      |
 
+---
 ## 2. Configure a Portal
 
 ### Steps to Configure a Portal:
@@ -115,6 +121,9 @@ The following regex validation rules comes as standalone formulas:
 
 Note: Before using the portal, it must be configured with your CRM system.
 
-## Important Note
+
+## **Important Note**
 
 Ensure that your Portal is properly configured to align with your CRM system requirements before going live.
+
+---

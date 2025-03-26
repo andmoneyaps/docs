@@ -1,27 +1,23 @@
 ---
 layout: default
 title: Customer Type Mapping
-nav_order: 8
+nav_order: 4
 parent: Present
+collection: present
 ---
 
 # Customer Type Mapping
 
-Present supports different types of customer classifications and allows for custom mapping of customer types. The Present Lightning Web Component (LWC) operates on an Event record page, using the Event record ID to query the related Account information.
+Present can work with different types of customer types, and it is possible to create a custom mapping for customer types.
+The Present LWC lives on an Event record page, and the Event record ID can then be used to query the related Account.
 
-## Integration with BookMe
+This is mostly useful if the &bookme Scheduler package is also installed in the org,
+as this package introduces a customer-type concept and adds a customer category field to each account.
 
-This functionality is particularly useful when the BookMe Scheduler package is installed in your org, as it introduces:
-- A customer-type concept
-- A customer category field for each account
+> Present will make use of the customer types defined in the &bookme Scheduler package for master template uploads,
+so the customer type mapping should look up the user's customer category and pass that to the present LWC.
 
-> **Note**: Present utilizes the customer types defined in the BookMe Scheduler package for master template uploads.
-> The customer type mapping should lookup the user's customer category and pass that to the Present LWC.
-
-## Implementation Example
-
-Here's an example implementation for custom customer types:
-
+Below is an example of how an implementation could look for custom customer types.
 ```java
 public with sharing class PresentCustomerTypeController {
   @AuraEnabled(Cacheable=true)
@@ -109,7 +105,7 @@ public with sharing class PresentCustomerTypeController {
       'BookingId__c FROM ' +
       String.escapeSingleQuotes(ns + 'AMB_Taxonomy__c');
     try {
-      List<SObject> result = Database.query(query);
+      List<SObject> result = Database.query(query); // OK to loop since it loops over a constant list
       for (SObject s : result) {
         PresentCustomerTypeDto dto = new PresentCustomerTypeDto(
           (String) s.get('Name'),
@@ -119,6 +115,7 @@ public with sharing class PresentCustomerTypeController {
         customerTypes.Add(dto);
       }
     } catch (QueryException e) {
+      // If the sobject doesn't exist, we try the next one
       system.debug(e);
     }
 
@@ -149,28 +146,12 @@ public with sharing class PresentCustomerTypeController {
   }
 }
 ```
+This implementation of `getCustomerTypeFromEvent` takes an `eventId` and looks up the related account.
+If this account has the &bookme Scheduler customer category field, the value of that field is returned as the customer's type.
 
-## Implementation Details
+If the field doesn't exist, the default `PRIVATE` customer type is returned.
 
-The `getCustomerTypeFromEvent` method:
-1. Takes an `eventId` parameter
-2. Looks up the related account
-3. Checks for the BookMe Scheduler customer category field
-4. Returns the customer's type based on the field value
-5. Defaults to `PRIVATE` customer type if the field doesn't exist
-
-## Integration Steps
-
-To integrate the custom implementation for customer type mapping:
-
-1. Make the method `AuraEnabled`
-2. Call it in your custom wrapper for the Present LWC
-3. Handle the returned customer type appropriately in your component
-
-## Default Customer Types
-
-If no custom types are configured, the system provides these defaults:
-- Private
-- Erhverv (Business)
-- Private Banking
-- Private Banking+
+> **How to integrate the customer type mapping**
+>
+> To integrate the custom implementation for customer type mapping,
+> Simply make the method `AuraEnabled` and call it in the custom wrapper for the Present LWC.

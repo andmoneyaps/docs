@@ -3,6 +3,7 @@ layout: default
 title: Overview
 nav_order: 1
 parent: Insights
+collection: insights
 ---
 
 # Insights Overview

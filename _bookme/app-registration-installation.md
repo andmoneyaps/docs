@@ -3,6 +3,7 @@ layout: default
 title: App Registration Installation
 nav_order: 1
 parent: BookMe
+collection: bookme
 ---
 
 # Ensuring access to the &money Financial Platform Management UI
@@ -17,18 +18,18 @@ Replace the placeholder **TENANT_ID_FOR_BANK** in the URLs. Access the URLs to c
 ## Environment – Test:
 
 **API app registration**
-- [https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=f100d6c7-bbee-405b-9231-7e1c05c4b944](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=f100d6c7-bbee-405b-9231-7e1c05c4b944)
+- [API app registration](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=f100d6c7-bbee-405b-9231-7e1c05c4b944)
 
 **UI app registration**
-- [https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b)
+- [UI app registration](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b)
 
 ## Environment - Production:
 
 **API app registration**
-- [https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=642f0f04-31f9-4641-a1cb-793f31496bd3](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=642f0f04-31f9-4641-a1cb-793f31496bd3)
+- [API app registration](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=642f0f04-31f9-4641-a1cb-793f31496bd3)
 
 **UI app registration**
-- [https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=261ae34b-4de9-4c4a-9d70-1df1c024c91e](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=261ae34b-4de9-4c4a-9d70-1df1c024c91e)
+- [UI app registration](https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=261ae34b-4de9-4c4a-9d70-1df1c024c91e)
 
 ## Role Assignment for the Management UI
 
@@ -42,28 +43,33 @@ permissions in ascending order):
 - **Configurator** - All permissions that the `Manager` role has, and can in addition perform Meeting configuration and Portal configuration.
 - **Admin** - All permissions that the `Configurator` role has, and can in addition access the Logs (Insights)
 
+
 ### Example of Role Assignments 
 
 After mapping users- or groups to the Booking Platform application roles, the Entra Admin center for the **BookingPlatform Mgmt API**
 enterprise application should look similar to the screenshot below: 
 
-![Map users/groups to roles](../assets/images/booking-platform-api-role-mappings.png "Map users and groups to the API roles")
+![Map users/groups to roles](/assets/images/booking-platform-api-role-mappings.png "Map users and groups to the API roles")
 
-> **Important**: Repeat for each environment
+> **Repeat for each environment**
 >
 > Make sure to map users- and groups to the *BookingPlatform Mgmt API* roles in both the Test and the Production 
 > enterprise applications.
+>
+{style="note"}
 
-> **Note**: Multiple Roles
+> **Multiple Roles**
 >
 > Note: It is possible to assign users to multiple roles, however there is no benefit to this since it will effectively 
 > grant the user the role with the highest level of permissions.
+>
+{style="tip"}
 
 ### Access the &money Financial Meeting Platform Management UI
 
 Once the enterprise application and its permission has been approved for the tenant and a user has been assigned one of
 the roles mentioned above you can try logging in using this url:
 
-Test: [https://self.test-env.booking.andmoney.dk/](https://self.test-env.booking.andmoney.dk/)
+Test: [Management UI Test](https://self.test-env.booking.andmoney.dk/)
 
-Production: [https://self.booking.andmoney.dk/](https://self.booking.andmoney.dk/)
+Production: [Management UI Production](https://self.booking.andmoney.dk/)

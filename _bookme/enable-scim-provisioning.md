@@ -3,33 +3,10 @@ layout: default
 title: SCIM Provisioning
 nav_order: 5
 parent: BookMe
+collection: bookme
 ---
-
-# Enable SCIM Provisioning
-
-This document provides details about the Enable-SCIM-Provisioning.ps1 PowerShell script used to set up SCIM provisioning for the BookMe platform.
-
-## Script Parameters
-
-- **ApplicationName** (optional): The name of the application to create. Choose a name that is easily distinguishable from other applications. Defaults to "BookMe - SCIM integration"
-- **TenantId** (required): The tenant ID to use - this should be the bank's tenant ID
-- **Environment** (optional): The environment to use (dev, test, prod). Defaults to "Test"
-- **ScimToken** (required): The SCIM token from &money. This is a secret token that is used to authenticate the SCIM requests and is specific to the TenantId
-
-## Script Functions
-
-### New-AppRegistration
-Creates a new app registration in Entra with calendar permissions and generates a client secret.
-
-### Add-ScimServicePrincipal
-Sets up a service principal for SCIM provisioning using a template and configures synchronization jobs.
-
-### Enable-SCIM-Provisioning
-Main function that orchestrates the entire setup process.
-
-## Script Content
-
-```powershell
+# Enable-SCIM-Provisioning.ps1
+```PowerShell
 param (
   [string] $ApplicationName, # The name of the application to create. Choose a name that are easily distinguishable from other applications (Default: BookMe - SCIM integration)
   [string] $TenantId, # The tenant ID to use - this should be the bank's tenant ID (required)
@@ -220,30 +197,3 @@ function Enable-SCIM-Provisioning {
 
 Enable-SCIM-Provisioning -ApplicationName $ApplicationName -Environment $Environment -TenantId $TenantId -ScimToken $ScimToken
 ```
-
-## Usage
-
-1. Save the script as `Enable-SCIM-Provisioning.ps1`
-2. Run the script with required parameters:
-
-```powershell
-.\Enable-SCIM-Provisioning.ps1 `
-  -ApplicationName "BookMe - SCIM integration" `
-  -TenantId "your-tenant-id" `
-  -Environment "Test" `
-  -ScimToken "your-scim-token"
-```
-
-## Script Flow
-
-1. Checks and installs required PowerShell modules
-2. Creates an app registration with calendar permissions
-3. Sets up SCIM service principals for both advisors and rooms
-4. Configures and starts synchronization jobs
-
-## Requirements
-
-- PowerShell 5.1 or higher
-- Microsoft.Graph.Applications module
-- Microsoft.Graph.Authentication module
-- Appropriate permissions in the target Entra tenant

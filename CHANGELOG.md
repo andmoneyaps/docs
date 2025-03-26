@@ -1,7 +1,8 @@
 ---
-layout: page
+layout: default
 title: Documentation Changelog
-nav_order: 2
+nav_order: 99
+permalink: /changelog/
 ---
 
 # Documentation Changelog

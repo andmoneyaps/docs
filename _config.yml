@@ -1,22 +1,13 @@
+# Theme configuration
 remote_theme: just-the-docs/just-the-docs
 title: "&Money Documentation"
 description: Public documentation for &Money products and services
 
-# Theme settings
-color_scheme: light
-search_enabled: true
-heading_anchors: true
-
-# Aux links for the upper right navigation
-aux_links:
-  "AndMoney":
-    - "https://andmoney.dk"
-
-# Makes Aux links open in a new tab
-aux_links_new_tab: true
-
-# Collections for documentation organization
+# Collections configuration
 collections:
+  general:
+    permalink: "/:collection/:path/"
+    output: true
   bookme:
     permalink: "/:collection/:path/"
     output: true
@@ -27,8 +18,37 @@ collections:
     permalink: "/:collection/:path/"
     output: true
 
-# Define the order of navigation
-nav_order_by_directory: true
+# Just the Docs theme settings
+color_scheme: light
+search_enabled: true
+heading_anchors: true
+nav_sort: case_sensitive
+
+# External links
+aux_links:
+  "AndMoney":
+    - "https://andmoney.dk"
+aux_links_new_tab: true
+
+# Navigation structure
+just_the_docs:
+  collections:
+    general:
+      name: "General"
+      nav_exclude: false
+      nav_fold: true
+    bookme:
+      name: "BookMe"
+      nav_exclude: false
+      nav_fold: true
+    present:
+      name: "Present"
+      nav_exclude: false
+      nav_fold: true
+    insights:
+      name: "Insights"
+      nav_exclude: false
+      nav_fold: true
 
 # Exclude files from processing
 exclude:

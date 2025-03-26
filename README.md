@@ -36,7 +36,6 @@ docs/
 ├── index.md                 # Home page
 ├── _bookme/                # BookMe documentation
 ├── _present/               # Present documentation
-├── _calendar/              # Calendar documentation
 └── _insights/             # Insights documentation
 ```
 

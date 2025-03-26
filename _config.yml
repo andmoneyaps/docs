@@ -1,6 +1,6 @@
 remote_theme: just-the-docs/just-the-docs
-title: AndMoney Public Documentation
-description: Public documentation for AndMoney products and services
+title: "&Money Documentation"
+description: Public documentation for &Money products and services
 
 # Theme settings
 color_scheme: light
@@ -10,7 +10,7 @@ heading_anchors: true
 # Aux links for the upper right navigation
 aux_links:
   "AndMoney":
-    - "https://andmoney.com"
+    - "https://andmoney.dk"
 
 # Makes Aux links open in a new tab
 aux_links_new_tab: true

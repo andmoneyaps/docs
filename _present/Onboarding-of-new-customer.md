@@ -11,9 +11,8 @@ collection: present
 This article describes how we handle a new customer for Present. It describes which credentials needs to be exchanged
 and how to verify that a customer is set up correctly and ready to use Present.
 
+{: .note }
 > Typically, when onboarding a new customer their Salesforce org will be a Sandbox
-> 
-{style="note"}
 
 <procedure title="Onboarding of a new customer involves three main tasks" id="secrets">
   <p>A lot of secrets and configs needs to be exchanged between the new customer and the &money team.
@@ -37,6 +36,7 @@ To generate a Private Key run the following two commands:
 openssl genpkey -des3 -algorithm RSA -pass pass:SomePassword -out server.pass.key -pkeyopt rsa_keygen_bits:2048
 ```
 
+{: .hint }
 > Replace 'SomePassword' with a strong password. A good password generator can be found [here](https://www.lastpass.com/features/password-generator).
 
 ```shell

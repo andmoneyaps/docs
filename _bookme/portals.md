@@ -16,9 +16,9 @@ To fully utilize the function, your company must:
 - Use the latest managed BookMe package 
 - Run on package 1.12 - 1.13 in BookMe's unmanaged package
 
+{: .note }
 > If your company has not installed any of the mentioned packages, you will only be able to offer the basic functionality.
->
-> {style="note"}
+
 ---
 
 ## Purpose
@@ -80,9 +80,10 @@ Example:
       .MuiStepper-root {
       width: 50%;
       }
+
+{: .warning }
 > Ensure colors do not obscure button visibility.
->
-> {style="warning"}
+
 ---
 ## Regex validation rules
 When setting up your Portal you can choose to add a validation rule for the specific field
@@ -120,7 +121,6 @@ The following regex validation rules comes as standalone formulas:
 9. Publish the Portal for partners and internal/external users
 
 Note: Before using the portal, it must be configured with your CRM system.
-
 
 ## **Important Note**
 

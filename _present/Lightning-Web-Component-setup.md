@@ -10,12 +10,11 @@ collection: present
 
 The Present package exposes a Lightning Web Component (LWC) called `fast-slides`. This is the main component of the Present package.
 
+{: .note }
 > **Present package namespace**
 > 
 > The managed Present package has the namespace `andmoney` and
 > should be used whenever you reference a component, sObject, class or custom metadata from the package.
->
-{style="note"}
 
 ## Present wrapper component
 In order to use the `fast-slides` LWC component it needs the following inputs:
@@ -54,12 +53,11 @@ default-state="collapsed"}
 
 This implementation is very simple and can be modified to match your styling etc.
 
+{: .hint }
 > **Present LWC wrapper**
 > * `lightning-card`: The fast-slides component is wrapped in `lightning-card` with a `h3` title with an `lightning-icon`.
 > * `andmoney-fast-slides`: The fast-slides component with `customerType` and `recordId` input.
 > * Since we provide a Managed Salesforce package, all components and SObjects include an `andmoney` namespace. Either `andmoney-` instead of `c-` for LWC components or `andmoney__` for SObjects.
->
-{style="tip"}
 
 ![Present wrapper component](/assets/images/present/present_wrapper.png){width="600"}
 

@@ -24,6 +24,27 @@ search_enabled: true
 heading_anchors: true
 nav_sort: case_sensitive
 
+# Callout configuration
+callouts:
+  warning:
+    title: Warning
+    color: red
+  note:
+    title: Note
+    color: purple
+  hint:
+    title: Tip
+    color: green
+  important:
+    title: Important
+    color: blue
+
+# Enable mermaid diagrams
+mermaid:
+  version: "9.1.3"
+  # Remove the line below if you want to use the default theme
+  theme: forest
+
 # External links
 aux_links:
   "AndMoney":

@@ -19,13 +19,12 @@ and optionally, a text when hovering on the **star** which describes the recomme
 
 ![Slide recommendation](/assets/images/present/present_slide_recommendation.png)
 
+{: .note }
 > **Slide Recommendation in your org**
 > 
 > Slide Recommendation can be used to recommend slides based on
 > **Next-Best actions**, **Salgspotentialer**, **Fokusgrupper**,
 > etc. Based on what is relevant for your organization. 
-> 
-{style="note"}
 
 ### How to create slide recommendations
 
@@ -71,12 +70,11 @@ global without sharing class PresentNextBestAction implements Callable {
 }
 ```
 
+{: .warning }
 > **RecordId**
 >
 > The `recordId` given as input depends on which record page your Present Component is displayed. Typically, it is used on the Event record page.
 > Then the `recordId` is the `Id` of the Event.
->
-{style="warning"}
 
 The action `getRecommendations` must be implemented, and included as a case in the `call` implementation.
 `getRecommendations` returns a `Map<Id, String>` where the `Id`'s are Id's of `andmoney__Template_Section__c` records that should be recommended,
@@ -88,6 +86,7 @@ It is then advised to use these section `Id`'s and the `recordId` to query the s
 
 The `Map` returned in the implementation will then be used by the Present solution to add the recommendations.
 
+{: .note }
 > **How to dependency inject your implementation**
 >
 > To use your custom implementation for recommendations, create a record of the metadata type **Present Recommendation DI Implementation**
@@ -95,5 +94,3 @@ The `Map` returned in the implementation will then be used by the Present soluti
 > ![Present Recommendation Metadata DI](/assets/images/present/present_recommendation_metadata.png)
 >
 > The `DeveloperName` should be `PresentNextBestAction` and the `Apex Class Name` should be the name of your class.
->
-{style="note"}

@@ -27,11 +27,10 @@ Setting up authentication to the Backend:
 2. Create a new Auth. Provider by selecting the provider type `PresentAuthProvider`
 3. Fill out the fields of the Auth. Provider with the details received from us. (For the execution user, use a system user that has the Manage Users permission.)
 
+{: .warning }
 > **Execution user MUST have an active Present license**
 >
 > In a Production salesforce org, the execution user must have an active Present license, as the user will be responsible for uploading the created slide decks from the Present backend to the org. This is not necessary in a sandbox org.
->
-> {style="warning"}
 
 4. Go to Named Credentials in Setup
 5. Create a new (Legacy) Named Credential
@@ -66,12 +65,11 @@ To allow the Backend to upload the created slide decks etc. The backend needs ac
     - This integration user will be responsible for uploading the created slide decks from the Present backend to the org.
     - Therefore, the integration user must have the Present permission sets assigned.
 13. To verify the connected app, the following commands can be run, to try and authorize using sfdx:
-    - “sfdx auth:jwt:grant --clientid {connected-app-client-id} --jwtkeyfile
+    - "sfdx auth:jwt:grant --clientid {connected-app-client-id} --jwtkeyfile
       {certificate-private-key.key} --username {integration-username}
       --setdefaultdevhubusername --setalias my-hub-org
     - If you want to connect to something not hosted on https://login.salesforce.com, then you can
-      use the “—instanceurl” parameter.
-
+      use the "—instanceurl" parameter.
 
 ## New Present connection setup
 
@@ -84,7 +82,6 @@ Navigate to the External Client App Manager in the salesforce setup menu.
 Find the App named `BookMe External Client App`, click edit policies, find the OAuth Policies section, Click `Enable Client Credentials Flow` and add a user that can be used for integration.
 
 ![External Client App](/assets/images/present/external-client-app.png)
-
 
 When this is done, go to the BookMe Management UI, and navigate to the **Admin --> CRM --> CRM Configuration tab within the Management UI**.
 Here, the domain name of the salesforce org must be entered. Click save, and then test the connection, by clicking the `Test` button on the **Test CRM Connection** card.

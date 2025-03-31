@@ -50,6 +50,7 @@ Date and time related fields are stored using the selected timezone for the insi
 | HourOfDay | Hour (0-23) | Integer |
 | DurationInMinutes | Time range length | Integer |
 | NumberOfAvailableMeetings | Available meetings within the time range | Integer |
+
 ### Time Range Reasons
 
 #### Availability Status

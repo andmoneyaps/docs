@@ -21,22 +21,24 @@ The Insights engine uses the following process to generate availability data:
 2. **Simulation**
    - Runs availability engine simulation
    - Processes 60-day forecast window
-   - Generates hourly time ranges
+   - Generates hourly time ranges for each advisor and meeting type
    - Applies business rules and constraints
 
 3. **Data Processing**
    - Enriches time ranges with reasons
    - Calculates availability metrics
-   - Applies location constraints
-   - Processes calendar integration
+   - Applies location/configuration constraints
+   - Applies advisor competence constraints (customer type and meeting theme)
 
 ## Data Structure
 
 ### Time Range Fields
 
+Date and time related fields are stored using the selected timezone for the insights settings
+
 | Field | Description | Format |
 |-------|-------------|---------|
-| Start | Time range start | DateTime UTC |
+| Start | DateTime component | DateTime|
 | StartDate | Date component | Date |
 | StartTime | Time component | Time |
 | Reason | Availability reason | Enum |
@@ -47,7 +49,7 @@ The Insights engine uses the following process to generate availability data:
 | DayOfWeek | Day of week | Enum |
 | HourOfDay | Hour (0-23) | Integer |
 | DurationInMinutes | Time range length | Integer |
-
+| NumberOfAvailableMeetings | Available meetings within the time range | Integer |
 ### Time Range Reasons
 
 #### Availability Status
@@ -66,9 +68,9 @@ The Insights engine uses the following process to generate availability data:
 - **Busy**: Default calendar busy status
 - **WorkingFromElsewhere**: Remote work status
 - **MaxMeetingsPerDay**: Daily meeting limit reached
-- **OutsideWorkday**: Outside configured hours
-- **DayOfWeekUnavailable**: Blocked weekday
-- **MeetingTypeUnavailable**: Meeting type not supported
+- **OutsideWorkday**: Outside configured working hours
+- **DayOfWeekUnavailable**: Blocked weekday in advisor's schedule
+- **MeetingTypeUnavailable**: Meeting type not available for advisor
 
 #### Meeting Processing
 - **PreProcessing**: Pre-meeting preparation time
@@ -79,8 +81,8 @@ The Insights engine uses the following process to generate availability data:
 #### Buffer and Qualification
 - **WorkingTimeBuffer**: Working hours buffer
 - **CalendarTimeBuffer**: Calendar-based buffer
-- **Unqualified**: Missing required qualifications
-- **Unbookable**: Booking disabled
+- **Unqualified**: Missing required qualifications (Customer type and/or meeting theme)
+- **Unbookable**: Booking disabled for advisor
 
 #### Other
 - **None/Unknown**: Default/unspecified reason
@@ -93,12 +95,10 @@ The Insights engine uses the following process to generate availability data:
    - Generated in hourly intervals (configurable)
    - Always starts at interval boundaries
    - Maximum duration of 60 minutes
-   - Considers business hours (8-20 default)
 
 2. **Availability Calculation**
    - Processes advisor schedules
    - Validates qualifications
-   - Checks room availability
    - Applies meeting constraints
 
 3. **Constraint Processing**
@@ -106,73 +106,3 @@ The Insights engine uses the following process to generate availability data:
    - Applies buffer rules
    - Processes travel requirements
    - Checks service group rules
-
-### Performance Considerations
-
-1. **Data Volume**
-   - Hourly snapshots per advisor
-   - 60-day forecast window
-   - Multiple meeting types
-   - Location-specific data
-
-2. **Processing Optimization**
-   - Batched data generation
-   - Efficient reason calculation
-   - Optimized storage format
-   - Indexed lookup fields
-
-3. **Integration Handling**
-   - Compressed data transfer
-   - Chunked file processing
-   - Efficient API utilization
-   - Optimized synchronization
-
-## Error Handling
-
-### Common Scenarios
-
-1. **Data Generation Errors**
-   - Invalid configuration
-   - Missing advisor data
-   - Calendar sync issues
-   - Processing timeout
-
-2. **Integration Failures**
-   - Connection issues
-   - Authentication errors
-   - Data format problems
-   - Sync conflicts
-
-### Resolution Steps
-
-1. **Validation Errors**
-   - Check configuration
-   - Verify input data
-   - Review error logs
-   - Update settings
-
-2. **Processing Issues**
-   - Monitor job status
-   - Check system resources
-   - Review batch processing
-   - Verify data integrity
-
-## Monitoring and Maintenance
-
-1. **System Health**
-   - Monitor job completion
-   - Track processing time
-   - Check data quality
-   - Verify integration status
-
-2. **Data Quality**
-   - Validate reason codes
-   - Check completeness
-   - Monitor accuracy
-   - Review patterns
-
-3. **Performance Metrics**
-   - Processing duration
-   - Data volume
-   - Integration speed
-   - System resource usage

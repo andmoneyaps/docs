@@ -7,14 +7,14 @@ parent: BookMe
 
 # Release Notes—BookMe
 
-## Release 1.14.0 (05-02-2025)
+## Release 1.15.0 (10-02-2025)
 
-### 1.14.0 — New features and improvements
-Here is what's new in release 1.14.0 of &bookme.
-> **Managed Package Version ID**: `04tP7000001BqkHIAS`.
+### 1.15.0 — New features and improvements
+Here is what's new in release 1.15.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000001CxtNIAS`.
 >
 > **Install link**:
-> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000001BqkHIAS`.
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000001CxtNIAS`.
 >
 > Remember to use your org's URL instead of https://login.salesforce.com.
 
@@ -22,7 +22,7 @@ Here is what's new in release 1.14.0 of &bookme.
   - The advisor flow has been re-engineered to fully leverage Salesforce’s standard components, ensuring a more consistent and native user experience across the platform.
   - By relying on standard Lightning web components, the advisor flow now benefits from built‐in accessibility, error handling, and responsive design—features that reduce development overhead and enhance end-user reliability.
 
-###  1.14.0 — New for developers
+###  1.15.0 — New for developers
 - **Integration of an External Client App in the Package**
   - The package now includes an External Client App – a next-generation solution that improves on the limitations of
     traditional Connected Apps.

@@ -8,6 +8,23 @@ collection: present
 
 # Release Notes—Present
 
+## Present - Version 1.27
+This version of present includes a few bug fixes
+
+### Release Date - 2025-05-06
+This release includes the following updates:
+
+> **Subscriber Package Version Id**: `04tP7000001U8dtIAC`
+>
+> **Install link**:
+> - `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=04tP7000001U8dtIAC`.
+>
+> Remember to use your org's URL instead of [YOUR_DOMAIN].
+
+**General bugfixes** — Fixes a bug with agenda tag, so it correctly adds bullet points
+
+**Changes** - Removed validation rule that disallowed inactive templates to be activated again (in case a template was falsely deactivated)
+
 
 ## Present - Version 1.24
 This version of Present delivers important quality-of-life enhancements that improve consistency,

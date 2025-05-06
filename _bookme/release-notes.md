@@ -7,7 +7,7 @@ parent: BookMe
 
 # Release Notes—BookMe
 
-## Release 1.15.0 (05-02-2025)
+## Release 1.15.0 (10-02-2025)
 
 ### 1.15.0 — New features and improvements
 Here is what's new in release 1.15.0 of &bookme.

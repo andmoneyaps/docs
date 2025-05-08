@@ -13,7 +13,7 @@ It is an essential part of the Financial Booking Solutions and is deployed as pa
 ![Graph-Proxy and Key Vault Architecture](/assets/images/graph-proxy-keyvault.png)
 
 {: .note }
-> For detailed installation instructions, please refer to the [Installation Guide](Installation-Marketplace-App-Offer.md).
+> For detailed installation instructions, please refer to the [Installation Guide](/bookme/installation-marketplace-app-offer).
 >
 
 ## Deployment Options
@@ -85,7 +85,7 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Sign in with a user account that has the following permissions:
      - `Application.ReadWrite.All`
      - `Synchronization.ReadWrite.All`
-   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](Enable-SCIM-Provisioning.md) to deploy the Entra ID components.
+   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](/bookme/enable-scim-provisioning) to deploy the Entra ID components.
    - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** permissions.
 
 2. **Deploy the Azure Part**
@@ -113,8 +113,8 @@ Two services are then provided:
 ![management-ui-graph-test.png](/assets/images/management-ui-graph-test.png)
 
 {: .note }
->  Be sure to follow the [Installation Marketplace App Offer](Installation-Marketplace-App-Offer.md) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
+>  Be sure to follow the [Installation Marketplace App Offer](/bookme/installation-marketplace-app-offer) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
 
 This documentation provides an overview of the Graph-Proxy, its deployment options,
 integration with Azure Key Vault, and required configuration. For further details or assistance,
-please consult the accompanying [Installation Guide](Installation-Marketplace-App-Offer.md) or contact our support team.
+please consult the accompanying [Installation Guide](/bookme/installation-marketplace-app-offer) or contact our support team.

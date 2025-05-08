@@ -36,7 +36,7 @@ By following this documentation, you will be equipped to seamlessly integrate ou
 ## App Offer structure
 Here is a list of what the App Offer contains by part.
 - **Azure part** (required)
-    - Container App ([Graph-Proxy](Graph-Proxy.md))
+    - Container App ([Graph-Proxy](/bookme/graph-proxy))
         - Environment Variables
     - Key vault
         - Secret: Client secret
@@ -66,7 +66,7 @@ A single tenant installation is needed when the Azure part and Entra ID part sho
 - Select a Managed Identity with the proper permissions.
 - Press Deploy in the App Offer
 
-<img src="assets\images\single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="/assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 
 ## Multi-Tenant Installation
@@ -83,7 +83,7 @@ Using this installation means that the Entra ID resources need to be created by 
 
 The deployment model can be illustrated in the following way:
 
-<img src="multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="/assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 ### Prerequisites
 
@@ -102,7 +102,7 @@ The script checks for these modules and installs/imports them if necessary.
 
 ### Overview of the SCIM Provisioning Script
 
-The provided script [Enable-SCIM-Provisioning.ps1](Enable-SCIM-Provisioning.md) performs the following key actions:
+The provided script [Enable-SCIM-Provisioning.ps1](/bookme/enable-scim-provisioning) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the required Microsoft Graph modules are installed. 
@@ -134,7 +134,7 @@ The script is parameterized so that you can specify:
 - Sign in using a user with the following permissions:
     - `Application.ReadWrite.All`
     - `Synchronization.ReadWrite.All`
-- Execute PowerShell script [Enable-SCIM-Provisioning.ps1](Enable-SCIM-Provisioning.md)
+- Execute PowerShell script [Enable-SCIM-Provisioning.ps1](/bookme/enable-scim-provisioning)
 - Verify that the following resources are created
   - App Registration for Calendar Access
   - Service Principal for SCIM provisioning

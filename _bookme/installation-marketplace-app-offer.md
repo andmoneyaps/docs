@@ -123,12 +123,12 @@ The script is parameterized so that you can specify:
 - **Environment** (dev, test, or prod)
 - **ScimToken** (your secret token from &money)
 
+{: .warning }
 > Before you run the script make sure you are logged in either via the `Connect-MgGraph` cmdlet or by using the Azure CLI.
 > 
 > `Connect-MgGraph -Scopes "Application.ReadWrite.All,Synchronization.ReadWrite.All" -TenantId $TenantId -NoWelcome`
 >
 > `az login --tenant $TenantId`
-> {style="warning"}
 
 **Entra ID part:**
 - Sign in using a user with the following permissions:

@@ -1,7 +1,7 @@
 # Theme configuration
 remote_theme: just-the-docs/just-the-docs
-title: "&Money Documentation"
-description: Public documentation for &Money products and services
+title: "&money Documentation"
+description: Public documentation for &money products and services
 
 # Collections configuration
 collections:
@@ -47,7 +47,7 @@ mermaid:
 
 # External links
 aux_links:
-  "AndMoney":
+  "&money":
     - "https://andmoney.dk"
 aux_links_new_tab: true
 

@@ -12,22 +12,22 @@ BookMe Insights is an advanced analytics platform that provides comprehensive vi
 
 ## Documentation Structure
 
-1. **[Overview](overview.md)**
+1. **[Overview](/insights/overview)**
    - Business value and key concepts
    - Core features and benefits
    - Integration capabilities
 
-2. **[Insights Settings](insights-setting.md)**
+2. **[Insights Settings](/insights/insights-setting)**
    - Configuration guide
    - Parameter settings
    - Best practices
 
-3. **[Technical Details](insights-details.md)**
+3. **[Technical Details](/insights/insights-details)**
    - Data structure
    - Time range fields
    - Availability calculations
 
-4. **[CRM Analytics Integration](crm-analytics.md)**
+4. **[CRM Analytics Integration](/insights/crm-analytics)**
    - Integration setup
    - Data synchronization
    - Reporting capabilities

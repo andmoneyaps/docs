@@ -1,7 +1,7 @@
 # Theme configuration
 remote_theme: just-the-docs/just-the-docs
-title: "&Money Documentation"
-description: Public documentation for &Money products and services
+title: "&money Documentation"
+description: Public documentation for &money products and services
 
 # Collections configuration
 collections:
@@ -47,7 +47,7 @@ mermaid:
 
 # External links
 aux_links:
-  "AndMoney":
+  "&money":
     - "https://andmoney.dk"
 aux_links_new_tab: true
 
@@ -55,21 +55,21 @@ aux_links_new_tab: true
 just_the_docs:
   collections:
     general:
-      name: "General"
-      nav_exclude: false
-      nav_fold: true
+      # name: "General"
+      # nav_exclude: false
+      # nav_fold: true
     bookme:
-      name: "BookMe"
-      nav_exclude: false
-      nav_fold: true
+      # name: "BookMe"
+      # nav_exclude: false
+      # nav_fold: true
     present:
-      name: "Present"
-      nav_exclude: false
-      nav_fold: true
+      # name: "Present"
+      # nav_exclude: false
+      # nav_fold: true
     insights:
-      name: "Insights"
-      nav_exclude: false
-      nav_fold: true
+      # name: "Insights"
+      # nav_exclude: false
+      # nav_fold: true
 
 # Exclude files from processing
 exclude:

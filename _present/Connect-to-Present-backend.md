@@ -81,12 +81,12 @@ If the respective bank that is being configured is on BookMe package version 1.1
 Navigate to the External Client App Manager in the salesforce setup menu.
 Find the App named `BookMe External Client App`, click edit policies, find the OAuth Policies section, Click `Enable Client Credentials Flow` and add a user that can be used for integration.
 
-![External Client App](/assets/images/present/external-client-app.png)
+![External Client App](/assets/images/external-client-app.png)
 
 When this is done, go to the BookMe Management UI, and navigate to the **Admin --> CRM --> CRM Configuration tab within the Management UI**.
 Here, the domain name of the salesforce org must be entered. Click save, and then test the connection, by clicking the `Test` button on the **Test CRM Connection** card.
 
-![CRM Configuration](/assets/images/present/mgmt-ui-crm-configuration.png)
+![CRM Configuration](/assets/images/mgmt-ui-crm-configuration.png)
 
 If the connection is successful, the backend is now connected to the Salesforce org.
 Now, the org must be connected to the backend.

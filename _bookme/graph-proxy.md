@@ -10,11 +10,11 @@ parent: BookMe
 The **Graph-Proxy** is a containerized application that acts as a secure intermediary between the BookMe solution and the Microsoft Graph API.
 It is an essential part of the Financial Booking Solutions and is deployed as part of the Azure resources included in the App Offer.
 
-![Graph-Proxy and Key Vault Architecture](graph-proxy-keyvault.png)
+![Graph-Proxy and Key Vault Architecture](/assets/images/graph-proxy-keyvault.png)
 
-> For detailed installation instructions, please refer to the [Installation Guide](Installation-Marketplace-App-Offer.md).
+{: .note }
+> For detailed installation instructions, please refer to the [Installation Guide](/bookme/installation-marketplace-app-offer).
 >
-> {style="note"}
 
 ## Deployment Options
 
@@ -30,11 +30,11 @@ This deployment is automated via the Azure Marketplace App Offer.
 
 The Graph-Proxy is deployed as a containerized application in an Azure Container App. The container image is hosted at:
 
+{: .note }
 > **Maintenance**
 >
 > The image is maintained by &money and is updated regularly to include the latest security patches and enhancements.
 >
-> {style="note"}
 
 ## Key Vault Integration
 
@@ -58,9 +58,9 @@ The application requires specific environment variables to be configured:
 - **`Microsoft365__ClientSecret`**:  
   The client secret used for authenticating with the Microsoft Graph API.
 
+{: .note }
 > For multi-tenant deployments, the **Entra Client ID** and **Entra Client Secret** are provided via the App Offer UI.
 >
-> {style="note"}
 
 ## Provide Access to Calendar Graph API for the Graph-Proxy
 
@@ -85,7 +85,7 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Sign in with a user account that has the following permissions:
      - `Application.ReadWrite.All`
      - `Synchronization.ReadWrite.All`
-   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](Enable-SCIM-Provisioning.md) to deploy the Entra ID components.
+   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](/bookme/enable-scim-provisioning) to deploy the Entra ID components.
    - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** permissions.
 
 2. **Deploy the Azure Part**
@@ -110,10 +110,11 @@ Two services are then provided:
 - **Save**
   Allows the user to submit the given URL to the database. This button will be disabled, if the posted URL matches the existing URL.
 
-![management-ui-graph-test.png](management-ui-graph-test.png)
+![management-ui-graph-test.png](/assets/images/management-ui-graph-test.png)
 
-> **Note:** Be sure to follow the [Installation Marketplace App Offer](Installation-Marketplace-App-Offer.md) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
+{: .note }
+>  Be sure to follow the [Installation Marketplace App Offer](/bookme/installation-marketplace-app-offer) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
 
 This documentation provides an overview of the Graph-Proxy, its deployment options,
 integration with Azure Key Vault, and required configuration. For further details or assistance,
-please consult the accompanying [Installation Guide](Installation-Marketplace-App-Offer.md) or contact our support team.
+please consult the accompanying [Installation Guide](/bookme/installation-marketplace-app-offer) or contact our support team.

@@ -49,7 +49,7 @@ permissions in ascending order):
 After mapping users- or groups to the Booking Platform application roles, the Entra Admin center for the **BookingPlatform Mgmt API**
 enterprise application should look similar to the screenshot below: 
 
-![Map users/groups to roles](/assets/images/booking-platform-api-role-mappings.png)
+![Map users/groups to roles]({{ site.baseurl }}/assets/images/booking-platform-api-role-mappings.png)
 
 {: .note}
 > **Repeat for each environment**

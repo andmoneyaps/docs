@@ -17,7 +17,7 @@ they look through the available sections of slides.
 The recommended slide sections will have a **star** attached,
 and optionally, a text when hovering on the **star** which describes the recommendation of that section.
 
-![Slide recommendation](/assets/images/present/present_slide_recommendation.png)
+![Slide recommendation]({{ site.baseurl }}/assets/images/present/present_slide_recommendation.png)
 
 {: .note }
 > **Slide Recommendation in your org**
@@ -91,6 +91,6 @@ The `Map` returned in the implementation will then be used by the Present soluti
 >
 > To use your custom implementation for recommendations, create a record of the metadata type **Present Recommendation DI Implementation**
 >
-> ![Present Recommendation Metadata DI](/assets/images/present/present_recommendation_metadata.png)
+> ![Present Recommendation Metadata DI]({{ site.baseurl }}/assets/images/present/present_recommendation_metadata.png)
 >
 > The `DeveloperName` should be `PresentNextBestAction` and the `Apex Class Name` should be the name of your class.

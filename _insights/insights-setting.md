@@ -12,7 +12,7 @@ collection: insights
 
 Insights Settings control how the availability simulation runs and what data is generated. These settings determine the scope, granularity, and focus of your availability analysis.
 
-![Insights Settings](/assets/images/insights/insights-setting.png)
+![Insights Settings]({{ site.baseurl }}/assets/images/insights/insights-setting.png)
 
 ## Configuration Steps
 

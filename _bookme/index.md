@@ -30,3 +30,4 @@ Navigate through the sections to find detailed information about:
 - CRM integration security
 - Portal configuration
 - Service competence groups
+- Meeting iCal generation

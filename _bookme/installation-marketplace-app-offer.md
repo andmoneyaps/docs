@@ -66,7 +66,7 @@ A single tenant installation is needed when the Azure part and Entra ID part sho
 - Select a Managed Identity with the proper permissions.
 - Press Deploy in the App Offer
 
-<img src="/assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="{{ site.baseurl }}/assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 
 ## Multi-Tenant Installation
@@ -83,7 +83,7 @@ Using this installation means that the Entra ID resources need to be created by 
 
 The deployment model can be illustrated in the following way:
 
-<img src="/assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="{{ site.baseurl }}/assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 ### Prerequisites
 

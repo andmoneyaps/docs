@@ -27,19 +27,19 @@ The Entra ID configuration process involves several key steps to ensure seamless
 
 For both single-tenant and multi-tenant deployments, you must create Enterprise Applications within your Entra Organization to provide administrative users with access to the &Money Financial Platform Management UI.
 
-- **For detailed steps, refer to the [Enterprise Application Installation Guide](AppRegistration-Installation.md).**
+- **For detailed steps, refer to the [Enterprise Application Installation Guide](/bookme/app-registration-installation).**
 
 ### 2. Role Assignment for Management UI
 
 Assign roles within the BookingPlatform Mgmt API to control access and permissions for users interacting with the Management UI. This applies to both deployment models.
 
-- **For detailed role assignment instructions, see the [Role Assignment Documentation](AppRegistration-Installation.md#role-assignment-for-the-management-ui).**
+- **For detailed role assignment instructions, see the [Role Assignment Documentation](/bookme/app-registration-installation/#role-assignment-for-the-management-ui).**
 
 ### 3. Microsoft 365 User, Room and Calendar integration
 
 Easily install and configure our Azure Marketplace offer to configure Entra Enterprise Apps for SCIM provisioning and Microsoft Graph API access for calendar information.
 
-- **For detailed instructions, refer to the [Marketplace App Offer Installation Guide](Installation-Marketplace-App-Offer.md).**
+- **For detailed instructions, refer to the [Marketplace App Offer Installation Guide](/bookme/installation-marketplace-app-offer).**
 
 ## Accessing the Management UI
 
@@ -55,4 +55,3 @@ Once the configurations are complete, users can access the Management UI based o
 ## Conclusion
 
 Following this guide ensures a comprehensive configuration of Entra ID for your deployment, whether single-tenant or multi-tenant. Utilize the links provided to access detailed instructions and complete each step effectively.
-

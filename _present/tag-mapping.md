@@ -14,7 +14,7 @@ It is possible to map fields and nested fields from Account, Contact, and Event 
 To start mapping between tags and SObject fields, go to the Present Lightning app and select the Tags section.
 This will lead you to the following page:
 
-![Tag Mapping Overview](/assets/images/present/ui/tag-mapping-overview.png)
+![Tag Mapping Overview](/assets/images/present/tag_mapping_overview.png)
 
 1. Select a tag from the first field. From this input, any tag used in one of the uploaded templates can be selected.
 2. Select an SObject. This can be Account, Contact, and Event, or from the built-in custom SObject (Specific).

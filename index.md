@@ -4,7 +4,7 @@ title: Home
 nav_order: 1
 ---
 
-# AndMoney Documentation
+# &money Documentation
 
 Welcome to the official AndMoney documentation portal. This comprehensive resource provides detailed information about our enterprise software solutions designed to streamline financial services operations.
 
@@ -58,7 +58,7 @@ For technical implementation details, refer to our API documentation and integra
 
 ## Documentation Updates
 
-Stay informed about our latest documentation improvements and additions by visiting our [Documentation Changelog](CHANGELOG.md).
+Stay informed about our latest documentation improvements and additions by visiting our [Documentation Changelog](/CHANGELOG).
 
 ## Support
 

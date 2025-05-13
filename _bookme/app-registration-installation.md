@@ -49,21 +49,21 @@ permissions in ascending order):
 After mapping users- or groups to the Booking Platform application roles, the Entra Admin center for the **BookingPlatform Mgmt API**
 enterprise application should look similar to the screenshot below: 
 
-![Map users/groups to roles](/assets/images/booking-platform-api-role-mappings.png "Map users and groups to the API roles")
+![Map users/groups to roles](/assets/images/booking-platform-api-role-mappings.png)
 
+{: .note}
 > **Repeat for each environment**
 >
 > Make sure to map users- and groups to the *BookingPlatform Mgmt API* roles in both the Test and the Production 
 > enterprise applications.
 >
-{style="note"}
 
+{: .tip}
 > **Multiple Roles**
 >
 > Note: It is possible to assign users to multiple roles, however there is no benefit to this since it will effectively 
 > grant the user the role with the highest level of permissions.
 >
-{style="tip"}
 
 ### Access the &money Financial Meeting Platform Management UI
 

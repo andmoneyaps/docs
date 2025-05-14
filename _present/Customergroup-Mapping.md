@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Customer Type Mapping
-nav_order: 4
+nav_order: 11
 parent: Present
 collection: present
 ---

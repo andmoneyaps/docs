@@ -6,7 +6,7 @@ parent: Present
 collection: present
 ---
 
-#Trouble shooting
+# Trouble shooting
 
 The current reporting functionality does not display the count of PowerPoint and PDF files generated within the Management UI.
 This limitation is due to the bank's continued use of legacy credentials.

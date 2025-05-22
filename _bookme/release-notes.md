@@ -7,6 +7,24 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.16.0 (22-05-2025)
+
+### 1.16.0 — New features and improvements
+Here is what's new in release 1.16.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000001XAWHIA4`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000001XAWHIA4`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+- **Advisor Flow - fixed search "advisor as the meeting owner"**
+  - It is now possible to search for an advisor as the meeting owner and capture the click event the first time a user clicks
+
+###  1.15.0 — New for developers
+- **Changed event for click**
+  - Updated the event handler on `BookingSearchInput` to use `onmousedown` instead of `onclick`, as the `onclick` event was not firing after hovering over an advisor for more than one second.
+
 ## Release 1.15.0 (10-02-2025)
 
 ### 1.15.0 — New features and improvements

@@ -21,7 +21,7 @@ Here is what's new in release 1.16.0 of &bookme.
 - **Advisor Flow - fixed search "advisor as the meeting owner"**
   - It is now possible to search for an advisor as the meeting owner and capture the click event the first time a user clicks
 
-###  1.15.0 — New for developers
+###  1.16.0 — New for developers
 - **Changed event for click**
   - Updated the event handler on `BookingSearchInput` to use `onmousedown` instead of `onclick`, as the `onclick` event was not firing after hovering over an advisor for more than one second.
 

@@ -1,15 +1,19 @@
 ---
 layout: default
-title: Trouble shooting
+title: Reporting
 nav_order: 17
 parent: Present
 collection: present
 ---
 
-# Trouble shooting
+# Reporting
+&money offers two types of reporting as regards for the usage of Present:
+1. Standard reporting module in the Management UI
+2. CRM Analytics data integration
 
-The current reporting functionality does not display the count of PowerPoint and PDF files generated within the Management UI.
-This limitation is due to the bank's continued use of legacy credentials.
+## 1. Standard reportering - Trouble shooting
 
-To resolve this issue, the bank should be transitioned to use the latest set of credentials configured in Salesforce.
+The current standard reporting functionality within the Management UI does not display the right count of genereated PowerPoint and PDF files if the Customer is using the legacy credentials for Present.
+
+To resolve this issue, the Customerbank should be transitioned to use the latest set of credentials configured in Salesforce.
 This update will enable accurate tracking and reporting of document generation activities in the Management UI.

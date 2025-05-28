@@ -1,6 +1,6 @@
 ---
 layout: default
-title: SCIM Provisioning
+title: Enable-SCIM-Provisioning.ps1
 nav_order: 5
 parent: BookMe
 collection: bookme

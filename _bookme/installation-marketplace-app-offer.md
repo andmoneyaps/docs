@@ -36,15 +36,16 @@ By following this documentation, you will be equipped to seamlessly integrate ou
 ## App Offer structure
 Here is a list of what the App Offer contains by part.
 - **Azure part** (required)
-    - Container App ([Graph-Proxy](/bookme/graph-proxy))
+    - Container App ([Graph-Proxy](Graph-Proxy.md))
         - Environment Variables
     - Key vault
         - Secret: Client secret
     - Managed Identity (optional, only required for single-tenant)
-        - Permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All`
+        - API Permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All`
+        - Roles: `Teams Communications Administrator` or `Teams Administrator`
 - **Entra ID part** (optional)
     - App Registration
-        - Permission: Calendar Access
+        - Permission: Calendar Access & Teams Access
     - Service Principal
         - SCIM Provisioning settings
 
@@ -55,14 +56,17 @@ Here is a list of what the App Offer contains by part.
 
 ## Single Tenant Installation
 A single tenant installation is needed when the Azure part and Entra ID part should be deployed together on a single tenant.
+
+{: .information }
 > **Requirements**
 >
-> - A managed Identity with the following permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All`.
+> - A managed Identity with the following permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All` as well as the role of `Teams Communications Administrator` or `Teams Administrator`.
 > - The user installing the App Offer needs the `Owner` permission in the Resource Group
->
-{style="information"}
+
 **App Offer:**
 - Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
+- SCIM Token: Obtain your SCIM token from the &money system. This token is used to authenticate SCIM requests.
+- Security Group: Specify a security group Object ID from your Entra setup to which the Teams Access Policy will be applied. The security group should contain the users that will be using the BookMe solution. The Teams access policy will allow the BookMe solution to access and modify Teams meetings for the users in this group.
 - Select a Managed Identity with the proper permissions.
 - Press Deploy in the App Offer
 
@@ -92,15 +96,22 @@ The deployment model can be illustrated in the following way:
     - Global Administrator
     - Application Administrator
     - Cloud Application Administrator
+- **Teams Permissions:** as well as one of the following Teams roles:
+    - Teams Communications Administrator
+    - Teams Administrator
 - **SCIM Token:** Obtain your SCIM token from the &money system. This token is used to authenticate SCIM requests.
 - **PowerShell Modules:** The script requires the following modules:
     - `Microsoft.Graph.Applications`
     - `Microsoft.Graph.Authentication`
+    - `MicrosoftTeams`
 
 The script checks for these modules and installs/imports them if necessary.
 - **Environment Details:** Know which environment you are targeting (e.g., `dev`, `test`, or `prod`) as the SCIM endpoints differ by environment.
 
-### Overview of the SCIM Provisioning Script
+### Overview of the Powershell scrips. 
+The following PowerShell scripts are provided to facilitate the setup of SCIM provisioning and Teams access policies for the BookMe solution. They must be executed in the specified order as the output from the first script should be used in the next script.
+
+#### 1) SCIM Provisioning Script
 
 The provided script [Enable-SCIM-Provisioning.ps1](/bookme/enable-scim-provisioning) performs the following key actions:
 
@@ -130,7 +141,7 @@ The script is parameterized so that you can specify:
 >
 > `az login --tenant $TenantId`
 
-**Entra ID part:**
+**Executing the script:**
 - Sign in using a user with the following permissions:
     - `Application.ReadWrite.All`
     - `Synchronization.ReadWrite.All`
@@ -138,3 +149,36 @@ The script is parameterized so that you can specify:
 - Verify that the following resources are created
   - App Registration for Calendar Access
   - Service Principal for SCIM provisioning
+
+
+#### 2) Teams Access Policy Script
+
+The provided script [Add-Teams-Access-Policy.ps1](/bookme/add-teams-access-policy) performs the following key actions:
+
+1. **Module Check and Import:**  
+   It checks if the Microsoft Teams module is installed. If not, it installs and imports it.
+2. **Connect to Microsoft Teams:**  
+   It connects to Microsoft Teams.
+3. **Create Application Access Policy:**  
+   It creates a new application access policy for the BookMe solution using the specified app registration ID and environment.
+4. **Grant Access Policy to Security Group:**  
+   It grants the created access policy to a specified security group. The security group should contain the users that will be using the BookMe solution. The Teams access policy will allow the BookMe solution to access and modify Teams meetings for the users in this group.
+
+The script is parameterized so that you can specify:
+- **AppRegistrationId** (the ID of the application registration created in the previous step (Enable-SCIM-Provisioning.ps1). This can be found in the output of the previous script as the "Client ID")
+- **SecurityGroupId** (the Object ID of the security group to which the policy should be applied)
+- **Environment** (dev, test, or prod - use the same environment as used in the previous script)
+- **TenantId** (your Entra tenant ID)
+- **ConnectionType** (Optional parameter specifying whether to connect using a managed identity or user interactive sign-in, default is "User". No need to specify this parameter when running the script as the default value is correct.)
+
+{: .warning }
+> Before you run the script make sure you have one of the following Teams roles:
+> 
+> -`Teams Communications Administrator` (lower privilege role)
+> - or `Teams Administrator` (highest privilege role)
+>
+> One of the two roles is required to create the Teams access policy.
+ 
+**Executing the script:**
+- Ensure that the requirements are met, including the Teams role.
+- Execute PowerShell script [Add-Teams-Access-Policy.ps1](/bookme/add-teams-access-policy)

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Template Validation
-nav_order: 16
+nav_order: 7
 parent: Present
 collection: present
 ---

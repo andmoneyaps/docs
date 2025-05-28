@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Terminology
-nav_order: 12
+nav_order: 17
 parent: Present
 collection: present
 ---

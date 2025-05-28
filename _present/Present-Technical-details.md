@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Technical Details
-nav_order: 11
+nav_order: 16
 parent: Present
 collection: present
 has_children: true

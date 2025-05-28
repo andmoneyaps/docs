@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LWC Setup
-nav_order: 8
+nav_order: 13
 parent: Present
 collection: present
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Template Creation Guide
-nav_order: 13
+nav_order: 5
 parent: Present
 collection: present
 ---

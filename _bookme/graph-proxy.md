@@ -71,10 +71,10 @@ The Graph-Proxy requires access to the Calendar Graph API to retrieve and manage
 In a single tenant installation, both the Azure and Entra ID components are deployed in the same tenant. During deployment, the App Offer automatically:
 
 - Configures the Graph-Proxy as an Azure Container App.
-- Sets up an App Registration with the required **Calendar Access** permission.
+- Sets up an App Registration with the required **Calendar Access** and **Online Meeting** permission.
 - Assigns the necessary roles to the managed identity for accessing Azure resources, such as the Key Vault and container image repository.
 
-This automated setup ensures that the Graph-Proxy can access the Calendar Graph API without further manual configuration.
+This automated setup ensures that the Graph-Proxy can access the Calendar and Online Meeting Graph API without further manual configuration.
 
 ### For Multi-Tenant Installations
 
@@ -86,18 +86,24 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
      - `Application.ReadWrite.All`
      - `Synchronization.ReadWrite.All`
    - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](/bookme/enable-scim-provisioning) to deploy the Entra ID components.
-   - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** permissions.
+   - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** and **Online Meeting** permissions.
 
-2. **Deploy the Azure Part**
+2. **Configure Teams access policy**
+    - Sign in with a user accout that has one of the two Teams admin roles `Teams Communications Administrator` or `Teams Administrator`.
+    - Execute the PowerShell script [Add-Teams-Access-Policy.ps1](Add-Teams-Access-Policy-ps1.md) to create a Teams access policy for the above generated App Registration. This step is necessary to allow the Graph-Proxy to manage online meetings in Microsoft Teams.
+
+3. **Deploy the Azure Part**
 
    - Install the App Offer using the **Partial Deployment** option to set up the Graph-Proxy and related Azure resources.
    - Configure the Graph-Proxy with the **ClientID** and **ClientSecret** obtained from the Entra ID configuration. These values are provided as environment variables to the Graph-Proxy container:
      - `Microsoft365__ClientId`
      - `Microsoft365__ClientSecret`
 
-3. **Verify Calendar API Access**
-   - Ensure that the App Registration in Entra ID has the correct **Calendar Access** permission.
+4. **Verify Calendar and Online Meeting API Access**
+   - Ensure that the App Registration in Entra ID has the correct **Calendar and Online Meeting Access** permission.
    - Test the Graph-Proxy by entering and testing the Graph-Proxy url in the Management UI. Under the 'Admin' → 'Microsoft'-tab in the Management UI.
+
+The above steps are explained in greater detail in the [Installation Guide](Installation-Marketplace-App-Offer.md).
 
 ### How to set up the Graph API URL in the Management UI
 

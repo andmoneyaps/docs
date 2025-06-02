@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Architecture
-nav_order: 10
+nav_order: 15
 parent: Present
 collection: present
 ---

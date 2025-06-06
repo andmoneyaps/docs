@@ -39,7 +39,7 @@ depending on environment and resource provisioning type along with their associa
 
 | Environment/Resource | Tenant URL: Advisors  | Tenant URL: Rooms  |
 |----------------------| ----------- | ----------- |
-| Test                 | `https://api.test-env.booking.andmoney.dk/advisors/scim `       | `https://api.t-env.booking.andmoney.dk/rooms/scim`        |
+| Test                 | `https://api.test-env.booking.andmoney.dk/advisors/scim `       | `https://api.test-env.booking.andmoney.dk/rooms/scim`        |
 | Production           | `https://api.booking.andmoney.dk/advisors/scim `        | `https://api.booking.andmoney.dk/rooms/scim`         |
 
 The `Secret Token` is provided by &Money.

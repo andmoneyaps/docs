@@ -89,7 +89,7 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** and **Online Meeting** permissions.
 
 2. **Configure Teams access policy**
-    - Sign in with a user accout that has one of the two Teams admin roles `Teams Communications Administrator` or `Teams Administrator`.
+    - Sign in with a user account that has one of the two Teams admin roles `Teams Communications Administrator` or `Teams Administrator`.
     - Execute the PowerShell script [Add-Teams-Access-Policy.ps1](Add-Teams-Access-Policy-ps1.md) to create a Teams access policy for the above generated App Registration. This step is necessary to allow the Graph-Proxy to manage online meetings in Microsoft Teams.
 
 3. **Deploy the Azure Part**

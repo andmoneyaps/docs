@@ -3,6 +3,7 @@ layout: default
 title: Add-Teams-Access-Policy.ps1
 nav_order: 6
 parent: BookMe
+permalink: /bookme/add-teams-access-policy
 ---
 
 # Add-Teams-Access-Policy.ps1

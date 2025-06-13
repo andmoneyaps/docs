@@ -3,6 +3,7 @@ layout: default
 title: Portals
 nav_order: 8
 parent: BookMe
+permalink: /bookme/portals
 ---
 
 # Portals

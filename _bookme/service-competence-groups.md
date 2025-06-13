@@ -3,6 +3,7 @@ layout: default
 title: Service & Competence Groups
 nav_order: 9
 parent: BookMe
+permalink: /bookme/service-competence-groups
 ---
 
 # Service- &amp; competence groups

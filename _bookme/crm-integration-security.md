@@ -3,6 +3,7 @@ layout: default
 title: CRM Integration Security
 nav_order: 7
 parent: BookMe
+permalink: /bookme/crm-integration-security
 ---
 
 # Portals CRM Integration Security

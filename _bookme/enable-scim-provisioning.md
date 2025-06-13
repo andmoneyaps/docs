@@ -4,6 +4,7 @@ title: Enable-SCIM-Provisioning.ps1
 nav_order: 5
 parent: BookMe
 collection: bookme
+permalink: /bookme/enable-scim-provisioning
 ---
 # Enable-SCIM-Provisioning.ps1
 ```PowerShell

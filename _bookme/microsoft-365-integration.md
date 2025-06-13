@@ -4,6 +4,7 @@ title: Microsoft 365 Integration
 nav_order: 2
 parent: BookMe
 collection: bookme
+permalink: /bookme/microsoft-365-integration
 ---
 
 # Setting up the integration between &money and Microsoft 365

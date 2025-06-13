@@ -4,6 +4,7 @@ title: Microsoft Entra Integration
 nav_order: 6
 parent: BookMe
 collection: bookme
+permalink: /bookme/entra-integration
 ---
 
 # Microsoft Entra Integration

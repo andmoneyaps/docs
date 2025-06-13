@@ -3,6 +3,7 @@ layout: default
 title: Graph Proxy
 nav_order: 6
 parent: BookMe
+permalink: /bookme/graph-proxy
 ---
 
 # Graph-Proxy

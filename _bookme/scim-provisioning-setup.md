@@ -3,6 +3,7 @@ layout: default
 title: SCIM Provisioning Setup
 nav_order: 6
 parent: BookMe
+permalink: /bookme/scim-provisioning-setup
 ---
 
 # SCIM Provisioning Setup

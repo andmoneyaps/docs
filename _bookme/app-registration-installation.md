@@ -4,6 +4,7 @@ title: App Registration Installation
 nav_order: 1
 parent: BookMe
 collection: bookme
+permalink: /bookme/app-registration-installation
 ---
 
 # Ensuring access to the &money Financial Platform Management UI

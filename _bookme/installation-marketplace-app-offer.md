@@ -3,6 +3,7 @@ layout: default
 title: Marketplace Installation
 nav_order: 4
 parent: BookMe
+permalink: /bookme/installation-marketplace-app-offer
 ---
 
 # Installation Marketplace App Offer

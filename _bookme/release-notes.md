@@ -3,6 +3,7 @@ layout: default
 title: Release Notes
 nav_order: 10
 parent: BookMe
+permalink: /bookme/release-notes
 ---
 
 # Release Notes—BookMe

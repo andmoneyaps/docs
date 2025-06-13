@@ -109,6 +109,45 @@ Attribute mappings for rooms should look like the table below:
     - **In the Target System:**  
       Log in to your target system (the one connected via SCIM) and verify that the new user account appears with the correct attributes.
 
+
+### Monitoring 
+To Monitor that the SCIM provisioning is working as intended continuously it is possible to configure an email address to notify when failure occurs. To do this:  
+-	Go to Enterprise Application --> Provisioning --> Settings --> Enable Send Email  
+This will need to be configured for each Enterprise Application Registration that needs to be monitored. 
+More Advanced monitoring scenarios can be achieved by integrating the Enterprise Application Registrations with Azure Log Analytics.  
+
+![Monitoring]({{ site.baseurl }}/assets/images/bookme/implementation-guide/monitoring.png)
+
+
+### Assign Users & Rooms for Provisioning 
+Now that provisioning is configured, assign the Advisors and Rooms to their respective Enterprise Application Registrations. 
+
+
+### Continuously Updating Integration User 
+You should consider how to keep the integration user up to date with permissions. This can occur when: 
+-	A new employee is being onboarded. 
+-	An existing employee is removed from the solution.  
+ 
+Here is a suggestion on some commands that can add the permissions, this can be run in a script automatically executing it. 
+The integration user must be a licensed exchange online should have the following permissions: 
+1.	Room Calendar: AvailabilityOnly  
+   -	AvailabilityOnly is required to inspect the availability of Rooms. 
+   -	Example: Add-MailboxFolderPermission -Identity Room@Organisation.onmicrosoft.com:\Calendar -User IntegrationUser@Organisation.onmicrosoft.com -AccessRights AvailabilityOnly 
+2.	User Calendar: Author  
+   -	Author is required since we need to impersonate the User as the owner of meetings. 
+   -	Example: Add-MailboxFolderPermission -Identity User@Organisation.onmicrosoft.com:\Calendar -User IntegrationUser@Organisation.onmicrosoft.com -AccessRights Author 
+
+To execute the commands above, you must be in powershell and have the ExchangeOnline Module installed. This can be done via the [PowerShell Gallery](https://www.powershellgallery.com/packages/ExchangeOnlineManagement/3.4.0) (Opens in new window or tab)  
+To authenticate, run the command Connect-ExchangeOnline -UserPrincipalName <YOUR USERNAME> 
+Please note that the calendar folder can be localized for some users. If this is the case, the names can be reset using the following command: 
+```powershell
+Get-Mailbox -Identity <IDENTITY> | Set-MailboxRegionalConfiguration -LocalizeDefaultFolderName:$true -Language "en-US" 
+```
+
+#### **Common issues during setup **
+Missing the required permissions on the integration user, please make sure to double check those are set. 
+Nested AD groups with users in it assigned to the SCIM provisioning will not work for example: AD Group --> AD Group --> Users. However, it will work with just one AD Group, and it is our recommended way to set up the SCIM provisioning. 
+
 ---
 
 ## SCIM Provisioning Setup References

@@ -73,7 +73,7 @@ Make sure that:
    * `<name-of-tag>` must be _lowercase_ and _without spaces_.
 
 {: .hint }
-> Information on how the **tags** are mapped to Salesforce data can be found [here](/present/tag-mapping).
+> Information on how the **tags** are mapped to Salesforce data can be found [here]({{ site.baseurl }}/present/tag-mapping).
 
 5. Insert image tags to replace images in the template.
 

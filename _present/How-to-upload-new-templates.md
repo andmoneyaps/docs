@@ -14,7 +14,7 @@ This article shows you how to upload new templates in Present.
 
 Make sure that:
 - The latest Present package is installed in your org
-- Make sure all steps are completed in [technical details](/present/present-technical-details).
+- Make sure all steps are completed in [technical details]({{ site.baseurl }}/present/present-technical-details).
 
 ## Uploading a new template in Present
 

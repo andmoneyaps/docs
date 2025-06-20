@@ -70,7 +70,7 @@ A single tenant installation is needed when the Azure part and Entra ID part sho
 - Select a Managed Identity with the proper permissions.
 - Press Deploy in the App Offer
 
-<img src="{{ site.baseurl }}/assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="../../assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 
 ## Multi-Tenant Installation
@@ -87,7 +87,7 @@ Using this installation means that the Entra ID resources need to be created by 
 
 The deployment model can be illustrated in the following way:
 
-<img src="{{ site.baseurl }}/assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="../../assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 ### Prerequisites
 
@@ -113,7 +113,7 @@ The following PowerShell scripts are provided to facilitate the setup of SCIM pr
 
 #### 1) SCIM Provisioning Script
 
-The provided script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/bookme/enable-scim-provisioning) performs the following key actions:
+The provided script [Enable-SCIM-Provisioning.ps1](../enable-scim-provisioning) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the required Microsoft Graph modules are installed. 
@@ -145,7 +145,7 @@ The script is parameterized so that you can specify:
 - Sign in using a user with the following permissions:
     - `Application.ReadWrite.All`
     - `Synchronization.ReadWrite.All`
-- Execute PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/bookme/enable-scim-provisioning)
+- Execute PowerShell script [Enable-SCIM-Provisioning.ps1](../enable-scim-provisioning)
 - Verify that the following resources are created
   - App Registration for Calendar Access
   - Service Principal for SCIM provisioning
@@ -153,7 +153,7 @@ The script is parameterized so that you can specify:
 
 #### 2) Teams Access Policy Script
 
-The provided script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/bookme/add-teams-access-policy) performs the following key actions:
+The provided script [Add-Teams-Access-Policy.ps1](../add-teams-access-policy) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the Microsoft Teams module is installed. If not, it installs and imports it.
@@ -181,4 +181,4 @@ The script is parameterized so that you can specify:
  
 **Executing the script:**
 - Ensure that the requirements are met, including the Teams role.
-- Execute PowerShell script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/bookme/add-teams-access-policy)
+- Execute PowerShell script [Add-Teams-Access-Policy.ps1](../add-teams-access-policy)

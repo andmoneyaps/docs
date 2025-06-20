@@ -49,7 +49,7 @@ flowchart LR
 
 ## Present Salesforce Objects
 
-![Present Salesforce Objects]({{ site.baseurl }}/assets/images/present/Present-architecture.png)
+![Present Salesforce Objects](../../assets/images/present/Present-architecture.png)
 
 ## Present Sequence Diagrams
 

@@ -27,11 +27,12 @@ This tool helps you to identify any issues with your templates before they are u
 3. Select your template file for validation
 4. Review the validation results
 
-![Validate Button](../../assets/images/present/validate_button.png){width="600"}
 
-![Validate Template](../../assets/images/present/validate_template.png){width="600"}
+<img src="../../assets/images/present/validate_button.png" alt="Validate Button" width="500">
 
-![Validation Results](../../assets/images/present/validation_results.png){width="600"}
+<img src="../../assets/images/present/validate_template.png" alt="Validate Template" width="500">
+
+<img src="../../assets/images/present/validation_results.png" alt="Validation Results" width="500">
 
 ## Validation Results
 

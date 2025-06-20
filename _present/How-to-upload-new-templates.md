@@ -47,5 +47,6 @@ Go to the Present app in Salesforce.
 2. Go to the 'Templates'-tab.
    ![Templates Tab](../../assets/images/present/templates_tab.png)
 3. Click the arrow button next to the uploaded template.
+
    <img alt="Deactivate template" src="../../assets/images/present/deactivate.png" width="300"/>
 4. Click "Deactivate", and the template will be deactivated.

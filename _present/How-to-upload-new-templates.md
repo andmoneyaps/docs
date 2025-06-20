@@ -19,7 +19,7 @@ Make sure that:
 ## Uploading a new template in Present
 
 1. Go to the Present app in Salesforce.
-   ![Present Search](../../assets/images/present/present_search.png)
+![Present Search](../../assets/images/present/present_search.png)
 2. Go to the 'Templates'-tab.
 ![Templates Tab](../../assets/images/present/templates_tab.png)
 3. Click the upload button.

@@ -27,7 +27,7 @@ bundle install
 bundle exec jekyll serve
 ```
 
-The site will be available at [http://localhost:4000](http://localhost:4000).
+The site will be available at [http://localhost:4000/docs/](http://localhost:4000/docs/).
 
 ## Documentation Structure
 

@@ -109,6 +109,16 @@ Attribute mappings for rooms should look like the table below:
     - **In the Target System:**  
       Log in to your target system (the one connected via SCIM) and verify that the new user account appears with the correct attributes.
 
+
+### Monitoring 
+To Monitor that the SCIM provisioning is working as intended continuously it is possible to configure an email address to notify when failure occurs. To do this:  
+-	Go to Enterprise Application --> Provisioning --> Settings --> Enable Send Email  
+This will need to be configured for each Enterprise Application Registration that needs to be monitored. 
+More Advanced monitoring scenarios can be achieved by integrating the Enterprise Application Registrations with Azure Log Analytics.  
+
+![Monitoring]({{ site.baseurl }}/assets/images/bookme/implementation-guide/monitoring.png)
+
+
 ---
 
 ## SCIM Provisioning Setup References

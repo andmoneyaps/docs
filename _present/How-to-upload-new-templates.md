@@ -14,22 +14,22 @@ This article shows you how to upload new templates in Present.
 
 Make sure that:
 - The latest Present package is installed in your org
-- Make sure all steps are completed in [technical details](/present/present-technical-details).
+- Make sure all steps are completed in [technical details](../present-technical-details).
 
 ## Uploading a new template in Present
 
 1. Go to the Present app in Salesforce.
-   ![Present Search]({{ site.baseurl }}/assets/images/present/present_search.png)
+   ![Present Search](../../assets/images/present/present_search.png)
 2. Go to the 'Templates'-tab.
-![Templates Tab]({{ site.baseurl }}/assets/images/present/templates_tab.png)
+![Templates Tab](../../assets/images/present/templates_tab.png)
 3. Click the upload button.
-![Upload]({{ site.baseurl }}/assets/images/present/upload_button.png)
+![Upload](../../assets/images/present/upload_button.png)
 4. A dialog will prompt you to upload a new template.
-![Upload Template]({{ site.baseurl }}/assets/images/present/upload_template.png)
+![Upload Template](../../assets/images/present/upload_template.png)
 5. When upload is finished click 'Done'.
-![Upload finished]({{ site.baseurl }}/assets/images/present/upload_finished.png)
+![Upload finished](../../assets/images/present/upload_finished.png)
 6. Now select an appropriate customer type (Kundetype).
-![Customer type selection]({{ site.baseurl }}/assets/images/present/customer_type_selection.png)
+![Customer type selection](../../assets/images/present/customer_type_selection.png)
    1. Select customer type (Kundetype) and click upload.
 
 {: .note }
@@ -43,10 +43,10 @@ Make sure that:
 You can deactivate/archive old templates in Present. This will keep your templates' metadata when deactivating templates used in reporting. This feature allows you to deactivate templates, but keep the metadata of a template but no longer want to use.
 
 Go to the Present app in Salesforce.
-1. ![Present Search]({{ site.baseurl }}/assets/images/present/present_search.png)
+1. ![Present Search](../../assets/images/present/present_search.png)
 2. Go to the 'Templates'-tab.
-   ![Templates Tab]({{ site.baseurl }}/assets/images/present/templates_tab.png)
+   ![Templates Tab](../../assets/images/present/templates_tab.png)
 3. Click the arrow button next to the uploaded template.
 
-   <img alt="Deactivate template" src="{{ site.baseurl }}/assets/images/present/deactivate.png" width="300"/>
+   <img alt="Deactivate template" src="../../assets/images/present/deactivate.png" width="300"/>
 4. Click "Deactivate", and the template will be deactivated.

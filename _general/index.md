@@ -12,41 +12,41 @@ This section contains comprehensive documentation about our processes, procedure
 
 ## Documentation Overview
 
-### 1. [Product Approval](/general/product-approval)
+### 1. [Product Approval](../product-approval)
 - Product and feature presentations
 - Documentation requirements
 - Business case development
 - Technical assessment procedures
 
-### 2. [Project Management & Quality Assurance](/general/project-management)
+### 2. [Project Management & Quality Assurance](../project-management)
 - Requirement gathering
 - Project planning methodologies
 - Quality assurance processes
 - Implementation support
 - Documentation standards
 
-### 3. [Security Authorization](/general/security-authorization)
+### 3. [Security Authorization](../security-authorization)
 - Security compliance documentation
 - Product security architecture
 - Data privacy policies
 - Testing and validation reports
 - Legal documentation
 
-### 4. [Setting Up](/general/setup)
+### 4. [Setting Up](../setup)
 - Environment provisioning
 - Access management
 - Integration configuration
 - Customer responsibilities
 - System setup procedures
 
-### 5. [Support & Hypercare](/general/support-and-hypercare)
+### 5. [Support & Hypercare](../support-and-hypercare)
 - Support structure and levels
 - Service Level Agreements (SLA)
 - Consultancy services
 - Hypercare period details
 - Post-deployment support
 
-### 6. [Test & Validation](/general/test-validation)
+### 6. [Test & Validation](../test-validation)
 - Integration testing procedures
 - Configuration validation
 - Quality assurance processes

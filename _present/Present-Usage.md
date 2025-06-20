@@ -49,13 +49,17 @@ Make sure that:
    {: .warning }
    > Slide name is a **must** to correctly report the usage of the different slides
 
-   ![Slide name in notes section]({{ site.baseurl }}/assets/images/present/slide_name.png)
+
+  ![Slide name in notes section](../../assets/images/present/slide_name.png)
+
 
 3. Set up sections for the Master Slides e.g. introduction, about the customer, about the bank, investing, etc.
 
    This can be done using the sections in PowerPoint. As an example see below:
 
-   <img alt="Section-names" src="{{ site.baseurl }}/assets/images/present/section_names.png" width="300">
+
+   <img alt="Section-names" src="../../assets/images/present/section_names.png" width="300">
+
 
    Here the agenda slide is in the section 'Agenda'.
 
@@ -72,33 +76,36 @@ Make sure that:
 
    * `<name-of-tag>` must be _lowercase_ and _without spaces_.
 
+
    {: .hint }
-   > Information on how the **tags** are mapped to Salesforce data can be found [here](/present/tag-mapping).
+   > Information on how the **tags** are mapped to Salesforce data can be found [here](../tag-mapping).
+
 
 5. Insert image tags to replace images in the template.
 
    To replace images use the following tag in the image name: `[image:<image_name>]`.
 
-   ![Replace images]({{ site.baseurl }}/assets/images/present/image_tags.png)
+
+![Replace images](../../assets/images/present/image_tags.png)
 
 6. Charts are not (yet) supported in Present
 
-   {: .hint }
-   > **Charts are not (yet) supported in the current version of Present**
-   >
-   > You are still able to include charts in the templates but the data cannot be changed.
+  {: .hint }
+  > **Charts are not (yet) supported in the current version of Present**
+  >
+  > You are still able to include charts in the templates but the data cannot be changed.
 
-   {: .warning }
-   > **Charts included in templates CAN NOT reference external worksheet data**
-   >
-   > All worksheet data must be included in the PowerPoint file (PPTX)
+  {: .warning }
+  > **Charts included in templates CAN NOT reference external worksheet data**
+  >
+  > All worksheet data must be included in the PowerPoint file (PPTX)
 
-   ![Charts in presentations]({{ site.baseurl }}/assets/images/present/charts.png)
+  ![Charts in presentations](../../assets/images/present/charts.png)
 
-   {: .warning }
-   > **Deletion of Master Templates are not supported in Present v1.10**
-   >
-   > Since all template metadata is stored in Salesforce this is (at the moment) used to report usage statistics to your CRM Analytics (If this is enabled in your org)
-   > Because of this Present v1.10 does not support (yet) deletion of Master Templates. This will be available in future releases.
-   > 
-   > In order to upload af new version of a Master Template you **MUST** upload a new template with the same file name. This will overwrite the existing Master Template.
+  {: .warning }
+  > **Deletion of Master Templates are not supported in Present v1.10**
+  >
+  > Since all template metadata is stored in Salesforce this is (at the moment) used to report usage statistics to your CRM Analytics (If this is enabled in your org)
+  > Because of this Present v1.10 does not support (yet) deletion of Master Templates. This will be available in future releases.
+  > 
+  > In order to upload af new version of a Master Template you **MUST** upload a new template with the same file name. This will overwrite the existing Master Template.

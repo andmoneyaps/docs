@@ -145,6 +145,7 @@ This phase covers the technical implementation and customization of &bookme Sche
 
 # Detailed task description for Phase 3 – Adaptation and development
 
+
 &bookme - Scheduler offers a wide range of configurations/customizations that ensure the product fits into your sales pipeline. In this section you will find the documentation for the fixes, configurations and customizations &bookme - Scheduler supports in relation to the implementation of the solution in complex organizations.
 You will also find guidelines for data quality and data relationships that must be met to get the most out of the solution.
 

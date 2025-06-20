@@ -36,7 +36,7 @@ By following this documentation, you will be equipped to seamlessly integrate ou
 ## App Offer structure
 Here is a list of what the App Offer contains by part.
 - **Azure part** (required)
-    - Container App ([Graph-Proxy](Graph-Proxy.md))
+    - Container App ([Graph-Proxy](../graph-proxy))
         - Environment Variables
     - Key vault
         - Secret: Client secret

@@ -27,24 +27,59 @@ With Portals, your partners and customers can book meetings with their advisor o
 
 ---
 
-## 1. Creating a Portal
+## 1. Portal Configuration
+
+### Steps to Configure a Portal:
+
+1. Go to **Management UI** and select **BookMe -> Portals**
+2. Click on the **"CRM Configuration** tab
+3. Click **Create New**
+
+<img src="../../assets/images/bookme/portals/new-config.png" width="1000" alt="Create new portal configuration button"/>
+
+<img src="../../assets/images/bookme/portals/new-config-modal.png" width="1000" alt="Create new portal configuration modal"/>
+
+4. Enter **Configuration Name**
+5. Set up Portal configuration fields
+    - **CRM Portal - new portal - create field setup**
+      - Choose **Key**
+      - Select **Object**
+      - Select **Object field**
+   - **CRM Portal - Bookme meeting fields - create standard field setup**
+     - Choose **Key**
+     - Select **Object**
+     - Select **Object field** 
+6. Click **Create** to save configuration 
+7. Go to **Management UI** and select **BookMe -> Portals** and choose your new Portal.
+8. Choose your new configuration under **Configuration** and click **Save**
+9. Publish the Portal for partners and internal/external users
+
+Note: Before using the portal, it must be configured with your CRM system.
+
+## 2. Creating a Portal
 
 ### Steps to Create a Portal:
 
 1. Go to **Management UI** and select **BookMe -> Portals**
 2. Click **Create Portal**
+
+<img src="../../assets/images/bookme/portals/create-portal.png" width="1000" alt="Create new portal button"/>
+
+<img src="../../assets/images/bookme/portals/create-new-portal.png" width="1000" alt="Create new portal modal"/>
+
 3. Enter the **Portal Name**
 4. Choose **Configuration** (select after it has been created)
 5. Select **Login Type** (Azure AD / MitID)
-6. Configure **Styling**
+6. Enable/disable **iCal**
+7. Configure **Styling**
     - Insert URL to the logo
     - Enter desired logo height
     - Customize portal styling such as colors for bullets, header background, buttons, etc.
-7. Configure **Customer Data Setup**
+8. Configure **Customer Data Setup**
    - Select **Customer category**
    - Choose **Theme**
    - Assign **Department** to receive meeting bookings
-8. Set up Fields for the Portal
+9. Set up Fields for the Portal
    - Click **Add Field**
    - Enter **Key**
    - Provide **Field Name**
@@ -55,8 +90,10 @@ With Portals, your partners and customers can book meetings with their advisor o
    - Indicate if the field is **Required**
    - Indicate if the field should be **Hidden** (e.g., pre-filled text/value)
    - Configure Regex **Validations** (choose from predefined options or create custom ones)
-9. Finalize by clicking **Create**
-10. Test the Portal by clicking on the portal icon (square with an arrow) on the homepage
+10. Finalize by clicking **Create**
+11. Test the Portal by clicking on the portal icon (square with an arrow) on the homepage
+
+<img src="../../assets/images/bookme/portals/test-a-portal.png" width="1000" alt="Test a portal"/>
 
 Note: Before using the portal, it must be configured with your CRM system.
 
@@ -96,31 +133,9 @@ The following regex validation rules comes as standalone formulas:
 | Customer name       | ^[a-zA-ZæøåÆØÅ]+$                                |
 | e-mail              | ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ |
 | Danish phone number | ^\+45\d{8}$                                      |
+| Url                 | ^[^ ]+\.[^ ]+$                                   |
 
 ---
-## 2. Configure a Portal
-
-### Steps to Configure a Portal:
-
-1. Go to **Management UI** and select **BookMe -> Portals**
-2. Click on the **"CRM Configuration** tab
-3. Click **Create New**
-4. Enter **Configuration Name**
-5. Set up Portal configuration fields
-    - **CRM Portal - new portal - create field setup**
-      - Choose **Key**
-      - Select **Object**
-      - Select **Object field**
-   - **CRM Portal - Bookme meeting fields - create standard field setup**
-     - Choose **Key**
-     - Select **Object**
-     - Select **Object field** 
-6. Click **Create** to save configuration 
-7. Go to **Management UI** and select **BookMe -> Portals** and choose your new Portal.
-8. Choose your new configuration under **Configuration** and click **Save**
-9. Publish the Portal for partners and internal/external users
-
-Note: Before using the portal, it must be configured with your CRM system.
 
 ## **Important Note**
 

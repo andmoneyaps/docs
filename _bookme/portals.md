@@ -222,8 +222,8 @@ The following regex validation rules come as standalone formulas, ready to imple
 | Cpr-number          | ^\d{6}-\d{4}$                                    |
 | Customer name       | ^[a-zA-ZæøåÆØÅ]+$                                |
 | e-mail              | ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ |
-| Danish phone number | ^\+45\d{8}$                                      |
-| Url                 | ^[^ ]+\.[^ ]+$                                   |
+| Danish phone number | ^\\+45\d{8}$                                      |
+| Url                 | ^[^ ]+\\.[^ ]+$                                   |
 
 ---
 

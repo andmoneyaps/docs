@@ -51,7 +51,31 @@ Date and time related fields are stored using the selected timezone for the insi
 | DurationInMinutes | Time range length | Integer |
 | NumberOfAvailableMeetings | Available meetings within the time range | Integer |
 
+### Historic Meeting Fields
+
+Historic Meeting Data provides comprehensive analytics on completed meetings for CRM Analytics integration.
+
+| Field | Description | Format |
+|-------|-------------|---------|
+| Start | Meeting start date and time | ISO 8601 DateTime (UTC) |
+| DateBooked | When the meeting was originally booked | ISO 8601 DateTime (UTC) |
+| DayOfWeek | Day of the week. Note: This is the day of the week of "DateBooked" | String (Monday, Tuesday, etc.) |
+| HourOfDay | Hour of the day. Note: This is the time of day of "DateBooked" | Integer (0-23) |
+| MeetingType | Meeting format | String (Physical, Virtual) |
+| Reason | Time range reason classification | String (see Time Range Reasons below) |
+| ParentTheme | Main service category | String |
+| ChildTheme | Specific service subcategory | String |
+| RoomName | Physical meeting room name | String |
+| DurationInMinutes | Actual meeting duration | Integer (minutes) |
+| ConfiguredDuration | Expected/configured duration | Integer (minutes) |
+| DurationDifference | Variance from expected duration (actual - configured) | Integer (minutes) |
+| AdvisorEmail | Meeting advisor identifier | String (email address) |
+| BookedBy | Who initiated the booking | String (Advisor, Customer) |
+| CustomerCategory | Customer segment or type | String |
+| MeetingId | Unique meeting identifier | String (GUID) |
+
 ### Time Range Reasons
+Both the time range and the historic meetings contain time ranges reasons explained below:
 
 #### Availability Status
 - **Available**: Advisor is qualified and free for meetings
@@ -63,6 +87,8 @@ Date and time related fields are stored using the selected timezone for the insi
 - **BusyAppointmentOccurence**: Recurring private appointment
 - **BusyEventInstance**: Single shared event
 - **BusyEventOccurence**: Recurring shared event
+- **BookedInternalBusy**: A booked internal meeting where the advisor is marked as busy and unavailable for customer bookings
+- **BookedInternalFree**: A booked BookMe internal meeting where the advisor remains available for customer bookings during the meeting time
 
 #### Schedule Constraints
 - **BankClosingDay**: Official bank holiday/closure

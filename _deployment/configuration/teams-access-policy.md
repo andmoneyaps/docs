@@ -1,8 +1,10 @@
 ---
 layout: default
-title: Add-Teams-Access-Policy.ps1
-nav_order: 6
-parent: BookMe
+title: Teams Access Policy Setup
+nav_order: 7
+parent: Configuration
+grand_parent: Platform Deployment
+collection: deployment
 ---
 
 # Add-Teams-Access-Policy.ps1

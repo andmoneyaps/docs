@@ -10,6 +10,9 @@ collections:
   general:
     permalink: "/:collection/:path/"
     output: true
+  deployment:
+    permalink: "/:collection/:path/"
+    output: true
   bookme:
     permalink: "/:collection/:path/"
     output: true
@@ -59,6 +62,10 @@ just_the_docs:
   collections:
     general:
       # name: "General"
+      # nav_exclude: false
+      # nav_fold: true
+    deployment:
+      # name: "Platform Deployment"
       # nav_exclude: false
       # nav_fold: true
     bookme:

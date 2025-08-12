@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Enable-SCIM-Provisioning.ps1
-nav_order: 5
+title: PowerShell Script - Enable SCIM
+nav_order: 11
 parent: BookMe
 collection: bookme
 ---

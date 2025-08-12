@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Add-Teams-Access-Policy.ps1
-nav_order: 6
+title: PowerShell Script - Teams Access Policy
+nav_order: 12
 parent: BookMe
 ---
 

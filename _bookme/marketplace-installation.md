@@ -1,29 +1,29 @@
 ---
 layout: default
-title: Marketplace Installation
-nav_order: 4
+title: Azure Marketplace Installation
+nav_order: 3
 parent: BookMe
 ---
 
-# Installation Marketplace App Offer
+# Azure Marketplace App Offer Installation
 # Introduction
 
 Welcome to the comprehensive documentation for our Azure Managed Application Offer, which is accessible and installable via the Azure Marketplace. This document is designed to guide you through the essential aspects of deploying and managing our application offer, whether you are operating within a single tenant or across multiple tenants.
 
 ## Purpose
 
-The Azure Managed Application Offer, referred to as the "App Offer," provides a streamlined solution for integrating Azure resources with Entra ID resources to enhance your organization's operational efficiency and security management. This document serves as a step-by-step guide for IT administrators and technical personnel tasked with deploying and managing this application within their Azure environment.
+The Azure Managed Application Offer, referred to as the "App Offer," provides a streamlined solution for integrating Azure resources with Microsoft Entra ID resources to enhance your organization's operational efficiency and security management. This document serves as a step-by-step guide for IT administrators and technical personnel tasked with deploying and managing this application within their Azure environment.
 
 ## Components
 
 The App Offer comprises two primary components:
-- **Azure Part:** This includes the necessary Azure resources such as the Container App (Graph-Proxy), environment variables, managed identities, and key vault configurations.
-- **Entra ID Part:** This optional component facilitates user identity and access management via app registration, service principals, and SCIM provisioning settings.
+- **Azure Part:** This includes the necessary Azure resources such as the Container App (Graph Proxy), environment variables, managed identities, and key vault configurations.
+- **Microsoft Entra ID Part:** This optional component facilitates user identity and access management via app registration, service principals, and SCIM provisioning settings.
 
 ## Deployment Modes
 
 To cater to diverse organizational needs, the App Offer supports multiple deployment modes:
-- **Single Tenant Deployment:** Suitable for organizations where both Azure and Entra ID resources are deployed within the same tenant.
+- **Single Tenant Deployment:** Suitable for organizations where both Azure and Microsoft Entra ID resources are deployed within the same tenant.
 - **Multi-Tenant Deployment:** Designed for scenarios where resources are distributed across different tenants, often managed by an administrator overseeing multiple organizational units.
 
 ## Audience
@@ -36,14 +36,14 @@ By following this documentation, you will be equipped to seamlessly integrate ou
 ## App Offer structure
 Here is a list of what the App Offer contains by part.
 - **Azure part** (required)
-    - Container App ([Graph-Proxy](../graph-proxy))
+    - Container App ([Graph Proxy](../graph-proxy))
         - Environment Variables
     - Key vault
         - Secret: Client secret
     - Managed Identity (optional, only required for single-tenant)
         - API Permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All`
         - Roles: `Teams Communications Administrator` or `Teams Administrator`
-- **Entra ID part** (optional)
+- **Microsoft Entra ID part** (optional)
     - App Registration
         - Permission: Calendar Access & Teams Access
     - Service Principal
@@ -51,39 +51,128 @@ Here is a list of what the App Offer contains by part.
 
 # Installation
 
-- Azure Managed Application Offer (**App Offer** for shorthand) is accessed and installed through the [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515).
+## Quick Decision Guide
+
+Before starting, determine your deployment scenario:
+
+| Scenario | Use This Method | Typical For |
+|----------|----------------|-------------|
+| Same tenant for Azure resources and Microsoft Entra ID | [Single Tenant Installation](#single-tenant-installation) | Direct customers with full control |
+| Different tenants or ISV managing multiple customers | [Multi-Tenant Installation](#multi-tenant-installation) | Partners, ISVs, or limited permissions |
+| Existing deployment needs update | [Update Procedures](#update-procedures) | Maintenance and upgrades |
+
+## Access the App Offer
+
+Azure Managed Application Offer (**App Offer** for shorthand) is accessed through:
+- [Azure Marketplace - &money Financial Meeting Platform](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
 
 
 ## Single Tenant Installation
-A single tenant installation is needed when the Azure part and Entra ID part should be deployed together on a single tenant.
+
+Use this method when Azure resources and Microsoft Entra ID are in the same tenant.
+
+### Prerequisites
 
 {: .information }
-> **Requirements**
+> **Required Permissions and Resources**
 >
-> - A managed Identity with the following permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All` as well as the role of `Teams Communications Administrator` or `Teams Administrator`.
-> - The user installing the App Offer needs the `Owner` permission in the Resource Group
+> - **Managed Identity** with:
+>   - API Permissions: `Application.ReadWrite.All` & `Synchronization.ReadWrite.All`
+>   - Role: `Teams Communications Administrator` or `Teams Administrator`
+> - **User performing installation** needs:
+>   - `Owner` permission in the target Resource Group
+>   - `Global Administrator` or delegated app consent permissions
+> - **SCIM Token** from &money (request from your account manager)
+> - **Security Group Object ID** containing BookMe users
 
-**App Offer:**
-- Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
-- SCIM Token: Obtain your SCIM token from the &money system. This token is used to authenticate SCIM requests.
-- Security Group: Specify a security group Object ID from your Entra setup to which the Teams Access Policy will be applied. The security group should contain the users that will be using the BookMe solution. The Teams access policy will allow the BookMe solution to access and modify Teams meetings for the users in this group.
-- Select a Managed Identity with the proper permissions.
-- Press Deploy in the App Offer
+### Step-by-Step Installation
+
+1. **Open Azure Marketplace**
+   - Navigate to [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/)
+   - Click "Get It Now"
+
+2. **Configure Installation Parameters**
+   - **Resource Group**: Select existing or create new
+   - **Region**: Choose your preferred Azure region
+   - **SCIM Token**: Paste the token provided by &money
+   - **Security Group Object ID**: Enter the ID of your prepared security group
+   - **Managed Identity**: Select the identity with required permissions
+
+3. **Deploy the Solution**
+   - Review configuration
+   - Accept terms and conditions
+   - Click "Create" to start deployment
+   - Wait for deployment completion (typically 10-15 minutes)
+
+4. **Post-Deployment Verification**
+   - Check deployment outputs for:
+     - Graph Proxy URL
+     - App Registration Client ID
+     - Service Principal ID
+   - Save these values for Management UI configuration
 
 <img src="../../assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 
 ## Multi-Tenant Installation
-A multi-tenant installation is needed when the two following conditions are met:
-- The BookMe solution will be maintained over multiple tenants by an administrator,
-- and where one or more tenants do not have subscriptions to install the App Offer through Marketplace. 
 
-Using this installation means that the Entra ID resources need to be created by executing additional PowerShell scripts.
+Use this method when:
+- Managing BookMe across multiple customer tenants
+- Customer tenant lacks Azure subscription
+- ISV/Partner centrally manages deployments
 
-**App Offer:**
-- Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
-- Enable the "Partial Deployment"-option.
-    - A partial deployment will only deploy the Azure part, meaning that the Entra ID-part of the installation needs to be installed using PowerShell scripts.
+### Overview
+
+This installation is split into two parts:
+1. **Part 1**: Customer tenant setup (Microsoft Entra ID resources)
+2. **Part 2**: Partner tenant setup (Azure resources/Graph Proxy)
+
+### Part 1: Customer Tenant Setup
+
+{: .warning }
+> **Important**: This part requires coordination with the customer's IT team or Global Administrator access.
+
+#### Step 1: Install App Offer on Customer Tenant
+
+**Performed by**: Customer Global Administrator or Partner with delegated access
+
+1. **Access Azure Marketplace**
+   - Customer admin navigates to [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/)
+   - Select "Get It Now"
+
+2. **Configure for Multi-Tenant**
+   - **Enable "Partial Deployment"** checkbox
+   - This creates only Microsoft Entra ID resources
+   - Enter SCIM token from &money
+   - Provide Security Group Object ID
+
+3. **Complete Installation**
+   - Deploy and wait for completion
+   - **Critical**: Note down the Client ID and Client Secret
+   - These will be needed for Part 2
+
+### Part 2: Partner Tenant Setup
+
+**Performed by**: Partner/ISV Administrator
+
+#### Step 2: Deploy Graph Proxy
+
+1. **Install Graph Proxy in Partner Tenant**
+   - Use the Azure portal or ARM templates
+   - Deploy to partner's Azure subscription
+   - Configure with Client ID/Secret from Part 1
+
+2. **Configure Environment Variables**
+   ```
+   CLIENT_ID=<from-part-1>
+   CLIENT_SECRET=<from-part-1>
+   TENANT_ID=<customer-tenant-id>
+   ENVIRONMENT=<prod|test|dev>
+   ```
+
+3. **Note Graph Proxy URL**
+   - Will be format: `https://<app-name>.azurewebsites.net`
+   - Required for Management UI configuration
 
 The deployment model can be illustrated in the following way:
 

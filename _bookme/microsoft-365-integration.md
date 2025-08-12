@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Microsoft 365 Integration
-nav_order: 2
+nav_order: 9
 parent: BookMe
 collection: bookme
 ---

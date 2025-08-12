@@ -1,8 +1,9 @@
 ---
 layout: default
-title: SCIM Configuration Guide
-nav_order: 6
-parent: BookMe
+title: SCIM User Provisioning
+nav_order: 1
+parent: Configuration
+grand_parent: Platform Deployment
 ---
 
 # SCIM Provisioning Setup

@@ -1,11 +1,12 @@
 ---
 layout: default
-title: Graph Proxy Technical Reference
-nav_order: 10
-parent: BookMe
+title: Graph Proxy Architecture
+nav_order: 1
+parent: Technical Reference
+grand_parent: Platform Deployment
 ---
 
-# Graph-Proxy
+# Graph Proxy Technical Reference
 
 The **Graph-Proxy** is a containerized application that acts as a secure intermediary between the BookMe solution and the Microsoft Graph API.
 It is an essential part of the Financial Booking Solutions and is deployed as part of the Azure resources included in the App Offer.

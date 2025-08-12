@@ -45,7 +45,7 @@ Use these scripts when:
 
 **Output**: Client ID and Client Secret for Graph Proxy configuration
 
-[View Full Script](enable-scim-provisioning)
+View the full script in [Enable-SCIM-Provisioning.ps1](#enable-scim-provisioningps1)
 
 ### Add-Teams-Access-Policy.ps1
 
@@ -68,7 +68,7 @@ Use these scripts when:
   -PolicyName "BookMe-Teams-Policy"
 ```
 
-[View Full Script](add-teams-access-policy)
+View the full script in [Teams Access Policy Setup](../configuration/teams-access-policy)
 
 ## Script Execution Guide
 
@@ -212,4 +212,4 @@ For script-related issues:
 - [Single-Tenant Installation](single-tenant-installation)
 - [Multi-Tenant Installation](multi-tenant-installation)
 - [SCIM Configuration](scim-provisioning-setup)
-- [Microsoft Entra Integration](entra-integration)
+- [Microsoft 365 Integration](../configuration/microsoft-365-integration)

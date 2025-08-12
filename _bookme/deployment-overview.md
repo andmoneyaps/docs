@@ -137,5 +137,5 @@ After successful deployment:
 
 - [Detailed Installation Guide](marketplace-installation)
 - [SCIM Configuration](scim-provisioning-setup)
-- [User Management](enable-scim-provisioning)
+- [User Management](/docs/deployment/configuration/scim-provisioning)
 - [CRM Integration Setup](salesforce-setup)

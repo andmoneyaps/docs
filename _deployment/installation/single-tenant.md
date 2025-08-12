@@ -182,8 +182,8 @@ Confirm the following resources appear in your resource group:
 ## Next Steps
 
 - [Configure SCIM Provisioning](scim-provisioning-setup) for advanced settings
-- [Management UI Setup](app-registration-installation) for role assignments
-- [Microsoft Entra Integration](entra-integration) for additional configuration
+- [Management UI Setup](/docs/deployment/configuration/app-registration-setup) for role assignments
+- [Microsoft 365 Integration](/docs/deployment/configuration/microsoft-365-integration) for additional configuration
 
 ## Support
 

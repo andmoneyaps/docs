@@ -1,9 +1,10 @@
 ---
 layout: default
-title: Management UI Access Setup
-nav_order: 8
-parent: BookMe
-collection: bookme
+title: App Registration Setup
+nav_order: 5
+parent: Configuration
+grand_parent: Platform Deployment
+collection: deployment
 ---
 
 # Ensuring access to the &money Financial Platform Management UI
@@ -34,6 +35,8 @@ Replace the placeholder **TENANT_ID_FOR_BANK** in the URLs. Access the URLs to c
 **UI app registration**
 
 - https://login.microsoftonline.com/TENANT_ID_FOR_BANK/adminconsent?client_id=261ae34b-4de9-4c4a-9d70-1df1c024c91e
+
+> **Important Security Note**: Client secrets for system integrations expire after 2 years and must be renewed before expiration. Plan rotation in advance and communicate new secrets to customers securely.
 
 ## Role Assignment for the Management UI
 

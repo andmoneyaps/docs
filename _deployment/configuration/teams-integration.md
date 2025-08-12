@@ -20,7 +20,7 @@ The platform integrates with Microsoft Teams to:
 ## Prerequisites
 
 Before configuring Teams integration:
-- [ ] Platform app registrations created (see [App Registration Installation](../../bookme/app-registration-installation))
+- [ ] Platform app registrations created (see [App Registration Setup](app-registration-setup))
 - [ ] Teams Administrator or Teams Communications Administrator role
 - [ ] Microsoft Teams PowerShell module installed
 
@@ -44,7 +44,7 @@ To verify permissions:
 
 The platform requires a Teams access policy to interact with user calendars and create meetings on their behalf.
 
-Use the provided PowerShell script documented in [Add Teams Access Policy](../../bookme/add-teams-access-policy). This script:
+Use the provided PowerShell script documented in [Teams Access Policy Setup](teams-access-policy). This script:
 - Creates the application access policy
 - Applies it to a specified security group
 - Supports both user and managed identity authentication
@@ -140,11 +140,11 @@ Get-CsOnlineUser -Identity "user@domain.com" | Select-Object ApplicationAccessPo
 ## Next Steps
 
 - Complete [SCIM Provisioning](scim-provisioning) for user synchronization
-- Configure [Microsoft Entra Integration](entra-integration) for authentication
+- Configure [Microsoft 365 Integration](microsoft-365-integration) for authentication
 - Review [Graph Proxy Configuration](../reference/graph-proxy) for API access
 
 ## Related Documentation
 
-- [Add Teams Access Policy Script](../../bookme/add-teams-access-policy)
+- [Teams Access Policy Script](teams-access-policy)
 - [Microsoft Graph Permissions Reference](https://docs.microsoft.com/en-us/graph/permissions-reference)
 - [Teams PowerShell Module](https://docs.microsoft.com/en-us/microsoftteams/teams-powershell-overview)

@@ -41,12 +41,14 @@ Configure administrative access to the management interface.
 - Multi-tenant management
 - Audit configuration
 
-### 4. [Microsoft Entra Integration](entra-integration)
-Advanced identity and access management configuration.
+### 4. Microsoft Entra Integration
+For identity and access management configuration, see:
+- [App Registration Setup](app-registration-setup) for app registrations and role assignments
+- [Microsoft 365 Integration](microsoft-365-integration) for complete setup guide
 
-**Covers:**
-- Conditional access
-- Multi-factor authentication
+**Topics covered:**
+- App registrations and enterprise applications
+- Role-based access control
 - Single sign-on
 - Security policies
 

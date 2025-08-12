@@ -64,7 +64,7 @@ Choose your deployment approach based on your organization's needs:
 | Component | Purpose | Documentation |
 |-----------|---------|---------------|
 | Azure Marketplace App | Core platform deployment | [Installation Guide](installation/single-tenant) |
-| Microsoft Entra ID | Identity and access management | [Entra Integration](configuration/entra-integration) |
+| Microsoft Entra ID | Identity and access management | [Microsoft 365 Integration](configuration/microsoft-365-integration) |
 | Graph Proxy | Microsoft 365 connectivity | [Technical Reference](reference/graph-proxy) |
 | SCIM Provisioning | User synchronization | [SCIM Configuration](configuration/scim-provisioning) |
 | Teams Integration | Online meetings and transcription | [Teams Setup](configuration/teams-integration) |

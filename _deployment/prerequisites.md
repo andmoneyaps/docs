@@ -16,7 +16,7 @@ Before deploying the &money Financial Platform, ensure all prerequisites are met
 
 #### Microsoft Entra ID Permissions
 - [ ] **Global Administrator** OR the following delegated permissions:
-  - [ ] `Application.ReadWrite.All` - To create app registrations ([Why? See Entra Integration](/docs/deployment/configuration/entra-integration#app-registrations))
+  - [ ] `Application.ReadWrite.All` - To create app registrations ([Why? See App Registration Setup](/docs/deployment/configuration/app-registration-setup))
   - [ ] `Synchronization.ReadWrite.All` - To configure SCIM provisioning ([Learn about SCIM](/docs/deployment/configuration/scim-provisioning#what-is-scim))
 
 #### Microsoft Teams Permissions  
@@ -52,14 +52,14 @@ Before deploying the &money Financial Platform, ensure all prerequisites are met
 - [ ] **Managed Identity** created with:
   - [ ] Graph API permissions configured
   - [ ] Key Vault access policies set
-  - [ ] Assigned to appropriate resources ([Identity Management](/docs/deployment/configuration/entra-integration#managed-identities))
+  - [ ] Assigned to appropriate resources
 
 ## Multi-Tenant Specific
 
 ### Customer Tenant
 - [ ] **Customer Administrator** available for:
   - [ ] App Offer installation ([Part 1 Process](/docs/deployment/installation/multi-tenant#part-1-customer-setup))
-  - [ ] Admin consent approval ([Consent Requirements](/docs/deployment/configuration/entra-integration#admin-consent))
+  - [ ] Admin consent approval ([See App Registration Guide](/docs/deployment/configuration/app-registration-setup))
   - [ ] User provisioning configuration ([SCIM Setup](/docs/deployment/configuration/scim-provisioning))
 - [ ] **Communication Channel** established with customer IT
 

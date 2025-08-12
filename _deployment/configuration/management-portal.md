@@ -41,7 +41,7 @@ The Management Portal provides:
 3. Search for **"BookingPlatform Mgmt API"**
 4. Click to open application settings
 
-**Note:** If the Enterprise Application doesn't exist yet, see the [Management UI Access Setup](../../bookme/app-registration-installation) guide to create it first.
+**Note:** If the Enterprise Application doesn't exist yet, see the [App Registration Setup](app-registration-setup) guide to create it first.
 
 ### Step 2: Assign User Roles
 
@@ -182,7 +182,7 @@ Each customer appears as separate organization:
 
 ## Next Steps
 
-- Configure [Microsoft Entra Integration](entra-integration) for advanced features
+- Configure [App Registration Setup](app-registration-setup) for role assignments
 - Set up [monitoring and alerts](../reference/monitoring)
 - Review [security guidelines](../reference/security)
 - Plan administrator training

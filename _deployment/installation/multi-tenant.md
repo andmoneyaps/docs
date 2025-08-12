@@ -249,7 +249,7 @@ Monitor all customers from Management UI:
 ## Next Steps
 
 - Review [SCIM Configuration](scim-provisioning-setup) for advanced settings
-- Configure [Microsoft Entra Integration](entra-integration)
+- Configure [Microsoft 365 Integration](/docs/deployment/configuration/microsoft-365-integration)
 - Set up monitoring and alerts
 
 ## Support

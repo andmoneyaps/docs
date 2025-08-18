@@ -36,7 +36,7 @@ To generate a Private Key run the following two commands:
 openssl genpkey -des3 -algorithm RSA -pass pass:SomePassword -out server.pass.key -pkeyopt rsa_keygen_bits:2048
 ```
 
-{: .hint }
+{: .important }
 > Replace 'SomePassword' with a strong password. A good password generator can be found [here](https://www.lastpass.com/features/password-generator).
 
 ```shell

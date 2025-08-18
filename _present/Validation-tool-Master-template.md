@@ -42,7 +42,7 @@ The tool provides three levels of feedback:
 - **Warnings**: Potential issues that may affect functionality
 - **Errors**: Critical issues that must be fixed before upload
 
-{: .hint }
+{: .highlight }
 > **Best Practice**
 >
 > Always run the validation tool before uploading new templates or making significant changes to existing ones.

@@ -73,7 +73,7 @@ Use this method when Azure resources and Microsoft Entra ID are in the same tena
 
 ### Prerequisites
 
-{: .information }
+{: .important }
 > **Required Permissions and Resources**
 >
 > - **Managed Identity** with:

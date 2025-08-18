@@ -14,7 +14,7 @@ The Present App enables financial employees to automatically generate PowerPoint
 The Present App allows Administrators or Marketing users to upload PowerPoint templates with placeholder Tags that can be substituted by data in Salesforce.
 The financial employees can choose between slides to generate the best possible PowerPoint presentation for their Meetings with their clients.
 
-{: .hint }
+{: .note }
 > **This documentation aligns with version 1.21 of Present**
 >
 > Some of the steps will still be relevant for earlier versions, but this is not guaranteed.

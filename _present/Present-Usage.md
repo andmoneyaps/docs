@@ -77,7 +77,7 @@ Make sure that:
    * `<name-of-tag>` must be _lowercase_ and _without spaces_.
 
 
-   {: .hint }
+   {: .note }
    > Information on how the **tags** are mapped to Salesforce data can be found [here](../tag-mapping).
 
 
@@ -90,7 +90,7 @@ Make sure that:
 
 6. Charts are not (yet) supported in Present
 
-  {: .hint }
+  {: .important }
   > **Charts are not (yet) supported in the current version of Present**
   >
   > You are still able to include charts in the templates but the data cannot be changed.

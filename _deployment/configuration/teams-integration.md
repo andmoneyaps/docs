@@ -8,48 +8,31 @@ grand_parent: Platform Deployment
 
 # Microsoft Teams Integration
 
-Configure Microsoft Teams access policies and permissions for the platform to create online meetings with transcription capabilities.
-
-## Overview
-
-The platform integrates with Microsoft Teams to:
-- Create Teams meetings programmatically via Microsoft Graph API
-- Retrieve meeting transcripts after meetings conclude
-- Enable recording capabilities for meetings
+Configure Microsoft Teams access policies to enable the platform to create online meetings.
 
 ## Prerequisites
 
-Before configuring Teams integration:
-- [ ] Platform app registrations created (see [App Registration Setup](app-registration-setup))
-- [ ] Teams Administrator or Teams Communications Administrator role
-- [ ] Microsoft Teams PowerShell module installed
+- Platform app registrations created (see [App Registration Setup](app-registration-setup))
+- Teams Administrator or Teams Communications Administrator role
+- Microsoft Teams PowerShell module v5.0+
+- Security group for policy application
 
-## Required Permissions
+## Required API Permissions
 
-The platform's app registration requires these Microsoft Graph API permissions:
+Configure these Microsoft Graph API permissions in your app registration:
 
-| Permission | Type | Purpose |
-|------------|------|---------|
-| `OnlineMeetings.ReadWrite.All` | Application | Create and manage Teams meetings |
-| `OnlineMeetingTranscript.Read.All` | Application | Retrieve meeting transcripts |
-| `Calendars.ReadWrite` | Delegated | Calendar integration |
-
-To verify permissions:
-1. Navigate to **Microsoft Entra ID** → **App registrations**
-2. Find your platform's app registration
-3. Click **API permissions**
-4. Verify the above permissions are granted with admin consent
+| Permission | Type | Purpose | Admin Consent |
+|:-----------|:-----|:--------|:--------------|
+| `OnlineMeetings.ReadWrite.All` | Application | Create and manage Teams meetings | Required |
+| `OnlineMeetingTranscript.Read.All` | Application | Retrieve meeting transcripts | Required |
+| `Calendars.ReadWrite` | Delegated | Calendar integration | Required |
+| `User.Read.All` | Application | User profile access | Required |
 
 ## Configure Teams Access Policy
 
-The platform requires a Teams access policy to interact with user calendars and create meetings on their behalf.
+The platform requires a Teams application access policy to create meetings on behalf of users.
 
-Use the provided PowerShell script documented in [Teams Access Policy Setup](teams-access-policy). This script:
-- Creates the application access policy
-- Applies it to a specified security group
-- Supports both user and managed identity authentication
-
-### Quick Reference
+### Run Configuration Script
 
 ```powershell
 .\Add-Teams-Access-Policy.ps1 `
@@ -59,92 +42,74 @@ Use the provided PowerShell script documented in [Teams Access Policy Setup](tea
     -TenantId "[YOUR-TENANT-ID]"
 ```
 
-The script will create a policy named `Bookme-OnlineMeetingAccess-Policy-[Environment]` and apply it to the specified group.
+This script:
+1. Creates an application access policy named `Bookme-OnlineMeetingAccess-Policy-[Environment]`
+2. Applies the policy to the specified security group
+3. Grants the app permission to create meetings for group members
+
+{: .note }
+> Policy propagation may take up to 30 minutes.
 
 ## Enable Meeting Features
 
-### Transcription Settings
+### Transcription
 
-Ensure your organization's Teams meeting policies allow transcription:
+To enable transcription in Teams Admin Center:
 
-1. In [Teams Admin Center](https://admin.teams.microsoft.com)
-2. Navigate to **Meetings** → **Meeting policies**
-3. Select the policy applied to your users
-4. Verify **Allow transcription** is enabled
-5. Save changes if modified
+1. Navigate to **Meetings** → **Meeting policies**
+2. Select the policy applied to your users
+3. Enable **Transcription** in the Recording & transcription section
+4. Save changes
 
-**Note:** Users must have appropriate Teams licenses that include transcription capabilities.
-
-### Recording Settings
-
-If recording is required:
-1. In the same meeting policy
-2. Enable **Allow cloud recording**
-3. Save changes
-
+{: .note }
+> Users must have Teams E3/E5 licenses for transcription features.
 
 ## Verification
 
-After configuration:
+### Test Graph API Access
 
-1. **Check Graph API connectivity:**
-   ```powershell
-   # Test Graph API access
-   Invoke-RestMethod -Uri "https://graph.microsoft.com/v1.0/me" `
-       -Headers @{Authorization = "Bearer [ACCESS-TOKEN]"}
-   ```
+```powershell
+# Test user profile access
+Invoke-RestMethod -Uri "https://graph.microsoft.com/v1.0/users" `
+    -Headers @{Authorization = "Bearer $token"} -Method GET
+```
 
-2. **Verify Teams policy is active:**
-   ```powershell
-   Get-CsApplicationAccessPolicy | Select-Object Identity, AppIds
-   ```
+### Verify Teams Policy
 
-3. **Confirm app permissions:**
-   - Check audit logs in Entra ID for consent grants
-   - Review app registration API permissions tab
+```powershell
+# List application access policies
+Get-CsApplicationAccessPolicy | 
+    Where-Object {$_.Identity -like "*Bookme*"} | 
+    Format-Table Identity, AppIds
+```
 
 ## Troubleshooting
 
 ### Policy Not Taking Effect
 
-**Issue:** Application cannot create meetings despite policy configuration
-
-**Solution:**
-```powershell
-# Force policy sync (may take up to 30 minutes)
-Grant-CsApplicationAccessPolicy -PolicyName "BookingPlatformPolicy" -Global
-
-# Verify with specific user
-Get-CsOnlineUser -Identity "user@domain.com" | Select-Object ApplicationAccessPolicy
-```
+- Wait for propagation (up to 30 minutes)
+- Verify group membership
+- Check policy assignment with `Get-CsApplicationAccessPolicy`
 
 ### Permission Errors
 
-**Issue:** "Insufficient privileges" when creating meetings
-
-**Verify:**
-1. Admin consent granted for all required permissions
-2. No Conditional Access policies blocking the application
-3. App registration not disabled in Entra ID
+- Verify admin consent in Azure Portal → App registrations → API permissions
+- Ensure all permissions show "Granted for [Tenant]"
+- Check app registration is enabled
 
 ### Transcript Access Issues
 
-**Issue:** Transcripts not accessible after meetings
-
-**Check:**
-1. Meeting policy has transcription enabled
-2. Users have appropriate Teams licenses
-3. Allow 5-15 minutes after meeting ends for transcript processing
-4. Application has `OnlineMeetingTranscript.Read.All` permission
+- Confirm meeting policy has transcription enabled
+- Verify users have appropriate Teams licenses
+- Wait 5-15 minutes after meeting ends for transcript availability
 
 ## Next Steps
 
-- Complete [SCIM Provisioning](scim-provisioning) for user synchronization
-- Configure [Microsoft 365 Integration](microsoft-365-integration) for authentication
-- Review [Graph Proxy Configuration](../reference/graph-proxy) for API access
+- Complete [SCIM Provisioning](scim-provisioning) for user management
+- Configure [Microsoft 365 Integration](microsoft-365-integration) for full suite access
 
-## Related Documentation
+## References
 
-- [Teams Access Policy Script](teams-access-policy)
+- [Teams PowerShell Module Documentation](https://docs.microsoft.com/en-us/microsoftteams/teams-powershell-overview)
 - [Microsoft Graph Permissions Reference](https://docs.microsoft.com/en-us/graph/permissions-reference)
-- [Teams PowerShell Module](https://docs.microsoft.com/en-us/microsoftteams/teams-powershell-overview)
+- [Application Access Policies](https://docs.microsoft.com/en-us/graph/cloud-communication-online-meeting-application-access-policy)

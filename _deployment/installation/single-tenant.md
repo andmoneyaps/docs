@@ -13,6 +13,7 @@ This guide provides step-by-step instructions for deploying the &money Financial
 ## Overview
 
 Single-tenant deployment is the simplest installation method, ideal for organizations that:
+
 - Have full administrative control over their tenant
 - Want all resources in one location
 - Prefer automated configuration
@@ -20,6 +21,7 @@ Single-tenant deployment is the simplest installation method, ideal for organiza
 ## Before You Begin
 
 Ensure you have completed the [Prerequisites Checklist](prerequisites). Key requirements:
+
 - Global Administrator or appropriate delegated permissions
 - Azure subscription in your tenant
 - SCIM token from &money
@@ -37,13 +39,15 @@ Ensure you have completed the [Prerequisites Checklist](prerequisites). Key requ
 ### Step 2: Configure Basic Settings
 
 #### Subscription and Resource Group
+
 1. **Subscription**: Select your Azure subscription
-2. **Resource Group**: 
+2. **Resource Group**:
    - Create new: Enter a descriptive name (e.g., `rg-bookme-prod`)
    - Use existing: Select from dropdown
 3. **Region**: Choose your preferred Azure region
 
 #### Application Configuration
+
 1. **Application Name**: Enter a unique name for your deployment
 2. **Environment**: Select either:
    - **Test** - For testing and validation
@@ -52,7 +56,7 @@ Ensure you have completed the [Prerequisites Checklist](prerequisites). Key requ
 ### Step 3: Configure SCIM Settings
 
 1. **SCIM Token**: Paste the token provided by your &money account manager
-2. **Security Group Object ID**: 
+2. **Security Group Object ID**:
    - Navigate to Microsoft Entra ID → Groups
    - Find your platform users group
    - Copy the Object ID
@@ -86,12 +90,12 @@ Ensure you have completed the [Prerequisites Checklist](prerequisites). Key requ
 
 Confirm the following resources appear in your resource group:
 
-| Resource Type | Resource Name | Purpose |
-|--------------|---------------|---------|
-| Container App | bookme-proxy-[env] | Graph Proxy service |
-| Key Vault | kv-bookme-[env] | Stores secrets |
-| Container App Environment | cae-bookme-[env] | Container environment |
-| Managed Identity | mi-bookme-[env] | Service authentication |
+| Resource Type             | Resource Name      | Purpose                |
+| ------------------------- | ------------------ | ---------------------- |
+| Container App             | bookme-proxy-[env] | Graph Proxy service    |
+| Key Vault                 | kv-bookme-[env]    | Stores secrets         |
+| Container App Environment | cae-bookme-[env]   | Container environment  |
+| Managed Identity          | mi-bookme-[env]    | Service authentication |
 
 ### Verify App Registrations
 
@@ -154,6 +158,7 @@ Confirm the following resources appear in your resource group:
 **Issue**: Deployment status shows Failed
 
 **Solutions**:
+
 1. Check deployment error messages in Azure Portal
 2. Verify all prerequisites are met
 3. Ensure sufficient Azure quota
@@ -164,6 +169,7 @@ Confirm the following resources appear in your resource group:
 **Issue**: Users don't appear in Management UI
 
 **Solutions**:
+
 1. Verify SCIM provisioning is started
 2. Check users are in the security group
 3. Review provisioning logs for errors
@@ -174,6 +180,7 @@ Confirm the following resources appear in your resource group:
 **Issue**: Access denied or login fails
 
 **Solutions**:
+
 1. Verify user has appropriate role assigned
 2. Check app registration permissions
 3. Clear browser cache and cookies
@@ -188,6 +195,7 @@ Confirm the following resources appear in your resource group:
 ## Support
 
 For assistance:
+
 - **Documentation**: Review related guides
 - **Account Manager**: Contact your &money representative
 - **Support Portal**: Submit tickets for technical issues

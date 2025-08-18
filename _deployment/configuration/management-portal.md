@@ -61,39 +61,9 @@ The Management Portal provides:
 
 For easier management:
 
-1. Create security groups:
-   - `Platform-Admins`
-   - `Platform-Configurators`
-   - `Platform-Managers`
+1. Create security groups for each role
 2. Assign groups to roles
 3. Manage membership via groups
-
-### Step 3: Configure Application Settings
-
-1. In Enterprise Application settings
-2. Go to **Properties**
-3. Configure:
-   - **Assignment required**: Yes (recommended)
-   - **Visible to users**: Yes
-   - **User assignment required**: Yes
-
-### Step 4: Set Up Conditional Access
-
-For enhanced security:
-
-1. Go to **Conditional Access**
-2. Create new policy:
-   ```
-   Name: Platform Management Access
-   Users: Platform administrators
-   Cloud apps: Platform Management API
-   Conditions:
-   - Locations: Trusted locations only
-   - Device state: Compliant devices
-   Grant:
-   - Require MFA
-   - Require compliant device
-   ```
 
 ## Portal URLs
 
@@ -115,15 +85,6 @@ For enhanced security:
 4. Accept permissions prompt
 5. Complete MFA if required
 
-### Profile Setup
-
-On first login:
-
-1. Verify contact information
-2. Set notification preferences
-3. Configure time zone
-4. Review assigned permissions
-
 ## Multi-Tenant Configuration
 
 For partners managing multiple customers:
@@ -136,15 +97,6 @@ Each customer appears as separate organization:
 2. Switch between organizations without re-authentication
 3. Permissions apply per organization
 
-### Delegation Setup
-
-1. In customer's tenant:
-   - Grant partner organization access
-   - Assign delegated admin privileges
-2. In partner's portal:
-   - Add customer configuration
-   - Map customer to organization
-
 ## Troubleshooting
 
 ### Cannot Access Portal
@@ -155,8 +107,8 @@ Each customer appears as separate organization:
 
 1. Verify user is assigned to application
 2. Check role assignment is complete
-3. Confirm no conditional access blocking
-4. Clear browser cache/cookies
+3. Clear browser cache/cookies
+4. Check for any tenant-specific access policies
 
 ### Role Not Applied
 

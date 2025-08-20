@@ -1722,7 +1722,25 @@ components:
         meetingTopicId:
           type: string
           description: The ID of the meeting topic (if applicable).
-      description: Represents an availabletime slot for scheduling a meeting.
+          description: The start date and time of the time slot.
+        endDate:
+          type: string
+          format: date-time
+          description: The end date and time of the time slot.
+        meetingType:
+          allOf:
+            - $ref: '#/components/schemas/MeetingType'
+          description: The type of meeting associated with this time slot (e.g., physical, online).
+        roomId:
+          type: string
+          description: The ID of the room where the meeting will take place (if applicable).
+        employeeId:
+          type: string
+          description: The ID of the employee associated with this time slot.
+        meetingTopicId:
+          type: string
+          description: The ID of the meeting topic (if applicable).
+      description: Represents an available time slot for scheduling a meeting.
     BookedBy:
       type: string
       enum:

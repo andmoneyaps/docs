@@ -1625,7 +1625,7 @@ components:
       name: startDate
       in: query
       required: false
-      description: Optional filter fortime slots starting at a specific date/time.
+      description: Optional filter for time slots starting at a specific date/time.
       schema:
         type: string
         format: date-time

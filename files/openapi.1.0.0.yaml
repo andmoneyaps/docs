@@ -1,0 +1,2418 @@
+openapi: 3.0.0
+info:
+  title: '&Money Public API'
+  contact:
+    name: '&Money Support'
+    url: https://www.andmoney.dk/#contact
+    email: info@andmoney.dk
+  description: Public API for &Money Services
+  version: 1.0.0
+tags:
+  - name: BookMe
+  - name: Organization Configuration
+  - name: Present
+paths:
+  /bookme/meeting-topics:
+    get:
+      operationId: Topics_list
+      parameters:
+        - $ref: '#/components/parameters/GetTopicsRequest.customerTypeId'
+        - $ref: '#/components/parameters/GetTopicsRequest.isCustomer'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+    post:
+      operationId: Topics_create
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTopicRequest'
+  /bookme/meeting-topics/{id}:
+    get:
+      operationId: Topics_get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+    patch:
+      operationId: Topics_patch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PatchOperation'
+  /bookme/meetings:
+    get:
+      operationId: Meetings_list
+      parameters:
+        - $ref: '#/components/parameters/GetMeetingsRequest.timeSlotId'
+        - $ref: '#/components/parameters/GetMeetingsRequest.employeeId'
+        - $ref: '#/components/parameters/GetMeetingsRequest.startDateModified'
+        - $ref: '#/components/parameters/GetMeetingsRequest.endDateModified'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Meeting'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+    post:
+      operationId: Meetings_create
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meeting'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMeetingRequest'
+  /bookme/meetings/{id}:
+    get:
+      operationId: Meetings_get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meeting'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+    put:
+      operationId: Meetings_update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meeting'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchOperation'
+    delete:
+      operationId: Meetings_delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+  /bookme/meetings/{id}/ical:
+    post:
+      operationId: Meetings_generateICal
+      description: Creates and returns the meeting details as an iCal file
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Meeting ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            text/calendar:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeetingICalRequest'
+  /bookme/room-vacancies:
+    get:
+      operationId: Rooms_vacancies
+      parameters:
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+          explode: false
+        - name: timeSlotId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+  /bookme/time-slots:
+    post:
+      operationId: TimeSlots_create
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSlot'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTimeSlotRequest'
+  /bookme/time-slots/available:
+    get:
+      operationId: TimeSlots_list
+      parameters:
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.explicitEmployeeIds'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.startDate'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.lookForwardTime'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.topic'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.customerTypeId'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.meetingTypes'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.customerLocation'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.meetingLocation'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.ignoreMeetingIds'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.requireRoom'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.specificRooms'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.meetingDuration'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.isCustomerInitiated'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.ignoreMinimumTimeBeforeBooking'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.getBestTimeSlots'
+        - $ref: '#/components/parameters/GetAvailableTimeSlotsRequest.requireEmployeeParticipation'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AvailableTimeslot'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+  /bookme/time-slots/reserve:
+    post:
+      operationId: TimeSlots_reserve
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSlot'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+  /bookme/time-slots/{id}:
+    get:
+      operationId: TimeSlots_get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSlot'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+    patch:
+      operationId: TimeSlots_patch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: reservationToken
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - BookMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PatchOperation'
+  /config/customer-types:
+    get:
+      operationId: CustomerTypes_list
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerType'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+    post:
+      operationId: CustomerTypes_create
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerType'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerTypeRequest'
+  /config/customer-types/{id}:
+    get:
+      operationId: CustomerTypes_get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerType'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+    patch:
+      operationId: CustomerTypes_patch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PatchOperation'
+  /config/employees:
+    get:
+      operationId: Employees_all
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+  /config/employees/{id}:
+    get:
+      operationId: Employees_get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+  /config/rooms:
+    get:
+      operationId: Rooms_all
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+  /config/rooms/{id}:
+    get:
+      operationId: Rooms_get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Organization Configuration
+  /present/slides:
+    post:
+      operationId: Slides_create
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlideDeck'
+  /present/slides/generate:
+    post:
+      operationId: Slides_generate
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentResponse'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlideDeck'
+  /present/slides/pdf:
+    post:
+      operationId: Slides_pdf_Slides_pdfFile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/ContentResponse'
+                  - $ref: '#/components/schemas/TypeSpec.Http.File'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlideDeckLocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ConvertToPDFFileRequestMultiPart'
+  /present/templates:
+    get:
+      operationId: Templates_all
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SlideTemplate'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+    post:
+      operationId: Templates_upload_Templates_uploadFile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlideTemplateDetails'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadTemplateJsonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadTemplateFileRequestMultiPart'
+  /present/templates/validation:
+    post:
+      operationId: Templates_validate_Templates_validateFile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationResult'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateTemplateJsonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ValidateTemplateFileRequestMultiPart'
+  /present/templates/{name}:
+    delete:
+      operationId: Templates_delete
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+    get:
+      operationId: Templates_get
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlideTemplateDetails'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+  /present/templates/{name}/slides:
+    get:
+      operationId: Templates_getTemplateSlides
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlideImagesResponse'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+  /present/templates/{templateName}/slides/{slideName}:
+    get:
+      operationId: Templates_getTemplateSlide
+      parameters:
+        - name: templateName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: slideName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uri
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Present
+security:
+  - OAuth2Auth:
+      - api://c096f1c4-781b-4544-9491-610e4b384261/access_as_user
+      - api://ca6233a5-e7a5-4a47-b72d-8d2161b90af3/access_as_user
+components:
+  parameters:
+    GetAvailableTimeSlotsRequest.customerLocation:
+      name: customerLocation
+      in: query
+      required: false
+      description: Optional filter by customer location.
+      schema:
+        type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.customerTypeId:
+      name: customerTypeId
+      in: query
+      required: false
+      description: Optional filter by customer type.
+      schema:
+        type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.explicitEmployeeIds:
+      name: explicitEmployeeIds
+      in: query
+      required: false
+      description: Optional list of employee IDs for explicit filtering.
+      schema:
+        type: array
+        items:
+          type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.getBestTimeSlots:
+      name: getBestTimeSlots
+      in: query
+      required: false
+      description: Optional flag to get the best available time slots.
+      schema:
+        type: boolean
+      explode: false
+    GetAvailableTimeSlotsRequest.ignoreMeetingIds:
+      name: ignoreMeetingIds
+      in: query
+      required: false
+      description: Optional filter to ignore specific meeting IDs.
+      schema:
+        type: array
+        items:
+          type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.ignoreMinimumTimeBeforeBooking:
+      name: ignoreMinimumTimeBeforeBooking
+      in: query
+      required: false
+      description: Optional flag to ignore minimum time before booking.
+      schema:
+        type: boolean
+      explode: false
+    GetAvailableTimeSlotsRequest.isCustomerInitiated:
+      name: isCustomerInitiated
+      in: query
+      required: false
+      description: Optional filter for meetings initiated by the customer.
+      schema:
+        type: boolean
+      explode: false
+    GetAvailableTimeSlotsRequest.lookForwardTime:
+      name: lookForwardTime
+      in: query
+      required: false
+      description: Optional duration for looking forward to availabletime slots.
+      schema:
+        type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.meetingDuration:
+      name: meetingDuration
+      in: query
+      required: false
+      description: Optional filter for meeting duration.
+      schema:
+        type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.meetingLocation:
+      name: meetingLocation
+      in: query
+      required: false
+      description: Optional filter by meeting location.
+      schema:
+        type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.meetingTypes:
+      name: meetingTypes
+      in: query
+      required: false
+      description: Optional filter for types of meetings (e.g., physical, online).
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/MeetingType'
+      explode: false
+    GetAvailableTimeSlotsRequest.requireEmployeeParticipation:
+      name: requireEmployeeParticipation
+      in: query
+      required: true
+      schema:
+        type: boolean
+      explode: false
+    GetAvailableTimeSlotsRequest.requireRoom:
+      name: requireRoom
+      in: query
+      required: false
+      description: Optional filter to require a room for the meeting.
+      schema:
+        type: boolean
+      explode: false
+    GetAvailableTimeSlotsRequest.specificRooms:
+      name: specificRooms
+      in: query
+      required: false
+      description: Optional filter for specific room IDs.
+      schema:
+        type: array
+        items:
+          type: string
+      explode: false
+    GetAvailableTimeSlotsRequest.startDate:
+      name: startDate
+      in: query
+      required: false
+      description: Optional filter fortime slots starting at a specific date/time.
+      schema:
+        type: string
+        format: date-time
+      explode: false
+    GetAvailableTimeSlotsRequest.topic:
+      name: topic
+      in: query
+      required: false
+      description: Optional filter for specific meeting topic.
+      schema:
+        type: string
+      explode: false
+    GetMeetingsRequest.employeeId:
+      name: employeeId
+      in: query
+      required: false
+      description: Optional query for filtering by employee ID.
+      schema:
+        type: string
+        format: uuid
+      explode: false
+    GetMeetingsRequest.endDateModified:
+      name: endDateModified
+      in: query
+      required: false
+      description: Optional filter for modified end date.
+      schema:
+        type: string
+        format: date-time
+      explode: false
+    GetMeetingsRequest.startDateModified:
+      name: startDateModified
+      in: query
+      required: false
+      description: Optional filter for modified start date.
+      schema:
+        type: string
+        format: date-time
+      explode: false
+    GetMeetingsRequest.timeSlotId:
+      name: timeSlotId
+      in: query
+      required: false
+      description: Optional query for filtering meetings bytime slot ID.
+      schema:
+        type: string
+      explode: false
+    GetTopicsRequest.customerTypeId:
+      name: customerTypeId
+      in: query
+      required: false
+      description: Optional filter for customer type ID.
+      schema:
+        type: string
+        format: uuid
+      explode: false
+    GetTopicsRequest.isCustomer:
+      name: isCustomer
+      in: query
+      required: true
+      description: Flag indicating if the request is for a customer.
+      schema:
+        type: boolean
+      explode: false
+  schemas:
+    AvailableTimeslot:
+      type: object
+      required:
+        - startDate
+        - endDate
+        - meetingType
+        - roomId
+        - employeeId
+        - meetingTopicId
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          description: The start date and time of thetime slot.
+        endDate:
+          type: string
+          format: date-time
+          description: The end date and time of thetime slot.
+        meetingType:
+          allOf:
+            - $ref: '#/components/schemas/MeetingType'
+          description: The type of meeting associated with thistime slot (e.g., physical, online).
+        roomId:
+          type: string
+          description: The ID of the room where the meeting will take place (if applicable).
+        employeeId:
+          type: string
+          description: The ID of the employee associated with thistime slot.
+        meetingTopicId:
+          type: string
+          description: The ID of the meeting topic (if applicable).
+      description: Represents an availabletime slot for scheduling a meeting.
+    BookedBy:
+      type: string
+      enum:
+        - employee
+        - customer
+      description: Enum representing who booked the meeting.
+    ContentResponse:
+      type: object
+      required:
+        - contentId
+      properties:
+        contentId:
+          type: string
+      description: A ContentResponse represents a response containing a content ID
+    ConvertToPDFFileRequestMultiPart:
+      type: object
+      required:
+        - name
+        - category
+      properties:
+        file:
+          type: string
+          format: binary
+        name:
+          type: string
+        category:
+          type: string
+      description: A request to convert a generated presentation to a PDF based on a file
+    CreateCustomerTypeRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The name of the customer type.
+      description: Request model for creating a customer type.
+    CreateMeetingRequest:
+      type: object
+      required:
+        - bookedBy
+        - customerTypeId
+        - timeSlotId
+        - type
+        - topicId
+        - employeeId
+        - customerId
+      properties:
+        bookedBy:
+          allOf:
+            - $ref: '#/components/schemas/BookedBy'
+          description: The person who booked the meeting.
+        salesforceId:
+          type: string
+          description: Optional Salesforce ID associated with the meeting.
+        customerTypeId:
+          type: string
+          description: The ID of the customer type.
+        timeSlotId:
+          type: string
+          description: The ID of thetime slot for the meeting.
+        title:
+          type: string
+          description: Optional title of the meeting.
+        description:
+          type: string
+          description: Optional description of the meeting.
+        additionalEmployees:
+          type: array
+          items:
+            type: string
+          description: Optional list of additional employees for the meeting.
+        roomId:
+          type: string
+          description: Optional room ID for the meeting.
+        type:
+          allOf:
+            - $ref: '#/components/schemas/MeetingType'
+          description: The type of the meeting (e.g., physical, online).
+        topicId:
+          type: string
+          description: The ID of the meeting topic.
+        employeeId:
+          type: string
+          description: The ID of the employee for the meeting.
+        customerId:
+          type: string
+          description: The ID of the customer for the meeting.
+      description: Request model for creating a new meeting.
+    CreateTimeSlotRequest:
+      type: object
+      required:
+        - status
+      properties:
+        ignoreTimeSlotConflicts:
+          type: boolean
+          description: Optional flag to ignore time slot conflicts.
+        startDate:
+          type: string
+          format: date-time
+          description: Optional start date and time for the time slot.
+        endDate:
+          type: string
+          format: date-time
+          description: Optional end date and time for the time slot.
+        status:
+          type: string
+          description: The status of the time slot.
+        roomId:
+          type: string
+          description: Optional room ID for the time slot.
+        employeeId:
+          type: string
+          description: Optional employee ID for the time slot.
+        serviceGroup:
+          type: string
+          description: Optional service group for the time slot.
+      description: Request model for creating a new time slot.
+    CreateTopicRequest:
+      type: object
+      required:
+        - name
+        - uniqueTopicId
+      properties:
+        name:
+          type: string
+          description: The name of the topic.
+        uniqueTopicId:
+          type: string
+          description: The unique topic ID.
+        parentId:
+          type: string
+          description: Optional parent topic ID.
+        order:
+          type: integer
+          format: int32
+          description: Optional order number for the topic.
+      description: Request model for creating a topic.
+    CustomerType:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Optional unique ID for the customer type.
+        name:
+          type: string
+          description: The name of the customer type.
+      description: Model representing a customer type.
+    Employee:
+      type: object
+      required:
+        - email
+        - initials
+      properties:
+        displayName:
+          type: string
+          description: Optional display name of the employee.
+        id:
+          type: string
+          format: uuid
+          description: Optional unique ID for the employee.
+        firstName:
+          type: string
+          description: First name of the employee.
+        lastName:
+          type: string
+          description: Last name of the employee.
+        email:
+          type: string
+          minLength: 1
+          description: Email of the employee.
+        initials:
+          type: string
+          minLength: 1
+          description: Initials of the employee.
+        location:
+          type: string
+          description: Optional location of the employee.
+        externalId:
+          type: string
+          nullable: true
+          description: Optional external ID of the employee (can be null).
+      description: Model representing an employee.
+    ForbiddenError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - FORBIDDEN
+        message:
+          type: string
+    InternalServerError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+    Meeting:
+      type: object
+      required:
+        - type
+        - topicId
+        - employeeId
+        - customerId
+      properties:
+        id:
+          type: string
+          description: Optional unique ID for the meeting.
+        salesforceId:
+          type: string
+          description: Optional Salesforce ID associated with the meeting.
+        bookedBy:
+          allOf:
+            - $ref: '#/components/schemas/BookedBy'
+          description: The person who booked the meeting.
+        customerTypeId:
+          type: string
+          description: The ID of the customer type.
+        timeSlotId:
+          type: string
+          description: The ID of thetime slot for the meeting.
+        dateCreated:
+          type: string
+          format: date-time
+          description: Optional date the meeting was created.
+        dateModified:
+          type: string
+          format: date-time
+          description: Optional date the meeting was last modified.
+        title:
+          type: string
+          description: Optional title of the meeting.
+        description:
+          type: string
+          description: Optional description of the meeting.
+        videoLink:
+          type: string
+          description: Optional video link for the meeting.
+        additionalEmployees:
+          type: array
+          items:
+            type: string
+          description: Optional list of additional employees.
+        roomId:
+          type: string
+          description: Optional room ID for the meeting.
+        startDate:
+          type: string
+          format: date-time
+          description: Optional start date and time for the meeting.
+        endDate:
+          type: string
+          format: date-time
+          description: Optional end date and time for the meeting.
+        type:
+          allOf:
+            - $ref: '#/components/schemas/MeetingType'
+          description: The type of the meeting (e.g., physical, online).
+        topicId:
+          type: string
+          description: The ID of the meeting topic.
+        employeeId:
+          type: string
+          description: The ID of the employee for the meeting.
+        customerId:
+          type: string
+          description: The ID of the customer for the meeting.
+      description: Model representing an individual meeting.
+    MeetingICalRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Optional title for the meeting.
+        description:
+          type: string
+          description: Optional description for the meeting.
+    MeetingType:
+      type: string
+      enum:
+        - physical
+        - online
+        - telephone
+        - offsite
+      description: Enum to represent the type of meeting.
+    NotFoundError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - NOT_FOUND
+        message:
+          type: string
+    PatchOperation:
+      type: object
+      properties:
+        value:
+          type: string
+        path:
+          type: string
+        op:
+          type: string
+        from:
+          type: string
+    Reservation:
+      type: object
+      required:
+        - timeSlot
+        - token
+      properties:
+        timeSlot:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/CreateTimeSlotRequest'
+          nullable: true
+          description: Thetime slot being reserved.
+        token:
+          type: string
+          description: The token for the reservation.
+        existingMeetingId:
+          type: string
+          description: Optional existing meeting ID if the reservation is for an existing meeting.
+      description: Model for representing a reservation for atime slot.
+    Room:
+      type: object
+      required:
+        - id
+        - location
+        - email
+        - name
+        - canBeBooked
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the room.
+        location:
+          type: string
+          description: The location of the room.
+        email:
+          type: string
+          description: The email associated with the room.
+        name:
+          type: string
+          description: The name of the room.
+        canBeBooked:
+          type: boolean
+          description: Flag indicating if the room can be booked.
+      description: Model representing a room.
+    Section:
+      type: object
+      properties:
+        name:
+          type: string
+        uri:
+          type: string
+          format: uri
+        slides:
+          type: array
+          items:
+            $ref: '#/components/schemas/Slide'
+      description: A Section of a template that groups a set of Slides
+    SelectedSlide:
+      type: object
+      required:
+        - templateName
+        - slideName
+      properties:
+        templateName:
+          type: string
+        slideName:
+          type: string
+      description: A SelectedSlide represents a slide that has been selected to be included in a slide deck
+    Slide:
+      type: object
+      properties:
+        subSectionName:
+          type: string
+        title:
+          type: string
+        slideImage:
+          type: string
+          format: uri
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+      description: A Present Slide
+    SlideConfiguration:
+      type: object
+      required:
+        - selectedSlides
+      properties:
+        selectedSlides:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelectedSlide'
+      description: A SlideConfiguration represents the configuration of a slide deck
+    SlideDeck:
+      type: object
+      required:
+        - metadata
+        - scalarMetadata
+        - slideConfiguration
+        - ownerId
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        scalarMetadata:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        slideConfiguration:
+          $ref: '#/components/schemas/SlideConfiguration'
+        ownerId:
+          type: string
+      description: A SlideDeck represents a slide deck
+    SlideDeckLocation:
+      type: object
+      required:
+        - contentId
+        - contentUrl
+        - ownerId
+      properties:
+        contentId:
+          type: string
+        contentUrl:
+          type: string
+        ownerId:
+          type: string
+      description: A SlideDeckLocation represents a slide deck that is to be converted to a PDF
+    SlideImage:
+      type: object
+      properties:
+        imageUri:
+          type: string
+          format: uri
+        slideName:
+          type: string
+      description: A  containing a list of slide images related to a Template
+    SlideImagesResponse:
+      type: object
+      properties:
+        slideImages:
+          type: array
+          items:
+            $ref: '#/components/schemas/SlideImage'
+        templateName:
+          type: string
+      description: A response containing a list of slide images related to a Template
+    SlideTemplate:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        name:
+          type: string
+        customerType:
+          type: string
+        tenantId:
+          type: string
+        ownerId:
+          type: string
+      description: A SlideTemplate
+    SlideTemplateDetails:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        name:
+          type: string
+        customerType:
+          type: string
+        tenantId:
+          type: string
+        ownerId:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+      description: A SlideTemplate represents with additional details
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+      description: A Present Tag
+    TimeSlot:
+      type: object
+      required:
+        - status
+      properties:
+        id:
+          type: string
+          description: Optional unique ID for thetime slot.
+        dateCreated:
+          type: string
+          format: date-time
+          description: Optional date when thetime slot was created.
+        dateModified:
+          type: string
+          format: date-time
+          description: Optional date when thetime slot was last modified.
+        startDate:
+          type: string
+          format: date-time
+          description: Optional start date and time of thetime slot.
+        endDate:
+          type: string
+          format: date-time
+          description: Optional end date and time of thetime slot.
+        status:
+          allOf:
+            - $ref: '#/components/schemas/TimeSlotStatus'
+          description: The current status of thetime slot.
+        roomId:
+          type: string
+          description: Optional room ID associated with thetime slot.
+        employeeId:
+          type: string
+          description: Optional employee ID associated with thetime slot.
+        serviceGroup:
+          type: string
+          description: Optional service group associated with thetime slot.
+      description: Model representing atime slot in the system.
+    TimeSlotStatus:
+      type: string
+      enum:
+        - Reserved
+        - Booked
+        - Busy
+        - ExtraOpen
+        - WorkingFromElsewhere
+        - AvailableForWork
+        - BusyAppointmentInstance
+        - BusyAppointmentOccurence
+        - BusyEventInstance
+        - BusyEventOccurence
+        - PreProcessing
+        - PostProcessing
+        - TravelTime
+      description: Enum representing the status of a time slot.
+    Topic:
+      type: object
+      required:
+        - id
+        - name
+        - uniqueTopicId
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the topic.
+        name:
+          type: string
+          description: The name of the topic.
+        uniqueTopicId:
+          type: string
+          description: A unique identifier for the topic.
+        parentId:
+          type: string
+          description: Optional parent ID if this is a sub-topic.
+        order:
+          type: integer
+          format: int32
+          description: Optional order number for sorting the topics.
+      description: Model representing a meeting topic.
+    TypeSpec.Http.File:
+      type: object
+      required:
+        - contents
+      properties:
+        contentType:
+          type: string
+        filename:
+          type: string
+        contents:
+          type: string
+          format: byte
+    UnauthorizedError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - UNAUTHORIZED
+        message:
+          type: string
+    UploadTemplateFileRequestMultiPart:
+      type: object
+      required:
+        - name
+        - category
+      properties:
+        file:
+          type: string
+          format: binary
+        name:
+          type: string
+        category:
+          type: string
+      description: A request for uploading a template file with name and category
+    UploadTemplateJsonRequest:
+      type: object
+      properties:
+        contentId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+      description: A request for uploading a template based on descriptive parameters
+    ValidateTemplateFileRequestMultiPart:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      description: A request for validating a template file
+    ValidateTemplateJsonRequest:
+      type: object
+      properties:
+        contentId:
+          type: string
+      description: A request for validating a template through content ID
+    ValidationResult:
+      type: object
+      required:
+        - slideNumber
+        - type
+      properties:
+        slideNumber:
+          type: integer
+          format: int32
+        slideName:
+          type: string
+        message:
+          type: string
+        type:
+          type: number
+          enum:
+            - 0
+            - 1
+            - 2
+      description: A result of a validation request
+    Versions:
+      type: string
+      enum:
+        - 1.0.0
+  securitySchemes:
+    OAuth2Auth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/organizations/oauth2/v2.0/token
+          scopes:
+            api://c096f1c4-781b-4544-9491-610e4b384261/access_as_user: ''
+            api://ca6233a5-e7a5-4a47-b72d-8d2161b90af3/access_as_user: ''
+servers:
+  - url: https://apim-public-api.azure-api.net
+    description: URL to the API
+    variables: {}

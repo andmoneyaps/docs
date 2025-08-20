@@ -1708,7 +1708,7 @@ components:
         endDate:
           type: string
           format: date-time
-          description: The end date and time of thetime slot.
+          description: The end date and time of the time slot.
         meetingType:
           allOf:
             - $ref: '#/components/schemas/MeetingType'

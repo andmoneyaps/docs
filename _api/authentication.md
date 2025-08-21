@@ -22,7 +22,7 @@ import { PublicClientApplication } from '@azure/msal-browser';
 
 const msalConfig = {
   auth: {
-    clientId: '42c4043e-27f1-42ce-a03c-c55cb504f2fd',
+    clientId: '8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b',
     authority: 'https://login.microsoftonline.com/organizations',
     redirectUri: 'https://your-app.com/callback'
   }
@@ -51,7 +51,7 @@ const codeChallenge = base64URLEncode(await crypto.subtle.digest('SHA-256',
 
 // 2. Redirect to authorization
 window.location.href = `https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?` +
-  `client_id=42c4043e-27f1-42ce-a03c-c55cb504f2fd&` +
+  `client_id=8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b&` +
   `response_type=code&` +
   `redirect_uri=${encodeURIComponent('https://your-app.com/callback')}&` +
   `scope=${encodeURIComponent('api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user')}&` +
@@ -63,7 +63,7 @@ const tokenResponse = await fetch('https://login.microsoftonline.com/organizatio
   method: 'POST',
   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   body: new URLSearchParams({
-    client_id: '42c4043e-27f1-42ce-a03c-c55cb504f2fd',
+    client_id: '8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b',
     grant_type: 'authorization_code',
     code: authorizationCode,
     redirect_uri: 'https://your-app.com/callback',
@@ -84,7 +84,7 @@ function base64URLEncode(buffer) {
 | Test | `api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user` |
 | Production | `api://642f0f04-31f9-4641-a1cb-793f31496bd3/access_as_user` |
 
-**Client ID**: `42c4043e-27f1-42ce-a03c-c55cb504f2fd` (same for all environments)
+**Client ID**: `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` (test environment)
 
 ## Important Notes
 

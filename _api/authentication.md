@@ -7,84 +7,91 @@ nav_order: 3
 
 # API Authentication
 
-The &money Public API uses OAuth 2.0 with Azure AD. All requests require a Bearer token.
+The &money Public API uses OAuth 2.0 with PKCE for authentication. All API requests require a Bearer token.
 
 ## Quick Start
 
-### 1. Get a Token
+Test the API using our developer portal: [https://apim-public-api-test.azure-api.net](https://apim-public-api-test.azure-api.net)
 
-**For server applications (recommended):**
+## Implementation
 
-```bash
-curl -X POST "https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "client_id={your-client-id}" \
-  -d "scope={audience-id}/.default" \
-  -d "client_secret={your-client-secret}" \
-  -d "grant_type=client_credentials"
-```
+### Option 1: Use MSAL.js (Recommended)
 
-### 2. Use the Token
-
-```bash
-curl -X GET "https://api.andmoney.dk/v1/bookme/meetings" \
-  -H "Authorization: Bearer {token}"
-```
-
-## Environment Configuration
-
-| Environment | Audience ID |
-|------------|------------|
-| Test | `f100d6c7-bbee-405b-9231-7e1c05c4b944` |
-| Production | Contact support for credentials |
-
-## Code Examples
-
-### JavaScript
 ```javascript
-const response = await fetch('https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token', {
+import { PublicClientApplication } from '@azure/msal-browser';
+
+const msalConfig = {
+  auth: {
+    clientId: '42c4043e-27f1-42ce-a03c-c55cb504f2fd',
+    authority: 'https://login.microsoftonline.com/organizations',
+    redirectUri: 'https://your-app.com/callback'
+  }
+};
+
+const msalInstance = new PublicClientApplication(msalConfig);
+
+// Login and get token
+const response = await msalInstance.loginPopup({
+  scopes: ['api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user'] // Test environment
+});
+
+// Use token
+const apiResponse = await fetch('https://api.andmoney.dk/v1/bookme/meetings', {
+  headers: { 'Authorization': `Bearer ${response.accessToken}` }
+});
+```
+
+### Option 2: Manual PKCE Implementation
+
+```javascript
+// 1. Generate PKCE parameters
+const codeVerifier = base64URLEncode(crypto.getRandomValues(new Uint8Array(32)));
+const codeChallenge = base64URLEncode(await crypto.subtle.digest('SHA-256', 
+  new TextEncoder().encode(codeVerifier)));
+
+// 2. Redirect to authorization
+window.location.href = `https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?` +
+  `client_id=42c4043e-27f1-42ce-a03c-c55cb504f2fd&` +
+  `response_type=code&` +
+  `redirect_uri=${encodeURIComponent('https://your-app.com/callback')}&` +
+  `scope=${encodeURIComponent('api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user')}&` +
+  `code_challenge=${codeChallenge}&` +
+  `code_challenge_method=S256`;
+
+// 3. Exchange code for token (in callback)
+const tokenResponse = await fetch('https://login.microsoftonline.com/organizations/oauth2/v2.0/token', {
   method: 'POST',
   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   body: new URLSearchParams({
-    client_id: 'your-client-id',
-    client_secret: 'your-client-secret',
-    scope: 'audience-id/.default',
-    grant_type: 'client_credentials'
+    client_id: '42c4043e-27f1-42ce-a03c-c55cb504f2fd',
+    grant_type: 'authorization_code',
+    code: authorizationCode,
+    redirect_uri: 'https://your-app.com/callback',
+    code_verifier: codeVerifier
   })
 });
-const { access_token } = await response.json();
+
+function base64URLEncode(buffer) {
+  return btoa(String.fromCharCode(...new Uint8Array(buffer)))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
 ```
 
-### C#
-```csharp
-var client = new HttpClient();
-var content = new FormUrlEncodedContent(new[] {
-    new KeyValuePair<string, string>("client_id", "your-client-id"),
-    new KeyValuePair<string, string>("client_secret", "your-client-secret"),
-    new KeyValuePair<string, string>("scope", "audience-id/.default"),
-    new KeyValuePair<string, string>("grant_type", "client_credentials")
-});
-var response = await client.PostAsync(
-    "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token", 
-    content);
-var token = await response.Content.ReadAsAsync<TokenResponse>();
-```
+## Configuration
 
-## Testing with Swagger UI
+| Environment | API Scope |
+|------------|-----------|
+| Test | `api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user` |
+| Production | `api://642f0f04-31f9-4641-a1cb-793f31496bd3/access_as_user` |
 
-1. Get a token using the method above
-2. Go to [Interactive API Docs]({{ site.baseurl }}/present/API-Docs/)
-3. Enter token in the authorization field
-4. Click "Set Token"
+**Client ID**: `42c4043e-27f1-42ce-a03c-c55cb504f2fd` (same for all environments)
 
-## Troubleshooting
+## Important Notes
 
-| Error | Solution |
-|-------|----------|
-| 401 Unauthorized | Check token is valid and properly formatted |
-| 403 Forbidden | Verify token has required permissions |
-| Token expired | Request a new token (tokens expire after 1 hour) |
+- Your redirect URI must be registered with us before use
+- Tokens expire after 1 hour
+- No client secret needed (PKCE handles security)
 
 ## Support
 
-For production access: [info@andmoney.dk](mailto:info@andmoney.dk)
+Contact [info@andmoney.dk](mailto:info@andmoney.dk) to register your redirect URIs or get production access.

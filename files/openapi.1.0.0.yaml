@@ -1669,7 +1669,7 @@ components:
       name: timeSlotId
       in: query
       required: false
-      description: Optional query for filtering meetings bytime slot ID.
+      description: Optional query for filtering meetings by time slot ID.
       schema:
         type: string
       explode: false

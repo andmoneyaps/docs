@@ -19,6 +19,9 @@ collections:
   insights:
     permalink: "/:collection/:path/"
     output: true
+  api:
+    permalink: "/:collection/:path/"
+    output: true
 
 # Just the Docs theme settings
 color_scheme: light
@@ -71,6 +74,10 @@ just_the_docs:
       # nav_fold: true
     insights:
       # name: "Insights"
+      # nav_exclude: false
+      # nav_fold: true
+    api:
+      # name: "Public API"
       # nav_exclude: false
       # nav_fold: true
 

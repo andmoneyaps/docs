@@ -28,44 +28,33 @@ The BookMe Management UI provides a streamlined deployment feature that allows a
 Before deploying the iframe component, ensure you have:
 
 1. **Configured Salesforce Domain**: Your Salesforce organization's domain must be properly configured in the Management UI
-2. **Established BookMe Connection**: The connection between BookMe and Salesforce must be provisioned and tested successfully
+2. **Established Salesforce org connection**: The connection between BookMe and Salesforce must be provisioned and tested successfully
 3. **Administrator Access**: You need appropriate permissions in both the Management UI and Salesforce
 
 ## Deployment Process
 
-### Step 1: Access CRM Configuration
+### Step 1: Setup Salesforce Connection
 
-Navigate to the CRM Configuration page in the Management UI:
-- Path: `/admin/crm/configuration`
-- Menu: Admin → CRM → Configuration
+Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup](./salesforce-connection-setup.md) guide which covers:
+- Configuring the External Client App in Salesforce
+- Setting up the Salesforce domain in the Management UI
+- Testing and provisioning the connection
+- Verifying the authentication flow
 
-### Step 2: Configure Salesforce Domain
+Once your connection is successfully established and tested, proceed to deploy the component.
 
-1. In the **Salesforce Configuration** section, enter your Salesforce domain
-   - Format: `yourcompany` (without the full URL)
-   - The system will automatically format it as: `https://yourcompany.my.salesforce.com`
-2. Save the configuration using the save bar
+### Step 2: Deploy the Portal Component
 
-### Step 3: Provision BookMe Connection
-
-1. In the **BookMe Connection** section, click the **"Provision BookMe Connection"** button
-2. Wait for the provisioning process to complete
-3. A status indicator will show:
-   - ✅ **Green checkmark**: Connection successful
-   - ⚠️ **Yellow warning**: Connection pending or requires attention
-   - ❌ **Red error**: Connection failed (check error message for details)
-
-### Step 4: Deploy the Portal Component
-
-1. Locate the **&money EngageMe Components** section
-2. Click the **"Deploy Portal"** button
-3. The deployment process will:
+1. Navigate to Admin → CRM → Configuration in the Management UI
+2. Locate the **&money EngageMe Components** section
+3. Click the **"Deploy Portal"** button
+4. The deployment process will:
    - Package the iframe LWC component
    - Authenticate with your Salesforce org using the provisioned connection
    - Deploy the component to Salesforce
-   - Poll for deployment status (up to 30 seconds)
+   - Poll for deployment status
 
-### Step 5: Verify Deployment
+### Step 3: Verify Deployment
 
 After successful deployment, you should receive a success notification: `"Portal deployed successfully"`
 
@@ -141,84 +130,10 @@ export default class CustomBookingWrapper extends LightningElement {
 </template>
 ```
 
-## Technical Details
-
-### Deployment API Flow
-
-1. **Initiate Deployment**: The Management UI calls `crmIntegrationDeployPortal()` endpoint
-2. **Status Polling**: If deployment returns "Pending" status, the system polls `crmIntegrationGetPortalDeploymentStatus()` every 2 seconds
-3. **Timeout Handling**: Deployment times out after 30 seconds if still pending
-4. **Result Processing**: Returns success or failure status with appropriate messaging
-
-### Connection Requirements
-
-The deployment uses the provisioned CRM connection which:
-- Establishes OAuth authentication with Salesforce
-- Validates API access permissions
-- Ensures metadata deployment capabilities
-- Verifies org compatibility
-
-## Troubleshooting
-
-### Common Issues and Solutions
-
-#### Deployment Button Disabled
-- **Cause**: Deployment already in progress
-- **Solution**: Wait for current deployment to complete
-
-#### "Deployment timed out" Error
-- **Cause**: Salesforce deployment taking longer than 30 seconds
-- **Solution**: 
-  1. Check Salesforce Setup → Deployment Status
-  2. Verify network connectivity
-  3. Try deployment again after a few minutes
-
-#### "Portal deployment failed" Error
-- **Possible Causes**:
-  - Invalid Salesforce credentials
-  - Insufficient permissions in Salesforce
-  - Network connectivity issues
-  - Salesforce org restrictions
-- **Solutions**:
-  1. Test the CRM connection using the "Test Connection" button
-  2. Re-provision the BookMe connection
-  3. Verify user has deployment permissions in Salesforce
-  4. Check Salesforce Setup → Deploy → Deployment Settings
-
-#### Component Not Visible in Salesforce
-- **Cause**: Component deployed but not added to page layouts
-- **Solution**: 
-  1. Go to Lightning App Builder
-  2. Edit the relevant page
-  3. Find "Portal" or "EngageMe" component in the component palette
-  4. Drag and drop to desired location
-  5. Configure component properties
-  6. Save and activate the page
-
-### Testing the Connection
-
-Before deployment, always test the connection:
-1. Click **"Test CRM Connection"** button in the Test CRM Connection section
-2. Success message confirms API access
-3. Error messages indicate specific connection issues
-
-## Security Considerations
-
-- The deployment process uses secure OAuth authentication
-- No credentials are stored in the browser or exposed to client-side code
-- All communication happens over HTTPS
-- The deployed component runs in Salesforce's secure Lightning container
-
-## Best Practices
-
-1. **Test First**: Always test the CRM connection before attempting deployment
-2. **Single Deployment**: The component only needs to be deployed once per Salesforce org
-3. **Version Management**: Future updates will automatically handle versioning
-4. **Configuration Over Customization**: Use the `configOverride` API rather than modifying the deployed component
-5. **Monitor Deployment**: Check Salesforce deployment status if the process takes longer than expected
 
 ## Related Documentation
 
-- [Salesforce Iframe LWC Configuration](./salesforce-iframe-lwc.md) - Detailed configuration options for the iframe component
-- [Salesforce BookMe Integration Setup](./salesforce-setup.md) - Complete Salesforce integration guide
+- [Salesforce Connection Setup](./salesforce-connection-setup.md) - Detailed guide for establishing the BookMe-Salesforce connection
+- [Salesforce Iframe LWC Configuration](./salesforce-iframe-lwc.md) - Configuration options for the deployed iframe component
+- [Salesforce BookMe Integration Setup](./salesforce-setup.md) - Complete Salesforce package installation and metadata configuration
 - [CRM Integration Security](./crm-integration-security.md) - Security architecture and considerations

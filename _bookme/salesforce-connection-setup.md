@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Salesforce Connection Setup
-nav_order: 8.5
+nav_order: 10
 parent: BookMe
 ---
 

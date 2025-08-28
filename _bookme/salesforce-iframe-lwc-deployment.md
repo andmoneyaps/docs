@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Deploying Iframe LWC to Salesforce
-nav_order: 9
+nav_order: 10.1
 parent: BookMe
 ---
 

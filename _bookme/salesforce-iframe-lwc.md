@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Salesforce Iframe LWC Configuration
-nav_order: 10
+nav_order: 10.2
 parent: BookMe
 ---
 

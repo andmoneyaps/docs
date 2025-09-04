@@ -75,7 +75,7 @@ Alternatively you can ise the ´<img>` tag:
 ```
 
 #### Examples of image references
-Example of use from: https://andmoneyaps.github.io/docs/bookme/microsoft-365-integration/
+Example of use from: https://andmoneyaps.github.io/docs/deployment/configuration/microsoft-365-integration/
 
 ```markdown
 ![Map users/groups to roles](../../assets/images/booking-platform-api-role-mappings.png)
@@ -97,10 +97,10 @@ Note, no .md suffix is needed for internal links.
 
 #### Example
 
-Example of use from: https://andmoneyaps.github.io/docs/bookme/microsoft-365-integration/ 
-To: https://andmoneyaps.github.io/docs/bookme/app-registration-installation/
+Example of use from: https://andmoneyaps.github.io/docs/deployment/configuration/microsoft-365-integration/ 
+To: https://andmoneyaps.github.io/docs/deployment/configuration/app-registration-setup/
 
 ```markdown
-For detailed steps, refer to the [Enterprise Application Installation Guide](../app-registration-installation)
+For detailed steps, refer to the [App Registration Setup Guide](../app-registration-setup)
 ```
 

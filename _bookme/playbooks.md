@@ -9,231 +9,344 @@ nav_order: 11
 
 ## Introduction
 
-Playbooks are powerful automation workflows in the andMoney platform that orchestrate complex business processes by connecting various system components. They enable automated data processing, integration with AI capabilities, and seamless CRM interactions through a visual block-based configuration system.
+Playbooks are powerful automation workflows in the andMoney platform that orchestrate complex business processes by connecting various system components through a visual block-based configuration system. They enable automated data processing, integration with AI capabilities, and seamless CRM interactions without requiring code development.
 
-## Key Concepts
+## What are Playbooks?
 
-### What are Playbooks?
+Playbooks are directed graphs of interconnected blocks that define automated workflows. Each playbook consists of:
 
-Playbooks are configurable workflows that:
-- Automate complex business processes
-- Connect different system components (AI, Entity Patterns, Templates)
-- Transform and process data between various services
-- React to specific triggers (Portal meetings, Summary events)
-- Enable sophisticated data orchestration without code
+- **Blocks**: Individual processing units that perform specific tasks (AI processing, CRM operations, data transformations)
+- **Relations**: Connections between blocks that define how data flows through the workflow
+- **Context**: Shared execution state that maintains data between blocks during execution
+- **Transformations**: Data manipulation operations that modify data as it flows between blocks
 
-### Use Cases
+### Key Benefits
 
-Playbooks are particularly valuable for:
-- **Meeting Automation**: Automatically process meeting data, generate summaries, and update CRM records
-- **Customer Intelligence**: Aggregate customer data from multiple sources and generate insights
-- **Document Generation**: Create personalized documents based on meeting outcomes
-- **Data Synchronization**: Keep CRM data synchronized with meeting activities
-- **Workflow Automation**: Automate multi-step business processes
+- **No-Code Automation**: Create complex workflows through visual configuration without programming
+- **Flexible Integration**: Connect various services (AI, CRM, Templates) seamlessly
+- **Data Orchestration**: Transform and route data between different systems automatically
+- **Trigger-Based Execution**: Respond to events like meetings, summaries, or custom triggers
+- **Reusable Components**: Build modular workflows that can be shared and reused
 
-## Architecture Overview
+### Common Use Cases
 
-### System Integration
+Playbooks excel in scenarios requiring automated business process orchestration:
 
-Playbooks integrate with multiple platform components:
+- **Meeting Intelligence**: Automatically process meeting data, generate AI summaries, and update CRM records
+- **Customer Data Aggregation**: Consolidate customer information from multiple sources and generate insights
+- **Document Automation**: Create personalized documents based on meeting outcomes or CRM data
+- **Data Synchronization**: Keep CRM systems synchronized with meeting activities and communications
+- **Multi-Step Workflows**: Automate complex business processes that span multiple systems
+
+## How Playbooks Work
+
+### Architecture Overview
+
+Playbooks integrate seamlessly with the andMoney platform ecosystem:
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐
 │   Trigger   │────▶│   Playbook   │────▶│   Output    │
-│   (Portal)  │     │   Executor   │     │  (Results)  │
+│   Event     │     │   Executor   │     │  (Results)  │
 └─────────────┘     └──────────────┘     └─────────────┘
                             │
                 ┌───────────┼───────────┐
                 ▼           ▼           ▼
         ┌──────────┐ ┌──────────┐ ┌──────────┐
-        │    AI    │ │  Entity  │ │ Template │
-        │          │ │ Patterns │ │  Engine  │
+        │          │ │   CRM    │ │ Template │
+        │  AI/ML   │ │ (Entity  │ │  Engine  │
+        │          │ │ Patterns)│ │          │
         └──────────┘ └──────────┘ └──────────┘
 ```
 
-### Execution Flow
+### Execution Process
 
-1. **Trigger Activation**: A trigger event (e.g., Portal meeting creation) initiates the playbook
-2. **Block Execution**: Blocks execute sequentially based on their order and relations
-3. **Data Transformation**: Data flows between blocks through configured transformations
-4. **Output Generation**: Final blocks produce results (documents, CRM updates, notifications)
+1. **Trigger Activation**: An event (Portal meeting, summary generation, API call) initiates the playbook
+2. **Sequential Processing**: Blocks execute in their defined order, respecting dependencies
+3. **Data Flow**: Data passes between blocks through relations, with transformations applied as configured
+4. **Context Management**: The execution context maintains state and data throughout the workflow
+5. **Result Generation**: Output blocks produce final results (API responses, CRM updates, documents)
 
-## Block Types
+## Block Types Reference
 
-Playbooks consist of different block types, each serving a specific purpose:
+Each block type serves a specific purpose in the workflow automation:
 
-### 1. Trigger Block
-- **Purpose**: Initiates playbook execution
-- **Types**:
-  - **Portal**: Triggered by portal meeting events
-  - **Summary**: Triggered by summary generation events
-- **Configuration**: Requires trigger type selection
-- **Required**: Every playbook must have exactly one trigger block
+### Trigger Block
+**Purpose**: Initiates playbook execution based on events  
+**Required**: Every playbook must have exactly one trigger block  
+**Configuration**:
+- **Trigger Type**: Select the event source (PortalMeetings, Summary, etc.)
+- **Conditions**: Optional filters to control when execution occurs
 
-### 2. AI Block
-- **Purpose**: Integrates AI/ML capabilities
-- **Function**: Executes AI capabilities for intelligent processing
-- **Configuration**: Capability ID (identifies the specific AI function)
-- **Use Cases**: Text analysis, summarization, entity extraction, sentiment analysis
+**Available Triggers**:
+- **PortalMeetings**: Activated when Portal meetings are created or updated
+- **Summary**: Triggered when meeting summaries are generated
+- **TranscriptReady**: Fires when meeting transcripts become available
 
-### 3. EntityPatternRead block
-- **Purpose**: Retrieves data from CRM systems
-- **Function**: Fetches entity data based on configured patterns
-- **Configuration**: Entity Pattern ID
-- **Output**: Structured CRM data
+### AI Block
+**Purpose**: Leverages AI capabilities for intelligent data processing  
+**Configuration**:
+- **Capability ID**: Unique identifier for the AI function to execute
+- **Input Mapping**: Maps incoming data to AI capability inputs
 
-### 4. Output Block
-- **Purpose**: Produces playbook results
-- **Function**: Formats and delivers final outputs
-- **Configuration**: Output format // TODO
-- **Use Cases**: What the playbook should output
+**Common Capabilities**:
+- Meeting summarization and analysis
+- Entity extraction from text
+- Sentiment and intent analysis
+- Document intelligence and classification
 
-## Block Relations and Transformations
+### EntityPatternRead Block
+**Purpose**: Retrieves data from CRM systems  
+**Configuration**:
+- **Entity Pattern ID**: Identifies the CRM entity configuration
+- **Query Parameters**: Filters and search criteria
+
+**Output**: Structured CRM data in JSON format
+
+### EntityPatternCreate Block
+**Purpose**: Creates new records in CRM systems  
+**Configuration**:
+- **Entity Pattern ID**: Target entity type
+- **Field Mappings**: Maps playbook data to CRM fields
+
+### EntityPatternFilter Block
+**Purpose**: Filters and transforms CRM data  
+**Configuration**:
+- **Field**: The field to filter on
+- **Operator**: Comparison operator (=, !=, >, <, contains, etc.)
+- **Value**: The value to compare against
+
+### Template Block
+**Purpose**: Generates documents using templates  
+**Configuration**:
+- **Template ID**: Reference to document template
+- **Data Bindings**: Maps data to template variables
+
+### Input Block
+**Purpose**: Accepts external data into the playbook  
+**Configuration**:
+- **Input Schema**: Defines expected data structure
+- **Validation Rules**: Data validation requirements
+
+### File Block
+**Purpose**: Handles file operations and storage  
+**Configuration**:
+- **Operation Type**: Read, write, or transform files
+- **File Format**: Supported formats and encoding
+
+### Output Block
+**Purpose**: Defines the playbook's final output  
+**Configuration**:
+- **Output Format**: Structure of returned data
+- **Delivery Method**: How results are delivered (API response, webhook, etc.)
+
+## Configuring Data Flow
 
 ### Understanding Relations
 
-Relations define how data flows between blocks. Each block can only configure its input relations - it cannot directly configure outputs to other blocks.
+Relations define how data flows between blocks in your playbook. They create a directed data pipeline where each block receives input from previous blocks and produces output for subsequent blocks.
 
-- **Input Relations**: Define what data a block receives from previous blocks
-- **Source Block ID**: References a block that executes before the current block
-- **Source Field**: Specifies which output field from the source block to use
-- **Destination Field**: Defines where the data is mapped in the current block's input
+**Key Concepts**:
+- **Input Relations**: Each block configures what data it receives from other blocks
+- **Source Block**: The block providing the data (must execute before the destination)
+- **Source Field**: The specific data field or path from the source block's output
+- **Destination Field**: Where the data maps in the receiving block's input structure
+- **Transformations**: Optional data modifications applied during the transfer
 
-### Editing Blocks and Adding Relations
+### Using the Relation Builder
 
-To configure block relations and transformations:
+The Relation Builder is a visual tool that simplifies creating data connections between blocks:
 
-1. **Select a Block**: Choose a block with both type and value configured
-2. **Access Edit Mode**: Click the edit button on the block
-3. **Use the Relation Builder**:
-   - Click "Add Input Relation" to open the Relation Builder
-   - Navigate through the source block's output structure
-   - Build the field path using the interactive interface
-   - Handle arrays with "First" or "All" selection
-   - The builder generates the correct dot-notation path
-4. **Configure the Relation**:
-   - Source Block: Selected from previous blocks
-   - Source Field: Path generated by the Relation Builder
-   - Destination Field: Where to map in current block
-   - Transformation: Optional data modification
-5. **Data Flow**: The block will receive data from configured source blocks and process it according to its type
+#### Step 1: Access the Relation Builder
+1. Select a block that has both type and value configured
+2. Click the edit button (pencil icon) on the block
+3. Click "Add Input Relation" or "Tilføj map" to open the builder
 
-The Relation Builder provides an intuitive way to navigate complex data structures and create precise field mappings without manually writing paths. See the [Relation Builder Guide](playbooks-relation-builder.md) for detailed information.
+#### Step 2: Navigate Data Structure
+The Relation Builder presents the source block's output structure as a navigable tree:
+- Click through nested objects to explore the data structure
+- Arrays are indicated with bracket notation
+- Select "First" to get the first array element or "All" to process all elements
+- The builder automatically generates the correct dot-notation path
 
-### Transformation Types
+#### Step 3: Configure the Mapping
+- **Source Block**: Select from blocks that execute before the current block
+- **Source Field**: Use the builder to navigate and select the exact field
+- **Destination Field**: Choose or enter where to map the data
+- **Transformation**: Optionally apply a transformation (see below)
 
-Playbooks support several transformation operations:
+#### Step 4: Apply and Test
+- The relation is validated to ensure type compatibility
+- Data will flow automatically during playbook execution
+- Multiple relations can be added to combine data from different sources
 
-#### 1. Identity Transformation
-- **Purpose**: Passes data through unchanged
-- **Use Case**: Direct field mapping
+### Data Transformations
 
-#### 2. Project Transformation
-- **Purpose**: Selects specific fields from complex objects
-- **Configuration**: Field paths to extract
-- **Example**: Extract `customer.name` from a complex customer object
+Transformations modify data as it flows between blocks, enabling powerful data manipulation without code:
 
-#### 3. Extract Transformation
-- **Purpose**: Extracts values from nested structures
-- **Configuration**: Path to the desired value
-- **Use Case**: Get specific attributes from JSON responses
+#### Identity Transformation
+**Purpose**: Pass data through without modification  
+**Use Case**: Direct field-to-field mapping  
+**Example**: Copy `meeting.id` directly to `crm.meetingId`
 
-#### 4. Join Transformation
-- **Purpose**: Combines multiple data sources
-- **Configuration**: Join keys and merge strategy
-- **Use Case**: Merge customer data from different sources
+#### Project Transformation
+**Purpose**: Select specific fields from complex objects  
+**Configuration**: List of field paths to extract  
+**Example**: From a customer object with 50 fields, extract only `name`, `email`, and `phone`  
+**Result**: Creates a new object with only the selected fields
 
-#### 5. Split Transformation
-- **Purpose**: Divides data into multiple outputs
-- **Configuration**: Split criteria or patterns
-- **Use Case**: Separate array elements or parse structured text
+#### Extract Transformation
+**Purpose**: Extract a single value from a nested structure  
+**Configuration**: Dot-notation path to the target value  
+**Example**: Extract `response.data.customer.id` from an API response  
+**Result**: Returns the specific value rather than the entire object
 
-## Data Flow Example
+#### Join Transformation
+**Purpose**: Combine data from multiple sources  
+**Configuration**: 
+- Join keys to match records
+- Merge strategy (left, right, inner, outer)
+**Example**: Combine customer data from CRM with meeting data from calendar  
+**Result**: Unified object with data from both sources
 
-Here's how data flows through a typical meeting playbook:
+#### Split Transformation
+**Purpose**: Divide data into multiple outputs  
+**Configuration**: 
+- Split criteria (delimiter, pattern, or field)
+- Output format
+**Example**: Split a comma-separated list of emails into individual records  
+**Result**: Array of separate data items
 
+## Example: Meeting Intelligence Playbook
+
+Here's a practical example of how a meeting intelligence playbook processes data:
+
+### Workflow Design
 ```
-1. Trigger (Portal Meeting)
-   ↓ [meeting_id, participants]
-2. EntityPatternRead (Fetch Customer)
-   ↓ [customer_data, meeting_id]
-3. AI (Generate Summary)
-   ↓ [summary_text, action_items]
-4. Output (Return Results)
+1. Trigger Block (PortalMeetings)
+   Output: {meetingId, participants, startTime, duration}
+   ↓
+2. EntityPatternRead Block (Fetch Customer Data)
+   Input: meetingId from Trigger
+   Output: {customerId, customerName, accountValue, lastContact}
+   ↓
+3. AI Block
+   Input: meeting data + customer context
+   Output: {summary, actionItems, sentiment, keyTopics}
+   ↓
+4. EntityPatternCreate Block (Update CRM)
+   Input: summary + actionItems
+   Output: {recordId, updateStatus}
+   ↓
+5. Output Block
+   Input: All previous outputs
+   Final Result: {success: true, summary, crmUpdated, actionItems}
 ```
 
-## Integration with Platform Services
+### Configuration Steps
 
-### AI Integration
-- Provides AI capabilities for intelligent data processing
-- Capabilities are identified by unique IDs
-- Supports various AI functions (NLP, summarization, classification)
-- Handles structured and unstructured data
+1. **Create Trigger**: Select PortalMeetings as trigger type
+2. **Add CRM Read Block**: 
+   - Configure Entity Pattern for Customer entity
+   - Create relation: Trigger.meetingId → EntityRead.meetingId
+3. **Add AI Processing**:
+   - Select meeting summary capability
+   - Create relations for meeting and customer data
+4. **Configure CRM Update**:
+   - Map summary fields to CRM activity record
+   - Apply Extract transformation for specific fields
+5. **Define Output**:
+   - Combine results from all blocks
+   - Format response structure
 
-### Entity Pattern Integration
-- Connects to CRM systems (Salesforce, Dynamics)
-- Provides CRUD operations on business entities
-- Supports complex queries and filters
-- Maintains data consistency across systems
+## Platform Integration
 
-### Portal Integration
-- Triggers playbooks based on meeting events
-- Provides meeting context and metadata
-- Enables automated meeting workflows
-- Supports real-time and batch processing
+### AI Service Integration
+The AI service provides advanced intelligence capabilities:
+- **Capability Management**: Each AI function has a unique ID for precise control
+- **Input/Output Contracts**: Strongly-typed interfaces ensure data compatibility
+- **Supported Operations**: 
+  - Meeting transcription and summarization
+  - Entity and intent extraction
+  - Sentiment analysis and classification
+  - Document understanding and generation
+- **Performance**: Asynchronous processing with configurable timeouts
+
+### CRM Integration (Entity Patterns)
+Entity Patterns provide a unified interface to CRM systems:
+- **Supported Platforms**: Salesforce, Microsoft Dynamics, HubSpot
+- **Operations**: Create, Read, Update, Delete (CRUD) for any entity type
+- **Query Capabilities**: 
+  - Complex filters with multiple conditions
+  - Relationship traversal and joins
+  - Batch operations for efficiency
+- **Data Mapping**: Automatic field mapping between systems
+- **Consistency**: Transaction support and rollback capabilities
+
+### Meeting Platform Integration
+Seamless integration with the BookMe meeting platform:
+- **Event Types**: 
+  - Meeting creation and updates
+  - Participant changes
+  - Meeting completion
+  - Transcript availability
+- **Context Data**: Full meeting metadata including participants, duration, and outcomes
+- **Processing Modes**: 
+  - Real-time: Immediate playbook execution
+  - Batch: Scheduled processing for multiple meetings
+  - On-demand: Manual triggering via API
+
+### Template Engine Integration
+Document generation through the template system:
+- **Template Types**: Meeting summaries, reports, follow-up emails
+- **Data Binding**: Dynamic content injection from playbook data
+- **Format Support**: PDF, DOCX, HTML, Email templates
+- **Localization**: Multi-language support with automatic translation
 
 ## Best Practices
 
-### Design Principles
+### Design Guidelines
 
-1. **Keep It Simple**: Start with simple playbooks and add complexity gradually
-2. **Modular Design**: Create reusable block configurations
-3. **Error Handling**: Plan for failure scenarios and edge cases
-4. **Performance**: Consider data volumes and processing times
-5. **Testing**: Test playbooks thoroughly before production deployment
+#### Start Simple, Iterate
+- Begin with basic workflows and add complexity incrementally
+- Test each addition before proceeding
+- Use the preview feature to validate data flow
+
+#### Modular Architecture
+- Design blocks to be reusable across playbooks
+- Create standard patterns for common operations
+- Maintain a library of tested block configurations
+
+#### Performance Optimization
+- Minimize the number of CRM queries by batching operations
+- Use filters early in the workflow to reduce data volume
+- Configure appropriate timeouts for external service calls
+- Consider async processing for long-running operations
+
+#### Error Resilience
+- Configure error handling for each block
+- Use conditional logic to handle edge cases
+- Implement fallback strategies for external service failures
+- Log important data points for debugging
 
 ### Naming Conventions
 
-- Use descriptive names for playbooks and blocks
-- Follow a consistent naming pattern
-- Include the purpose in the name (e.g., "Customer Meeting Summary Playbook")
-- Use clear block names that describe their function
+**Playbooks**:
+- Format: `[Purpose]_[Entity]_[Action]`
+- Example: `Meeting_Customer_Summary`
 
-### Configuration Guidelines
+**Blocks**:
+- Format: `[Action]_[Target]_[Modifier]`
+- Example: `Read_Customer_ByMeetingId`
 
-1. **Validate Inputs**: Ensure all required fields are configured
-2. **Map Fields Carefully**: Verify source and destination field mappings
-3. **Test Transformations**: Validate data transformations with sample data
-4. **Document Complex Logic**: Add descriptions to complex configurations
-5. **Version Control**: Track playbook changes and maintain versions
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Trigger Not Firing**
-   - Verify trigger type configuration
-   - Check event source connectivity
-   - Review trigger conditions
-
-2. **Data Not Flowing Between Blocks**
-   - Verify block relations are configured
-   - Check field mappings
-   - Validate transformation configurations
-
-3. **Entity Pattern Errors**
-   - Confirm Entity Pattern ID is valid
-   - Verify CRM connectivity
-   - Check entity permissions
-
-4. **AI Processing Failures**
-   - Validate Capability ID
-   - Check input data format
-   - Review capability requirements
+**Relations**:
+- Use clear source→destination naming
+- Example: `trigger.meetingId → customerRead.searchId`
 
 ## Related Documentation
 
-- [Entity Patterns Overview](../crm-integration-security.md)
-- [Portal Configuration](portals.md)
-- [Meeting Management](implementation-guide.md)
-- [Playbooks User Guide](playbooks-user-guide.md)
+- [Entity Patterns Overview](../crm-integration-security.md) - CRM integration details
+- [Portal Configuration](portals.md) - Meeting platform setup
+- [Meeting Management](implementation-guide.md) - Meeting workflow automation
+- [Playbooks User Guide](playbooks-user-guide.md) - Step-by-step usage instructions
+- [API Documentation](/api/playbook) - Complete API reference

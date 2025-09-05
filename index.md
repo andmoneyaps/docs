@@ -18,6 +18,7 @@ BookMe is our industry-leading booking and scheduling solution specifically desi
 - Service competence group organization
 - Secure SCIM-based user provisioning
 - Custom portal solutions
+- Powerful playbook automation workflows for complex business processes
 
 ### Present
 Present is our customer-centric presentation platform that enables:

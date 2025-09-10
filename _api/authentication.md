@@ -105,7 +105,3 @@ function base64URLEncode(buffer) {
 - Both Bearer token and subscription key are required for API calls
 - All authentication uses OAuth 2.0 with Azure AD
 - Contact support for client registration and subscription key access
-
-## Support
-
-Contact [info@andmoney.dk](mailto:info@andmoney.dk) to register your redirect URIs or get production access.

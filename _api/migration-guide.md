@@ -292,13 +292,6 @@ if (useV2Features) {
 3. **Production**: Gradual rollout with monitoring
 4. **Deprecation**: V1 will be deprecated after transition period
 
-## Support
-
-For migration assistance:
-- Email: [info@andmoney.dk](mailto:info@andmoney.dk)
-- Include "API V2 Migration" in the subject line
-- Provide your current V1 implementation details
-
 ## Additional Resources
 
 - [V2 API Documentation]({{ site.baseurl }}/api/bookme)

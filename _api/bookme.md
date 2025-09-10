@@ -7,21 +7,22 @@ nav_order: 1
 
 # BookMe API Documentation
 
-The BookMe API provides comprehensive access to meeting booking and scheduling functionality.
+The BookMe API provides comprehensive access to meeting booking and scheduling functionality. This documentation covers API Version 2.0.0 (current). For V1 documentation, see the [deprecated V1 reference]({{ site.baseurl }}/api/bookme-v1).
 
 ## Base URL
 
 ```
-Production: https://api.andmoney.dk/v1/bookme
-Test: https://api-test.andmoney.dk/v1/bookme
+Production: https://apim-public-api.azure-api.net/api/v2/bookme
+Test: https://apim-public-api-test.azure-api.net/api/v2/bookme
 ```
 
 ## Authentication
 
-Include your API key in the request header:
+All API requests require OAuth2 authentication using Azure AD:
 
 ```
-X-API-Key: your-api-key-here
+Authorization: Bearer <access_token>
+Ocp-Apim-Subscription-Key: <subscription_key>
 ```
 
 ## Endpoints
@@ -59,7 +60,32 @@ Create a new meeting booking.
 POST /meetings
 ```
 
-**Request Body:** Meeting object
+**Request Body:**
+```json
+{
+  "bookedBy": "Employee|Customer|PortalPartner|PortalCustomer",
+  "salesforceId": "string",  // Required in V2
+  "customerTypeId": "uuid",  // Optional in V2
+  "timeSlotId": "uuid",      // Optional in V2
+  "portalId": "uuid",        // V2 only
+  "cpr": "string",           // V2 only
+  "customFields": [          // V2 only
+    {
+      "key": "string",
+      "value": "string"
+    }
+  ],
+  "title": "string",
+  "description": "string",
+  "videoLink": "string",     // V2 only
+  "additionalEmployees": ["uuid"],
+  "roomId": "uuid",
+  "type": "Physical|Online|Telephone|Offsite",
+  "topicId": "uuid",         // Optional in V2
+  "employeeId": "uuid",      // Required
+  "customerId": "string"     // Required
+}
+```
 
 **Response:** Created Meeting object with ID
 
@@ -83,11 +109,20 @@ DELETE /meetings/{id}
 
 **Response:** 204 No Content
 
-#### Generate iCal
+#### Generate iCal (V2 Only)
 Generate an iCal file for a meeting.
 
 ```http
-GET /meetings/{id}/ical
+POST /meetings/{id}/ical
+```
+
+**Request Body:**
+```json
+{
+  "title": "string",
+  "description": "string", 
+  "location": "string"
+}
 ```
 
 **Response:** iCal file content
@@ -98,29 +133,60 @@ GET /meetings/{id}/ical
 Retrieve available time slots.
 
 ```http
-GET /timeslots
+GET /time-slots
 ```
 
 **Query Parameters:**
 - `employeeId` (uuid, optional): Filter by employee
-- `roomId` (string, optional): Filter by room
+- `roomId` (uuid, optional): Filter by room
 - `startDate` (datetime): Start of date range
 - `endDate` (datetime): End of date range
+- `status` (array, optional): Filter by status
 
 **Response:** Array of TimeSlot objects
+
+#### List Available Time Slots
+Get available time slots for booking with advanced filtering.
+
+```http
+GET /time-slots/available
+```
+
+**Query Parameters:**
+- `explicitEmployeeIds` (array): Specific employee IDs
+- `startDate` (datetime): Start date
+- `lookForwardTime` (timespan): Look-ahead duration
+- `topic` (uuid): Meeting topic ID
+- `customerTypeId` (uuid): Customer type
+- `meetingTypes` (array): Types of meetings
+- `employeeTypes` (array): Types of employees (V2 only: "Local", "ServiceGroup", "Explicit")
+- `customerLocation` (string): Customer location
+- `meetingLocation` (string): Meeting location
+- `requireRoom` (boolean): Room requirement
+- `requireEmployeeParticipation` (boolean, required): Employee participation requirement
+
+**Response:** Array of available TimeSlot objects
 
 #### Reserve Time Slot
 Reserve a time slot for booking.
 
 ```http
-POST /timeslots/{id}/reserve
+POST /time-slots/reserve
 ```
 
 **Request Body:**
 ```json
 {
-  "duration": 60,
-  "customerId": "customer-id"
+  "timeSlot": {
+    "startDate": "datetime",
+    "endDate": "datetime",
+    "status": "string",
+    "roomId": "uuid",
+    "employeeId": "uuid",
+    "serviceGroup": "string"
+  },
+  "token": "string",
+  "existingMeetingId": "uuid"
 }
 ```
 
@@ -146,18 +212,18 @@ GET /rooms/{id}
 
 **Response:** Room object
 
-#### Check Room Availability
-Check room availability for a date range.
+#### Check Room Vacancies
+Check room availability for a specific time slot.
 
 ```http
-GET /rooms/{id}/vacancies
+GET /room-vacancies
 ```
 
 **Query Parameters:**
-- `startDate` (datetime): Start of availability check
-- `endDate` (datetime): End of availability check
+- `location` (string, required): Room location
+- `timeSlotId` (uuid, required): Time slot ID
 
-**Response:** Array of available time slots
+**Response:** Array of available rooms
 
 ### Employees
 
@@ -185,43 +251,65 @@ GET /employees/{id}
 Retrieve all meeting topics.
 
 ```http
-GET /topics
+GET /meeting-topics
 ```
+
+**Query Parameters:**
+- `customerTypeId` (uuid, optional): Filter by customer type
+- `isCustomer` (boolean, required): Flag indicating if the request is for a customer
 
 **Response:** Array of Topic objects
 
-#### Create Topic
-Create a new meeting topic.
-
-```http
-POST /topics
-```
-
-**Request Body:** Topic object
-
-**Response:** Created Topic object
-
-### Customer Types
+### Configuration API
 
 #### List Customer Types
 Retrieve all customer types.
 
 ```http
-GET /customertypes
+GET /config/customer-types
 ```
 
 **Response:** Array of CustomerType objects
+
+#### Get Customer Type
+Get details for a specific customer type.
+
+```http
+GET /config/customer-types/{id}
+```
+
+**Response:** CustomerType object
 
 #### Create Customer Type
 Create a new customer type.
 
 ```http
-POST /customertypes
+POST /config/customer-types
 ```
 
 **Request Body:** CustomerType object
 
 **Response:** Created CustomerType object
+
+#### Update Customer Type
+Update an existing customer type.
+
+```http
+PUT /config/customer-types/{id}
+```
+
+**Request Body:** CustomerType object
+
+**Response:** Updated CustomerType object
+
+#### Delete Customer Type
+Delete a customer type.
+
+```http
+DELETE /config/customer-types/{id}
+```
+
+**Response:** 204 No Content
 
 ## Data Models
 
@@ -279,15 +367,17 @@ POST /customertypes
 ```javascript
 const axios = require('axios');
 
-const API_KEY = 'your-api-key';
-const BASE_URL = 'https://api.andmoney.dk/v1/bookme';
+const ACCESS_TOKEN = 'your-access-token';
+const SUBSCRIPTION_KEY = 'your-subscription-key';
+const BASE_URL = 'https://apim-public-api.azure-api.net/api/v2/bookme';
 
 // List meetings
 async function listMeetings() {
   try {
     const response = await axios.get(`${BASE_URL}/meetings`, {
       headers: {
-        'X-API-Key': API_KEY
+        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+        'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY
       }
     });
     return response.data;
@@ -296,12 +386,28 @@ async function listMeetings() {
   }
 }
 
-// Create a meeting
+// Create a meeting with V2 features
 async function createMeeting(meetingData) {
   try {
-    const response = await axios.post(`${BASE_URL}/meetings`, meetingData, {
+    const payload = {
+      bookedBy: "Customer",
+      salesforceId: meetingData.salesforceId, // Required in V2
+      customerTypeId: meetingData.customerTypeId || null, // Optional in V2
+      timeSlotId: meetingData.timeSlotId,
+      employeeId: meetingData.employeeId,
+      customerId: meetingData.customerId,
+      type: "Physical",
+      // V2 new features
+      portalId: meetingData.portalId || null,
+      customFields: meetingData.customFields || [],
+      videoLink: meetingData.videoLink || null,
+      ...meetingData
+    };
+    
+    const response = await axios.post(`${BASE_URL}/meetings`, payload, {
       headers: {
-        'X-API-Key': API_KEY,
+        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+        'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY,
         'Content-Type': 'application/json'
       }
     });
@@ -322,13 +428,15 @@ using Newtonsoft.Json;
 public class BookMeApiClient
 {
     private readonly HttpClient _httpClient;
-    private const string ApiKey = "your-api-key";
-    private const string BaseUrl = "https://api.andmoney.dk/v1/bookme";
+    private const string AccessToken = "your-access-token";
+    private const string SubscriptionKey = "your-subscription-key";
+    private const string BaseUrl = "https://apim-public-api.azure-api.net/api/v2/bookme";
 
     public BookMeApiClient()
     {
         _httpClient = new HttpClient();
-        _httpClient.DefaultRequestHeaders.Add("X-API-Key", ApiKey);
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {AccessToken}");
+        _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
     }
 
     public async Task<List<Meeting>> GetMeetingsAsync()
@@ -340,9 +448,9 @@ public class BookMeApiClient
         return JsonConvert.DeserializeObject<List<Meeting>>(json);
     }
 
-    public async Task<Meeting> CreateMeetingAsync(Meeting meeting)
+    public async Task<Meeting> CreateMeetingAsync(CreateMeetingRequest meetingRequest)
     {
-        var json = JsonConvert.SerializeObject(meeting);
+        var json = JsonConvert.SerializeObject(meetingRequest);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         
         var response = await _httpClient.PostAsync($"{BaseUrl}/meetings", content);
@@ -352,27 +460,89 @@ public class BookMeApiClient
         return JsonConvert.DeserializeObject<Meeting>(resultJson);
     }
 }
+
+// V2 Meeting Request Model
+public class CreateMeetingRequest
+{
+    public string BookedBy { get; set; } // "Employee", "Customer", "PortalPartner", "PortalCustomer"
+    public string SalesforceId { get; set; } // Required in V2
+    public string CustomerTypeId { get; set; } // Optional in V2
+    public string TimeSlotId { get; set; }
+    public string PortalId { get; set; } // V2 only
+    public string Cpr { get; set; } // V2 only
+    public List<CustomField> CustomFields { get; set; } // V2 only
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string VideoLink { get; set; } // V2 only
+    public List<string> AdditionalEmployees { get; set; }
+    public string RoomId { get; set; }
+    public string Type { get; set; } // "Physical", "Online", "Telephone", "Offsite"
+    public string TopicId { get; set; } // Optional in V2
+    public string EmployeeId { get; set; }
+    public string CustomerId { get; set; }
+}
+
+public class CustomField
+{
+    public string Key { get; set; }
+    public string Value { get; set; }
+}
 ```
 
 ### cURL
 ```bash
 # List meetings
-curl -X GET "https://api.andmoney.dk/v1/bookme/meetings" \
-  -H "X-API-Key: your-api-key"
+curl -X GET "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
+  -H "Authorization: Bearer your-access-token" \
+  -H "Ocp-Apim-Subscription-Key: your-subscription-key"
 
-# Create a meeting
-curl -X POST "https://api.andmoney.dk/v1/bookme/meetings" \
-  -H "X-API-Key: your-api-key" \
+# Create a V2 meeting with new features
+curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
+  -H "Authorization: Bearer your-access-token" \
+  -H "Ocp-Apim-Subscription-Key: your-subscription-key" \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Customer Meeting",
+    "bookedBy": "Customer",
+    "salesforceId": "sf-customer-123",
+    "timeSlotId": "timeslot-uuid",
     "employeeId": "employee-uuid",
     "customerId": "customer-id",
-    "startDate": "2025-08-21T10:00:00Z",
-    "endDate": "2025-08-21T11:00:00Z"
+    "title": "Customer Meeting",
+    "type": "Online",
+    "videoLink": "https://meet.example.com/room123",
+    "customFields": [
+      {
+        "key": "project_code",
+        "value": "PROJ-123"
+      }
+    ]
+  }'
+
+# Generate iCal for meeting (V2 only)
+curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings/meeting-id/ical" \
+  -H "Authorization: Bearer your-access-token" \
+  -H "Ocp-Apim-Subscription-Key: your-subscription-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Custom Meeting Title",
+    "description": "Meeting description for calendar",
+    "location": "Online via Teams"
   }'
 ```
 
 ## Full API Specification
 
-For the complete API specification including all endpoints, parameters, and response schemas, download the [BookMe OpenAPI Specification]({{ site.baseurl }}/files/bookme-api.yaml).
+For the complete API specification including all endpoints, parameters, and response schemas:
+- [V2 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml) - Current version
+- [V1 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml) - Deprecated
+
+## What's New in V2
+
+### Key Changes from V1
+- **Required Fields**: `salesforceId` is now required, while `customerTypeId`, `topicId`, and `timeSlotId` are now optional
+- **Portal Integration**: New `bookedBy` types: `PortalPartner` and `PortalCustomer`
+- **Enhanced Features**: Custom fields, video links, CPR field, and iCal generation
+- **Employee Types**: New types `Local` and `ServiceGroup` replace deprecated `Global` type
+- **Time Slot Status**: New internal meeting statuses for better scheduling
+
+For detailed migration instructions, see our [V1 to V2 Migration Guide]({{ site.baseurl }}/api/migration-guide).

@@ -93,6 +93,8 @@ POST /meetings
 }
 ```
 
+Note that the fields related to portal meetings "portalId, customFields and externalAttendees" are only used during portal meeting bookings and are not used during booking of a normal BookMe meeting.
+
 **Response:** Created Meeting object with ID
 
 #### Update Meeting
@@ -564,5 +566,6 @@ For the complete API specification including all endpoints, parameters, and resp
 - **Enhanced Features**: Custom fields, external attendees, video links, CPR field, and iCal generation
 - **Employee Types**: New types `Local` and `ServiceGroup` replace deprecated `Global` type
 - **Time Slot Status**: New internal meeting statuses for better scheduling
+- **Portal meeting external attendees**: External attendees can now optionally be added for portal meetings.
 
 For detailed migration instructions, see our [V1 to V2 Migration Guide]({{ site.baseurl }}/api/migration-guide).

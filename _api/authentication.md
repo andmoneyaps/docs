@@ -18,7 +18,6 @@ Ocp-Apim-Subscription-Key: <subscription_key>
 
 ## Quick Start
 
-To get started quickly, contact our support team at [info@andmoney.dk](mailto:info@andmoney.dk) to:
 1. Register your application and redirect URIs
 2. Obtain your subscription key
 3. Get access to test and production environments

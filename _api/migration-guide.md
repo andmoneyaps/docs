@@ -100,7 +100,8 @@ const meetingData = {
   // New V2 optional fields
   portalId: null,
   customFields: [],
-  videoLink: null
+  videoLink: null,
+  externalAttendees: null,
 };
 ```
 
@@ -171,6 +172,10 @@ const portalMeeting = {
   customerId: "customer-id", 
   type: "Online",
   videoLink: "https://meet.example.com/room" // New field
+  externalAttendees: [
+    { name: "John Doe", email: "john.doe@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" }
+  ] // New field
 };
 ```
 

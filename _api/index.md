@@ -39,7 +39,7 @@ The Present API provides access to our presentation generation services. Capabil
 - **Base URL**: `https://apim-public-api.azure-api.net/api/v2/`
 - **Status**: Active
 - **Released**: 2025
-- **Features**: Portal integration, custom fields, enhanced employee types, iCal generation
+- **Features**: Portal integration, custom fields, enhanced employee types, iCal generation, external attendees for portal meetings
 
 ### Version 1.0.0 
 - **Base URL**: `https://apim-public-api.azure-api.net/api/v1/`

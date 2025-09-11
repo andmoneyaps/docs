@@ -16,6 +16,24 @@ nav_order: 2
 - Interactive API schemas with detailed request/response documentation
 - Enhanced authentication flow documentation
 
+### *CRM Integration*
+- Enhanced Salesforce integration with improved data synchronization
+- Real-time field mapping updates between BookMe and Salesforce
+- Automatic conflict resolution for meeting ownership scenarios
+- Support for custom Salesforce objects and fields in booking workflows
+
+### *Management UI*
+- Redesigned dashboard with improved performance metrics visualization
+- New bulk operations support for managing multiple bookings simultaneously
+- Enhanced filtering and search capabilities across all entity types
+- Improved accessibility features meeting WCAG 2.1 AA standards
+
+### *PlaybookService*
+- New event-driven playbook execution engine for automated workflows
+- Dynamic CRM field mapping through configurable entity patterns
+- Support for conditional logic and branching in playbook definitions
+- Real-time playbook monitoring and debugging capabilities
+
 ## July 2025
 
 ### *Portal*

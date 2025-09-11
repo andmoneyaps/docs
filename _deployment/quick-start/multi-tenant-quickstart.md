@@ -119,10 +119,10 @@ az ad app list --display-name "BookMe" --query "[].appId"
 
 **Additional customers can be added efficiently using the same workflow**
 
-## Emergency Contacts
+## Support Contacts
 
-- **Critical Issues**: [Partner Support Hotline]
-- **SCIM Tokens**: &money Account Manager
+- **Platform Support**: Contact the Service Desk
+- **SCIM Tokens**: Contact the Service Desk
 - **Azure Issues**: Azure Support Portal
 
 ## Next Steps

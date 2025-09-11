@@ -44,11 +44,11 @@ For the new Entra Enterprise Application named **BookingPlatform Mgmt API**, the
 new Booking Platform Management system must be assigned to one or more of the following roles (the list is sorted with
 permissions in ascending order):
 
-- _Customer_ - Not relevant for the Management UI
-- _Employee/System_ - Not relevant for the Management UI
+- **Customer** - Not relevant for the Management UI
+- **Employee/System** - Not relevant for the Management UI
 - **Manager** - A manager can access the Management UI and configure service groups and competence groups
-- **Configurator** - All permissions that the `Manager` role has, and can in addition perform Meeting configuration and Portal configuration.
-- **Admin** - All permissions that the `Configurator` role has, and can in addition access the Logs (Insights)
+- **Configurator** - All permissions that the Manager role has, and can in addition perform Meeting configuration and Portal configuration
+- **Admin** - All permissions that the Configurator role has, and can in addition access the Logs (Insights)
 
 ### Example of Role Assignments
 

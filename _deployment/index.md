@@ -72,9 +72,8 @@ Choose your deployment approach based on your organization's needs:
 ## Support Resources
 
 - **Pre-Sales**: Contact your account manager
-- **Technical Support**: Use the support portal
+- **Technical Support**: Contact the Service Desk
 - **Documentation**: You're here!
-- **Emergency**: 24/7 hotline for critical issues
 
 ## Recent Updates
 

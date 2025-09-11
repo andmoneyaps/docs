@@ -110,39 +110,22 @@ graph TB
 | Integration | Microsoft Graph | M365 connectivity |
 | Provisioning | SCIM 2.0 | User synchronization |
 
-## Performance Specifications
+## Performance Considerations
 
 ### Scalability
-- **Users**: Up to 100,000 per tenant
-- **Concurrent meetings**: 10,000+
-- **API requests**: 1000/second
-- **Transcription processing**: < 5 minutes
+The platform is designed to scale based on your Azure infrastructure and licensing.
 
 ### Availability
-- **SLA**: 99.9% uptime
-- **RPO**: 1 hour
-- **RTO**: 4 hours
-- **Regions**: Global availability
+Availability depends on your Azure deployment configuration and selected service tiers.
 
-## Compliance & Certifications
+## Compliance & Security
 
-- **SOC 2 Type II**
-- **ISO 27001**
-- **GDPR Compliant**
-- **HIPAA Ready**
+The platform leverages Azure's security and compliance features. Consult your Azure subscription's compliance certifications and your organization's security requirements.
 
 ## Development Resources
 
-### SDKs Available
-- .NET SDK
-- Node.js SDK
-- Python SDK
-- Java SDK
-
-### Sample Code
-- [GitHub Repository](https://github.com/andmoney/platform-samples)
-- [API Postman Collection](https://postman.com/andmoney)
-- [Webhook Examples](https://docs.andmoney.com/webhooks)
+### Integration Options
+The platform provides REST APIs for integration. Contact the Service Desk for available SDKs and sample code.
 
 ## Advanced Topics
 
@@ -162,8 +145,7 @@ Migrating from legacy systems to the platform.
 
 ### Technical Support
 - **Documentation**: This guide
-- **Support Portal**: For ticketed support
-- **Emergency**: 24/7 hotline
+- **Support**: Contact the Service Desk
 
 ### Community Resources
 - **Partner Forum**: Share experiences
@@ -177,9 +159,6 @@ For documentation improvements:
 2. Contact technical writing team
 3. Participate in partner advisory board
 
-## Version Information
+## Documentation Information
 
-- **Current Version**: 2.5.0
-- **API Version**: v1.0
-- **Last Updated**: January 2024
-- **Next Release**: February 2024
+- **Last Updated**: September 2025

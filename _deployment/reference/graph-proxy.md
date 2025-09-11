@@ -75,7 +75,7 @@ In a single tenant installation, both the Azure and Entra ID components are depl
 - Sets up an App Registration with the required **Calendar Access** and **Online Meeting** permission.
 - Assigns the necessary roles to the managed identity for accessing Azure resources, such as the Key Vault and container image repository.
 
-This automated setup ensures that the Graph-Proxy can access the Calendar and Online Meeting Graph API without further manual configuration.
+This automated setup configures the Graph-Proxy to access the Calendar and Online Meeting Graph API.
 
 ### For Multi-Tenant Installations
 

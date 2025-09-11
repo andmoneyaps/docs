@@ -9,7 +9,7 @@ collection: deployment
 
 # Setting up the integration between &money and Microsoft 365
 
-BookMe integrates natively with your Organizations Microsoft 365 account. This ensures that your BookMe users, resources and calendars are always in sync with your Microsoft 365 account.
+BookMe integrates with your Organization's Microsoft 365 account to synchronize users, resources and calendars.
 
 ## Introduction
 
@@ -17,7 +17,7 @@ This guide provides a high-level overview of configuring Entra ID for both singl
 
 ## Overview of Entra ID Configuration
 
-The Entra ID configuration process involves several key steps to ensure seamless integration and management across tenants. The process is designed to:
+The Entra ID configuration process involves several key steps for integration and management across tenants. The process is designed to:
 
 - Automate end-user provisioning through SCIM.
 - Assign appropriate roles for access control within the Management UI for administrative users and management.
@@ -55,4 +55,4 @@ Once the configurations are complete, users can access the Management UI based o
 
 ## Conclusion
 
-Following this guide ensures a comprehensive configuration of Entra ID for your deployment, whether single-tenant or multi-tenant. Utilize the links provided to access detailed instructions and complete each step effectively.
+Following this guide provides comprehensive configuration of Entra ID for your deployment, whether single-tenant or multi-tenant. Utilize the links provided to access detailed instructions and complete each step effectively.

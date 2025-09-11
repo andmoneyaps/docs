@@ -119,7 +119,7 @@ Attribute mappings for rooms should look like the table below:
 
 1. **Automatic Synchronization:**
 
-   - Microsoft Entra’s provisioning service automatically runs on a schedule (typically every 40 minutes).
+   - Microsoft Entra's provisioning service runs on a schedule controlled by Microsoft.
    - Once the sync occurs, the assigned users are provisioned (or updated) in the target system.
 
 2. **Manual Provisioning (Optional):**  

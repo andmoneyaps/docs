@@ -17,21 +17,21 @@ nav_order: 2
 - Enhanced authentication flow documentation
 
 ### *CRM Integration*
-- **Search Query Enhancements**: Added IN and NOT IN operators for advanced filtering capabilities
-- **Security Improvements**: Additional authorization layer for CRM requests with user access validation
-- Redis cache configuration for improved performance with customizable invalidation times
-- Enhanced field type mapping for Salesforce query generation
+- **Advanced Search Capabilities**: Support for more complex search criteria to find records faster
+- **Enhanced Security**: Strengthened authorization for CRM operations to protect your data
+- **Performance Improvements**: Faster response times when accessing CRM data
+- **Better Salesforce Integration**: More accurate field mapping between BookMe and Salesforce
 
 ### *Management UI*
-- **Meetings Overview**: New comprehensive meetings overview page for better visibility
-- **Sync Logs**: Improved sync log table with optimized column widths and multilingual support
-- Enhanced user interface with responsive table layouts
+- **Meetings Overview**: New dashboard for viewing and managing all your meetings in one place
+- **Activity Monitoring**: Enhanced visibility into system synchronization status
+- **Responsive Design**: Improved interface that works seamlessly across all device sizes
 
-### *PlaybookService*
-- **Transformation Pipeline**: Complete architecture refactoring for improved data processing
-- **Entity Pattern Parser**: New parser for transforming entity pattern responses
-- **Portal Playbook Execution**: Enhanced execution flow with comprehensive documentation
-- Improved null handling and error resilience in orchestrators
+### *Playbook Automation*
+- **Faster Processing**: Significant performance improvements in automated workflows
+- **Smarter Data Handling**: More intelligent processing of information between systems
+- **Portal Integration**: Enhanced automation capabilities for portal-based bookings
+- **Improved Reliability**: More robust handling of edge cases and system variations
 
 ## July 2025
 

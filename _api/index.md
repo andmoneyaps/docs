@@ -50,7 +50,7 @@ All API requests require authentication using an API key. Include your API key i
 X-API-Key: your-api-key-here
 ```
 
-To obtain an API key, please contact our support team at [info@andmoney.dk](mailto:info@andmoney.dk).
+To obtain an API key, please contact the Service Desk.
 
 ### Rate Limiting
 
@@ -95,9 +95,7 @@ Download the complete API specifications:
 
 ## Support
 
-For API support and questions:
-- Email: [info@andmoney.dk](mailto:info@andmoney.dk)
-- Documentation issues: [GitHub Issues](https://github.com/andmoneyaps/docs/issues)
+For API support and questions, contact the Service Desk.
 
 ## Changelog
 

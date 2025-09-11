@@ -44,7 +44,7 @@ Here is what's new in release 1.15.0 of &bookme.
 - **Integration of an External Client App in the Package**
   - The package now includes an External Client App – a next-generation solution that improves on the limitations of
     traditional Connected Apps.
-  - Unlike Connected Apps, External Client Apps are designed to work seamlessly with second-generation managed packages (2GP).
+  - Unlike Connected Apps, External Client Apps are designed to work with second-generation managed packages (2GP).
     This integration allows the app to be packaged and distributed to subscriber orgs with greater ease, ensuring that OAuth credentials and integration settings remain isolated and manageable.
 
 ## Release 1.13.0 (22-05-2024)

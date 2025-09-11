@@ -4,6 +4,14 @@ title: Release news
 nav_order: 2
 ---
 
+## September 2025
+
+*Features currently being rolled out - availability may vary by region*
+
+### *Platform Enhancements*
+- **Enhanced Documentation**: Improved API documentation with interactive schemas
+- **Meeting Analytics Updates**: Additional portal fields in historic meetings for better business intelligence
+
 ## August 2025
 
 ### *BookMe Insights*
@@ -15,6 +23,26 @@ nav_order: 2
 - Comprehensive OpenAPI specifications for all platform endpoints
 - Interactive API schemas with detailed request/response documentation
 - Enhanced authentication flow documentation
+
+### *Management UI*
+- **Meetings Overview**: New dashboard for viewing and managing all your meetings in one place
+- **Portal CRM Strategy Configuration**: Configure how portal meetings create CRM records with new strategy options
+- **Entity Pattern Defaults**: Set default values for entity patterns to streamline data entry
+
+### *Portal Enhancements*
+- **External Attendees Support**: Add external participants to portal meetings with email validation
+- **Enhanced Booking Differentiation**: Improved tracking to distinguish between partner and customer bookings
+- **Portal-Specific Automation**: Configure playbooks to run only for specific portals
+
+### *Calendar & Meeting Features*
+- **External Attendee Integration**: Support for non-organization attendees in meeting creation
+- **Automatic Calendar Sync**: Automated management of calendar subscriptions when advisors join or leave
+- **Advanced Insights Filtering**: New filtering options for more precise control over displayed meetings
+
+### *Playbook Automation*
+- **External Attendee Data Access**: Playbook triggers now include external attendee information
+- **Soft Delete Protection**: Playbooks are now recoverable after deletion
+- **Enhanced Block Descriptions**: Clear descriptions for all playbook block types in the editor
 
 ## July 2025
 

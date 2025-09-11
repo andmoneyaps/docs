@@ -2,16 +2,25 @@
 layout: default
 title: Authentication
 parent: Public API
-nav_order: 3
+nav_order: 2
 ---
 
 # API Authentication
 
-The &money Public API uses OAuth 2.0 with PKCE for authentication. All API requests require a Bearer token.
+The &money Public API uses OAuth 2.0 authentication with Azure AD. All API requests require both a Bearer token and a subscription key.
+
+## Required Headers
+
+```
+Authorization: Bearer <access_token>
+Ocp-Apim-Subscription-Key: <subscription_key>
+```
 
 ## Quick Start
 
-Test the API using our developer portal: [https://apim-public-api-test.azure-api.net](https://apim-public-api-test.azure-api.net)
+1. Register your application and redirect URIs
+2. Obtain your subscription key
+3. Get access to test and production environments
 
 ## Implementation
 
@@ -32,12 +41,15 @@ const msalInstance = new PublicClientApplication(msalConfig);
 
 // Login and get token
 const response = await msalInstance.loginPopup({
-  scopes: ['api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user'] // Test environment
+  scopes: ['api://c096f1c4-781b-4544-9491-610e4b384261/access_as_user'] // Production scope
 });
 
-// Use token
-const apiResponse = await fetch('https://api.andmoney.dk/v1/bookme/meetings', {
-  headers: { 'Authorization': `Bearer ${response.accessToken}` }
+// Use token for API calls
+const apiResponse = await fetch('https://apim-public-api.azure-api.net/api/v2/bookme/meetings', {
+  headers: { 
+    'Authorization': `Bearer ${response.accessToken}`,
+    'Ocp-Apim-Subscription-Key': 'your-subscription-key'
+  }
 });
 ```
 
@@ -54,7 +66,7 @@ window.location.href = `https://login.microsoftonline.com/organizations/oauth2/v
   `client_id=8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b&` +
   `response_type=code&` +
   `redirect_uri=${encodeURIComponent('https://your-app.com/callback')}&` +
-  `scope=${encodeURIComponent('api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user')}&` +
+  `scope=${encodeURIComponent('api://c096f1c4-781b-4544-9491-610e4b384261/access_as_user')}&` +
   `code_challenge=${codeChallenge}&` +
   `code_challenge_method=S256`;
 
@@ -81,10 +93,10 @@ function base64URLEncode(buffer) {
 
 | Environment | API Scope |
 |------------|-----------|
-| Test | `api://f100d6c7-bbee-405b-9231-7e1c05c4b944/access_as_user` |
-| Production | `api://642f0f04-31f9-4641-a1cb-793f31496bd3/access_as_user` |
+| Production | `api://c096f1c4-781b-4544-9491-610e4b384261/access_as_user` |
+| Test | `api://ca6233a5-e7a5-4a47-b72d-8d2161b90af3/access_as_user` |
 
-**Client ID**: `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` (test environment)
+**Note**: Client IDs and redirect URIs must be registered with us before use.
 
 ## Important Notes
 

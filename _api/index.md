@@ -33,24 +33,34 @@ The Present API provides access to our presentation generation services. Capabil
 
 [View Present API Documentation]({{ site.baseurl }}/api/present)
 
+## API Versions
+
+### Version 2.0.0 (Current)
+- **Base URL**: `https://apim-public-api.azure-api.net/api/v2/`
+- **Status**: Active
+- **Released**: 2025
+- **Features**: Portal integration, custom fields, enhanced employee types, iCal generation, external attendees for portal meetings
+
+### Version 1.0.0 
+- **Base URL**: `https://apim-public-api.azure-api.net/api/v1/`
+- **Status**: Active
+- **Released**: 2025
+- **Migration**: See our [V1 to V2 Migration Guide]({{ site.baseurl }}/api/migration-guide) for upgrade instructions
+
 ## Getting Started
-
-### Base URLs
-
-| Environment | Base URL |
-|------------|----------|
-| Production | `https://api.andmoney.dk/v1` |
-| Test | `https://api-test.andmoney.dk/v1` |
 
 ### Authentication
 
-All API requests require authentication using an API key. Include your API key in the request header:
+All API requests require OAuth2 authentication using Azure AD with the following headers:
 
 ```
-X-API-Key: your-api-key-here
+Authorization: Bearer <access_token>
+Ocp-Apim-Subscription-Key: <subscription_key>
 ```
 
 To obtain an API key, please contact the Service Desk.
+
+For detailed authentication setup, see our [Authentication Guide]({{ site.baseurl }}/api/authentication).
 
 ### Rate Limiting
 
@@ -71,7 +81,7 @@ The API uses standard HTTP status codes to indicate success or failure:
 |------------|-------------|
 | 200 | Success |
 | 400 | Bad Request - Invalid parameters |
-| 401 | Unauthorized - Invalid or missing API key |
+| 401 | Unauthorized - Invalid or missing access token |
 | 403 | Forbidden - Insufficient permissions |
 | 404 | Not Found - Resource does not exist |
 | 429 | Too Many Requests - Rate limit exceeded |
@@ -90,7 +100,8 @@ Error responses include a JSON body with details:
 ## API Specifications
 
 Download the complete API specifications:
-- [BookMe OpenAPI Specification (YAML)]({{ site.baseurl }}/files/bookme-api.yaml)
+- [V2 BookMe OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml)
+- [V1 BookMe OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml)
 - [Present OpenAPI Specification (JSON)]({{ site.baseurl }}/files/swagger.json)
 
 ## Support

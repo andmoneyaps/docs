@@ -17,47 +17,21 @@ nav_order: 2
 - Enhanced authentication flow documentation
 
 ### *CRM Integration*
-- Enhanced Salesforce integration with improved data synchronization
-- Real-time field mapping updates between BookMe and Salesforce
-- Automatic conflict resolution for meeting ownership scenarios
-- Support for custom Salesforce objects and fields in booking workflows
+- **Search Query Enhancements**: Added IN and NOT IN operators for advanced filtering capabilities
+- **Security Improvements**: Additional authorization layer for CRM requests with user access validation
+- Redis cache configuration for improved performance with customizable invalidation times
+- Enhanced field type mapping for Salesforce query generation
 
 ### *Management UI*
-- Redesigned dashboard with improved performance metrics visualization
-- New bulk operations support for managing multiple bookings simultaneously
-- Enhanced filtering and search capabilities across all entity types
-- Improved accessibility features meeting WCAG 2.1 AA standards
+- **Meetings Overview**: New comprehensive meetings overview page for better visibility
+- **Sync Logs**: Improved sync log table with optimized column widths and multilingual support
+- Enhanced user interface with responsive table layouts
 
 ### *PlaybookService*
-- New event-driven playbook execution engine for automated workflows
-- Dynamic CRM field mapping through configurable entity patterns
-- Support for conditional logic and branching in playbook definitions
-- Real-time playbook monitoring and debugging capabilities
-
-### *Meetings Overview*
-- New comprehensive meetings dashboard displaying all scheduled and historical meetings
-- Advanced filtering by date range, participants, status, and meeting type
-- Quick actions for meeting management directly from the overview page
-- Export functionality for meeting data in multiple formats (CSV, Excel, PDF)
-- Real-time status updates and participant tracking
-
-### *Search & Query Enhancements*
-- Improved search performance with optimized query execution
-- Support for complex search queries with multiple criteria
-- Full-text search across meeting titles, descriptions, and notes
-- Saved search filters for frequently used queries
-
-### *Security Improvements*
-- Enhanced role-based access control with granular permissions
-- Improved audit logging for all platform operations
-- Secure token rotation and session management
-- Compliance with latest security standards and protocols
-
-### *Sync & Integration*
-- Improved synchronization logs with detailed error tracking
-- Transformation pipeline for data normalization across systems
-- Entity pattern parser for dynamic field mapping
-- Automatic retry mechanisms for failed sync operations
+- **Transformation Pipeline**: Complete architecture refactoring for improved data processing
+- **Entity Pattern Parser**: New parser for transforming entity pattern responses
+- **Portal Playbook Execution**: Enhanced execution flow with comprehensive documentation
+- Improved null handling and error resilience in orchestrators
 
 ## July 2025
 

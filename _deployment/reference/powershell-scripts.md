@@ -45,7 +45,7 @@ Use these scripts when:
 
 **Output**: Client ID and Client Secret for Graph Proxy configuration
 
-View the full script in [Enable-SCIM-Provisioning.ps1](#enable-scim-provisioningps1)
+View the full script below in [Enable-SCIM-Provisioning.ps1](#enable-scim-provisioningps1-full-script)
 
 ### Add-Teams-Access-Policy.ps1
 
@@ -206,6 +206,237 @@ For script-related issues:
 - Review prerequisites and permissions
 - Contact your &money technical support
 - Submit issues through the support portal
+
+## Full Script Code
+
+### Enable-SCIM-Provisioning.ps1 Full Script
+
+<details markdown="1">
+<summary>Click to expand the full Enable-SCIM-Provisioning.ps1 script</summary>
+
+```powershell
+param (
+  [string] $ApplicationName, # The name of the application to create. Choose a name that are easily distinguishable from other applications (Default: BookMe - SCIM integration)
+  [string] $TenantId, # The tenant ID to use - this should be the bank's tenant ID (required)
+  [string] $Environment, # The environment to use (dev, test, prod, Default: Test)
+  [string] $ScimToken # The SCIM token from &money. This is a secret token that is used to authenticate the SCIM requests and is specific to the TenantId (required)
+)
+
+$ErrorActionPreference = "Stop"
+
+if (Get-Module -ListAvailable -Name Microsoft.Graph.Applications && Get-Module -ListAvailable -Name Microsoft.Graph.Authentication) {
+  Write-Host "Modules for Microsoft.Graph.Applications and Microsoft.Graph.Authentication are imported"
+} 
+else {
+  Install-Module Microsoft.Graph.Applications -Force
+  Install-Module Microsoft.Graph.Authentication -Force
+  Import-Module Microsoft.Graph.Applications
+  Import-Module Microsoft.Graph.Authentication
+}
+
+function New-AppRegistration {
+  param (
+    [string] $ApplicationName,
+    [string] $Environment,
+    [string] $TenantId
+  )
+
+  $CalendarsReadWriteScope = Find-MgGraphPermission -SearchString Calendars.ReadWrite -PermissionType Application -ExactMatch -ErrorAction Stop
+
+  Write-Host "Creating AppRegistraiton with the following permissions:"
+  Write-Host $CalendarsReadWriteScope
+
+  $CreateAppParams = @{
+    DisplayName            = "$($ApplicationName) - $($Environment)"
+    RequiredResourceAccess = @{
+      ResourceAppId  = "00000003-0000-0000-c000-000000000000"
+      ResourceAccess = @(
+        @{
+          Id   = $CalendarsReadWriteScope.Id
+          Type = "Role"
+        }
+      )
+
+    }
+  }
+
+  $appRegistration = New-MgApplication @CreateAppParams -ErrorAction Stop
+
+  $clientSecret = Add-MgApplicationPassword -ApplicationId $appRegistration.Id `
+    -PasswordCredential @{ DisplayName = "Automated" } -ErrorAction Stop
+
+  Write-Host
+  Write-Host -ForegroundColor Gray "Created App registration '$($CreateAppParams.DisplayName)' >>"
+  Write-Host -ForegroundColor Cyan -NoNewline "Application ID: "
+  Write-Host -ForegroundColor Yellow $appRegistration.Id
+
+  Write-Host -ForegroundColor Cyan -NoNewline "Client ID: "
+  Write-Host -ForegroundColor Yellow $appRegistration.Id
+
+  if ($null -ne $clientSecret) {
+    Write-Host -ForegroundColor Cyan -NoNewline "Client secret: "
+    Write-Host -ForegroundColor Yellow $clientSecret.SecretText " (Expires: $($clientSecret.EndDateTime))"
+  }
+
+  Write-Host -ForegroundColor Green "SUCCESS >> App registration '$($CreateAppParams.DisplayName)' created <<"
+  Write-Host
+}
+
+function Add-ScimServicePrincipal {
+  param (
+    [string] $ApplicationName,
+    [string] $Environment,
+    [string] $TenantId,
+    [string] $ScimUrl,
+    [string] $ScimToken
+  )
+
+  # A uniqiue identifier for the application template
+  $applicationTemplateId = "8adf8e6e-67b2-4cf2-a259-e3dc5476c621"
+
+  $params = @{
+    displayName = "$($ApplicationName) - $(Get-Date)"
+  }
+
+  $servicePrincipal = Invoke-MgInstantiateApplicationTemplate -ApplicationTemplateId $applicationTemplateId -BodyParameter $params
+
+  Write-Host -ForegroundColor Cyan "Service principal for SCIM Provisioning Jobs created $($servicePrincipal.ServicePrincipal.Id)"
+  Write-Host
+    
+  $timeout = 120 # Timeout in seconds
+  $interval = 5 # Interval to check in seconds
+  $startTime = Get-Date
+  $extraDelay = 60 # Extra delay in seconds
+
+  Write-Host -ForegroundColor Gray "Waiting for the service principal and its permissions to fully propagate..."
+    
+  while ($true) {
+    $spExists = Get-MgServicePrincipal -Filter "id eq '$($servicePrincipal.ServicePrincipal.Id)'" -ErrorAction SilentlyContinue
+    if ($spExists) {
+      Write-Host -ForegroundColor Cyan "Service principal is now available."
+      break
+    }
+    
+    if ((Get-Date) -gt $startTime.AddSeconds($timeout)) {
+      Write-Error "Timed out waiting for the service principal to propagate."
+      Exit
+    }
+    
+    Start-Sleep -Seconds $interval
+  }
+
+  $jobParams = @{
+    templateId = "scim"
+  }
+
+  Write-Host -ForegroundColor Gray "Waiting an additional $extraDelay seconds for full propagation before creating SynchronizationJob"
+  Write-Host
+  Start-Sleep -Seconds $extraDelay
+    
+  $syncJob = New-MgServicePrincipalSynchronizationJob -ServicePrincipalId $servicePrincipal.ServicePrincipal.Id -BodyParameter $jobParams
+    
+  $params = @{
+    value = @(
+      @{
+        key   = "BaseAddress"
+        value = $ScimUrl
+      }
+      @{
+        key   = "SecretToken"
+        value = $ScimToken
+      }
+      @{
+        key   = "SyncNotificationSettings"
+        value = '{"Enabled":false,"DeleteThresholdEnabled":false}'
+      }
+      @{
+        key   = "SyncAll"
+        value = "false"
+      }
+    )
+  }
+
+  Set-MgServicePrincipalSynchronizationSecret -ServicePrincipalId $servicePrincipal.ServicePrincipal.Id -BodyParameter $params
+
+  Write-Host -ForegroundColor Gray "SynchronizationJob created: $($syncJob.Id)"
+  Write-Host -ForegroundColor Gray "Waiting $extraDelay seconds for full propagation of SynchronizationJob"
+  Start-Sleep -Seconds $extraDelay
+
+  Write-Host -ForegroundColor Gray "Starting SynchronizationJob..."
+  Start-MgServicePrincipalSynchronizationJob -ServicePrincipalId $servicePrincipal.ServicePrincipal.Id -SynchronizationJobId $syncJob.Id
+}
+
+function Enable-SCIM-Provisioning {
+  param (
+    [string] $ApplicationName = "BookMe - SCIM integration",
+    [string] $Environment = "Test",
+    [string] $TenantId,
+    [string] $ScimToken
+  )
+
+  $envName = $Environment.ToLowerInvariant()
+  $scimAdvisorUrl = "https://api.dev-env.booking.andmoney.dk/advisors/scim"
+  $scimRoomUrl = "https://api.dev-env.booking.andmoney.dk/rooms/scim"
+
+  if ($envName -eq 'dev') {
+    $scimAdvisorUrl = "https://api.dev-env.booking.andmoney.dk/advisors/scim"
+    $scimRoomUrl = "https://api.dev-env.booking.andmoney.dk/rooms/scim"
+  }
+  elseif ($envName -eq 'test') {
+    $scimAdvisorUrl = "https://api.test-env.booking.andmoney.dk/advisors/scim"
+    $scimRoomUrl = "https://api.test-env.booking.andmoney.dk/rooms/scim"
+  }
+  elseif ($envName -eq 'prod') {
+    $scimAdvisorUrl = "https://api.booking.andmoney.dk/advisors/scim"
+    $scimRoomUrl = "https://api.booking.andmoney.dk/rooms/scim"
+  }
+  else {
+    Write-Host -ForegroundColor Red "Invalid environment name: $envName"
+    exit 1
+  }
+
+  Connect-MgGraph -Scopes "Application.ReadWrite.All,Synchronization.ReadWrite.All" -TenantId $TenantId -NoWelcome
+
+  New-AppRegistration -ApplicationName $ApplicationName -Environment $Environment -TenantId $TenantId
+
+  Add-ScimServicePrincipal -Environment $Environment -TenantId $TenantId -ApplicationName "$($ApplicationName) - Advisors" -ScimUrl $scimAdvisorUrl -ScimToken $ScimToken
+  Add-ScimServicePrincipal -Environment $Environment -TenantId $TenantId -ApplicationName "$($ApplicationName) - Rooms" -ScimUrl $scimRoomUrl -ScimToken $ScimToken
+}
+
+Enable-SCIM-Provisioning -ApplicationName $ApplicationName -Environment $Environment -TenantId $TenantId -ScimToken $ScimToken
+```
+
+</details>
+
+## Token Management and Architecture
+
+### Token Validation in Multi-Tenant Applications
+
+When operating in a multi-tenant environment, the platform validates tokens as follows:
+
+- **Issuer (iss) Claim**: Tokens include the customer's Entra Tenant ID as the issuer
+- **Tenant Mapping**: The platform maintains a mapping between Entra Tenant IDs and internal BankIds in the organization database
+- **Multiple BankId Support**: A single tenant can have multiple BankId mappings, allowing users to switch context in the Management UI
+
+### Client Credentials Flow
+
+For system-to-system integrations:
+
+- **OAuth Flow**: Client credentials grant type is used for service accounts
+- **Bank-Specific Integrations**: Each bank receives unique client ID and secret
+- **Automatic Role Assignment**: System integrations automatically receive the System app role
+- **Secret Rotation**: Client secrets expire after 2 years and must be renewed before expiration
+
+### App Registration Architecture
+
+The platform uses different app registrations for specific purposes:
+
+| App Registration | Purpose | Authentication |
+|:-----------------|:--------|:---------------|
+| **BookingPlatform Management UI** | Browser-based login flows | Interactive |
+| **BookingPlatform Management API** | API permission scopes and role definitions | Token-based |
+| **BookMe API System Integration** | System-level integrations within BookMe tenant | Client credentials |
+| **Bank-Specific System Integration** | Per-customer system access | Client credentials |
 
 ## Related Documentation
 

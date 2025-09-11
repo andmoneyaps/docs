@@ -28,11 +28,11 @@ This tool helps you to identify any issues with your templates before they are u
 4. Review the validation results
 
 
-<img src="../../assets/images/present/validate_button.png" alt="Validate Button" width="500">
+<img src="{{ site.baseurl }}/assets/images/present/validate_button.png" alt="Validate Button" width="500">
 
-<img src="../../assets/images/present/validate_template.png" alt="Validate Template" width="500">
+<img src="{{ site.baseurl }}/assets/images/present/validate_template.png" alt="Validate Template" width="500">
 
-<img src="../../assets/images/present/validation_results.png" alt="Validation Results" width="500">
+<img src="{{ site.baseurl }}/assets/images/present/validation_results.png" alt="Validation Results" width="500">
 
 ## Validation Results
 

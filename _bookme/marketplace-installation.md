@@ -36,7 +36,7 @@ By following this documentation, you will be equipped to seamlessly integrate ou
 ## App Offer structure
 Here is a list of what the App Offer contains by part.
 - **Azure part** (required)
-    - Container App ([Graph Proxy](/docs/deployment/reference/graph-proxy))
+    - Container App ([Graph Proxy]({{ site.baseurl }}/deployment/reference/graph-proxy))
         - Environment Variables
     - Key vault
         - Secret: Client secret
@@ -111,7 +111,7 @@ Use this method when Azure resources and Microsoft Entra ID are in the same tena
      - Service Principal ID
    - Save these values for Management UI configuration
 
-<img src="../../assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="{{ site.baseurl }}/assets/images/single-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 
 ## Multi-Tenant Installation
@@ -176,7 +176,7 @@ This installation is split into two parts:
 
 The deployment model can be illustrated in the following way:
 
-<img src="../../assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
+<img src="{{ site.baseurl }}/assets/images/multi-tenant-installation.png" width="500" alt="Diagram helping visualize the single tenant installation"/>
 
 ### Prerequisites
 
@@ -202,7 +202,7 @@ The following PowerShell scripts are provided to facilitate the setup of SCIM pr
 
 #### 1) SCIM Provisioning Script
 
-The provided script [Enable-SCIM-Provisioning.ps1](/docs/deployment/reference/powershell-scripts#enable-scim-provisioningps1) performs the following key actions:
+The provided script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/deployment/reference/powershell-scripts#enable-scim-provisioningps1) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the required Microsoft Graph modules are installed. 
@@ -234,7 +234,7 @@ The script is parameterized so that you can specify:
 - Sign in using a user with the following permissions:
     - `Application.ReadWrite.All`
     - `Synchronization.ReadWrite.All`
-- Execute PowerShell script [Enable-SCIM-Provisioning.ps1](/docs/deployment/reference/powershell-scripts#enable-scim-provisioningps1)
+- Execute PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/deployment/reference/powershell-scripts#enable-scim-provisioningps1)
 - Verify that the following resources are created
   - App Registration for Calendar Access
   - Service Principal for SCIM provisioning
@@ -242,7 +242,7 @@ The script is parameterized so that you can specify:
 
 #### 2) Teams Access Policy Script
 
-The provided script [Add-Teams-Access-Policy.ps1](/docs/deployment/configuration/teams-access-policy) performs the following key actions:
+The provided script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/deployment/configuration/teams-access-policy) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the Microsoft Teams module is installed. If not, it installs and imports it.
@@ -270,4 +270,4 @@ The script is parameterized so that you can specify:
  
 **Executing the script:**
 - Ensure that the requirements are met, including the Teams role.
-- Execute PowerShell script [Add-Teams-Access-Policy.ps1](/docs/deployment/configuration/teams-access-policy)
+- Execute PowerShell script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/deployment/configuration/teams-access-policy)

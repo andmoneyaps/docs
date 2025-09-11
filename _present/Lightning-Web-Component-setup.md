@@ -58,7 +58,7 @@ This implementation is very simple and can be modified to match your styling etc
 > * `andmoney-fast-slides`: The fast-slides component with `customerType` and `recordId` input.
 > * Since we provide a Managed Salesforce package, all components and SObjects include an `andmoney` namespace. Either `andmoney-` instead of `c-` for LWC components or `andmoney__` for SObjects.
 
-<img src="../../assets/images/present/present_wrapper.png" width="600" alt="Present wrapper component" />
+<img src="{{ site.baseurl }}/assets/images/present/present_wrapper.png" width="600" alt="Present wrapper component" />
 
 </details>
 

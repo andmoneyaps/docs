@@ -11,7 +11,7 @@ grand_parent: Platform Deployment
 The **Graph-Proxy** is a containerized application that acts as a secure intermediary between the BookMe solution and the Microsoft Graph API.
 It is an essential part of the Financial Booking Solutions and is deployed as part of the Azure resources included in the App Offer.
 
-![Graph-Proxy and Key Vault Architecture](../../assets/images/graph-proxy-keyvault.png)
+![Graph-Proxy and Key Vault Architecture]({{ site.baseurl }}/assets/images/graph-proxy-keyvault.png)
 
 {: .note }
 > For detailed installation instructions, please refer to the [Installation Guide](../installation-marketplace-app-offer).
@@ -117,7 +117,7 @@ Two services are then provided:
 - **Save**
   Allows the user to submit the given URL to the database. This button will be disabled, if the posted URL matches the existing URL.
 
-![management-ui-graph-test.png](../../assets/images/management-ui-graph-test.png)
+![Management UI Graph Test]({{ site.baseurl }}/assets/images/management-ui-graph-test.png)
 
 {: .note }
 >  Be sure to follow the [Installation Marketplace App Offer](../installation-marketplace-app-offer) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.

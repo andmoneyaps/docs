@@ -7,7 +7,7 @@ nav_order: 1
 
 # BookMe API Documentation
 
-The BookMe API provides comprehensive access to meeting booking and scheduling functionality. This documentation covers API Version 2.0.0 (current). For V1 documentation, see the [deprecated V1 reference]({{ site.baseurl }}/api/bookme-v1).
+The BookMe API provides comprehensive access to meeting booking and scheduling functionality. This documentation covers API Version 2.0.0 (current). For V1 documentation, see the [V1 reference]({{ site.baseurl }}/api/bookme-v1).
 
 ## Base URL
 
@@ -73,6 +73,12 @@ POST /meetings
     {
       "key": "string",
       "value": "string"
+    }
+  ],
+  "externalAttendees": [     // V2 only
+    {
+      "name": "string",
+      "email": "string"
     }
   ],
   "title": "string",
@@ -400,6 +406,7 @@ async function createMeeting(meetingData) {
       // V2 new features
       portalId: meetingData.portalId || null,
       customFields: meetingData.customFields || [],
+      externalAttendees: meetingData.externalAttendees || [],
       videoLink: meetingData.videoLink || null,
       ...meetingData
     };
@@ -471,6 +478,7 @@ public class CreateMeetingRequest
     public string PortalId { get; set; } // V2 only
     public string Cpr { get; set; } // V2 only
     public List<CustomField> CustomFields { get; set; } // V2 only
+    public List<ExternalAttendee> ExternalAttendees { get; set; } // V2 only
     public string Title { get; set; }
     public string Description { get; set; }
     public string VideoLink { get; set; } // V2 only
@@ -486,6 +494,12 @@ public class CustomField
 {
     public string Key { get; set; }
     public string Value { get; set; }
+}
+
+public class ExternalAttendee
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
 }
 ```
 
@@ -515,6 +529,12 @@ curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
         "key": "project_code",
         "value": "PROJ-123"
       }
+    ],
+    "externalAttendees": [
+      {
+        "name": "John Smith",
+        "email": "john.smith@external.com"
+      }
     ]
   }'
 
@@ -534,14 +554,14 @@ curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings/meeti
 
 For the complete API specification including all endpoints, parameters, and response schemas:
 - [V2 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml) - Current version
-- [V1 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml) - Deprecated
+- [V1 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml) - Active
 
 ## What's New in V2
 
 ### Key Changes from V1
 - **Required Fields**: `salesforceId` is now required, while `customerTypeId`, `topicId`, and `timeSlotId` are now optional
 - **Portal Integration**: New `bookedBy` types: `PortalPartner` and `PortalCustomer`
-- **Enhanced Features**: Custom fields, video links, CPR field, and iCal generation
+- **Enhanced Features**: Custom fields, external attendees, video links, CPR field, and iCal generation
 - **Employee Types**: New types `Local` and `ServiceGroup` replace deprecated `Global` type
 - **Time Slot Status**: New internal meeting statuses for better scheduling
 

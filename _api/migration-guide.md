@@ -290,7 +290,6 @@ if (useV2Features) {
 1. **Development**: Update and test in development environment
 2. **Staging**: Full testing in staging environment  
 3. **Production**: Gradual rollout with monitoring
-4. **Deprecation**: V1 will be deprecated after transition period
 
 ## Additional Resources
 

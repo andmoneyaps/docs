@@ -3,7 +3,7 @@ layout: default
 title: Implementation Guide
 description: Implementation plan and detailed task description for &bookme Scheduler
 has_children: true
-nav_order: 14
+nav_order: 12
 parent: BookMe
 ---
 

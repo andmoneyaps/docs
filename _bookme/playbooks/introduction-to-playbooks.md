@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Playbooks
-parent: BookMe
+title: Introduction to Playbooks
+parent: Playbooks
 nav_order: 11
 ---
 
@@ -15,9 +15,8 @@ Playbooks are powerful automation workflows in the andMoney platform that orches
 
 Playbooks are directed graphs of interconnected blocks that define automated workflows. Each playbook consists of:
 
-- **Blocks**: Individual processing units that perform specific tasks (AI processing, CRM operations, data transformations)
+- **Blocks**: Individual processing units that perform specific tasks (AI processing, CRM operations and more)
 - **Relations**: Connections between blocks that define how data flows through the workflow
-- **Context**: Shared execution state that maintains data between blocks during execution
 - **Transformations**: Data manipulation operations that modify data as it flows between blocks
 
 ### Key Benefits
@@ -25,8 +24,7 @@ Playbooks are directed graphs of interconnected blocks that define automated wor
 - **No-Code Automation**: Create complex workflows through visual configuration without programming
 - **Flexible Integration**: Connect various services (AI, CRM, Templates) seamlessly
 - **Data Orchestration**: Transform and route data between different systems automatically
-- **Trigger-Based Execution**: Respond to events like meetings, summaries, or custom triggers
-- **Reusable Components**: Build modular workflows that can be shared and reused
+- **Trigger-Based Execution**: Respond to events like portal meetings and M365 transcripts and more triggers in the future
 
 ### Common Use Cases
 
@@ -34,7 +32,6 @@ Playbooks excel in scenarios requiring automated business process orchestration:
 
 - **Meeting Intelligence**: Automatically process meeting data, generate AI summaries, and update CRM records
 - **Customer Data Aggregation**: Consolidate customer information from multiple sources and generate insights
-- **Document Automation**: Create personalized documents based on meeting outcomes or CRM data
 - **Data Synchronization**: Keep CRM systems synchronized with meeting activities and communications
 - **Multi-Step Workflows**: Automate complex business processes that span multiple systems
 
@@ -61,11 +58,11 @@ Playbooks integrate seamlessly with the andMoney platform ecosystem:
 
 ### Execution Process
 
-1. **Trigger Activation**: An event (Portal meeting, summary generation, API call) initiates the playbook
-2. **Sequential Processing**: Blocks execute in their defined order, respecting dependencies
+1. **Trigger Activation**: An event (Portal meeting, transcript ready event, API call) initiates the playbook
+2. **Sequential Processing**: Blocks execute in their defined order
 3. **Data Flow**: Data passes between blocks through relations, with transformations applied as configured
 4. **Context Management**: The execution context maintains state and data throughout the workflow
-5. **Result Generation**: Output blocks produce final results (API responses, CRM updates, documents)
+5. **Result Generation**: Then final result can either be updating data in the CRM system, using output blocks produce final results or something else.
 
 ## Block Types Reference
 
@@ -75,12 +72,12 @@ Each block type serves a specific purpose in the workflow automation:
 **Purpose**: Initiates playbook execution based on events  
 **Required**: Every playbook must have exactly one trigger block  
 **Configuration**:
-- **Trigger Type**: Select the event source (PortalMeetings, Summary, etc.)
+- **Trigger Type**: Select the event source (PortalMeetings, etc.)
 - **Conditions**: Optional filters to control when execution occurs
 
 **Available Triggers**:
 - **PortalMeetings**: Activated when Portal meetings are created or updated
-- **Summary**: Triggered when meeting summaries are generated
+- **CustomerOverview**: Triggered when a request to generate a customer overview is made
 - **TranscriptReady**: Fires when meeting transcripts become available
 
 ### AI Block
@@ -114,7 +111,7 @@ Each block type serves a specific purpose in the workflow automation:
 **Configuration**:
 - **Field**: The field to filter on
 - **Operator**: Comparison operator (=, !=, >, <, contains, etc.)
-- **Value**: The value to compare against
+- **Value**: The value to compare against. A `GetDate(days)` is available to compute date time values. I.e. `GetDate(-30)` inserts the current date minus thirty days into the value field. This is usefull for limiting the data collected from an entity pattern read block.
 
 ### Template Block
 **Purpose**: Generates documents using templates  
@@ -224,40 +221,15 @@ Here's a practical example of how a meeting intelligence playbook processes data
 ### Workflow Design
 ```
 1. Trigger Block (PortalMeetings)
-   Output: {meetingId, participants, startTime, duration}
+   Output: {meetingId, startTime, endTime, title, primaryAdvisor.Email}
    ↓
-2. EntityPatternRead Block (Fetch Customer Data)
-   Input: meetingId from Trigger
-   Output: {customerId, customerName, accountValue, lastContact}
+2. EntityPatternRead Block (Fetch Advisor data Data)
+   Input: primaryAdvisor.Email from Trigger
+   Output: {UserId}
    ↓
-3. AI Block
-   Input: meeting data + customer context
-   Output: {summary, actionItems, sentiment, keyTopics}
-   ↓
-4. EntityPatternCreate Block (Update CRM)
-   Input: summary + actionItems
-   Output: {recordId, updateStatus}
-   ↓
-5. Output Block
-   Input: All previous outputs
-   Final Result: {success: true, summary, crmUpdated, actionItems}
+3. EntityPatternCreate Block (Create CRM entities)
+   Input: {userId, meetingId, startTime, endTime, title}
 ```
-
-### Configuration Steps
-
-1. **Create Trigger**: Select PortalMeetings as trigger type
-2. **Add CRM Read Block**: 
-   - Configure Entity Pattern for Customer entity
-   - Create relation: Trigger.meetingId → EntityRead.meetingId
-3. **Add AI Processing**:
-   - Select meeting summary capability
-   - Create relations for meeting and customer data
-4. **Configure CRM Update**:
-   - Map summary fields to CRM activity record
-   - Apply Extract transformation for specific fields
-5. **Define Output**:
-   - Combine results from all blocks
-   - Format response structure
 
 ## Platform Integration
 
@@ -267,41 +239,31 @@ The AI service provides advanced intelligence capabilities:
 - **Input/Output Contracts**: Strongly-typed interfaces ensure data compatibility
 - **Supported Operations**: 
   - Meeting transcription and summarization
-  - Entity and intent extraction
-  - Sentiment analysis and classification
-  - Document understanding and generation
-- **Performance**: Asynchronous processing with configurable timeouts
+  - More capabilities can be created quickly upon request
 
 ### CRM Integration (Entity Patterns)
 Entity Patterns provide a unified interface to CRM systems:
 - **Supported Platforms**: Salesforce, Microsoft Dynamics, HubSpot
-- **Operations**: Create, Read, Update, Delete (CRUD) for any entity type
+- **Operations**: Create, Read, for any entity pattern
 - **Query Capabilities**: 
   - Complex filters with multiple conditions
   - Relationship traversal and joins
-  - Batch operations for efficiency
 - **Data Mapping**: Automatic field mapping between systems
-- **Consistency**: Transaction support and rollback capabilities
 
 ### Meeting Platform Integration
 Seamless integration with the BookMe meeting platform:
 - **Event Types**: 
-  - Meeting creation and updates
-  - Participant changes
-  - Meeting completion
+  - Portal ceeting creation 
+  - Customer overview triggered
   - Transcript availability
-- **Context Data**: Full meeting metadata including participants, duration, and outcomes
 - **Processing Modes**: 
-  - Real-time: Immediate playbook execution
-  - Batch: Scheduled processing for multiple meetings
-  - On-demand: Manual triggering via API
+  - Event-driven: Scheduled processing for multiple meetings
+  - On-demand: Manual triggering via API will be avaialble in future versions
 
 ### Template Engine Integration
 Document generation through the template system:
-- **Template Types**: Meeting summaries, reports, follow-up emails
-- **Data Binding**: Dynamic content injection from playbook data
-- **Format Support**: PDF, DOCX, HTML, Email templates
-- **Localization**: Multi-language support with automatic translation
+- **Template Examples**: Meeting summaries, reports, follow-up emails
+- **Format Support**: The templates are added in Management UI under "admin/templates"
 
 ## Best Practices
 
@@ -313,40 +275,16 @@ Document generation through the template system:
 - Use the preview feature to validate data flow
 
 #### Modular Architecture
-- Design blocks to be reusable across playbooks
 - Create standard patterns for common operations
-- Maintain a library of tested block configurations
 
 #### Performance Optimization
-- Minimize the number of CRM queries by batching operations
+- Minimize the number of CRM queries to increase performance
 - Use filters early in the workflow to reduce data volume
-- Configure appropriate timeouts for external service calls
-- Consider async processing for long-running operations
-
-#### Error Resilience
-- Configure error handling for each block
-- Use conditional logic to handle edge cases
-- Implement fallback strategies for external service failures
-- Log important data points for debugging
-
-### Naming Conventions
-
-**Playbooks**:
-- Format: `[Purpose]_[Entity]_[Action]`
-- Example: `Meeting_Customer_Summary`
-
-**Blocks**:
-- Format: `[Action]_[Target]_[Modifier]`
-- Example: `Read_Customer_ByMeetingId`
-
-**Relations**:
-- Use clear source→destination naming
-- Example: `trigger.meetingId → customerRead.searchId`
 
 ## Related Documentation
 
-- [Entity Patterns Overview](../crm-integration-security.md) - CRM integration details
-- [Portal Configuration](portals.md) - Meeting platform setup
-- [Meeting Management](implementation-guide.md) - Meeting workflow automation
-- [Playbooks User Guide](playbooks-user-guide.md) - Step-by-step usage instructions
-- [API Documentation](/api/playbook) - Complete API reference
+- [Entity Patterns Overview]({{ site.baseurl }}/bookme/crm-integration-security/) - CRM integration details
+- [Portal Configuration]({{ site.baseurl }}/bookme/portals/) - Meeting platform setup
+- [Meeting Management]({{ site.baseurl }}/bookme/implementation-guide/) - Meeting workflow automation
+- [Playbooks User Guide]({{ site.baseurl }}/bookme/playbooks/playbooks-user-guide/) - Step-by-step usage instructions
+- [API Documentation]({{ site.baseurl }}/api/bookme/) - Complete API reference

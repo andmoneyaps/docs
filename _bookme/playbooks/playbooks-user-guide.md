@@ -1,13 +1,13 @@
 ---
 layout: default
 title: Playbooks User Guide
-parent: BookMe
+parent: Playbooks
 nav_order: 12
 ---
 
 # Playbooks User Guide
 
-This guide provides step-by-step instructions for creating, configuring, and managing playbooks in the andMoney Management UI.
+This guide provides step-by-step instructions for creating, configuring, and managing playbooks in the &Money Management UI.
 
 ## Getting Started
 
@@ -16,7 +16,6 @@ This guide provides step-by-step instructions for creating, configuring, and man
 Before creating playbooks, ensure you have:
 - Admin access to the Management UI
 - Understanding of your business workflow requirements
-- Access to required integrations (AI, Entity Patterns)
 - Appropriate permissions for playbook management
 
 ### Accessing Playbooks
@@ -33,7 +32,7 @@ You'll see the Playbooks overview page displaying existing playbooks with their 
 
 Click the **"Create"** button on the Playbooks page to open the creation modal.
 
-![Playbook Creation Modal](../assets/images/bookme/playbooks/playbook-create-initial.png)
+![Playbook Creation Modal](../../../assets/images/bookme/playbooks/playbook-create-initial.png)
 
 ### Step 2: Configure Basic Information
 
@@ -54,7 +53,7 @@ Every playbook must start with a Trigger block:
 
 Click **"Add block"** to add more blocks to your playbook:
 
-![Playbook with Multiple Blocks](../assets/images/bookme/playbooks/playbook-create-with-blocks.png)
+![Playbook with Multiple Blocks](../../../assets/images/bookme/playbooks/playbook-create-with-blocks.png)
 
 For each new block:
 
@@ -63,8 +62,12 @@ For each new block:
    
 2. **Select Block Type**:
    - **AI**: For AI/ML processing
-   - **EntityPatternRead**: To fetch CRM data
+   - **EntityPatternRead**: To fetch data from the CRM system
+   - **EntityPatternCreate**: To create data in the CRM system
+   - **EntityPatternFilter**: To add filters used in your entity pattern read blocks.
+   - **Template**: To fetch a defined template
    - **Output**: To produce results
+   - **Note**: Additional block types, File and Input are defined but not yet fully implemented
 
 3. **Configure Block Value**:
    - For AI blocks: Enter the Capability ID
@@ -102,17 +105,31 @@ Once all blocks are configured:
 
 ### Trigger Block Configuration
 
-The Trigger block determines when and how your playbook executes:
+The Trigger block determines when and how your playbook executes. Currently implemented trigger type:
 
-**Portal Trigger**:
+**PortalMeetings Trigger**:
 - Activates when portal meetings are created or updated
-- Provides meeting metadata (ID, participants, time, location)
+- Provides real meeting data:
+  - `MeetingId`: Meeting identifier (GUID)
+  - `SalesforceId`: Salesforce record ID
+  - `Title`: Meeting title
+  - `Description`: Meeting description
+  - `Type`: Meeting type
+  - `BookedBy`: Person who booked the meeting
+  - `Room`: Room information object
+  - `MeetingOwner`: Primary advisor object
+  - `AdditionalAdvisors`: List of additional advisor objects
+  - `ExternalAttendees`: List of external attendee objects
+  - `Theme`: Meeting theme
+  - `ThemeId`: Theme identifier (GUID)
+  - `CustomerCategory`: Customer category classification
+  - `StartDate`: Meeting start date and time
+  - `EndDate`: Meeting end date and time
+  - `Cpr`: CPR number (confidential data)
+  - `CustomFields`: Key-value pairs of custom fields
 - Useful for meeting-related workflows
 
-**Summary Trigger**:
-- Activates when summaries are generated
-- Provides summary content and metadata
-- Ideal for post-meeting processing
+**Note**: Additional trigger types (TranscriptReady and CustomerOverview) are defined but may not be fully integrated yet.
 
 ### AI Block Configuration
 
@@ -128,22 +145,22 @@ AI blocks integrate artificial intelligence capabilities:
 
 Example Capability IDs:
 - Meeting summarization
-- Sentiment analysis
-- Action item extraction
-- Entity recognition
+- Creating customer emails from meeting summaries
+
+New AI operations can quickly be added on demand based on your specific business needs.
 
 ### EntityPatternRead Block Configuration
 
-EntityPatternRead blocks retrieve data from CRM systems:
+EntityPatternRead blocks retrieve data from Salesforce:
 
 1. **Select EntityPatternRead as Block Type**
 2. **Enter Entity Pattern ID**: 
    - Select from available Entity Patterns
-   - Each pattern represents a specific CRM entity type
+   - Each pattern represents a specific Salesforce entity type
 3. **Configure Input Relations**:
    - Map search criteria from previous blocks
    - Define which fields to retrieve
-4. **Outputs**: Structured CRM data that can be used by subsequent blocks
+4. **Outputs**: Structured Salesforce data that can be used by subsequent blocks
 
 ### Output Block Configuration
 
@@ -194,7 +211,7 @@ To add an input relation to a block:
    - Click Save to apply the relation
    - The block will now receive data from the source block
 
-![Playbook with Multiple input relations](../assets/images/bookme/playbooks/relation-builder-configured-relation.png)
+![Playbook with Multiple input relations](../../../assets/images/bookme/playbooks/relation-builder-configured-relation.png)
 
 ### Visual Guide: Using the Relation Builder
 
@@ -233,7 +250,7 @@ The Relation Builder modal contains:
 - **Cancel**: Close without saving
 - **Save**: Apply the relation (enabled when path is complete)
 
-![Playbook relation builder for input](../assets/images/bookme/playbooks/relation-builder-complete-path.png)
+![Playbook relation builder for input](../../../assets/images/bookme/playbooks/relation-builder-complete-path.png)
 
 #### Example: Creating a Complex Relation
 
@@ -330,101 +347,3 @@ Before creating a playbook:
 2. **Identify Data Sources**: What information is needed?
 3. **Map the Workflow**: List the steps in sequence
 4. **Determine Outputs**: What results are expected?
-
-### Naming Conventions
-
-Use clear, descriptive names:
-- **Playbook Names**: `[Purpose] [Type] Playbook`
-  - Example: "Customer Meeting Summary Playbook"
-- **Block Names**: `[Action] [Target]`
-  - Example: "Fetch Customer Data"
-
-## Common Use Cases
-
-### Meeting Summary Generation
-
-```
-1. Trigger (Portal Meeting)
-2. EntityPatternRead (Fetch Customer Info)
-3. AI (Generate Summary)
-4. Output (Return Summary and Customer Data)
-```
-
-### Customer Data Aggregation
-
-```
-1. Trigger (Summary)
-2. EntityPatternRead (Fetch Customer)
-3. AI (Analyze Customer Data)
-4. Output (Return Analysis)
-```
-
-### Automated Follow-up Creation
-
-```
-1. Trigger (Portal Meeting)
-2. AI (Extract Action Items)
-3. Output (Return Action Items)
-```
-
-## Input Relations Examples
-
-### Example 1: Trigger to EntityPatternRead
-
-When connecting a Trigger block to an EntityPatternRead block:
-
-```yaml
-EntityPatternRead Block Configuration:
-  Input Relation:
-    Source Block: Trigger
-    Source Field: meeting.customerId
-    Destination Field: searchCriteria.id
-    Transformation: Identity
-```
-
-This passes the customer ID from the trigger to the entity pattern search.
-
-### Example 2: EntityPatternRead to AI
-
-When connecting EntityPatternRead to an AI block:
-
-```yaml
-AI Block Configuration:
-  Input Relation 1:
-    Source Block: Trigger
-    Source Field: meeting.transcript
-    Destination Field: transcript
-    Transformation: Identity
-    
-  Input Relation 2:
-    Source Block: EntityPatternRead
-    Source Field: customer
-    Destination Field: customerContext
-    Transformation: Project
-    Fields: ["name", "segment", "history"]
-```
-
-This provides both transcript and customer data to the AI for processing.
-
-### Example 3: Multiple Blocks to Output
-
-When connecting multiple blocks to an Output block:
-
-```yaml
-Output Block Configuration:
-  Input Relation 1:
-    Source Block: AI
-    Source Field: summary
-    Destination Field: meetingSummary
-    Transformation: Identity
-    
-  Input Relation 2:
-    Source Block: EntityPatternRead
-    Source Field: customer.name
-    Destination Field: customerName
-    Transformation: Extract
-```
-
-This combines results from different blocks into the final output.
-
-For more technical details, see the [Playbooks Technical Documentation](playbooks.md).

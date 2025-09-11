@@ -16,22 +16,8 @@ nav_order: 2
 - Interactive API schemas with detailed request/response documentation
 - Enhanced authentication flow documentation
 
-### *CRM Integration*
-- **Advanced Search Capabilities**: Support for more complex search criteria to find records faster
-- **Enhanced Security**: Strengthened authorization for CRM operations to protect your data
-- **Performance Improvements**: Faster response times when accessing CRM data
-- **Better Salesforce Integration**: More accurate field mapping between BookMe and Salesforce
-
 ### *Management UI*
 - **Meetings Overview**: New dashboard for viewing and managing all your meetings in one place
-- **Activity Monitoring**: Enhanced visibility into system synchronization status
-- **Responsive Design**: Improved interface that works seamlessly across all device sizes
-
-### *Playbook Automation*
-- **Faster Processing**: Significant performance improvements in automated workflows
-- **Smarter Data Handling**: More intelligent processing of information between systems
-- **Portal Integration**: Enhanced automation capabilities for portal-based bookings
-- **Improved Reliability**: More robust handling of edge cases and system variations
 
 ## July 2025
 

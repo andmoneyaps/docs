@@ -58,7 +58,7 @@ Authorization: Bearer <access_token>
 Ocp-Apim-Subscription-Key: <subscription_key>
 ```
 
-To obtain access credentials, please contact our support team at [info@andmoney.dk](mailto:info@andmoney.dk).
+To obtain an API key, please contact the Service Desk.
 
 For detailed authentication setup, see our [Authentication Guide]({{ site.baseurl }}/api/authentication).
 
@@ -103,3 +103,11 @@ Download the complete API specifications:
 - [V2 BookMe OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml)
 - [V1 BookMe OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml)
 - [Present OpenAPI Specification (JSON)]({{ site.baseurl }}/files/swagger.json)
+
+## Support
+
+For API support and questions, contact the Service Desk.
+
+## Changelog
+
+View the latest API updates and changes in our [Release Notes]({{ site.baseurl }}/release-news).

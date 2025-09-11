@@ -100,7 +100,10 @@ function base64URLEncode(buffer) {
 
 ## Important Notes
 
-- Tokens expire after 1 hour and must be refreshed
-- Both Bearer token and subscription key are required for API calls
-- All authentication uses OAuth 2.0 with Azure AD
-- Contact support for client registration and subscription key access
+- Your redirect URI must be registered with us before use
+- Tokens expire after 1 hour
+- No client secret needed (PKCE handles security)
+
+## Support
+
+Contact the Service Desk to register your redirect URIs or get production access.

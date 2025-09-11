@@ -1,14 +1,15 @@
 ---
 layout: default
 title: Microsoft 365 Integration
-nav_order: 2
-parent: BookMe
-collection: bookme
+nav_order: 6
+parent: Configuration
+grand_parent: Platform Deployment
+collection: deployment
 ---
 
 # Setting up the integration between &money and Microsoft 365
 
-BookMe integrates natively with your Organizations Microsoft 365 account. This ensures that your BookMe users, resources and calendars are always in sync with your Microsoft 365 account.
+BookMe integrates with your Organization's Microsoft 365 account to synchronize users, resources and calendars.
 
 ## Introduction
 
@@ -16,7 +17,7 @@ This guide provides a high-level overview of configuring Entra ID for both singl
 
 ## Overview of Entra ID Configuration
 
-The Entra ID configuration process involves several key steps to ensure seamless integration and management across tenants. The process is designed to:
+The Entra ID configuration process involves several key steps for integration and management across tenants. The process is designed to:
 
 - Automate end-user provisioning through SCIM.
 - Assign appropriate roles for access control within the Management UI for administrative users and management.
@@ -27,13 +28,13 @@ The Entra ID configuration process involves several key steps to ensure seamless
 
 For both single-tenant and multi-tenant deployments, you must create Enterprise Applications within your Entra Organization to provide administrative users with access to the &Money Financial Platform Management UI.
 
-- **For detailed steps, refer to the [Enterprise Application Installation Guide](../app-registration-installation).**
+- **For detailed steps, refer to the [App Registration Setup Guide](app-registration-setup).**
 
 ### 2. Role Assignment for Management UI
 
 Assign roles within the BookingPlatform Mgmt API to control access and permissions for users interacting with the Management UI. This applies to both deployment models.
 
-- **For detailed role assignment instructions, see the [Role Assignment Documentation](../app-registration-installation/#role-assignment-for-the-management-ui).**
+- **For detailed role assignment instructions, see the [Role Assignment Documentation](app-registration-setup#role-assignment-for-the-management-ui).**
 
 ### 3. Microsoft 365 User, Room and Calendar integration
 
@@ -54,4 +55,4 @@ Once the configurations are complete, users can access the Management UI based o
 
 ## Conclusion
 
-Following this guide ensures a comprehensive configuration of Entra ID for your deployment, whether single-tenant or multi-tenant. Utilize the links provided to access detailed instructions and complete each step effectively.
+Following this guide provides comprehensive configuration of Entra ID for your deployment, whether single-tenant or multi-tenant. Utilize the links provided to access detailed instructions and complete each step effectively.

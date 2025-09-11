@@ -47,19 +47,20 @@ An example implementation of a LWC wrapping the `fast-slides` component is shown
   </lightning-card>
 </template>
 ```
-{collapsed-title="Present LWC Wrapper"
-collapsible="true"
-default-state="collapsed"}
+<details markdown="1">
+<summary>Present LWC Wrapper</summary>
 
 This implementation is very simple and can be modified to match your styling etc.
 
-{: .hint }
+{: .note }
 > **Present LWC wrapper**
 > * `lightning-card`: The fast-slides component is wrapped in `lightning-card` with a `h3` title with an `lightning-icon`.
 > * `andmoney-fast-slides`: The fast-slides component with `customerType` and `recordId` input.
 > * Since we provide a Managed Salesforce package, all components and SObjects include an `andmoney` namespace. Either `andmoney-` instead of `c-` for LWC components or `andmoney__` for SObjects.
 
-![Present wrapper component](../../assets/images/present/present_wrapper.png){width="600"}
+<img src="{{ site.baseurl }}/assets/images/present/present_wrapper.png" width="600" alt="Present wrapper component" />
+
+</details>
 
 In order to fetch the customer type passed to the `fast-slides` component we use the sample implementation found [here](../customergroup-mapping).
 

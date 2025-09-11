@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Salesforce BookMe Integration Setup
-nav_order: 8
+nav_order: 13
 parent: BookMe
 collection: bookme
 ---
@@ -20,7 +20,7 @@ BookMe-Salesforce integration enables seamless booking capabilities within your 
 You can clone the [BookMe-Salesforce repository](https://github.com/andmoneyaps/bookme-salesforce#) using any of the following methods:
 
 ### Via GitHub Desktop
-![Cloning using github desktop](../../assets/images/gh-desktop-clone.png)
+![Cloning using github desktop]({{ site.baseurl }}/assets/images/gh-desktop-clone.png)
 1. Open GitHub Desktop
 2. Go to File > Clone Repository
 3. Select the bookme-salesforce repository

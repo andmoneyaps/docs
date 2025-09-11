@@ -94,4 +94,4 @@ function base64URLEncode(buffer) {
 
 ## Support
 
-Contact [info@andmoney.dk](mailto:info@andmoney.dk) to register your redirect URIs or get production access.
+Contact the Service Desk to register your redirect URIs or get production access.

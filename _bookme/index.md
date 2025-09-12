@@ -18,6 +18,7 @@ BookMe is our industry-leading booking and scheduling solution specifically desi
 - Service competence group organization
 - Secure SCIM-based user provisioning
 - Custom portal solutions
+- Powerful playbook automation workflows
 
 ## Documentation Structure
 
@@ -31,3 +32,6 @@ Navigate through the sections to find detailed information about:
 - Portal configuration
 - Service competence groups
 - Meeting iCal generation
+- Playbooks automation and workflows
+- Playbooks user guide
+- Relation Builder for data mapping

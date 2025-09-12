@@ -16,7 +16,6 @@ This guide provides step-by-step instructions for creating, configuring, and man
 Before creating playbooks, ensure you have:
 - Admin access to the Management UI
 - Understanding of your business workflow requirements
-- Appropriate permissions for playbook management
 
 ### Accessing Playbooks
 
@@ -211,7 +210,7 @@ To add an input relation to a block:
    - Click Save to apply the relation
    - The block will now receive data from the source block
 
-![Playbook with Multiple input relations](../../../assets/images/bookme/playbooks/relation-builder-configured-relation.png)
+![Playbook with Multiple input relations](../../../assets/images/bookme/playbooks/playbook-mappings.png)
 
 ### Visual Guide: Using the Relation Builder
 
@@ -235,8 +234,7 @@ The Relation Builder provides an intuitive interface for creating input relation
 The Relation Builder modal contains:
 
 **Top Section - Breadcrumb Navigation**:
-- Shows your current path: `Home > customer > contacts`
-- Click any breadcrumb to navigate back
+- Shows your current path: `Home > Email from summary`
 - Helps track your location in nested structures
 
 **Middle Section - Field Selection**:
@@ -248,9 +246,9 @@ The Relation Builder modal contains:
 
 **Bottom Section - Actions**:
 - **Cancel**: Close without saving
-- **Save**: Apply the relation (enabled when path is complete)
+- **Save**: Create / update the playbook (enabled when path is back to home)
 
-![Playbook relation builder for input](../../../assets/images/bookme/playbooks/relation-builder-complete-path.png)
+![Playbook relation builder for input](../../../assets/images/bookme/playbooks/playbook-relation-builder.png)
 
 #### Example: Creating a Complex Relation
 
@@ -272,6 +270,8 @@ The Relation Builder modal contains:
 5. **Click Save** to apply the relation
 
 ### Configuring Transformations
+
+![Playbook Transformations Modal](../../../assets/images/bookme/playbooks/playbook-transformations.png)
 
 Transformations modify data as it flows between blocks:
 

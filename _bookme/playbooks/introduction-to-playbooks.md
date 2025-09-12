@@ -31,7 +31,6 @@ Playbooks are directed graphs of interconnected blocks that define automated wor
 Playbooks excel in scenarios requiring automated business process orchestration:
 
 - **Meeting Intelligence**: Automatically process meeting data, generate AI summaries, and update CRM records
-- **Customer Data Aggregation**: Consolidate customer information from multiple sources and generate insights
 - **Data Synchronization**: Keep CRM systems synchronized with meeting activities and communications
 - **Multi-Step Workflows**: Automate complex business processes that span multiple systems
 
@@ -110,7 +109,7 @@ Each block type serves a specific purpose in the workflow automation:
 **Purpose**: Filters and transforms CRM data  
 **Configuration**:
 - **Field**: The field to filter on
-- **Operator**: Comparison operator (=, !=, >, <, contains, etc.)
+- **Operator**: Comparison operator (=, !=, >, <, In, NotIn etc.)
 - **Value**: The value to compare against. A `GetDate(days)` is available to compute date time values. I.e. `GetDate(-30)` inserts the current date minus thirty days into the value field. This is usefull for limiting the data collected from an entity pattern read block.
 
 ### Template Block
@@ -157,23 +156,21 @@ The Relation Builder is a visual tool that simplifies creating data connections 
 #### Step 1: Access the Relation Builder
 1. Select a block that has both type and value configured
 2. Click the edit button (pencil icon) on the block
-3. Click "Add Input Relation" or "Tilføj map" to open the builder
+3. Click "Add Input Relation" to open the builder
 
 #### Step 2: Navigate Data Structure
 The Relation Builder presents the source block's output structure as a navigable tree:
 - Click through nested objects to explore the data structure
-- Arrays are indicated with bracket notation
 - Select "First" to get the first array element or "All" to process all elements
 - The builder automatically generates the correct dot-notation path
 
 #### Step 3: Configure the Mapping
 - **Source Block**: Select from blocks that execute before the current block
 - **Source Field**: Use the builder to navigate and select the exact field
-- **Destination Field**: Choose or enter where to map the data
+- **Destination Field**: Choose where to map the data
 - **Transformation**: Optionally apply a transformation (see below)
 
 #### Step 4: Apply and Test
-- The relation is validated to ensure type compatibility
 - Data will flow automatically during playbook execution
 - Multiple relations can be added to combine data from different sources
 
@@ -243,7 +240,6 @@ The AI service provides advanced intelligence capabilities:
 
 ### CRM Integration (Entity Patterns)
 Entity Patterns provide a unified interface to CRM systems:
-- **Supported Platforms**: Salesforce, Microsoft Dynamics, HubSpot
 - **Operations**: Create, Read, for any entity pattern
 - **Query Capabilities**: 
   - Complex filters with multiple conditions
@@ -257,8 +253,7 @@ Seamless integration with the BookMe meeting platform:
   - Customer overview triggered
   - Transcript availability
 - **Processing Modes**: 
-  - Event-driven: Scheduled processing for multiple meetings
-  - On-demand: Manual triggering via API will be avaialble in future versions
+  - On-demand: Manual triggering via API will be available in future versions
 
 ### Template Engine Integration
 Document generation through the template system:

@@ -50,7 +50,7 @@ Make sure that:
    > Slide name is a **must** to correctly report the usage of the different slides
 
 
-  ![Slide name in notes section](../../assets/images/present/slide_name.png)
+  ![Slide name in notes section]({{ site.baseurl }}/assets/images/present/slide_name.png)
 
 
 3. Set up sections for the Master Slides e.g. introduction, about the customer, about the bank, investing, etc.
@@ -58,7 +58,7 @@ Make sure that:
    This can be done using the sections in PowerPoint. As an example see below:
 
 
-   <img alt="Section-names" src="../../assets/images/present/section_names.png" width="300">
+   <img alt="Section-names" src="{{ site.baseurl }}/assets/images/present/section_names.png" width="300">
 
 
    Here the agenda slide is in the section 'Agenda'.
@@ -77,7 +77,7 @@ Make sure that:
    * `<name-of-tag>` must be _lowercase_ and _without spaces_.
 
 
-   {: .hint }
+   {: .note }
    > Information on how the **tags** are mapped to Salesforce data can be found [here](../tag-mapping).
 
 
@@ -86,11 +86,11 @@ Make sure that:
    To replace images use the following tag in the image name: `[image:<image_name>]`.
 
 
-![Replace images](../../assets/images/present/image_tags.png)
+![Replace images]({{ site.baseurl }}/assets/images/present/image_tags.png)
 
 6. Charts are not (yet) supported in Present
 
-  {: .hint }
+  {: .important }
   > **Charts are not (yet) supported in the current version of Present**
   >
   > You are still able to include charts in the templates but the data cannot be changed.
@@ -100,7 +100,7 @@ Make sure that:
   >
   > All worksheet data must be included in the PowerPoint file (PPTX)
 
-  ![Charts in presentations](../../assets/images/present/charts.png)
+  ![Charts in presentations]({{ site.baseurl }}/assets/images/present/charts.png)
 
   {: .warning }
   > **Deletion of Master Templates are not supported in Present v1.10**

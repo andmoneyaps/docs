@@ -1,16 +1,17 @@
 ---
 layout: default
-title: Graph Proxy
-nav_order: 6
-parent: BookMe
+title: Graph Proxy Architecture
+nav_order: 1
+parent: Technical Reference
+grand_parent: Platform Deployment
 ---
 
-# Graph-Proxy
+# Graph Proxy Technical Reference
 
 The **Graph-Proxy** is a containerized application that acts as a secure intermediary between the BookMe solution and the Microsoft Graph API.
 It is an essential part of the Financial Booking Solutions and is deployed as part of the Azure resources included in the App Offer.
 
-![Graph-Proxy and Key Vault Architecture](../../assets/images/graph-proxy-keyvault.png)
+![Graph-Proxy and Key Vault Architecture]({{ site.baseurl }}/assets/images/graph-proxy-keyvault.png)
 
 {: .note }
 > For detailed installation instructions, please refer to the [Installation Guide](../installation-marketplace-app-offer).
@@ -74,7 +75,7 @@ In a single tenant installation, both the Azure and Entra ID components are depl
 - Sets up an App Registration with the required **Calendar Access** and **Online Meeting** permission.
 - Assigns the necessary roles to the managed identity for accessing Azure resources, such as the Key Vault and container image repository.
 
-This automated setup ensures that the Graph-Proxy can access the Calendar and Online Meeting Graph API without further manual configuration.
+This automated setup configures the Graph-Proxy to access the Calendar and Online Meeting Graph API.
 
 ### For Multi-Tenant Installations
 
@@ -85,12 +86,12 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Sign in with a user account that has the following permissions:
      - `Application.ReadWrite.All`
      - `Synchronization.ReadWrite.All`
-   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](../enable-scim-provisioning) to deploy the Entra ID components.
+   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1](powershell-scripts#enable-scim-provisioningps1) to deploy the Entra ID components.
    - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** and **Online Meeting** permissions.
 
 2. **Configure Teams access policy**
     - Sign in with a user account that has one of the two Teams admin roles `Teams Communications Administrator` or `Teams Administrator`.
-    - Execute the PowerShell script [Add-Teams-Access-Policy.ps1](../add-teams-access-policy) to create a Teams access policy for the above generated App Registration. This step is necessary to allow the Graph-Proxy to manage online meetings in Microsoft Teams.
+    - Execute the PowerShell script [Add-Teams-Access-Policy.ps1](../configuration/teams-access-policy) to create a Teams access policy for the above generated App Registration. This step is necessary to allow the Graph-Proxy to manage online meetings in Microsoft Teams.
 
 3. **Deploy the Azure Part**
 
@@ -116,7 +117,7 @@ Two services are then provided:
 - **Save**
   Allows the user to submit the given URL to the database. This button will be disabled, if the posted URL matches the existing URL.
 
-![management-ui-graph-test.png](../../assets/images/management-ui-graph-test.png)
+![Management UI Graph Test]({{ site.baseurl }}/assets/images/management-ui-graph-test.png)
 
 {: .note }
 >  Be sure to follow the [Installation Marketplace App Offer](../installation-marketplace-app-offer) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.

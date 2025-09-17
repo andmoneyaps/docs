@@ -121,23 +121,23 @@ The Present Test Tool allows you to test and validate your templates before uplo
 This tool helps you to identify any issues with your templates before they are uploaded to Present. It can report on missing data in chart, incorrect tags, and more. It allows template authors to get info, warnings or errors on the slides they create.
 
 
-<img alt="Validate Button" src="../../assets/images/present/validate_button.png" width="600"/>
-<img alt="validate Template" src="../../assets/images/present/validate_template.png" width="600"/>
-<img alt="Validation Results" src="../../assets/images/present/validation_results.png" width="600"/>
+<img alt="Validate Button" src="{{ site.baseurl }}/assets/images/present/validate_button.png" width="600"/>
+<img alt="validate Template" src="{{ site.baseurl }}/assets/images/present/validate_template.png" width="600"/>
+<img alt="Validation Results" src="{{ site.baseurl }}/assets/images/present/validation_results.png" width="600"/>
 
 
 - **Deactivation of old templates**
 
 We now support deactivation/archiving of templates in Present. This will keep your templates' metadata when deactivating templates used in reporting. This feature allows you to deactivate templates, but keep the metadata of a template but no longer want to use.
 
-<img alt="Deactivate template" src="../../assets/images/present/deactivate.png" width="300"/>
+<img alt="Deactivate template" src="{{ site.baseurl }}/assets/images/present/deactivate.png" width="300"/>
 
 
 - **Tag mapping now supports custom and nested sObjects**
 
 This feature allows you to map fields from custom and nested objects in Salesforce to tags in your templates.
 
-<img alt="Extended Tag Mapping" src="../../assets/images/present/tag_mapping_extended.png" width="600"/>
+<img alt="Extended Tag Mapping" src="{{ site.baseurl }}/assets/images/present/tag_mapping_extended.png" width="600"/>
 
 
 ### Improvements

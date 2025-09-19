@@ -10,9 +10,9 @@ collection: insights
 
 ## Overview
 
-Insights Settings control how the availability simulation runs and what data is generated. These settings determine the scope, granularity, and focus of your availability analysis.
+The Insights Settings set the framework for how the availability simulation runs and what output data is generated. These settings determine the scope, granularity, and focus of your availability analysis.
 
-![Insights Settings](../../assets/images/insights/insights-setting.png)
+![Insight Settings](image.png)
 
 ## Configuration Steps
 
@@ -27,14 +27,15 @@ Insights Settings control how the availability simulation runs and what data is 
 | Name | Identifier for the setting | "Private" |
 | Customer Type | The customer type used for simulation | "Basic Customer" |
 | Time Zone | Timezone used for dates of generated data | "Europe/Copenhagen" |
-
+| Use case | The use case used for simulation | "Full dataset" |
+| Specific employee | Includes available time for specific employees in dataset | "Full dataset" |
 
 ### Meeting configuration
 
 Insights data is calculation using a meeting configuration, typically defined by the customer type and a meeting theme.
 A meeting configuration should be selected for an insights setting, or a custom one can be defined.
 
-### Time Configuration
+### Time Configuration (selected meeting topic)
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
@@ -42,6 +43,7 @@ A meeting configuration should be selected for an insights setting, or a custom 
 | Calendar Time Buffer | Minutes before meeting allowed | 120 |
 | Working Time Buffer | Required working hours buffer | 60 |
 | Time Between Meetings | Required gap between meetings | 15 |
+| Opening hours | Opening hours defines timefram for availability check | 15 |
 
 ### Meeting Parameters
 

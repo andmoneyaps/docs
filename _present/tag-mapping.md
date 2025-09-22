@@ -40,11 +40,31 @@ A single tag can be used across multiple different templates.
 >
 > Any tag that has not been mapped to an SObject field, can be populated by the user through input fields, before the creation of the slide deck.
 
+## Unmapped Tags
+
+### Handling Unmapped Tags in the Validation Modal
+
+When generating a slide deck, the existing validation modal will also include input fields for any unmapped tags found in your selected slides. These appear as empty fields alongside the pre-populated mapped tag values.
+
+**What you'll see:**
+- Mapped tags appear with their Salesforce data pre-filled for validation
+- Unmapped tags appear as empty input fields ready for your custom text
+- You can edit both mapped and unmapped tag values before generating the presentation
+
+### When to Use Unmapped Tags
+
+Unmapped tags are ideal for content that:
+- Changes per meeting and isn't stored in Salesforce
+- Requires contextual input specific to each presentation
+- Varies too frequently to warrant creating Salesforce fields
+
+**Example:** While `[tag:account_name]` shows pre-filled data from Salesforce, an unmapped tag like `[tag:meeting_focus]` will appear as an empty field where you can enter "Investment Portfolio Review".
+
 {: .warning }
 > **Tag mapping maps Salesforce fields 'as-is'**
 >
 > In Present v1.10 the tag-mapping maps the Salesforce SObject fields 'as-is', meaning the raw data.
-> 
+>
 > **With some exceptions**:
 > - Dates are transformed based on your locale and language in User Settings: An example `Event.enddate` will be in DK date format: `dd.MM.yyyy`
 > - If a field is a lookup (an `Id`) for example `Account.OwnerId` the sObject is queried and the `.Name` property is used. In case of the `Account.OwnerId` this will return the Name of the Account Owner.

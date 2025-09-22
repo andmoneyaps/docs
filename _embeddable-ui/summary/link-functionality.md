@@ -2,7 +2,7 @@
 layout: default
 title: Link Functionality
 parent: Summary Component
-grand_parent: iFrame Components
+grand_parent: Embeddable UI
 nav_order: 1
 ---
 
@@ -41,7 +41,7 @@ Adding a link to your text is straightforward:
 3. **Add Your URL**: A small input box appears where you can type or paste your web address
 4. **Save Your Link**: Press Enter or click the checkmark to create the link
 
-![iFrame create link](../../../assets/images/iframe/iframe-add-new-link.png)
+![Create link](../../../assets/images/embeddable-ui/iframe-add-new-link.png)
 
 ### Editing an Existing Link
 
@@ -52,7 +52,7 @@ Need to update a link? Here's how:
 3. **Make Your Changes**: Edit the web address as needed
 4. **Save or Cancel**: Use the checkmark to save your changes or the X to cancel
 
-![iFrame edit link](../../../assets/images/iframe/iframe-edit-existing-link.png)
+![Edit link](../../../assets/images/embeddable-ui/iframe-edit-existing-link.png)
 
 ### Understanding the Link Workflow
 

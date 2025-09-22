@@ -22,7 +22,7 @@ collections:
   api:
     permalink: "/:collection/:path/"
     output: true
-  iframe:
+  embeddable-ui:
     permalink: "/:collection/:path/"
     output: true
 
@@ -83,8 +83,8 @@ just_the_docs:
       # name: "Public API"
       # nav_exclude: false
       # nav_fold: true
-    iframe:
-      # name: "iFrame Components"
+    embeddable-ui:
+      # name: "Embeddable UI"
       # nav_exclude: false
       # nav_fold: true
 

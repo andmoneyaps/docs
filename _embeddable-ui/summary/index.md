@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Summary Component
-parent: iFrame Components
+parent: Embeddable UI
 nav_order: 1
 has_children: true
 ---
@@ -12,7 +12,7 @@ The Summary component is a sophisticated rich text editor built with the Lexical
 
 ## Documentation Structure
 
-### [Link Functionality Guide]({{ site.baseurl }}/iframe/summary/link-functionality/)
+### [Link Functionality Guide]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/)
 Complete guide to the link management features including:
 - Creating and editing links
 - Security and validation

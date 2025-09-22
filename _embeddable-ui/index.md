@@ -1,14 +1,14 @@
 ---
 layout: default
-title: iFrame Components
+title: Embeddable UI
 nav_order: 6
 has_children: true
-permalink: /iframe
+permalink: /embeddable-ui
 ---
 
-# iFrame Components Documentation
+# Embeddable UI Documentation
 
-Welcome to the andMoney iFrame Components documentation. This section covers embeddable components and integrations designed for seamless integration into external applications and CRM systems.
+Welcome to the andMoney Embeddable UI documentation. This section covers embeddable components and integrations designed for seamless integration into external applications and CRM systems.
 
 ## Available Components
 

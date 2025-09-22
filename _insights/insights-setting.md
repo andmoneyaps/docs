@@ -12,7 +12,7 @@ collection: insights
 
 The Insights Settings set the framework for how the availability simulation runs and what output data is generated. These settings determine the scope, granularity, and focus of your availability analysis.
 
-![Insight Settings](image.png)
+![Insight Settings](../../assets/images/insights/Insights_settings_2025-09-22.png)
 
 ## Configuration Steps
 

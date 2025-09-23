@@ -8,7 +8,7 @@ permalink: /embeddable-ui
 
 # Embeddable UI Documentation
 
-Welcome to the andMoney Embeddable UI documentation. This section covers embeddable components and integrations designed for seamless integration into external applications and CRM systems.
+Welcome to the &Money Embeddable UI documentation. This section covers embeddable components and integrations designed for seamless integration into external applications and CRM systems.
 
 ## Available Components
 

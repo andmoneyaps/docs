@@ -8,7 +8,7 @@ has_children: true
 
 # Summary Component
 
-The Summary component is a sophisticated rich text editor built with the Lexical framework, designed for seamless integration into CRM systems and web applications through iFrame embedding.
+The Summary component is a rich text editor built with the Lexical framework, designed for seamless integration into CRM systems and web applications through iFrame embedding.
 
 ## Documentation Structure
 

@@ -115,20 +115,12 @@ Your content is protected by multiple security measures:
 - **Safe Fallbacks**: If an unsafe protocol is detected, the link is replaced with a harmless placeholder rather than allowing potentially dangerous content
 - **Trusted Protocols Only**: Only industry-standard, safe link types are permitted - experimental or potentially harmful protocols are blocked
 
-## Browser Compatibility
+## Supported browsers
 
-The link functionality is compatible with all modern browsers:
-
-### Desktop Browsers
-
-- **Chrome/Edge**: Version 90+ (Full support)
-- **Firefox**: Version 88+ (Full support)
-- **Safari**: Version 14+ (Full support)
-- **Opera**: Version 76+ (Full support)
-
-### Mobile Browsers
-
-- **iOS Safari**: Version 14+ (Full support)
-- **Chrome Mobile**: Version 90+ (Full support)
-- **Firefox Mobile**: Version 88+ (Full support)
-- **Samsung Internet**: Version 14+ (Full support)
+- **Firefox**: 52+
+- **Chrome**: 49+
+- **Edge**: 79+ (when Edge switched to Chromium)
+- **Safari**: 11+
+- **iOS**: 11+ (Safari)
+- **iPad**: OS 13+ (Safari)
+- **Android Chrome**: 72+

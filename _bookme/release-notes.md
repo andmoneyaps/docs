@@ -7,6 +7,18 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.18.0 (24-09-2025)
+Here is what's new in release 1.18.0 of &bookme.
+> **Managed Package Version ID**: `04tP70000020PZxIAM`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP70000020PZxIAM`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+- **Extension to iFrame solution**
+  - A new custom event, `backtoiframe`, has been implemented to enable navigation back to the meeting overview within the iFrame interface.
+
 ## Release 1.16.0 (22-05-2025)
 
 ### 1.16.0 — New features and improvements

@@ -93,9 +93,6 @@ For example:
 | `title` | Capitalizes the first letter of each word | `hello world` | `Hello World` |
 | `trim` | Removes leading and trailing whitespace | `  hello world  ` | `hello world` |
 
-{: .note }
-> **Special case for Danish**: The `capitalize` modifier has special handling for the Danish letter "i" - when the input is just "i" (with or without spaces), it will be converted to "I".
-
 ### Combining Modifiers
 
 You can chain multiple modifiers together by separating them with additional colons:

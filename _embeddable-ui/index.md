@@ -17,15 +17,7 @@ The BookMe iframe component enables seamless integration of meeting booking func
 
 - Schedule meetings directly within their CRM
 - View and manage existing bookings
-- Access advisor availability in real-time
-- Customize the booking experience through configuration options
-
-**Key Features:**
-- Embedded iframe solution for Salesforce Lightning pages
-- PostMessage API communication for secure data exchange
-- Configurable UI elements and booking flows
-- Support for custom themes and branding
-- Real-time height adjustment for optimal display
+- Embed in iframe solution for Salesforce Lightning pages
 
 #### Access Requirements
 

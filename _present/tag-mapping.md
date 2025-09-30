@@ -14,16 +14,16 @@ It is possible to map fields and nested fields from Account, Contact, and Event 
 To start mapping between tags and SObject fields, go to the Management UI and select the Tags tab.
 This will lead you to the following page:
 
-![Tag Mapping Overview](<tags mapping.png>)
+![Tag Mapping Overview](../../assets/images/present/tags_mapping_overview.png)
 
 1. Click Create and Choose a tag to be configurated. From this input, any tag used in one of the uploaded templates can be selected.
-![Tag configuration](<tag configuration.png>)
+![Tag configuration](../../assets/images/present/tag_configuration_step1.png)
 
 2. Select Object type. This can be Account, Contact, and Event, or from the built-in custom SObject (Specific).
-![Tag configuration2](<tag configuration2.png>)
+![Tag configuration2](../../assets/images/present/tag_configuration_step2.png)
 
 3. Select Object field for the chosen Object type.
-![Tag configuration3](<tag configuration3.png>)
+![Tag configuration3](../../assets/images/present/tag_configuration_step3.png)
 
 4. If the field is a reference type, you can select a nested field from the reference object.
 

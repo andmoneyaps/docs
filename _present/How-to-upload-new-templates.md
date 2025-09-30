@@ -8,7 +8,7 @@ collection: present
 
 # How to upload new templates / deactivate old templates 
 
-This article shows you how to upload new- og deactive existing templates in the Management UI.
+This article shows you how to upload new templates and deactivate existing templates in the Management UI.
 
 ## Before you start
 
@@ -48,7 +48,7 @@ Go to the Management UI and select Present->Setup.
 1. Choose the template to be deactivated and click the trash-icon.
 ![Deactivate](../../assets/images/present/deactivate_template.png)
 
-2. click Delete and the template will be deactivated.
+2. Click Delete and the template will be deactivated.
 ![Delete](../../assets/images/present/delete_template_confirm.png)
 
 3. Deactivated templates can be listed in the Management UI.

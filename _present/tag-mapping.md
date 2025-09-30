@@ -7,7 +7,7 @@ collection: present
 ---
 
 # Tag Mapping
-Tag mapping is useful for mapping data from salesforce objects to the tags that are used throughout the uploaded templates.
+Tag mapping is useful for mapping data from Salesforce objects to the tags that are used throughout the uploaded templates.
 It is possible to map fields and nested fields from Account, Contact, and Event to the tags in templates.
 
 ## Tag Mapping
@@ -16,7 +16,7 @@ This will lead you to the following page:
 
 ![Tag Mapping Overview](../../assets/images/present/tags_mapping_overview.png)
 
-1. Click Create and Choose a tag to be configurated. From this input, any tag used in one of the uploaded templates can be selected.
+1. Click Create and choose a tag to be configured. From this input, any tag used in one of the uploaded templates can be selected.
 ![Tag configuration](../../assets/images/present/tag_configuration_step1.png)
 
 2. Select Object type. This can be Account, Contact, and Event, or from the built-in custom SObject (Specific).
@@ -53,5 +53,5 @@ A single tag can be used across multiple different templates.
 > In Present v1.10 the tag-mapping maps the Salesforce SObject fields 'as-is', meaning the raw data.
 > 
 > **With some exceptions**:
-> - Dates are transformed based on your locale and language in User Settings: An example `Event.enddate` will be in DK date format: `dd.MM.yyyy`
+> - Dates are transformed based on your locale and language in User Settings. For example, `Event.enddate` will be in DK date format: `dd.MM.yyyy`
 > - If a field is a lookup (an `Id`) for example `Account.OwnerId` the sObject is queried and the `.Name` property is used. In case of the `Account.OwnerId` this will return the Name of the Account Owner.

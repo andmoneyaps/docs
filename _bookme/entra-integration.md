@@ -105,58 +105,19 @@ For each bank customer:
 
 ## User Access Configuration
 
-### Assigning App Roles to Users and Groups
+Users must be assigned appropriate app roles in Entra ID to access the BookingPlatform Management API. The available roles are:
 
-Users must be properly configured in Entra ID to access the BookingPlatform Management API. This section describes how to assign the appropriate app roles to users and groups.
+- **Admin**: Full administrative access to the platform
+- **Configurator**: Configuration and setup functions
+- **Manager**: Management-level access with oversight capabilities
+- **Employee**: Standard user access for day-to-day operations
+- **Customer**: Customer-facing access with limited permissions
 
-#### Configuration Steps
+For detailed instructions on assigning users and groups to app roles, see the [App Registration Installation](app-registration-installation.md#role-assignment-for-the-management-ui) guide.
 
-1. **Navigate to Enterprise Applications** in the Azure portal
-   - Go to Azure Active Directory > Enterprise applications
-   - Search for "BookingPlatform" or use the application ID
+### Security Best Practices
 
-2. **Locate the BookingPlatform Mgmt API Application**
-   - Find the BookingPlatform Management API app registration
-   - Click on the application to open its configuration
-
-3. **Add Users and Groups**
-   - Navigate to "Users and groups" in the left menu
-   - Click "Add user/group"
-   - Select the users or groups that need access to the BookingPlatform API
-
-4. **Assign App Roles**
-   - During user/group assignment, select the appropriate app role:
-     - **Admin**: Full administrative access to the platform
-     - **Configurator**: Access to configuration and setup functions
-     - **Manager**: Management-level access with oversight capabilities
-     - **Employee**: Standard user access for day-to-day operations
-     - **Customer**: Customer-facing access with limited permissions
-
-5. **Verify Access Configuration**
-   - Confirm that users can authenticate successfully
-   - Test access to ensure proper role-based permissions are applied
-   - Validate that users receive appropriate access levels based on their assigned roles
-
-#### App Role Descriptions
-
-| Role | Description | Typical Use Cases |
-|------|-------------|-------------------|
-| **Admin** | Full platform administration | System administrators, IT staff |
-| **Configurator** | Configuration and setup access | Implementation teams, setup specialists |
-| **Manager** | Management oversight and reporting | Team leads, department managers |
-| **Employee** | Standard operational access | Bank employees, customer service staff |
-| **Customer** | Limited customer-facing access | External users, customer portals |
-
-#### Important Considerations
-
-- **Role Assignment**: Choose the most restrictive role that provides necessary access
-- **Group Management**: Use security groups to manage access more efficiently, especially for larger organizations
-- **Access Validation**: Users must be properly authenticated in their Entra ID session
-- **Permission Inheritance**: Role permissions are inherited based on the assigned app role
-
-#### Security Notes
-
-- Only assign roles to users who legitimately need access to the BookingPlatform
-- Regularly review role assignments to ensure access remains appropriate
-- Monitor authentication logs for any access issues or security concerns
-- Follow the principle of least privilege when assigning roles
+- Assign the most restrictive role that provides necessary access
+- Use security groups to manage access efficiently
+- Regularly review role assignments
+- Monitor authentication logs for access issues

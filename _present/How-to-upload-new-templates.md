@@ -8,7 +8,7 @@ collection: present
 
 # How to upload new templates / deactivate old templates 
 
-This article shows you how to upload new templates in Present.
+This article shows you how to upload new templates and deactivate existing templates in the Management UI.
 
 ## Before you start
 
@@ -16,21 +16,23 @@ Make sure that:
 - The latest Present package is installed in your org
 - Make sure all steps are completed in [technical details](../present-technical-details).
 
-## Uploading a new template in Present
+## Uploading a new template
 
-1. Go to the Present app in Salesforce.
-![Present Search](../../assets/images/present/present_search.png)
-2. Go to the 'Templates'-tab.
-![Templates Tab](../../assets/images/present/templates_tab.png)
-3. Click the upload button.
-![Upload](../../assets/images/present/upload_button.png)
-4. A dialog will prompt you to upload a new template.
-![Upload Template](../../assets/images/present/upload_template.png)
-5. When upload is finished click 'Done'.
-![Upload finished](../../assets/images/present/upload_finished.png)
-6. Now select an appropriate customer type (Kundetype).
-![Customer type selection](../../assets/images/present/customer_type_selection.png)
-   1. Select customer type (Kundetype) and click upload.
+1. Go to the Management UI and select Present->Setup.
+![Present mgmt ui](../../assets/images/present/present_mgmt_ui_setup.png)
+
+2. Click the Upload button.
+![Upload](../../assets/images/present/upload_template_button.png)
+
+3. Click Upload file and select file in the dialogue pop-up.
+![Upload file](../../assets/images/present/upload_file_dialog.png)
+
+4. When uploading the file is validated and admin gets an overview of findings.
+![Upload finished](../../assets/images/present/upload_validate_results.png)
+
+5. Now select an appropriate customer type and click Upload
+![Customer type selection](../../assets/images/present/customer_type_upload.png)
+
 
 {: .note }
 > **Template Upload Progress**
@@ -40,13 +42,14 @@ Make sure that:
 
 ## Deactivate old templates
 
-You can deactivate/archive old templates in Present. This will keep your templates' metadata when deactivating templates used in reporting. This feature allows you to deactivate templates, but keep the metadata of a template but no longer want to use.
+You can deactivate/archive old templates in the Management UI. This will keep your templates' metadata when deactivating templates used in reporting. This feature allows you to deactivate templates, but keep the metadata of a template you no longer want to use.
 
-Go to the Present app in Salesforce.
-1. ![Present Search](../../assets/images/present/present_search.png)
-2. Go to the 'Templates'-tab.
-   ![Templates Tab](../../assets/images/present/templates_tab.png)
-3. Click the arrow button next to the uploaded template.
+Go to the Management UI and select Present->Setup.
+1. Choose the template to be deactivated and click the trash-icon.
+![Deactivate](../../assets/images/present/deactivate_template.png)
 
-   <img alt="Deactivate template" src="../../assets/images/present/deactivate.png" width="300"/>
-4. Click "Deactivate", and the template will be deactivated.
+2. Click Delete and the template will be deactivated.
+![Delete](../../assets/images/present/delete_template_confirm.png)
+
+3. Deactivated templates can be listed in the Management UI.
+![Deactivated templates](../../assets/images/present/list_of_deactivated_templates.png)

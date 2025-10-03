@@ -102,3 +102,22 @@ For each bank customer:
    - Request minimal necessary permissions
    - Avoid unnecessary admin consent requirements
    - Use basic Microsoft Graph API scopes when possible
+
+## User Access Configuration
+
+Users must be assigned appropriate app roles in Entra ID to access the BookingPlatform Management API. The available roles are:
+
+- **Admin**: Full administrative access to the platform
+- **Configurator**: Configuration and setup functions
+- **Manager**: Management-level access with oversight capabilities
+- **Employee**: Standard user access for day-to-day operations
+- **Customer**: Customer-facing access with limited permissions
+
+For detailed instructions on assigning users and groups to app roles, see the [App Registration Installation](app-registration-installation.md#role-assignment-for-the-management-ui) guide.
+
+### Security Best Practices
+
+- Assign the most restrictive role that provides necessary access
+- Use security groups to manage access efficiently
+- Regularly review role assignments
+- Monitor authentication logs for access issues

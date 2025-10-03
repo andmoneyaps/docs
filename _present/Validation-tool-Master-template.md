@@ -19,20 +19,23 @@ This tool helps you to identify any issues with your templates before they are u
 - Identifies incorrect tag usage
 - Verifies section and slide naming conventions
 - Reports template structure issues
+- Interactive elements in slides
+- Size of used pictures
 
 ## Using the Validation Tool
 
-1. Access the validation tool from the Present app interface
+1. Access the validation tool from the Management UI interface
+
 2. Click the validate button to start the validation process
+![Validate](<validate template.png>)
+
 3. Select your template file for validation
+![Uploade file](<validate template2.png>)
+
 4. Review the validation results
+![Result](validateresult.png)
 
 
-<img src="../../assets/images/present/validate_button.png" alt="Validate Button" width="500">
-
-<img src="../../assets/images/present/validate_template.png" alt="Validate Template" width="500">
-
-<img src="../../assets/images/present/validation_results.png" alt="Validation Results" width="500">
 
 ## Validation Results
 

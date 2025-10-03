@@ -27,11 +27,11 @@ Make sure that:
 3. Click Upload file and select file in the dialogue pop-up.
 ![Upload file](../../assets/images/present/upload_file_dialog.png)
 
-4. When uploading the file is validated and admin gets an overview of findings.
+4. When uploading the file is automatically validated and admin gets an overview of findings.
 ![Upload finished](../../assets/images/present/upload_validate_results.png)
 
 5. Now select an appropriate customer type and click Upload
-![Customer type selection](../../assets/images/present/customer_type_upload.png)
+![Customer type selection]()
 
 
 {: .note }

@@ -47,7 +47,7 @@ GET /bookme/time-slots/available?
   ...
 ```
 
-This will search for available advisors from configured Service Groups. See the [BookMe API Documentation]({{ site.baseurl }}/api/bookme#employee-types-v2) for detailed examples.
+This will search for available advisors from configured Service Groups.
 
 ---
 

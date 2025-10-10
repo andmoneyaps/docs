@@ -57,29 +57,35 @@ GET /config/rooms
 
 ## 2. Fetching Available Time Slots
 
-Once the customer has selected a theme, category, employee, and room, retrieve the available time slots:
+Once the customer has selected meeting parameters, retrieve the available time slots:
 
 ```http
-GET /bookme/time-slots/available
+GET /bookme/time-slots/available?requireEmployeeParticipation=true&lookForwardTime=7.00:00:00&...
 ```
 
 **Key Query Parameters:**
 
-- `explicitEmployeeIds` - Optional filter for specific employees
-- `startDate` - Optional filter for specific start date/time
-- `theme` - Optional filter for specific meeting theme
-- `customerCategoryId` - Optional filter by customer category
-- `meetingTypes` - Optional filter for meeting types (physical, online, etc.)
-- `requireRoom` - Optional filter to require a room
-- `specificRooms` - Optional filter for specific room IDs
-- `meetingDuration` - Optional filter for meeting duration
-- `requireEmployeeParticipation` - Whether employee participation is required (required)
+| Parameter | Required | Description | Example Value |
+|-----------|----------|-------------|---------------|
+| `requireEmployeeParticipation` | Yes | If `true`: all specified employees must be available. If `false`: at least one must be available | `true` |
+| `explicitEmployeeIds` | No | Specific employee IDs. Omit for Local/ServiceGroup employees | `[]` or `["uuid1"]` |
+| `employeeTypes` | No | Employee pool types (V2). At least one required. Only used when `requireEmployeeParticipation=false` | `["Local", "ServiceGroup"]` |
+| `startDate` | No | Search start date/time | `2025-10-09T08:00:00Z` |
+| `lookForwardTime` | No | How far ahead to search | `"7.00:00:00"` (7 days) |
+| `topic` | No | Meeting theme ID | `"theme-uuid"` |
+| `customerTypeId` | No | Customer category ID | `"category-uuid"` |
+| `meetingTypes` | No | Types of meetings | `["physical", "online"]` |
+| `customerLocation` | No | Customer's location | `"Copenhagen"` |
+| `meetingLocation` | No | Meeting location | `"Branch-North"` |
+| `requireRoom` | No | Must have room available | `true` |
+| `specificRooms` | No | Specific room IDs | `["room-uuid"]` |
 
 **Response:** Returns a list of available time slots based on the search filters.
 
+
 ## 3. Reserving a Time Slot
 
-After choosing an available time slot, the customer must reserve it:
+After choosing an available time slot, the customer must reserve it. **Reservations expire after exactly 5 minutes** if not confirmed by creating a meeting.
 
 ```http
 POST /bookme/time-slots/reserve
@@ -95,9 +101,10 @@ Authorization: Bearer <access_token>
     "startDate": "2025-03-15T10:00:00Z",
     "endDate": "2025-03-15T11:00:00Z",
     "status": "Reserved",
-    "employeeId": "67890"
+    "employeeId": "employee-uuid",
+    "roomId": "room-uuid"  // Optional, if room is required
   },
-  "token": "reservation-token"
+  "token": "session-token-uuid"  // Unique UUID for this customer session
 }
 ```
 

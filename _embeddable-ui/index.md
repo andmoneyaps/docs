@@ -10,7 +10,7 @@ permalink: /embeddable-ui
 
 Welcome to the &Money Embeddable UI documentation. This section covers embeddable components and integrations designed for seamless integration into external applications and CRM systems.
 
-## Available Components
+## Available Pages
 
 ### BookMe Iframe Component
 The BookMe iframe component enables seamless integration of meeting booking functionality into Salesforce and other platforms. This component allows users to:
@@ -31,9 +31,9 @@ For detailed technical configuration steps, see the [Entra ID Integration Guide]
 
 ### Summary Component
 The Summary component provides a rich text editor with advanced formatting capabilities that can be embedded in Salesforce and other CRM platforms. Key features include:
+### Setup and Configuration
+- **[Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/)** - Complete guide for integrating &Money Portal and quick actions in Salesforce
 
-- Rich text editing with Lexical editor
-- Link management functionality
-- Markdown support
-- Secure URL validation
-- Cross-browser compatibility
+### Component Documentation  
+- **[Summary Component]({{ site.baseurl }}/embeddable-ui/summary/)** - Rich text editor with advanced formatting capabilities
+  - [Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/)** - Complete guide to link management features

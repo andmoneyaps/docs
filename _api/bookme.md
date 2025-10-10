@@ -161,22 +161,123 @@ GET /time-slots/available
 ```
 
 **Query Parameters:**
-- `explicitEmployeeIds` (array): Specific employee IDs
-- `startDate` (datetime): Start date
-- `lookForwardTime` (timespan): Look-ahead duration
-- `topic` (uuid): Meeting topic ID
-- `customerTypeId` (uuid): Customer type
-- `meetingTypes` (array): Types of meetings
-- `employeeTypes` (array): Types of employees (V2 only: "Local", "ServiceGroup", "Explicit")
-- `customerLocation` (string): Customer location
-- `meetingLocation` (string): Meeting location
-- `requireRoom` (boolean): Room requirement
-- `requireEmployeeParticipation` (boolean, required): Employee participation requirement
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `requireEmployeeParticipation` | boolean | Yes | If `true`, requires all explicitly specified employees are available for the entire meeting duration. If `false`, returns slots where at least one specified employee is available |
+| `explicitEmployeeIds` | array of uuid | No | Specific employee IDs. Pass empty array or omit for all employees |
+| `startDate` | datetime | No | Start date for time slot search (ISO 8601 format) |
+| `lookForwardTime` | string | No | Duration to search ahead (format: `"days.hours:minutes:seconds"`, e.g., `"7.00:00:00"` for 7 days) |
+| `topic` | uuid | No | Meeting topic/theme ID |
+| `customerTypeId` | uuid | No | Customer type/category ID |
+| `meetingTypes` | array | No | Types of meetings: `["physical", "online", "telephone", "offsite"]` |
+| `employeeTypes` | array | No | V2 only: Employee selection types. At least one value required. Only relevant when `requireEmployeeParticipation` is `false` (see [Employee Types](#employee-types-v2)) |
+| `customerLocation` | string | No | Customer's location (free text, used to filter local employees) |
+| `meetingLocation` | string | No | Meeting location (free text, defaults to customerLocation if omitted) |
+| `requireRoom` | boolean | No | If `true`, only return slots with available rooms |
+| `specificRooms` | array of uuid | No | Specific room IDs to filter by |
+| `meetingDuration` | string | No | Override default meeting duration (format: `"hours:minutes:seconds"`) |
+| `ignoreMeetingIds` | array of uuid | No | Meeting IDs to exclude from conflict checking |
+| `isCustomerInitiated` | boolean | No | Whether the booking is customer-initiated |
+| `ignoreMinimumTimeBeforeBooking` | boolean | No | Skip minimum time before booking validation |
+| `getBestTimeSlots` | boolean | No | Return optimized time slot suggestions (default: true) |
 
 **Response:** Array of available TimeSlot objects
 
+##### Employee Types (V2)
+
+**Important:** The `employeeTypes` parameter is only relevant when `requireEmployeeParticipation` is set to `false`. At least one value must be provided.
+
+This parameter controls which pools of employees to search. Multiple types can be combined:
+
+- **`Explicit`**: Use only employees specified in `explicitEmployeeIds`
+- **`Local`**: Include employees qualified to serve the customer's location
+- **`ServiceGroup`**: Include employees from configured [Service & Competence Groups]({{ site.baseurl }}/bookme/service-competence-groups)
+
+**Common Patterns:**
+
+```javascript
+// All employees must be available (most restrictive)
+{
+  "explicitEmployeeIds": ["employee-uuid-1", "employee-uuid-2"],
+  "requireEmployeeParticipation": true
+}
+
+// At least one employee available from specified IDs
+{
+  "explicitEmployeeIds": ["employee-uuid-1", "employee-uuid-2"],
+  "employeeTypes": ["Explicit"],
+  "requireEmployeeParticipation": false
+}
+
+// All available employees (Local + ServiceGroup)
+{
+  "employeeTypes": ["Local", "ServiceGroup"],
+  "requireEmployeeParticipation": false
+}
+
+// One specific employee only
+{
+  "explicitEmployeeIds": ["employee-uuid"],
+  "employeeTypes": ["Explicit"],
+  "requireEmployeeParticipation": false
+}
+
+// Only local employees at customer's location
+{
+  "employeeTypes": ["Local"],
+  "customerLocation": "Copenhagen",
+  "requireEmployeeParticipation": false
+}
+
+// All employee types (maximum availability)
+{
+  "employeeTypes": ["Explicit", "Local", "ServiceGroup"],
+  "requireEmployeeParticipation": false
+}
+```
+
+**Note:**
+- When `requireEmployeeParticipation` is `true`, all explicitly specified employees must be available
+- When `requireEmployeeParticipation` is `false`, at least one employee from the specified types must be available
+- Employee types are combined (union), not mutually exclusive
+
+##### How Time Slots Are Generated
+
+Available time slots are generated automatically based on employee availability and configuration:
+
+- **Interval**: Time slots start at 30-minute intervals (`:00` and `:30` minutes)
+- **Duration**: Default meeting duration is typically 1 hour (configurable via `meetingDuration` parameter)
+- **Multiple slots**: For each available employee, slots are generated for each available meeting type they support
+
+**Example response:**
+```json
+[
+  {
+    "startDate": "2025-10-10T08:00:00.000Z",
+    "endDate": "2025-10-10T09:00:00.000Z",
+    "meetingType": "Physical",
+    "employeeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "startDate": "2025-10-10T08:30:00.000Z",
+    "endDate": "2025-10-10T09:30:00.000Z",
+    "meetingType": "Physical",
+    "employeeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "startDate": "2025-10-10T09:00:00.000Z",
+    "endDate": "2025-10-10T10:00:00.000Z",
+    "meetingType": "Online",
+    "employeeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  }
+]
+```
+
+This means customers can book meetings starting at any half-hour mark within the employee's available working hours.
+
 #### Reserve Time Slot
-Reserve a time slot for booking.
+Reserve a time slot for booking. **Reservations expire after 5 minutes** if not converted to a meeting.
 
 ```http
 POST /time-slots/reserve
@@ -193,12 +294,76 @@ POST /time-slots/reserve
     "employeeId": "uuid",
     "serviceGroup": "string"
   },
-  "token": "string",
-  "existingMeetingId": "uuid"
+  "token": "uuid",
+  "existingMeetingId": "uuid"  // Optional
 }
 ```
 
-**Response:** Reservation confirmation
+**Parameters:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `timeSlot` | object | Yes | Time slot details to reserve |
+| `timeSlot.startDate` | datetime | Yes | Start time (ISO 8601) |
+| `timeSlot.endDate` | datetime | Yes | End time (ISO 8601) |
+| `timeSlot.status` | string | Yes | Should be `"Reserved"` |
+| `timeSlot.employeeId` | uuid | No | Employee/advisor ID |
+| `timeSlot.roomId` | uuid | No | Room ID if room is required |
+| `timeSlot.serviceGroup` | string | No | Service group identifier |
+| `token` | uuid | Yes | Unique reservation token (see [Token Behavior](#token-behavior)) |
+| `existingMeetingId` | uuid | No | Meeting ID when modifying an existing booking |
+
+##### Token Behavior
+
+The `token` parameter is crucial for managing reservations:
+
+**Same Token = Automatic Replacement:**
+When you reserve a new time slot with the **same token** as a previous reservation, the system automatically:
+1. Deletes the old reservation immediately
+2. Creates the new reservation
+3. Ensures only one active reservation per token
+
+This is the **recommended approach** when a customer changes their mind about time selection.
+
+**Example - Customer changes time slot:**
+```javascript
+// First reservation
+POST /time-slots/reserve
+{
+  "timeSlot": { "startDate": "2025-10-09T10:00:00Z", ... },
+  "token": "customer-session-token-123"
+}
+
+// Customer changes their mind - use SAME token
+POST /time-slots/reserve
+{
+  "timeSlot": { "startDate": "2025-10-09T14:00:00Z", ... },
+  "token": "customer-session-token-123"  // ← Same token
+}
+// Old 10:00 reservation is automatically deleted
+// New 14:00 reservation is created
+```
+
+**Different Token = Separate Reservations:**
+Using a different token creates a separate reservation. The old reservation will remain until it expires (5 minutes) or is explicitly replaced.
+
+##### Using existingMeetingId
+
+When rescheduling an existing meeting, pass `existingMeetingId` to exclude that meeting's time slots from conflict checking:
+
+```javascript
+// Rescheduling an existing meeting
+POST /time-slots/reserve
+{
+  "timeSlot": { "startDate": "2025-10-09T15:00:00Z", ... },
+  "token": "reschedule-token-456",
+  "existingMeetingId": "meeting-uuid-789"  // Ignores conflicts with this meeting
+}
+```
+
+This prevents false conflicts when moving a meeting to a different time.
+
+**Response:** Reserved TimeSlot object with confirmation
 
 ### Rooms
 

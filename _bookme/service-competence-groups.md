@@ -36,6 +36,19 @@ We recommend that you start by creating your Competence Groups (Groups).
 
 **Note:** Competencies apply to all subgroups within the Competence Group.
 
+### Using Service Groups via API
+
+When using the Public API to find available time slots, Service Groups are accessed via the `employeeTypes` parameter:
+
+```javascript
+GET /bookme/time-slots/available?
+  employeeTypes=ServiceGroup&
+  requireEmployeeParticipation=true&
+  ...
+```
+
+This will search for available advisors from configured Service Groups. See the [BookMe API Documentation]({{ site.baseurl }}/api/bookme#employee-types-v2) for detailed examples.
+
 ---
 
 ## 1. Creating a Competence Group

@@ -37,7 +37,6 @@ For first-time implementations, configure the embeddable UI URL as a Trusted URL
 
 | Environment | Embeddable UI URL                                 |
 | ----------- | ------------------------------------------------- |
-| Development | `https://embeddable.dev-env.booking.andmoney.dk`  |
 | Test        | `https://embeddable.test-env.booking.andmoney.dk` |
 | Production  | `https://embeddable.booking.andmoney.dk`          |
 

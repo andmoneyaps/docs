@@ -9,7 +9,28 @@ collection: present
 # Release Notes—Present
 
 ## Present - Version 1.27
-This version of present includes a few bug fixes
+This version of Present includes several releases of new features and a bug fixes.
+
+### Release Date - 2025-10-21
+This release includes the following updates:
+
+**Interactive slides**
+Allow the admin to create even more nice looking slides, which gives the feeling of interactivity at the meeting.
+
+Note: Active links dont work in Salesforce preview feature!
+
+**Editing slides**
+This feature allows admins to create slides where the user can edit the content with **free text** and thereby gives the users an option to create their own personal slide for the meeting.
+
+Note: Active links dont work in Salesforce preview feature!
+
+**Active links**
+Users of Present can now click at active links in the presentation, and come back to presentation when presenting in Power Point.
+
+Note: Active links dont work in Salesforce preview feature!
+
+**Tag modifiers**
+Allows admins to transform the data from Salesforce fields before inserting them into the customer presentations. This gives control over text formatting without changing the source data in Salesforce, and creates new opportunities for the usage of tags.
 
 ### Release Date - 2025-05-06
 This release includes the following updates:
@@ -21,7 +42,7 @@ This release includes the following updates:
 >
 > Remember to use your org's URL instead of [YOUR_DOMAIN].
 
-**General bugfixes** — Fixes a bug with agenda tag, so it correctly adds bullet points
+**General bugfixes** — Fixes a bug with agenda tag, so it correctly adds bullet points.
 
 **Changes** - Removed validation rule that disallowed inactive templates to be activated again (in case a template was falsely deactivated)
 

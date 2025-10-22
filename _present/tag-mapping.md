@@ -29,7 +29,7 @@ This will lead you to the following page:
 
 5. Click the 'Create' button.
 
-> In the example above, the tag "dine_jeres" is mapped to `Event → Account → andmoney__AMB_Taxonomy__c → Name`.
+> In the example above, the tag "agenda" is mapped to `Event → Account → andmoney__AMB_Taxonomy__c → Agenda`.
 
 If the tag mapping is successfully created, it will now be shown in the list of tag mappings.
 The list also shows which master templates the tags are used within.

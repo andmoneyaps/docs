@@ -9,15 +9,15 @@ collection: present
 # Release Notes—Present
 
 ## Present - Version 1.27
-This version of Present includes several releases of new features and a bug fixes.
+This version of Present includes several releases of new features and bug fixes.
 
 ### Release Date - 2025-10-21
 This release includes the following updates:
 
 **Interactive slides**
-Allow the admin to create even more nice looking slides, which gives the feeling of interactivity at the meeting.
+Allow the admin to create even more nice-looking slides, which gives the feeling of interactivity at the meeting.
 
-Note: Active links dont work in Salesforce preview feature!
+Note: Active links don't work in Salesforce preview feature!
 
 **Editing slides**
 This feature allows admins to create slides where the user can edit the content with **free text** and thereby gives the users an option to create their own personal slide for the meeting.
@@ -25,7 +25,7 @@ This feature allows admins to create slides where the user can edit the content 
 Note: Active links dont work in Salesforce preview feature!
 
 **Active links**
-Users of Present can now click at active links in the presentation, and come back to presentation when presenting in Power Point.
+Users of Present can now click at active links in the presentation, and come back to the presentation when presenting in PowerPoint.
 
 Note: Active links dont work in Salesforce preview feature!
 

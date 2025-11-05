@@ -8,6 +8,39 @@ collection: present
 
 # Release Notes—Present
 
+## Version 1.29
+
+**Release Date:** November 4, 2025
+
+This release focuses on resolving critical bugs to improve system stability and user experience.
+
+### Bug Fixes
+
+**Slide Deck Permission Set Corrections**
+
+Resolved an issue where the `Can_generate_slide_deck` PermissionSet lacked necessary permissions, causing Salesforce record IDs to display instead of customer types when choosing slides.
+
+- **Impact:** Users with the affected PermissionSet experienced incorrect data display when generating presentations
+- **Resolution:** Updated the `Can_generate_slide_deck` PermissionSet to include all required field-level security and apex code permissions
+
+**Template Update Status Tracking**
+
+Fixed a defect where template operations (new uploads or reordering) incorrectly flagged all templates as "Updated" rather than only the modified ones.
+
+- **Impact:** Made it difficult for administrators to identify which templates had actually changed
+- **Resolution:** Implemented an auxiliary tracking object to accurately monitor template modifications
+
+### Installation
+
+> **Subscriber Package Version ID:** `04tP7000002BUG9IAO`
+>
+> **Installation URL:**
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=04tP7000002BUG9IAO`
+>
+> **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
+
+---
+
 ## Present - Version 1.27
 This version of Present includes several releases of new features and bug fixes.
 

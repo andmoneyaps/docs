@@ -289,6 +289,7 @@ Configurations on BookmeCustomerFlow are done via the public attribute Config, w
 | close | Executed when the "Close meeting booking" button is pressed |
 | meetingbooked | Executed when a meeting has been booked or updated |
 | meetingcanceled | Executed when a meeting has been canceled |
+| startmeeting | User clicks to start/join a meeting
 
 ## &Bookme – setup requirements and points to consider
 

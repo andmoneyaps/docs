@@ -44,7 +44,7 @@ Meet follows a simple three-phase workflow:
 Before configuring Meet in Salesforce, ensure you have:
 
 - Administrator access to your Salesforce organization
-- The &Money Portal component deployed to Salesforce (see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/))
+- The &money Portal component deployed to Salesforce (see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/))
 - Access to the Meet environment URLs (provided by &money)
 
 ## Browser Requirements

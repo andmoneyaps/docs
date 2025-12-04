@@ -26,7 +26,7 @@ For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ sit
 
 ## Portal Component Setup
 
-Meet is embedded using the same Portal component as other &Money embeddable features (such as Referat). The setup follows the same pattern described in [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/).
+Meet is embedded using the same Portal component as other &money embeddable features (such as Referat). The setup follows the same pattern described in [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/).
 
 ### Adding the Portal Component to an Event Page
 
@@ -35,7 +35,7 @@ Meet is embedded using the same Portal component as other &Money embeddable feat
 3. Choose the desired location for the component:
    - Add a new tab, or
    - Select an existing section
-4. Locate **&Money Portal** in the components panel
+4. Locate **&money Portal** in the components panel
 5. Drag the component to your chosen location
 6. Configure the component:
    - **Source URL**: Enter the Meet URL provided by &money

@@ -1,5 +1,6 @@
 # Theme configuration
-remote_theme: just-the-docs/just-the-docs
+theme: just-the-docs
+# remote_theme: just-the-docs/just-the-docs
 title: "&money Documentation"
 description: Public documentation for &money products and services
 baseurl: "/docs"
@@ -17,6 +18,9 @@ collections:
     permalink: "/:collection/:path/"
     output: true
   insights:
+    permalink: "/:collection/:path/"
+    output: true
+  meet:
     permalink: "/:collection/:path/"
     output: true
   api:
@@ -77,6 +81,10 @@ just_the_docs:
       # nav_fold: true
     insights:
       # name: "Insights"
+      # nav_exclude: false
+      # nav_fold: true
+    meet:
+      # name: "Meet"
       # nav_exclude: false
       # nav_fold: true
     api:

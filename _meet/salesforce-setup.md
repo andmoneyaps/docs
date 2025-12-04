@@ -49,6 +49,17 @@ The component uses the Event's `recordId` to establish context, which is passed 
 
 Meet requires additional Content Security Policy (CSP) directives compared to other embeddable components, due to real-time transcription and microphone access requirements.
 
+### Step 0: Enable Permissions-Policy HTTP Header
+
+1. Navigate to **Setup** in Salesforce
+2. Search for "Session Settings" in the Quick Find box
+3. Scroll to the **Browser Feature Policies** section
+4. Check **Include Permissions-Policy HTTP header**
+5. Set **Microphone** to **Trusted URLs Only**
+6. Click **Save**
+
+> **Note**: This is a one-time configuration per Salesforce organization. Without this setting, the microphone permission in Trusted URLs will not take effect.
+
 ### Step 1: Access Trusted URLs Configuration
 
 1. Navigate to **Setup** in Salesforce

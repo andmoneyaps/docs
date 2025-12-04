@@ -21,10 +21,8 @@ For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ sit
 
 | Environment | Meet URL |
 |-------------|----------|
-| Test | `https://app.meet.[env].andmoney.dk` |
+| Test | `https://app.meet.test-env.andmoney.dk` |
 | Production | `https://app.meet.andmoney.dk` |
-
-Contact &money to obtain the appropriate URLs for your environments.
 
 ## Portal Component Setup
 

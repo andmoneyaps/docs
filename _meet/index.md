@@ -13,7 +13,7 @@ Meet is an AI-powered real-time meeting assistant designed for financial advisor
 ## Key Features
 
 ### Real-Time Transcription
-- Azure Speech Service with speaker diarization
+- Live transcription with speaker diarization
 - Multi-language support: Danish (default) and English
 - Automatic speaker mapping for up to 4 participants
 

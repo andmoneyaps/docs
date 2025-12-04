@@ -30,7 +30,6 @@ Meet is an AI-powered real-time meeting assistant designed for financial advisor
 ### Session Recovery
 - Automatic recovery after network disconnections
 - Full context restoration (transcript, insights, participants)
-- Zero data loss within recovery window
 
 ## Three-Phase Workflow
 

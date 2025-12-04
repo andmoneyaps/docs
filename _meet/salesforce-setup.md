@@ -59,7 +59,7 @@ Meet requires additional Content Security Policy (CSP) directives compared to ot
 
 1. Click **New Trusted URL**
 2. Complete the configuration:
-   - **API Name**: Enter an identifier (e.g., "meet_iframe")
+   - **API Name**: Enter an identifier, e.g., `meet_iframe`
    - **URL**: Enter the Meet URL provided by &money
    - **CSP Context**: Select **Lightning Experience Pages**
 

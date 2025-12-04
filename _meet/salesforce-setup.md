@@ -12,7 +12,7 @@ This guide covers configuring the Meet component in your Salesforce organization
 ## Prerequisites
 
 - Administrator access to your Salesforce organization
-- The &Money Portal component deployed to Salesforce
+- The &money Portal component deployed to Salesforce
 - Meet environment URL provided by &money
 
 For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/).

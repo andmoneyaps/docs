@@ -21,8 +21,8 @@ For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ sit
 
 | Environment | Meet URL |
 |-------------|----------|
-| Test | `[Provided by &money]` |
-| Production | `[Provided by &money]` |
+| Test | `https://app.meet.[env].andmoney.dk` |
+| Production | `https://app.meet.andmoney.dk` |
 
 Contact &money to obtain the appropriate URLs for your environments.
 
@@ -59,32 +59,38 @@ Meet requires additional Content Security Policy (CSP) directives compared to ot
 
 1. Click **New Trusted URL**
 2. Complete the configuration:
-   - **Name**: Enter a descriptive identifier (e.g., "&Money Meet")
+   - **API Name**: Enter an identifier (e.g., "meet_iframe")
    - **URL**: Enter the Meet URL provided by &money
    - **CSP Context**: Select **Lightning Experience Pages**
-   - **CSP Directives**: Enable the following permissions:
 
-| Directive | Required | Purpose |
-|-----------|----------|---------|
-| `connect-src` | ✅ | WebSocket connections for real-time transcription |
-| `media-src` | ✅ | Browser microphone access |
-| `style-src` | ✅ | Material-UI component styling |
+3. Under **CSP Directives**, enable the following:
 
-3. Click **Save** to confirm the configuration
+| Directive | Enable | Purpose |
+|-----------|--------|---------|
+| connect-src (scripts) | ✅ | WebSocket connections for real-time transcription |
+| font-src (fonts) | ☐ | Not required |
+| frame-src (iframe content) | ☐ | Not required |
+| img-src (images) | ☐ | Not required |
+| media-src (audio and video) | ✅ | Microphone audio capture |
+| style-src (stylesheets) | ✅ | Material-UI component styling |
+
+4. Under **Permissions Policy Directives**, enable the following:
+
+| Directive | Enable | Purpose |
+|-----------|--------|---------|
+| camera | ☐ | Not required |
+| microphone | ✅ | Audio recording for meetings |
+
+5. Click **Save** to confirm the configuration
 
 ### Step 3: Validate Configuration
 
 1. Verify the Meet URL appears in the Trusted URLs list
-2. Confirm all three CSP directives (`connect-src`, `media-src`, `style-src`) show as active
-3. Test the integration by loading Meet on an Event page
+2. Confirm CSP directives are enabled: `connect-src`, `media-src`, `style-src`
+3. Confirm Permissions Policy directive `microphone` is enabled
+4. Test the integration by loading Meet on an Event page
 
 > **Note**: This is a one-time configuration per Salesforce organization. Future updates will not require modifications to these Trusted URL settings.
-
-### Iframe Microphone Permission
-
-The Portal component must include the `allow="microphone"` attribute for the iframe. This is handled automatically by the deployed Portal component when Meet is loaded.
-
-> **Note**: If you are using a custom wrapper component, ensure your iframe element includes `allow="microphone"` in the template.
 
 ## Verifying the Installation
 
@@ -119,8 +125,8 @@ After completing the setup, verify that Meet is working correctly:
 
 | Issue | Solution |
 |-------|----------|
-| Meet not displaying | Verify Trusted URL configuration and all CSP directives are enabled |
-| Microphone not detected | Check browser permissions and ensure `media-src` CSP directive is enabled |
+| Meet not displaying | Verify Trusted URL configuration and CSP directives are enabled |
+| Microphone not detected | Check browser permissions, `media-src` CSP directive, and `microphone` Permissions Policy |
 | WebSocket connection errors | Verify `connect-src` CSP directive is enabled for the Meet URL |
 | Authentication failures | Ensure user has appropriate access and Azure AD SSO is configured |
 | Cross-origin errors | Confirm the Meet URL matches the Trusted URL exactly |

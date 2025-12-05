@@ -62,6 +62,28 @@ Before configuring Meet in Salesforce, ensure you have:
 - **Microphone**: Use laptop microphone or external microphone connected to laptop
 - **During Meeting**: Keep the Meet browser tab active throughout the session. If you need Salesforce during the meeting, open a separate browser tab
 
+## Browser Permissions
+
+### First-Time User Experience
+
+1. Browser prompts for microphone access on first use
+2. User clicks **Allow** in browser permission dialog
+3. Once granted, device names appear in Meet's microphone selector
+4. Permission is remembered for future sessions
+
+### Enterprise Deployment
+
+Pre-configure browser policies to skip permission prompts for managed devices:
+
+| Browser | Policy | Value |
+|---------|--------|-------|
+| Chrome | `AudioCaptureAllowedUrls` | `https://[*.]andmoney.dk` |
+| Edge | `AudioCaptureAllowedUrls` | `https://[*.]andmoney.dk` |
+
+Deploy via GPO, Intune, or MDM.
+
+> **Tip**: Pre-configuration ensures a seamless first-time experience and reduces support requests.
+
 ## Next Steps
 
 - [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Meet in your Salesforce organization

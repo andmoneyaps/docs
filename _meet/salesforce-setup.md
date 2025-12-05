@@ -113,7 +113,7 @@ After completing the setup, verify that Meet is working correctly:
 
 ### Step 2: Verify Authentication
 
-1. Meet will initiate SSO login using your Salesforce user's email
+1. Meet will initiate SSO login using your Salesforce user's federation ID (if configured) or email
 2. You should be authenticated automatically via Azure AD
 3. If prompted, sign in with your organizational credentials
 4. Meet validates that your authenticated identity matches your Salesforce user context

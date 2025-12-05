@@ -135,7 +135,7 @@ After completing the setup, verify that Meet is working correctly:
 | Issue | Solution |
 |-------|----------|
 | Meet not displaying | Verify Trusted URL configuration and CSP directives are enabled |
-| Microphone not detected | Check browser permissions, `media-src` CSP directive, and `microphone` Permissions Policy |
+| Microphone not detected | Check browser permissions, `media-src` CSP directive, `microphone` Permissions Policy, and Session Settings Permissions-Policy HTTP header |
 | WebSocket connection errors | Verify `connect-src` CSP directive is enabled for the Meet URL |
 | Authentication failures | Ensure user has appropriate access and Azure AD SSO is configured |
 | Cross-origin errors | Confirm the Meet URL matches the Trusted URL exactly |

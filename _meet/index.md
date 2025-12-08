@@ -51,9 +51,9 @@ Before configuring Meet in Salesforce, ensure you have:
 
 | Browser | Support Level |
 |---------|---------------|
-| Chrome | ✅ Recommended |
-| Edge | ✅ Recommended |
-| Safari | ⚠️ Limited support |
+| Chrome | Yes (Recommended) |
+| Edge | Yes (Recommended) |
+| Safari | Limited |
 
 ## Best Practices
 

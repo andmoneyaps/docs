@@ -1,6 +1,5 @@
 # Theme configuration
-theme: just-the-docs
-# remote_theme: just-the-docs/just-the-docs
+remote_theme: just-the-docs/just-the-docs
 title: "&money Documentation"
 description: Public documentation for &money products and services
 baseurl: "/docs"

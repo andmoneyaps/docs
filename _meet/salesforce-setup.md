@@ -76,19 +76,19 @@ Meet requires additional Content Security Policy (CSP) directives compared to ot
 
 | Directive | Enable | Purpose |
 |-----------|--------|---------|
-| connect-src (scripts) | ✅ | WebSocket connections for real-time transcription |
-| font-src (fonts) | ☐ | Not required |
-| frame-src (iframe content) | ☐ | Not required |
-| img-src (images) | ☐ | Not required |
-| media-src (audio and video) | ✅ | Microphone audio capture |
-| style-src (stylesheets) | ✅ | Material-UI component styling |
+| connect-src (scripts) | Yes | WebSocket connections for real-time transcription |
+| font-src (fonts) | No | Not required |
+| frame-src (iframe content) | No | Not required |
+| img-src (images) | No | Not required |
+| media-src (audio and video) | Yes | Microphone audio capture |
+| style-src (stylesheets) | Yes | Material-UI component styling |
 
 4. Under **Permissions Policy Directives**, enable the following:
 
 | Directive | Enable | Purpose |
 |-----------|--------|---------|
-| camera | ☐ | Not required |
-| microphone | ✅ | Audio recording for meetings |
+| camera | No | Not required |
+| microphone | Yes | Audio recording for meetings |
 
 5. Click **Save** to confirm the configuration
 

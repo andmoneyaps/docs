@@ -8,6 +8,35 @@ collection: present
 
 # Release Notes—Present
 
+## Version 1.30
+
+**Release Date:** December 2025
+
+This release introduces template labeling and filtering capabilities.
+
+### New Features
+
+**Template Labels and Filtering**
+
+You can now organize templates using labels and filter them when creating presentations.
+
+- **Add labels to templates** — Categorize templates with custom labels (e.g., "Investment", "Mortgage", "Q4-2025")
+- **Filter by labels** — Advisors can filter available templates by selecting one or more labels
+- **AND filtering logic** — When multiple labels are selected, only templates matching all selected labels are shown
+
+See [Template Labels](template-labels.md) for details.
+
+### Installation
+
+> **Subscriber Package Version ID:** `TODO`
+>
+> **Installation URL:**
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=TODO`
+>
+> **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
+
+---
+
 ## Version 1.29
 
 **Release Date:** November 4, 2025

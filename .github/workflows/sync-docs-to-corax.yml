@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/hackerthon-docs-knowledgebase # TODO: Remove after testing
   workflow_dispatch:
 
 jobs:

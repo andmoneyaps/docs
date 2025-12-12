@@ -1,0 +1,89 @@
+name: Sync Documentation to Corax
+
+on:
+  push:
+    branches:
+      - main
+      - feature/hackerthon-docs-knowledgebase # TODO: Remove after testing
+  workflow_dispatch:
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Collect markdown documentation files
+        id: collect-files
+        run: |
+          # Find all markdown files in documentation folders, excluding _site (generated output),
+          # vendor (dependencies), and other non-documentation files
+          find . -type f -name "*.md" \
+            -not -path "./_site/*" \
+            -not -path "./vendor/*" \
+            -not -path "./.git/*" \
+            -not -name "CHANGELOG.md" \
+            -not -name "README.md" \
+            | sort > /tmp/doc_files.txt
+
+          echo "Found documentation files:"
+          cat /tmp/doc_files.txt
+
+          FILE_COUNT=$(wc -l < /tmp/doc_files.txt | tr -d ' ')
+          echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+          echo "Total files found: $FILE_COUNT"
+
+      - name: Upload documents to Corax collection
+        if: steps.collect-files.outputs.file_count > 0
+        env:
+          CORAX_API_KEY: ${{ secrets.CORAX_API_KEY }}
+          CORAX_API_URL: https://api.corax.dev-env.booking.andmoney.dk
+          COLLECTION_ID: da11d0e7-e412-4459-beca-6f2b9e6ed114
+        run: |
+          echo "Uploading documentation files to Corax collection..."
+
+          SUCCESS_COUNT=0
+          FAIL_COUNT=0
+
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              echo "Uploading: $file"
+
+              RESPONSE=$(curl -X POST \
+                -H "X-API-Key: $CORAX_API_KEY" \
+                -H "Accept: application/json" \
+                -F "files=@$file" \
+                "$CORAX_API_URL/v1/collections/$COLLECTION_ID/embed" \
+                -w "\n%{http_code}" -s)
+
+              HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+              BODY=$(echo "$RESPONSE" | sed '$d')
+
+              if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+                echo "  ✓ Success"
+                SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+              else
+                echo "  ✗ Failed (HTTP $HTTP_CODE): $BODY"
+                FAIL_COUNT=$((FAIL_COUNT + 1))
+              fi
+            fi
+          done < /tmp/doc_files.txt
+
+          echo ""
+          echo "Upload complete: $SUCCESS_COUNT succeeded, $FAIL_COUNT failed"
+
+          if [ "$FAIL_COUNT" -gt 0 ]; then
+            echo "Some uploads failed"
+            exit 1
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Documentation Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Files processed**: ${{ steps.collect-files.outputs.file_count }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Collection ID**: da11d0e7-e412-4459-beca-6f2b9e6ed114" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger**: Push to main branch" >> $GITHUB_STEP_SUMMARY

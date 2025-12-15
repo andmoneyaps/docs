@@ -26,13 +26,13 @@ API V2 introduces significant improvements including portal integration, enhance
 
 **V1 URLs:**
 ```
-Production: https://apim-public-api.azure-api.net/api/v1/
+Production: https://apim-public-api-prod.azure-api.net/api/v1/
 Test: https://apim-public-api-test.azure-api.net/api/v1/
 ```
 
 **V2 URLs:**
 ```
-Production: https://apim-public-api.azure-api.net/api/v2/
+Production: https://apim-public-api-prod.azure-api.net/api/v2/
 Test: https://apim-public-api-test.azure-api.net/api/v2/
 ```
 
@@ -237,12 +237,12 @@ Test key endpoints with V2 URLs:
 
 ```bash
 # Test meeting listing
-curl -X GET "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
+curl -X GET "https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Ocp-Apim-Subscription-Key: YOUR_KEY"
 
 # Test meeting creation with V2 requirements
-curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
+curl -X POST "https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Ocp-Apim-Subscription-Key: YOUR_KEY" \
   -H "Content-Type: application/json" \
@@ -278,7 +278,7 @@ Keep your V1 implementation ready as a fallback:
 
 ```javascript
 const API_VERSION = process.env.API_VERSION || 'v2';
-const BASE_URL = `https://apim-public-api.azure-api.net/api/${API_VERSION}`;
+const BASE_URL = `https://apim-public-api-prod.azure-api.net/api/${API_VERSION}`;
 
 // Feature flags for V2-only features
 const useV2Features = API_VERSION === 'v2';
@@ -299,5 +299,5 @@ if (useV2Features) {
 ## Additional Resources
 
 - [V2 API Documentation]({{ site.baseurl }}/api/bookme)
-- [V2 OpenAPI Specification](https://apim-public-api.azure-api.net/api/v2/openapi.yaml)
-- [V1 OpenAPI Specification](https://apim-public-api.azure-api.net/api/v1/openapi.yaml) (deprecated)
+- [V2 OpenAPI Specification](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml)
+- [V1 OpenAPI Specification](https://apim-public-api-prod.azure-api.net/api/v1/openapi.yaml) (deprecated)

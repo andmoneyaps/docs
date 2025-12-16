@@ -12,7 +12,7 @@ The BookMe API provides comprehensive access to meeting booking and scheduling f
 ## Base URL
 
 ```
-Production: https://apim-public-api.azure-api.net/api/v2/bookme
+Production: https://apim-public-api-prod.azure-api.net/api/v2/bookme
 Test: https://apim-public-api-test.azure-api.net/api/v2/bookme
 ```
 
@@ -454,7 +454,7 @@ const axios = require('axios');
 
 const ACCESS_TOKEN = 'your-access-token';
 const SUBSCRIPTION_KEY = 'your-subscription-key';
-const BASE_URL = 'https://apim-public-api.azure-api.net/api/v2/bookme';
+const BASE_URL = 'https://apim-public-api-prod.azure-api.net/api/v2/bookme';
 
 // List meetings
 async function listMeetings() {
@@ -516,7 +516,7 @@ public class BookMeApiClient
     private readonly HttpClient _httpClient;
     private const string AccessToken = "your-access-token";
     private const string SubscriptionKey = "your-subscription-key";
-    private const string BaseUrl = "https://apim-public-api.azure-api.net/api/v2/bookme";
+    private const string BaseUrl = "https://apim-public-api-prod.azure-api.net/api/v2/bookme";
 
     public BookMeApiClient()
     {
@@ -585,12 +585,12 @@ public class ExternalAttendee
 ### cURL
 ```bash
 # List meetings
-curl -X GET "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
+curl -X GET "https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings" \
   -H "Authorization: Bearer your-access-token" \
   -H "Ocp-Apim-Subscription-Key: your-subscription-key"
 
 # Create a V2 meeting with new features
-curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
+curl -X POST "https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings" \
   -H "Authorization: Bearer your-access-token" \
   -H "Ocp-Apim-Subscription-Key: your-subscription-key" \
   -H "Content-Type: application/json" \
@@ -618,7 +618,7 @@ curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings" \
   }'
 
 # Generate iCal for meeting (V2 only)
-curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings/meeting-id/ical" \
+curl -X POST "https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings/meeting-id/ical" \
   -H "Authorization: Bearer your-access-token" \
   -H "Ocp-Apim-Subscription-Key: your-subscription-key" \
   -H "Content-Type: application/json" \
@@ -632,8 +632,8 @@ curl -X POST "https://apim-public-api.azure-api.net/api/v2/bookme/meetings/meeti
 ## Full API Specification
 
 For the complete API specification including all endpoints, parameters, and response schemas:
-- [V2 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml) - Current version
-- [V1 OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml) - Active
+- [V2 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml) - Current version
+- [V1 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v1/openapi.yaml) - Active
 
 ## What's New in V2
 

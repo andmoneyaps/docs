@@ -45,7 +45,7 @@ const response = await msalInstance.loginPopup({
 });
 
 // Use token for API calls
-const apiResponse = await fetch('https://apim-public-api.azure-api.net/api/v2/bookme/meetings', {
+const apiResponse = await fetch('https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings', {
   headers: { 
     'Authorization': `Bearer ${response.accessToken}`,
     'Ocp-Apim-Subscription-Key': 'your-subscription-key'

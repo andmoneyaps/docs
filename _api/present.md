@@ -12,7 +12,7 @@ The Present API enables dynamic generation of PowerPoint presentations and PDFs 
 ## Base URL
 
 ```
-Production: https://apim-public-api.azure-api.net/api/v2/present
+Production: https://apim-public-api-prod.azure-api.net/api/v2/present
 Test: https://apim-public-api-test.azure-api.net/api/v2/present
 ```
 
@@ -257,7 +257,7 @@ GET /templates/{templateName}/slides/{slideName}
 ```javascript
 const ACCESS_TOKEN = 'your-access-token';
 const SUBSCRIPTION_KEY = 'your-subscription-key';
-const BASE_URL = 'https://apim-public-api.azure-api.net/api/v2/present';
+const BASE_URL = 'https://apim-public-api-prod.azure-api.net/api/v2/present';
 
 // Create presentation
 async function createPresentation(templateData) {
@@ -290,12 +290,12 @@ async function listTemplates() {
 ### cURL
 ```bash
 # List templates
-curl -X GET "https://apim-public-api.azure-api.net/api/v2/present/templates" \
+curl -X GET "https://apim-public-api-prod.azure-api.net/api/v2/present/templates" \
   -H "Authorization: Bearer your-access-token" \
   -H "Ocp-Apim-Subscription-Key: your-subscription-key"
 
 # Upload template (file)
-curl -X POST "https://apim-public-api.azure-api.net/api/v2/present/templates" \
+curl -X POST "https://apim-public-api-prod.azure-api.net/api/v2/present/templates" \
   -H "Authorization: Bearer your-access-token" \
   -H "Ocp-Apim-Subscription-Key: your-subscription-key" \
   -H "Content-Type: multipart/form-data" \
@@ -304,7 +304,7 @@ curl -X POST "https://apim-public-api.azure-api.net/api/v2/present/templates" \
   -F "category=Business"
 
 # Generate slides
-curl -X POST "https://apim-public-api.azure-api.net/api/v2/present/slides/generate" \
+curl -X POST "https://apim-public-api-prod.azure-api.net/api/v2/present/slides/generate" \
   -H "Authorization: Bearer your-access-token" \
   -H "Ocp-Apim-Subscription-Key: your-subscription-key" \
   -H "Content-Type: application/json" \
@@ -320,4 +320,4 @@ curl -X POST "https://apim-public-api.azure-api.net/api/v2/present/slides/genera
 ## Full API Specification
 
 For the complete API specification including all endpoints, parameters, and response schemas:
-- [V2 Present OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml)
+- [V2 Present OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml)

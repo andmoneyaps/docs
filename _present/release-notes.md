@@ -28,10 +28,10 @@ See [Template Labels](template-labels.md) for details.
 
 ### Installation
 
-> **Subscriber Package Version ID:** `TODO`
+> **Subscriber Package Version ID:** `04tP7000002KimvIAC`
 >
 > **Installation URL:**
-> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=TODO`
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=04tP7000002KimvIAC`
 >
 > **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
 

@@ -24,15 +24,12 @@ Labels are free-form text tags assigned to templates that act as filters. When a
 
 ## Adding Labels to Templates
 
-Administrators can add labels to templates through the Template Management interface.
+Administrators can add labels to templates through the Management UI.
 
-1. Navigate to the Template Management tab
+1. Navigate to the Present -> Setup -> Templates tab
 2. Select a template
 3. Add one or more labels
 4. Save changes
-
-{: .hint }
-> The Template Management UI for labels is currently under development.
 
 ## Filtering Templates by Labels
 

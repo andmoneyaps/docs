@@ -2431,6 +2431,6 @@ components:
             api://c096f1c4-781b-4544-9491-610e4b384261/access_as_user: ''
             api://ca6233a5-e7a5-4a47-b72d-8d2161b90af3/access_as_user: ''
 servers:
-  - url: https://apim-public-api.azure-api.net
+  - url: https://apim-public-api-prod.azure-api.net
     description: URL to the API
     variables: {}

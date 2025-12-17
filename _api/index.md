@@ -36,13 +36,13 @@ The Present API provides access to our presentation generation services. Capabil
 ## API Versions
 
 ### Version 2.0.0 (Current)
-- **Base URL**: `https://apim-public-api.azure-api.net/api/v2/`
+- **Base URL**: `https://apim-public-api-prod.azure-api.net/api/v2/`
 - **Status**: Active
 - **Released**: 2025
 - **Features**: Portal integration, custom fields, enhanced employee types, iCal generation, external attendees for portal meetings
 
 ### Version 1.0.0 
-- **Base URL**: `https://apim-public-api.azure-api.net/api/v1/`
+- **Base URL**: `https://apim-public-api-prod.azure-api.net/api/v1/`
 - **Status**: Active
 - **Released**: 2025
 - **Migration**: See our [V1 to V2 Migration Guide]({{ site.baseurl }}/api/migration-guide) for upgrade instructions
@@ -100,8 +100,8 @@ Error responses include a JSON body with details:
 ## API Specifications
 
 Download the complete API specifications:
-- [V2 BookMe OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v2/openapi.yaml)
-- [V1 BookMe OpenAPI Specification (YAML)](https://apim-public-api.azure-api.net/api/v1/openapi.yaml)
+- [V2 BookMe OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml)
+- [V1 BookMe OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v1/openapi.yaml)
 - [Present OpenAPI Specification (JSON)]({{ site.baseurl }}/files/swagger.json)
 
 ## Support

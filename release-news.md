@@ -17,7 +17,7 @@ nav_order: 2
   - **Benefits**:
     - More accurate capacity management (30-minute and 2-hour meetings now count differently)
     - Flexible scheduling based on actual meeting duration
-  - **Migration**: Existing count-based limits of "Max meetings per day" are automatically converted to duration-based limits using 1:1 hour conversion (e.g., 2 meetings → 2 hours)
+  - **Migration**: Existing count-based limits of "Max meetings per day" are automatically converted to duration-based limits using 1:1 hour conversion (e.g., 2 meetings → 2 hours). *Important: This is a behavioral change and might cause your advisor availability to change.*
 
 ## September 2025
 

@@ -198,6 +198,44 @@ Available time slots are generated automatically based on employee availability 
 - **Interval**: Time slots start at 30-minute intervals (`:00` and `:30` minutes)
 - **Duration**: Default meeting duration is typically 1 hour (configurable via `meetingDuration` parameter)
 - **Multiple slots**: For each available employee, slots are generated for each available meeting type they support
+- **Daily capacity limits**: Time slots are filtered based on each advisor's remaining daily meeting capacity (see below)
+
+##### Daily Meeting Time Limits
+
+The system enforces duration-based daily meeting time limits to prevent advisor overbooking:
+
+**How It Works:**
+1. Each advisor has a `MaxMeetingTimePerDay` limit (configured at bank, service group, or advisor level)
+2. The system calculates total booked meeting time per advisor per day
+3. Advisors are excluded from time slot results when: `existingMeetingDuration + requestedMeetingDuration > dailyLimit`
+4. If the requested meeting duration alone exceeds the daily limit, the advisor is excluded for all days in the search range
+
+**Example Scenarios:**
+
+```javascript
+// Scenario 1: Normal booking
+// Advisor limit: 04:00:00 (4 hours/day)
+// Already booked: 2 hours
+// Requested meeting: 1 hour
+// Result: ✅ Advisor appears in time slots (2h + 1h = 3h < 4h limit)
+
+// Scenario 2: Near capacity
+// Advisor limit: 04:00:00 (4 hours/day)
+// Already booked: 3.5 hours
+// Requested meeting: 1 hour
+// Result: ❌ Advisor excluded (3.5h + 1h = 4.5h > 4h limit)
+
+// Scenario 3: Meeting too long
+// Advisor limit: 04:00:00 (4 hours/day)
+// Already booked: 0 hours
+// Requested meeting: 5 hours
+// Result: ❌ Advisor excluded for all days (5h > 4h limit)
+```
+
+**API Behavior:**
+- Advisors at capacity are automatically filtered out
+- No explicit error is returned - they simply don't appear in results
+- Limits reset at midnight (per day calculation)
 
 **Example response:**
 ```json

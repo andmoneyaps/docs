@@ -7,13 +7,15 @@ nav_order: 1
 
 # BookMe API Documentation
 
-The BookMe API provides comprehensive access to meeting booking and scheduling functionality. This documentation covers API Version 2.0.0 (current). For V1 documentation, see the [V1 reference]({{ site.baseurl }}/api/bookme-v1).
+The BookMe API provides comprehensive access to meeting booking and scheduling functionality. This documentation covers API Version 3.0.0 (latest) and includes V2 features. For migration from V2 to V3, see the [V2 to V3 Migration Guide]({{ site.baseurl }}/api/migration-guide-v3).
 
 ## Base URL
 
 ```
-Production: https://apim-public-api-prod.azure-api.net/api/v2/bookme
-Test: https://apim-public-api-test.azure-api.net/api/v2/bookme
+Production (V3): https://apim-public-api-prod.azure-api.net/api/v3/bookme
+Production (V2): https://apim-public-api-prod.azure-api.net/api/v2/bookme
+Test (V3): https://apim-public-api-test.azure-api.net/api/v3/bookme
+Test (V2): https://apim-public-api-test.azure-api.net/api/v2/bookme
 ```
 
 ## Authentication
@@ -98,13 +100,19 @@ Note that the fields related to portal meetings "portalId, customFields and exte
 **Response:** Created Meeting object with ID
 
 #### Update Meeting
-Update an existing meeting.
+Update an existing meeting using JSON Patch operations.
 
 ```http
-PUT /meetings/{id}
+PATCH /meetings/{id}
 ```
 
-**Request Body:** Meeting object
+**Request Body:** Array of JSON Patch operations
+```json
+[
+  { "op": "replace", "path": "/title", "value": "Updated Meeting Title" },
+  { "op": "replace", "path": "/description", "value": "Updated description" }
+]
+```
 
 **Response:** Updated Meeting object
 
@@ -396,6 +404,324 @@ DELETE /config/customer-types/{id}
 
 **Response:** 204 No Content
 
+### Labels API (V3)
+
+The Labels API provides centralized management for labels used to categorize resources across the platform.
+
+#### List Labels
+```http
+GET /config/labels
+```
+
+**Query Parameters:**
+- `pageNumber` (int, optional): Page number (0-indexed, default: 0)
+- `pageSize` (int, optional): Items per page (default: 20)
+- `activeFilter` (string, optional): Filter by status: `All`, `Active`, or `Inactive`
+
+**Response:** Paginated list of LabelRegistration objects
+
+#### Get Label
+```http
+GET /config/labels/{id}
+```
+
+**Response:** LabelRegistration object
+
+#### Create Label
+```http
+POST /config/labels
+```
+
+**Request Body:**
+```json
+{
+  "labelName": "Premium",
+  "color": "#FFD700",
+  "description": "Premium tier services"
+}
+```
+
+**Response:** 201 Created with LabelRegistration object
+
+#### Update Label
+```http
+PATCH /config/labels/{id}
+```
+
+**Request Body:**
+```json
+{
+  "color": "#FF5733",
+  "description": "Updated description"
+}
+```
+
+**Response:** Updated LabelRegistration object
+
+#### Delete Label
+```http
+DELETE /config/labels/{id}
+```
+
+**Note:** Labels can only be deleted when they have zero usages.
+
+**Response:** 204 No Content
+
+#### Search Labels
+Fuzzy search labels by name.
+
+```http
+GET /config/labels/search
+```
+
+**Query Parameters:**
+- `q` (string): Search query
+- `threshold` (float, optional): Similarity threshold 0.0-1.0 (default: 0.3)
+- `limit` (int, optional): Maximum results (default: 20)
+- `activeFilter` (string, optional): Filter by status
+
+**Response:** Array of LabelSearchResult objects with similarity scores
+
+#### Label Suggestions
+Get autocomplete suggestions.
+
+```http
+GET /config/labels/suggest
+```
+
+**Query Parameters:**
+- `prefix` (string): Prefix to search for
+- `limit` (int, optional): Maximum suggestions (default: 10)
+
+**Response:** Array of LabelSuggestion objects
+
+### Competence Groups API (V3)
+
+Competence Groups define expertise areas and associate employees, topics, and customer types.
+
+#### List Competence Groups
+```http
+GET /bookme/config/competence-groups
+```
+
+**Query Parameters:**
+- `labels` (array, optional): Filter by labels
+
+**Response:** Array of CompetenceGroup objects
+
+#### Get Competence Group
+```http
+GET /bookme/config/competence-groups/{id}
+```
+
+**Response:** CompetenceGroup object
+
+#### Create Competence Group
+```http
+POST /bookme/config/competence-groups
+```
+
+**Request Body:**
+```json
+{
+  "name": "Mortgage Specialists",
+  "employeeIds": ["uuid1", "uuid2"],
+  "customerTypeIds": ["uuid3"],
+  "topicIds": ["uuid4"],
+  "labels": ["Finance", "Premium"]
+}
+```
+
+**Response:** 201 Created with CompetenceGroup object
+
+#### Update Competence Group
+```http
+PATCH /bookme/config/competence-groups/{id}
+```
+
+**Request Body:** Array of JSON Patch operations
+```json
+[
+  { "op": "replace", "path": "/name", "value": "Updated Name" },
+  { "op": "replace", "path": "/labels", "value": ["Finance", "Updated"] }
+]
+```
+
+**Response:** 200 OK
+
+#### Delete Competence Group
+```http
+DELETE /bookme/config/competence-groups/{id}
+```
+
+**Response:** 204 No Content
+
+### Service Groups API (V3)
+
+Service Groups organize employees into logical groups for scheduling.
+
+#### List Service Groups
+```http
+GET /bookme/config/service-groups
+```
+
+**Query Parameters:**
+- `labels` (array, optional): Filter by labels
+
+**Response:** Array of ServiceGroup objects
+
+#### Get Service Group
+```http
+GET /bookme/config/service-groups/{id}
+```
+
+**Response:** ServiceGroup object
+
+#### Create Service Group
+```http
+POST /bookme/config/service-groups
+```
+
+**Request Body:**
+```json
+{
+  "name": "Customer Service Team",
+  "membershipEmail": "team@example.com",
+  "employeeIds": ["uuid1", "uuid2"],
+  "competenceGroupIds": ["uuid3"],
+  "labels": ["Support"]
+}
+```
+
+**Response:** 201 Created with ServiceGroup object
+
+#### Update Service Group
+```http
+PATCH /bookme/config/service-groups/{id}
+```
+
+**Request Body:** Array of JSON Patch operations
+
+**Response:** 200 OK
+
+#### Delete Service Group
+```http
+DELETE /bookme/config/service-groups/{id}
+```
+
+**Response:** 204 No Content
+
+#### Get Service Group Advisors
+Get advisor membership showing advisors from different sources.
+
+```http
+GET /bookme/config/service-groups/{id}/advisors
+```
+
+**Response:**
+```json
+{
+  "skillBased": ["uuid1", "uuid2"],
+  "assigned": ["uuid3"],
+  "competenceGroupAdvisors": ["uuid4", "uuid5"]
+}
+```
+
+#### Update Service Trigger
+Update service trigger configuration for a service group.
+
+```http
+PATCH /bookme/config/service-groups/{id}/service-trigger
+```
+
+**Request Body:** Array of JSON Patch operations
+
+**Response:** 200 OK
+
+#### Update Service Level
+Update service level configuration for a service group.
+
+```http
+PATCH /bookme/config/service-groups/{id}/service-level
+```
+
+**Request Body:** Array of JSON Patch operations
+
+**Response:** 200 OK
+
+### Portals API (V3)
+
+Portals represent booking interfaces that can be customized with fields, styling, and authentication.
+
+#### List Portals
+```http
+GET /bookme/config/portals
+```
+
+**Query Parameters:**
+- `includeHiddenFields` (boolean, optional): Include hidden form fields
+- `labels` (array, optional): Filter by labels
+
+**Response:** Array of Portal objects
+
+#### Get Portal
+```http
+GET /bookme/config/portals/{id}
+```
+
+**Query Parameters:**
+- `includeHiddenFields` (boolean, optional): Include hidden form fields
+
+**Response:** Portal object
+
+#### Create Portal
+```http
+POST /bookme/config/portals
+```
+
+**Request Body:**
+```json
+{
+  "name": "Customer Booking Portal",
+  "location": "Copenhagen",
+  "authenticationType": "AzureAD",
+  "fields": [
+    {
+      "name": "phone",
+      "label": "Phone Number",
+      "type": "Phone",
+      "validation": {
+        "required": true
+      }
+    }
+  ],
+  "logoUrl": "https://example.com/logo.png",
+  "styling": "/* Custom CSS */",
+  "customerTypeId": "uuid",
+  "topicId": "uuid",
+  "icalEnabled": true,
+  "labels": ["Public"]
+}
+```
+
+**Response:** 201 Created with Portal object
+
+#### Update Portal
+```http
+PATCH /bookme/config/portals/{id}
+```
+
+**Request Body:** Array of JSON Patch operations
+
+**Response:** 200 OK
+
+#### Delete Portal
+```http
+DELETE /bookme/config/portals/{id}
+```
+
+**Response:** 204 No Content
+
 ## Data Models
 
 ### Meeting Object
@@ -445,6 +771,90 @@ DELETE /config/customer-types/{id}
   "available": true
 }
 ```
+
+### LabelRegistration Object (V3)
+```json
+{
+  "id": "uuid",
+  "labelName": "Premium",
+  "color": "#FFD700",
+  "description": "Premium tier services",
+  "usageCount": 5,
+  "isActive": true,
+  "firstSeen": "2025-01-15T10:30:00Z",
+  "lastUpdated": "2025-03-20T14:45:00Z"
+}
+```
+
+### CompetenceGroup Object (V3)
+```json
+{
+  "id": "uuid",
+  "name": "Mortgage Specialists",
+  "childGroupIds": ["uuid"],
+  "parentGroupIds": ["uuid"],
+  "customerTypes": [{ "id": "uuid", "name": "Business" }],
+  "employeeIds": ["uuid"],
+  "topics": [{ "id": "uuid", "name": "Mortgage" }],
+  "serviceGroupIds": ["uuid"],
+  "labels": ["Finance", "Premium"]
+}
+```
+
+### ServiceGroup Object (V3)
+```json
+{
+  "id": "uuid",
+  "name": "Customer Service Team",
+  "membershipEmail": "team@example.com",
+  "employeeIds": ["uuid"],
+  "competenceGroupIds": ["uuid"],
+  "labels": ["Support"]
+}
+```
+
+### Portal Object (V3)
+```json
+{
+  "id": "uuid",
+  "name": "Customer Booking Portal",
+  "location": "Copenhagen",
+  "fields": [
+    {
+      "id": "uuid",
+      "name": "phone",
+      "label": "Phone Number",
+      "type": "Phone",
+      "placeholder": "+45...",
+      "hidden": false,
+      "validation": {
+        "required": true,
+        "pattern": "^\\+?[0-9]{8,}$"
+      }
+    }
+  ],
+  "logoUrl": "https://example.com/logo.png",
+  "logoHeight": 60,
+  "styling": "/* Custom CSS */",
+  "authenticationType": "AzureAD",
+  "customerTypeId": "uuid",
+  "topicId": "uuid",
+  "crmMappingConfigurationId": "uuid",
+  "icalEnabled": true,
+  "labels": ["Public"]
+}
+```
+
+### Portal Field Types (V3)
+- `Text`: Text input field
+- `Phone`: Phone number field
+- `Email`: Email field
+- `Checkbox`: Checkbox field
+- `Dropdown`: Dropdown selection field
+
+### Portal Authentication Types (V3)
+- `AzureAD`: Standard Azure AD authentication
+- `MitID`: Danish MitID national identity authentication
 
 ## Code Examples
 
@@ -632,8 +1042,27 @@ curl -X POST "https://apim-public-api-prod.azure-api.net/api/v2/bookme/meetings/
 ## Full API Specification
 
 For the complete API specification including all endpoints, parameters, and response schemas:
-- [V2 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml) - Current version
-- [V1 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v1/openapi.yaml) - Active
+- [V3 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v3/openapi.yaml) - Latest
+- [V2 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml)
+- [V1 OpenAPI Specification (YAML)](https://apim-public-api-prod.azure-api.net/api/v1/openapi.yaml)
+
+## What's New in V3
+
+V3 is fully backward compatible with V2. All new features are additive.
+
+### New APIs
+- **Labels API**: Centralized label management for categorizing resources with fuzzy search and autocomplete
+- **Competence Groups API**: Manage expertise-based employee groupings with hierarchical relationships
+- **Service Groups API**: Organize employees into logical service groups with advisor membership tracking
+- **Portals API**: Configure booking portals with custom form fields, styling, and authentication
+
+### Key Features
+- **Label Filtering**: All new resources support labels for categorization and filtering
+- **JSON Patch Operations**: V3 PATCH endpoints use RFC 6902 JSON Patch format
+- **Service Group Advisors**: Get advisor membership from multiple sources (skill-based, assigned, competence groups)
+- **Portal Configuration**: Custom fields with validation, authentication types (AzureAD, MitID), CSS styling
+
+For detailed migration instructions, see our [V2 to V3 Migration Guide]({{ site.baseurl }}/api/migration-guide-v3).
 
 ## What's New in V2
 

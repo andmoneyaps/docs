@@ -28,8 +28,8 @@ Currently, the following timezones are supported:
 
 ## How to Configure
 
-1. Go to **Management UI** and select **BookMe -> Bank Options**
-2. Locate the **Timezone** dropdown
+1. Go to **Management UI** and select **BookMe -> Meeting setup**
+2. Locate the **Timezone** dropdown in the **General** zone
 3. Select the appropriate timezone for your bank
 4. Save your changes
 

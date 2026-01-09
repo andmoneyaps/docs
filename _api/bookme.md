@@ -727,28 +727,42 @@ DELETE /bookme/config/portals/{id}
 Bank Options configure bank-wide settings including timezone and operating hours.
 
 #### Get Bank Options
+
+Retrieve the current bank options configuration.
+
 ```http
 GET /bookme/config/bank-options
+```
 
-Response: BankOptions object
+**Response:** BankOptions object
 
-Update Bank Options
+#### Update Bank Options
 
+Update bank options using JSON Patch operations.
+
+```http
 PATCH /bookme/config/bank-options
+```
 
-Request Body: Array of JSON Patch operations
+**Request Body:** Array of JSON Patch operations
+
+```json
 [
   { "op": "replace", "path": "/timeZoneId", "value": "uuid" }
 ]
-
-Response: 200 OK
-
-List Supported Timezones
-
-GET /bookme/config/timezones
-
-Response: Array of Timezone objects
 ```
+
+**Response:** 200 OK with updated BankOptions object
+
+#### List Supported Timezones
+
+Retrieve all available timezones that can be configured for a bank.
+
+```http
+GET /bookme/config/timezones
+```
+
+**Response:** Array of Timezone objects
 
 ## Data Models
 
@@ -900,14 +914,16 @@ Response: Array of Timezone objects
   },
   "closingDays": ["2026-12-25", "2026-12-26"]
 }
+```
 
-Timezone Object (V3)
-
+### Timezone Object (V3)
+```json
 {
   "id": "uuid",
   "identifier": "Greenland Standard Time",
   "displayName": "(UTC-02:00) Greenland"
 }
+```
 
 ## Code Examples
 

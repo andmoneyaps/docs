@@ -7,7 +7,7 @@ nav_order: 2
 
 ### _Timezone configuration for Banks_
 
-- Timezone Support: Banks can now be configured with a specific timezone (Danish or Greenland) that determines how meeting times are displayed in Outlook calendar invites
+- Timezone Support: Banks can now be configured with a specific timezone (Romance Standard Time or Greenland Standard Time) that determines how meeting times are displayed in Outlook calendar invites
 - Timezone selector added to Bank Options in Management UI
 - Calendar Service respects bank timezone when creating and updating Outlook events
 

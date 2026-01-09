@@ -9,6 +9,16 @@ permalink: /changelog/
 
 This changelog tracks significant updates and changes to the AndMoney documentation.
 
+## January 2026
+
+### Added
+- Comprehensive documentation for Duration-Based Daily Meeting Time Limits feature
+- Detailed configuration levels and migration information for advisor capacity management
+
+### Updated
+- Release news with expanded feature descriptions for January 2026
+- Management UI capacity management documentation
+
 ## August 2025
 
 ### Added

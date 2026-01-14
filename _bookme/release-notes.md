@@ -7,6 +7,12 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.19.0 (14-01-2026)
+Here is what's new in release 1.19.0 of &bookme.
+
+- **Fixed issue with additional advisors**
+  - Removing an additional advisor no longer affects other meeting participants.
+
 ## Release 1.18.0 (24-09-2025)
 Here is what's new in release 1.18.0 of &bookme.
 > **Managed Package Version ID**: `04tP70000020PZxIAM`.

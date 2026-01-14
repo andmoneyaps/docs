@@ -801,6 +801,8 @@ POST /bookme/config/employee-schedules
 
 **Response:** 201 Created with EmployeeSchedule object
 
+> **Warning:** This endpoint is not intended for direct consumption. Employee schedules are automatically configured for employees and using this endpoint is advised against. Requires elevated permissions.
+
 #### Get Employee Schedule
 ```http
 GET /bookme/config/employee-schedules/{id}
@@ -839,6 +841,8 @@ DELETE /bookme/config/employee-schedules/{id}
 
 **Response:** 204 No Content
 
+> **Warning:** This endpoint is not intended for direct consumption. Employee schedules are automatically managed and using this endpoint is advised against. Requires elevated permissions.
+
 ### Organization Settings API (V3)
 
 Organization Settings configure organization-wide defaults for booking behavior, operating hours, and display preferences.
@@ -873,6 +877,8 @@ DELETE /bookme/config/organization-settings/{id}
 ```
 
 **Response:** 204 No Content
+
+> **Warning:** This endpoint is not intended for direct consumption. Organization settings are automatically configured and using this endpoint is advised against. Requires elevated permissions.
 
 #### Add Closing Days
 Add dates when the organization is closed.

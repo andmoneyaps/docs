@@ -556,6 +556,52 @@ DELETE /bookme/config/competence-groups/{id}
 
 **Response:** 204 No Content
 
+#### Get Employee's Competence Groups
+Get all competence groups that an employee belongs to.
+
+```http
+GET /bookme/config/competence-groups/employee/{employeeId}
+```
+
+**Response:** Array of EmployeeCompetenceGroup objects
+```json
+[
+  {
+    "id": "uuid",
+    "name": "Mortgage Specialists",
+    "dateAssigned": "2025-01-15T10:30:00Z"
+  }
+]
+```
+
+#### Add Employee to Competence Groups
+Add an employee to one or more competence groups.
+
+```http
+PATCH /bookme/config/competence-groups/employee/{employeeId}/add
+```
+
+**Request Body:** Array of competence group IDs
+```json
+["uuid1", "uuid2", "uuid3"]
+```
+
+**Response:** 200 OK
+
+#### Remove Employee from Competence Groups
+Remove an employee from one or more competence groups.
+
+```http
+PATCH /bookme/config/competence-groups/employee/{employeeId}/remove
+```
+
+**Request Body:** Array of competence group IDs
+```json
+["uuid1", "uuid2"]
+```
+
+**Response:** 200 OK
+
 ### Service Groups API (V3)
 
 Service Groups organize employees into logical groups for scheduling.
@@ -646,6 +692,53 @@ PATCH /bookme/config/service-groups/{id}/service-level
 ```
 
 **Request Body:** Array of JSON Patch operations
+
+**Response:** 200 OK
+
+#### Get Employee's Service Groups
+Get all service groups that an employee belongs to.
+
+```http
+GET /bookme/config/service-groups/employee/{employeeId}
+```
+
+**Response:** Array of EmployeeServiceGroup objects
+```json
+[
+  {
+    "id": "uuid",
+    "name": "Customer Service Team",
+    "membershipEmail": "team@example.com",
+    "dateAssigned": "2025-01-15T10:30:00Z"
+  }
+]
+```
+
+#### Add Employee to Service Groups
+Add an employee to one or more service groups.
+
+```http
+PATCH /bookme/config/service-groups/employee/{employeeId}/add
+```
+
+**Request Body:** Array of service group IDs
+```json
+["uuid1", "uuid2", "uuid3"]
+```
+
+**Response:** 200 OK
+
+#### Remove Employee from Service Groups
+Remove an employee from one or more service groups.
+
+```http
+PATCH /bookme/config/service-groups/employee/{employeeId}/remove
+```
+
+**Request Body:** Array of service group IDs
+```json
+["uuid1", "uuid2"]
+```
 
 **Response:** 200 OK
 
@@ -810,6 +903,27 @@ DELETE /bookme/config/portals/{id}
   "employeeIds": ["uuid"],
   "competenceGroupIds": ["uuid"],
   "labels": ["Support"]
+}
+```
+
+### EmployeeCompetenceGroup Object (V3)
+Represents a competence group membership for an employee.
+```json
+{
+  "id": "uuid",
+  "name": "Mortgage Specialists",
+  "dateAssigned": "2025-01-15T10:30:00Z"
+}
+```
+
+### EmployeeServiceGroup Object (V3)
+Represents a service group membership for an employee.
+```json
+{
+  "id": "uuid",
+  "name": "Customer Service Team",
+  "membershipEmail": "team@example.com",
+  "dateAssigned": "2025-01-15T10:30:00Z"
 }
 ```
 
@@ -1061,6 +1175,7 @@ V3 is fully backward compatible with V2. All new features are additive.
 - **JSON Patch Operations**: V3 PATCH endpoints use RFC 6902 JSON Patch format
 - **Service Group Advisors**: Get advisor membership from multiple sources (skill-based, assigned, competence groups)
 - **Portal Configuration**: Custom fields with validation, authentication types (AzureAD, MitID), CSS styling
+- **Employee-centric Membership Management**: Get, add, or remove an employee's competence group and service group memberships directly via employee ID
 
 For detailed migration instructions, see our [V2 to V3 Migration Guide]({{ site.baseurl }}/api/migration-guide-v3).
 

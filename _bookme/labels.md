@@ -134,7 +134,7 @@ Labels can only be deleted when they are not assigned to any entities.
 
 1. Go to **Admin** → **Label Management** → **Labels**
 2. Find the label you want to delete
-3. Verify the label is inactive (Services = x)
+3. Verify the label is inactive (Services = ❌)
 4. Click the **Delete** button (trash icon)
 5. Confirm the deletion
 

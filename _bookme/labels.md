@@ -215,6 +215,7 @@ Common label categories that work well for organizing booking-related entities:
 - **Department**: `Dept:Private`, `Dept:Business`, `Dept:Agriculture`
 - **Status**: `Active`, `Pilot`, `Legacy`
 - **Customer Segment**: `Segment:Retail`, `Segment:Corporate`
+- **Brand**: `Brand:orgA`, `Brand:orgB`, `Brand:orgC`
 
 ### Color Guidelines
 

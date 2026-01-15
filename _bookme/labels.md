@@ -58,7 +58,7 @@ The label overview table displays the following information:
 | **Description** | Optional description explaining the label's purpose |
 | **Services** | Number of times the label is currently assigned across all entities |
 | **Status** | Indicates whether the label is currently in use |
-| **Actions** | Edit or delete the label (only those who's not in use)|
+| **Actions** | Edit or delete the label|
 
 ### Filtering and Searching
 

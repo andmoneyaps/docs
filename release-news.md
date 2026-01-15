@@ -10,7 +10,7 @@ nav_order: 2
 
 - **Duration-Based Daily Meeting Time Limits**: Administrators can now configure maximum meeting time per advisor per day using duration-based limits instead of meeting counts. This feature provides:
   - **Configuration levels** (most specific wins):
-    - **Bank-wide default**: Set in Management UI under BookMe/Meeting Setup tab (applies to all advisors)
+    - **Organization-wide default**: Set in Management UI under BookMe/Meeting Setup tab (applies to all advisors)
     - **Service Group override**: Configure on Service Groups under the BookMe/Service Groups tab (applies to group members)
     - **Advisor-specific override**: Set on advisor availability under the BookMe/Availaibility (Employees) tab (applies to individual advisor)
   - **How it works**: System tracks total booked meeting duration per advisor per day. When an advisor reaches their limit, they are automatically excluded from available time slot searches

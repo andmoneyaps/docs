@@ -722,38 +722,6 @@ DELETE /bookme/config/portals/{id}
 
 **Response:** 204 No Content
 
-### Bank Options API (V3)
-
-Bank Options configure bank-wide settings including timezone and operating hours.
-
-#### Get Bank Options
-
-Retrieve the current bank options configuration.
-
-```http
-GET /bookme/config/bank-options
-```
-
-**Response:** BankOptions object
-
-#### Update Bank Options
-
-Update bank options using JSON Patch operations.
-
-```http
-PATCH /bookme/config/bank-options
-```
-
-**Request Body:** Array of JSON Patch operations
-
-```json
-[
-  { "op": "replace", "path": "/timeZoneId", "value": "uuid" }
-]
-```
-
-**Response:** 200 OK with updated BankOptions object
-
 #### List Supported Timezones
 
 Retrieve all available timezones that can be configured for a bank.

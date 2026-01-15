@@ -9,6 +9,12 @@ parent: BookMe
 
 ## Release 1.19.0 (14-01-2026)
 Here is what's new in release 1.19.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002Qwf7IAC`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002Qwf7IAC`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
 
 - **Fixed issue with additional advisors**
   - Removing an additional advisor no longer affects other meeting participants.

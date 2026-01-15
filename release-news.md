@@ -4,6 +4,12 @@ title: Release news
 nav_order: 2
 ---
 
+## January 2026
+
+### _BookMe_
+
+- **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
+
 ## September 2025
 
 ### _Platform Enhancements_

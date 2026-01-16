@@ -3,6 +3,20 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## January 2026
+
+### _Timezone configuration for organizations_
+
+- Timezone Support: Banks can now be configured with a specific timezone (Romance Standard Time or Greenland Standard Time) that determines how meeting times are displayed in Outlook calendar invites
+- Timezone selector added to meeting setup in Management UI
+- Creating and updating Outlook events now respects the organization timezone 
+
+
+## January 2026
+
+### _BookMe_
+
+- **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
 
 ## January 2026
 

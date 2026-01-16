@@ -815,6 +815,16 @@ DELETE /bookme/config/portals/{id}
 
 **Response:** 204 No Content
 
+#### List Supported Timezones
+
+Retrieve all available timezones that can be configured for a bank.
+
+```http
+GET /bookme/config/timezones
+```
+
+**Response:** Array of Timezone objects
+
 ## Data Models
 
 ### Meeting Object
@@ -969,6 +979,33 @@ Represents a service group membership for an employee.
 ### Portal Authentication Types (V3)
 - `AzureAD`: Standard Azure AD authentication
 - `MitID`: Danish MitID national identity authentication
+
+### BankOptions Object (V3)
+```json
+{
+  "id": "uuid",
+  "openingTime": "08:00:00",
+  "closingTime": "17:00:00",
+  "maxTimeFromBookingToMeeting": "60.00:00:00",
+  "maxMeetingTimePerDay": "08:00:00",
+  "timeZoneId": "uuid",
+  "timeZone": {
+    "id": "uuid",
+    "identifier": "Romance Standard Time",
+    "displayName": "(UTC+01:00) Brussels, Copenhagen, Madrid, Paris"
+  },
+  "closingDays": ["2026-12-25", "2026-12-26"]
+}
+```
+
+### Timezone Object (V3)
+```json
+{
+  "id": "uuid",
+  "identifier": "Greenland Standard Time",
+  "displayName": "(UTC-02:00) Greenland"
+}
+```
 
 ## Code Examples
 

@@ -22,13 +22,13 @@ Users can continue booking multiple meetings in sequence. Each new meeting is ad
 
 The confirmation screen emits events that your Salesforce implementation can listen for.
 
-### meetingclicked
+### navigatetorecord
 
-When a user clicks on a meeting card, this event is emitted with the Salesforce Event ID.
+When a user clicks the "Åben" button on a meeting card, this event is emitted with the Salesforce Event ID.
 
 | Property | Value |
 | -------- | ----- |
-| Event name | `meetingclicked` |
+| Event name | `navigatetorecord` |
 | Data | Salesforce Event ID (string) |
 
 Use this event to open the meeting record in Salesforce or trigger custom workflows.
@@ -48,7 +48,7 @@ Use this event to return to the parent view (if needed). The session data is bei
 
 From the confirmation screen, users can:
 
-- Click a meeting card to trigger the `meetingclicked` event
+- Click the "Åben" button on a meeting card to trigger the `navigatetorecord` event
 - Book a customer meeting
 - Create a calendar reservation (internal meeting)
 - Return to the meeting overview

@@ -42,7 +42,7 @@ When the user clicks "Meeting Overview" to return to the main list, this event i
 | Event name | `close` |
 | Data | `null` |
 
-Use this event to the parent view (if needed). The session data is being cleared.
+Use this event to return to the parent view (if needed). The session data is being cleared.
 
 ## Available Actions
 

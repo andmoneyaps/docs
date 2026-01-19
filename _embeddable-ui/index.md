@@ -36,5 +36,5 @@ The Summary component provides a rich text editor with advanced formatting capab
 
 ### Component Documentation
 - **[Summary Component]({{ site.baseurl }}/embeddable-ui/summary/)** - Rich text editor with advanced formatting capabilities
-  - [Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/)** - Complete guide to link management features
+  - [Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/) - Complete guide to link management features
 - **[Confirmation Screen]({{ site.baseurl }}/embeddable-ui/confirmation-screen/)** - Session-based meeting confirmation view with event integration

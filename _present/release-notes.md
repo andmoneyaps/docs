@@ -8,6 +8,35 @@ collection: present
 
 # Release Notes—Present
 
+## Version 1.32
+
+**Release Date:** January 2026
+
+This release introduces bulk slide selection to streamline presentation creation.
+
+### New Features
+
+**Bulk Slide Selection**
+
+You can now select or deselect multiple slides at once when building presentations.
+
+- **Section-level buttons** — "Vælg alle" and "Fravælg alle" buttons at the top of the slide selection modal to select or deselect all slides in the current section
+- **Subsection-level buttons** — Quick-action buttons next to each subsection heading for targeted selection within specific subsections
+- **Smart selection** — Buttons only affect slides that aren't already in the desired state, preserving your existing selection
+
+See [Bulk Slide Selection](bulk-slide-selection.md) for details.
+
+### Installation
+
+> **Subscriber Package Version ID:** `[TO BE ADDED]`
+>
+> **Installation URL:**
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=[TO BE ADDED]`
+>
+> **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
+
+---
+
 ## Version 1.31
 
 **Release Date:** December 2025

@@ -12,19 +12,9 @@ collection: present
 
 **Release Date:** January 2026
 
-This release introduces bulk slide selection to streamline presentation creation.
-
 ### New Features
 
-**Bulk Slide Selection**
-
-You can now select or deselect multiple slides at once when building presentations.
-
-- **Section-level buttons** — "Vælg alle" and "Fravælg alle" buttons at the top of the slide selection modal to select or deselect all slides in the current section
-- **Subsection-level buttons** — Quick-action buttons next to each subsection heading for targeted selection within specific subsections
-- **Smart selection** — Buttons only affect slides that aren't already in the desired state, preserving your existing selection
-
-See [Bulk Slide Selection](bulk-slide-selection.md) for details.
+**Bulk Slide Selection** — Select or deselect multiple slides at once using "Vælg alle" and "Fravælg alle" buttons at both section and subsection levels. See [Bulk Slide Selection](bulk-slide-selection.md) for details.
 
 ### Installation
 

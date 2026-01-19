@@ -14,7 +14,7 @@ nav_order: 2
 ### _Embeddable UI: Confirmation Screen_
 
 - **Confirmation Screen**: New session-based view displaying all meetings booked during the current session
-- **navigatetorecord event**: Emits Salesforce Event ID when a user clicks the "Åben" button on a meeting card
+- **navigatetorecord event**: Emits Salesforce Event ID when a user clicks the "Åbn" button on a meeting card
 - **close event**: Notifies parent view when user returns to meeting overview, clearing session data
 
 ### _BookMe_

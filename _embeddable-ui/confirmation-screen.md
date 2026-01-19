@@ -24,7 +24,7 @@ The confirmation screen emits events that your Salesforce implementation can lis
 
 ### navigatetorecord
 
-When a user clicks the "Åben" button on a meeting card, this event is emitted with the Salesforce Event ID.
+When a user clicks the "Åbn" button on a meeting card, this event is emitted with the Salesforce Event ID.
 
 | Property | Value |
 | -------- | ----- |
@@ -48,7 +48,7 @@ Use this event to return to the parent view (if needed). The session data is bei
 
 From the confirmation screen, users can:
 
-- Click the "Åben" button on a meeting card to trigger the `navigatetorecord` event
+- Click the "Åbn" button on a meeting card to trigger the `navigatetorecord` event
 - Book a customer meeting
 - Create a calendar reservation (internal meeting)
 - Return to the meeting overview

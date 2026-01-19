@@ -16,6 +16,12 @@ collection: present
 
 **Bulk Slide Selection** — Select or deselect multiple slides at once using "Vælg alle" and "Fravælg alle" buttons at both section and subsection levels. See [Bulk Slide Selection](bulk-slide-selection.md) for details.
 
+**Label Filter Configuration** — New LWC config options for controlling the label filter:
+- `labelWhitelist` — Restrict the filter dropdown to only show specific labels
+- `hideLabelFilter` — Completely hide the label filter for use-cases where it's not relevant
+
+See [Template Labels](template-labels.md) for details.
+
 ### Installation
 
 > **Subscriber Package Version ID:** `[TO BE ADDED]`

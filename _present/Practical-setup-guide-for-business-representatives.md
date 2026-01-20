@@ -10,11 +10,10 @@ collection: present
 
 ## Contents
 
-- [General Overview](#general-overview)  
-- [How to Use Present](#how-to-use-present)  
-  - [Admin/Customer Responsible](#admincustomer-responsible)  
-  - [Employee](#employee)  
-- [Questions](#questions)
+- [General Overview](#general-overview)
+- [How to Use Present](#how-to-use-present)
+  - [Admin/Customer Responsible](#admincustomer-responsible)
+  - [Employee](#employee)
 
 ---
 

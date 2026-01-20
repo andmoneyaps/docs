@@ -147,8 +147,8 @@ The Management UI provides visual status indicators for the connection:
 ## Next Steps
 
 Once the connection is successfully established:
-1. [Deploy the iframe LWC component](./salesforce-iframe-lwc-deployment.md) to enable embedded booking
-2. [Configure the component](./salesforce-iframe-lwc.md) for your specific use cases
+1. [Deploy the iframe LWC component](./salesforce-iframe-lwc-deployment) to enable embedded booking
+2. [Configure the component](./salesforce-iframe-lwc) for your specific use cases
 3. Set up custom metadata for meeting configurations
 
 ## Support

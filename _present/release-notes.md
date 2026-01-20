@@ -24,10 +24,10 @@ See [Template Labels](template-labels.md) for details.
 
 ### Installation
 
-> **Subscriber Package Version ID:** `[TO BE ADDED]`
+> **Subscriber Package Version ID:** `04tP7000002RkQbIAK`
 >
 > **Installation URL:**
-> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=[TO BE ADDED]`
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=04tP7000002RkQbIAK`
 >
 > **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
 

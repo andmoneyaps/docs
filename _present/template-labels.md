@@ -81,6 +81,42 @@ When `preselectedLabel` is set, the FastSlides component will load with only mat
 | Property | Type | Description |
 |----------|------|-------------|
 | `agenda` | `string` | Predefined agenda text |
-| `preselectedLabel` | `string` | Label to pre-filter templates |
+| `preselectedLabel` | `string` | Label to pre-filter templates on load |
+| `labelWhitelist` | `string[]` | Only show these labels in the filter dropdown |
+| `hideLabelFilter` | `boolean` | Hide the label filter completely |
 
-Both properties are optional. If `preselectedLabel` is empty, all templates are shown.
+All properties are optional.
+
+### Label Whitelist
+
+Use `labelWhitelist` to restrict which labels are available in the filter dropdown. Only labels in the whitelist (that also exist in the backend) will be shown.
+
+```javascript
+config = {
+  labelWhitelist: ["Private Banking", "Retail"]  // Only these labels available
+};
+```
+
+This is useful when you want to limit the filter options to labels relevant for a specific use-case or customer segment.
+
+### Hiding the Label Filter
+
+Use `hideLabelFilter` to completely hide the label filter from the UI. This is useful for banks or use-cases where label filtering is not relevant.
+
+```javascript
+config = {
+  hideLabelFilter: true  // Filter UI is hidden, all templates shown
+};
+```
+
+{: .note }
+> When `hideLabelFilter` is `true`, any `preselectedLabel` value will be ignored.
+
+### Validation
+
+The component validates the `preselectedLabel` to ensure it:
+1. Exists in the available labels from the backend
+2. Is included in the `labelWhitelist` (if configured)
+3. Is not used when `hideLabelFilter` is `true`
+
+If validation fails, the preselected label is ignored and a warning is logged to the console.

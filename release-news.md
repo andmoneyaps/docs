@@ -9,10 +9,13 @@ nav_order: 2
 
 - Timezone Support: Banks can now be configured with a specific timezone (Romance Standard Time or Greenland Standard Time) that determines how meeting times are displayed in Outlook calendar invites
 - Timezone selector added to meeting setup in Management UI
-- Creating and updating Outlook events now respects the organization timezone 
+- Creating and updating Outlook events now respects the organization timezone
 
+### _Embeddable UI: Confirmation Screen_
 
-## January 2026
+- **Confirmation Screen**: New session-based view displaying all meetings booked during the current session
+- **navigatetorecord event**: Emits Salesforce Event ID when a user clicks the "Åbn" button on a meeting card
+- **close event**: Notifies parent view when user returns to meeting overview, clearing session data
 
 ### _BookMe_
 

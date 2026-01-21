@@ -8,6 +8,31 @@ collection: present
 
 # Release Notes—Present
 
+## Version 1.32
+
+**Release Date:** January 2026
+
+### New Features
+
+**Bulk Slide Selection** — Select or deselect multiple slides at once using "Vælg alle" and "Fravælg alle" buttons at both section and subsection levels. See [Bulk Slide Selection](bulk-slide-selection.md) for details.
+
+**Label Filter Configuration** — New LWC config options for controlling the label filter:
+- `labelWhitelist` — Restrict the filter dropdown to only show specific labels
+- `hideLabelFilter` — Completely hide the label filter for use-cases where it's not relevant
+
+See [Template Labels](template-labels.md) for details.
+
+### Installation
+
+> **Subscriber Package Version ID:** `04tP7000002RkQbIAK`
+>
+> **Installation URL:**
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=04tP7000002RkQbIAK`
+>
+> **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
+
+---
+
 ## Version 1.31
 
 **Release Date:** December 2025

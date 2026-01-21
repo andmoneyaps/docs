@@ -206,6 +206,44 @@ Available time slots are generated automatically based on employee availability 
 - **Interval**: Time slots start at 30-minute intervals (`:00` and `:30` minutes)
 - **Duration**: Default meeting duration is typically 1 hour (configurable via `meetingDuration` parameter)
 - **Multiple slots**: For each available employee, slots are generated for each available meeting type they support
+- **Daily capacity limits**: Time slots are filtered based on each advisor's remaining daily meeting capacity (see below)
+
+##### Daily Meeting Time Limits
+
+The system enforces duration-based daily meeting time limits to prevent advisor overbooking:
+
+**How It Works:**
+1. Each advisor has a `MaxMeetingTimePerDay` limit (configured at organization, service group, or advisor level)
+2. The system calculates total booked meeting time per advisor per day
+3. Advisors are excluded from time slot results when: `existingMeetingDuration + requestedMeetingDuration > dailyLimit`
+4. If the requested meeting duration alone exceeds the daily limit, the advisor is excluded for all days in the search range
+
+**Example Scenarios:**
+
+```javascript
+// Scenario 1: Normal booking
+// Advisor limit: 04:00:00 (4 hours/day)
+// Already booked: 2 hours
+// Requested meeting: 1 hour
+// Result: ✅ Advisor appears in time slots (2h + 1h = 3h < 4h limit)
+
+// Scenario 2: Near capacity
+// Advisor limit: 04:00:00 (4 hours/day)
+// Already booked: 3.5 hours
+// Requested meeting: 1 hour
+// Result: ❌ Advisor excluded (3.5h + 1h = 4.5h > 4h limit)
+
+// Scenario 3: Meeting too long
+// Advisor limit: 04:00:00 (4 hours/day)
+// Already booked: 0 hours
+// Requested meeting: 5 hours
+// Result: ❌ Advisor excluded for all days (5h > 4h limit)
+```
+
+**API Behavior:**
+- Advisors at capacity are automatically filtered out
+- No explicit error is returned - they simply don't appear in results
+- Limits reset at midnight (per day calculation)
 
 **Example response:**
 ```json
@@ -815,6 +853,220 @@ DELETE /bookme/config/portals/{id}
 
 **Response:** 204 No Content
 
+### Employee Schedules API (V3)
+
+Employee Schedules define working hours, availability, and meeting time limits for individual employees.
+
+#### List Employee Schedules
+```http
+GET /bookme/config/employee-schedules
+```
+
+**Response:** Array of EmployeeSchedule objects
+
+#### Create Employee Schedule
+```http
+POST /bookme/config/employee-schedules
+```
+
+**Request Body:**
+```json
+{
+  "employeeId": "uuid",
+  "isOnlyExplicitlyAvailable": false,
+  "canBeBooked": true,
+  "workdays": [
+    {
+      "isAvailable": true,
+      "dayOfWeek": "Monday",
+      "from": "08:00:00",
+      "to": "17:00:00",
+      "availableMeetingTypes": [
+        { "type": "Physical" },
+        { "type": "Online" }
+      ],
+      "location": "Copenhagen"
+    }
+  ],
+  "maxMeetingTimePerDay": "04:00:00"
+}
+```
+
+**Response:** 201 Created with EmployeeSchedule object
+
+> **Warning:** This endpoint is not intended for direct consumption. Employee schedules are automatically configured for employees and using this endpoint is advised against. Requires elevated permissions.
+
+#### Get Employee Schedule
+```http
+GET /bookme/config/employee-schedules/{id}
+```
+
+**Response:** EmployeeSchedule object
+
+#### Get Actual Employee Schedule
+Get employee schedule with populated locations on workdays.
+
+```http
+GET /bookme/config/employee-schedules/{id}/actual
+```
+
+**Response:** EmployeeSchedule object with resolved location data
+
+#### Update Employee Schedule
+```http
+PATCH /bookme/config/employee-schedules/{id}
+```
+
+**Request Body:** Array of JSON Patch operations
+```json
+[
+  { "op": "replace", "path": "/canBeBooked", "value": false },
+  { "op": "replace", "path": "/maxMeetingTimePerDay", "value": "06:00:00" }
+]
+```
+
+**Response:** 200 OK
+
+#### Delete Employee Schedule
+```http
+DELETE /bookme/config/employee-schedules/{id}
+```
+
+**Response:** 204 No Content
+
+> **Warning:** This endpoint is not intended for direct consumption. Employee schedules are automatically managed and using this endpoint is advised against. Requires elevated permissions.
+
+### Organization Settings API (V3)
+
+Organization Settings configure organization-wide defaults for booking behavior, operating hours, and display preferences.
+
+#### Get Organization Settings
+Get organization settings. A default configuration is created if none exists.
+
+```http
+GET /bookme/config/organization-settings
+```
+
+**Response:** OrganizationSetting object
+
+#### Update Organization Settings
+```http
+PATCH /bookme/config/organization-settings/{id}
+```
+
+**Request Body:** Array of JSON Patch operations
+```json
+[
+  { "op": "replace", "path": "/openingTime", "value": "09:00:00" },
+  { "op": "replace", "path": "/closingTime", "value": "18:00:00" }
+]
+```
+
+**Response:** 200 OK
+
+#### Delete Organization Settings
+```http
+DELETE /bookme/config/organization-settings/{id}
+```
+
+**Response:** 204 No Content
+
+> **Warning:** This endpoint is not intended for direct consumption. Organization settings are automatically configured and using this endpoint is advised against. Requires elevated permissions.
+
+#### Add Closing Days
+Add dates when the organization is closed.
+
+```http
+POST /bookme/config/organization-settings/{id}/closing-days
+```
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `closingDays` | array of datetime | Yes | Dates to add as closing days (ISO 8601 format) |
+
+**Response:** 200 OK
+
+#### Remove Closing Days
+Remove dates from the organization's closing days.
+
+```http
+DELETE /bookme/config/organization-settings/{id}/closing-days
+```
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `closingDays` | array of datetime | Yes | Dates to remove from closing days (ISO 8601 format) |
+
+**Response:** 204 No Content
+
+### Locations API (V3)
+
+Locations represent physical locations where meetings can be held, with room booking settings.
+
+#### List Locations
+```http
+GET /bookme/config/locations
+```
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `location` | string | No | Filter by location identifier |
+| `search` | string | No | Search term for filtering locations |
+
+**Response:** Array of Location objects
+
+#### Create Location
+```http
+POST /bookme/config/locations
+```
+
+**Request Body:**
+```json
+{
+  "location": "CPH-HQ",
+  "displayName": "Copenhagen Headquarters",
+  "addRoomsToBookedMeetings": true,
+  "requireAvailableRoom": false
+}
+```
+
+**Response:** 201 Created with Location object
+
+#### Get Location
+```http
+GET /bookme/config/locations/{id}
+```
+
+**Response:** Location object
+
+#### Update Location
+```http
+PATCH /bookme/config/locations/{id}
+```
+
+**Request Body:** Array of JSON Patch operations
+```json
+[
+  { "op": "replace", "path": "/displayName", "value": "Updated Location Name" },
+  { "op": "replace", "path": "/requireAvailableRoom", "value": true }
+]
+```
+
+**Response:** 200 OK
+
+#### Delete Location
+```http
+DELETE /bookme/config/locations/{id}
+```
+
+**Response:** 204 No Content
+
 #### List Supported Timezones
 
 Retrieve all available timezones that can be configured for a bank.
@@ -912,7 +1164,8 @@ GET /bookme/config/timezones
   "membershipEmail": "team@example.com",
   "employeeIds": ["uuid"],
   "competenceGroupIds": ["uuid"],
-  "labels": ["Support"]
+  "labels": ["Support"],
+  "maxMeetingTimePerDay": "04:00:00"
 }
 ```
 
@@ -980,21 +1233,72 @@ Represents a service group membership for an employee.
 - `AzureAD`: Standard Azure AD authentication
 - `MitID`: Danish MitID national identity authentication
 
-### BankOptions Object (V3)
+### EmployeeSchedule Object (V3)
+```json
+{
+  "id": "uuid",
+  "employeeId": "uuid",
+  "isOnlyExplicitlyAvailable": false,
+  "canBeBooked": true,
+  "workdays": [
+    {
+      "isAvailable": true,
+      "dayOfWeek": "Monday",
+      "from": "08:00:00",
+      "to": "17:00:00",
+      "availableMeetingTypes": [
+        { "type": "Physical" },
+        { "type": "Online" }
+      ],
+      "location": "Copenhagen"
+    }
+  ],
+  "maxMeetingTimePerDay": "04:00:00"
+}
+```
+
+### EmployeeWorkday Object (V3)
+```json
+{
+  "isAvailable": true,
+  "dayOfWeek": "Monday",
+  "from": "08:00:00",
+  "to": "17:00:00",
+  "availableMeetingTypes": [
+    { "type": "Physical" },
+    { "type": "Online" },
+    { "type": "Telephone" }
+  ],
+  "location": "Copenhagen"
+}
+```
+
+### OrganizationSetting Object (V3)
 ```json
 {
   "id": "uuid",
   "openingTime": "08:00:00",
   "closingTime": "17:00:00",
-  "maxTimeFromBookingToMeeting": "60.00:00:00",
-  "maxMeetingTimePerDay": "08:00:00",
+  "maxTimeFromBookingToMeeting": "30.00:00:00",
+  "maxMeetingTimePerDay": "04:00:00",
+  "isFilterShowTimesAsCustomerEnabled": true,
+  "meetingTypeLabels": [
+    { "name": "Physical", "label": "In-Person Meeting", "order": 1 },
+    { "name": "Online", "label": "Video Call", "order": 2 }
+  ],
+  "employeeLabels": [
+    { "name": "Advisor", "label": "Financial Advisor", "order": 1 }
+  ],
+  "extendedOpeningHoursEmail": "support@example.com",
+  "closingDays": ["2025-12-25T00:00:00Z", "2025-12-26T00:00:00Z"],
+  "iCalMeetingTitle": "Meeting with {{employee}}",
+  "iCalMeetingDescription": "Your scheduled meeting",
   "timeZoneId": "uuid",
   "timeZone": {
     "id": "uuid",
-    "identifier": "Romance Standard Time",
-    "displayName": "(UTC+01:00) Brussels, Copenhagen, Madrid, Paris"
-  },
-  "closingDays": ["2026-12-25", "2026-12-26"]
+    "identifier": "Europe/Copenhagen",
+    "displayName": "Central European Time"
+  }
 }
 ```
 
@@ -1004,6 +1308,17 @@ Represents a service group membership for an employee.
   "id": "uuid",
   "identifier": "Greenland Standard Time",
   "displayName": "(UTC-02:00) Greenland"
+}
+```
+
+### Location Object (V3)
+```json
+{
+  "id": "uuid",
+  "location": "CPH-HQ",
+  "displayName": "Copenhagen Headquarters",
+  "addRoomsToBookedMeetings": true,
+  "requireAvailableRoom": false
 }
 ```
 
@@ -1206,13 +1521,16 @@ V3 is fully backward compatible with V2. All new features are additive.
 - **Competence Groups API**: Manage expertise-based employee groupings with hierarchical relationships
 - **Service Groups API**: Organize employees into logical service groups with advisor membership tracking
 - **Portals API**: Configure booking portals with custom form fields, styling, and authentication
+- **Employee Schedules API**: Manage employee work schedules, availability, and meeting time limits
+- **Organization Settings API**: Configure organization-wide booking defaults, operating hours, and closing days
+- **Locations API**: Manage physical locations with room booking settings
 
 ### Key Features
 - **Label Filtering**: All new resources support labels for categorization and filtering
 - **JSON Patch Operations**: V3 PATCH endpoints use RFC 6902 JSON Patch format
 - **Service Group Advisors**: Get advisor membership from multiple sources (skill-based, assigned, competence groups)
 - **Portal Configuration**: Custom fields with validation, authentication types (AzureAD, MitID), CSS styling
-- **Employee-centric Membership Management**: Get, add, or remove an employee's competence group and service group memberships directly via employee ID
+- **maxMeetingTimePerDay**: New field on Service Groups, Employee Schedules, and Organization Settings to limit daily meeting duration per advisor
 
 For detailed migration instructions, see our [V2 to V3 Migration Guide]({{ site.baseurl }}/api/migration-guide-v3).
 

@@ -139,6 +139,31 @@ This will search for available advisors from configured Service Groups.
 
 ---
 
+## Daily Meeting Time Limits
+
+Service groups can override the bank-wide daily meeting time limit for their members.
+
+### Configuration
+
+1. Navigate to **Service Groups** in the Management UI
+2. Select or create a service group
+3. Locate the "max meeting time per day" field
+
+### How It Works
+
+- **Override behavior**: When set, this limit applies to all advisors in the service group instead of the bank default
+- **Multiple groups**: If an advisor belongs to multiple service groups, the **highest** (most permissive) limit applies
+- **Advisor-specific overrides**: Individual advisors can have their own limits set in Advisor Schedules, which take precedence over service group limits
+
+### Impact on Availability
+
+When an advisor reaches their daily meeting time limit:
+- They are automatically excluded from available time slot searches
+- Customers won't see booking options for that advisor on that day
+- Limit resets at midnight
+
+---
+
 ## Important Note
 
 **USE COMPETENCE GROUPS TO CONNECT MANY EMPLOYEES TO A SERVICE GROUP!**

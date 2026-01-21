@@ -47,6 +47,9 @@ When creating a presentation, advisors can filter templates using the label drop
 
 The Present Salesforce package supports preselecting a label, allowing you to automatically filter templates based on context before the advisor opens the component.
 
+{: .important }
+> The label filter dropdown only appears in the UI once you have added at least one label to your templates in the Management UI. If you don't see the filter, ensure labels have been configured first. If you later decide filtering is not needed, you can hide it using the `hideLabelFilter` config option.
+
 ## Preselecting a Label
 
 Configure the `preselectedLabel` property in your wrapper component's config object:

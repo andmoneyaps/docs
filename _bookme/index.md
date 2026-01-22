@@ -36,3 +36,4 @@ Navigate through the sections to find detailed information about:
 - Playbooks user guide
 - Relation Builder for data mapping
 - Labels
+- Advisor priority rules

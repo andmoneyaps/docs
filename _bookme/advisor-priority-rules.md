@@ -19,7 +19,6 @@ Advisor Priority Rules allow banks to configure how advisors are selected when m
 ## Key Benefits
 
 - **Load Balancing**: Distribute meetings across advisors based on business priorities
-- **Business Rule Enforcement**: Ensure local advisors are prioritized over regional or national advisors
 - **Customized Routing**: Create tiered service groups to route customers to the most appropriate advisors
 - **Flexible Configuration**: Adjust priorities without requiring IT assistance
 

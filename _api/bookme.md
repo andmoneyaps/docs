@@ -182,7 +182,7 @@ GET /time-slots/available
 | `customerLocation` | string | No | Customer's location (free text, used to filter local employees) |
 | `meetingLocation` | string | No | Meeting location (free text, defaults to customerLocation if omitted) |
 | `requireRoom` | boolean | No | If `true`, only return slots with available rooms |
-| `isCustomerInitiated` | boolean | No | If set to true, respects advisor schedule, otherwise defaults to banks opening hours |
+| `isCustomerInitiated` | boolean | No | If `true`, enforces customer-specific booking constraints such as minimum booking notice and working time restrictions. Defaults to `false` if omitted. |
 | `requireEmployeeParticipation` | boolean | Yes | If `true`, requires all explicitly specified employees are available for the entire meeting duration. If `false`, returns slots where at least one specified employee is available |
 
 **Response:** Array of available TimeSlot objects

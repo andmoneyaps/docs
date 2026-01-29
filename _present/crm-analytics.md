@@ -12,19 +12,12 @@ collection: present
 
 Present CRM Analytics provides business intelligence dashboards and datasets for analyzing presentation usage patterns within Salesforce CRM Analytics (formerly Wave Analytics/Einstein Analytics).
 
-The analytics assets are maintained in the [`engageme-salesforce-crm-analytics`](https://dev.azure.com/andmoney/Engage%20Me/_git/engageme-salesforce-crm-analytics) repository and deployed to customer Salesforce orgs as part of the `andmoney` managed package.
+The analytics assets are deployed to customer Salesforce orgs as part of the `andmoney` managed package.
 
-## Repository Structure
-
-```
-engageme-salesforce-crm-analytics/
-├── am-analytics/main/default/wave/
-│   ├── SlidesGenerated.wdpr          # Base slides dataset
-│   ├── AllSlideData.wdpr             # Extended slides dataset with user info
-│   └── Present_Dashboard.wdash       # Present analytics dashboard
-├── sfdx-project.json                 # Salesforce DX configuration
-└── config/project-scratch-def.json   # Scratch org definition
-```
+{: .note }
+> **Obtaining the CRM Analytics Assets**
+>
+> The CRM Analytics datasets and dashboards are available to Present customers. Contact [&money](https://andmoney.dk) to obtain the analytics package for your Salesforce org.
 
 ## Datasets
 
@@ -126,51 +119,18 @@ q = order q by 'Antal Slides' desc;
 q = limit q 10;
 ```
 
-## Deployment
+## Prerequisites
 
-### Prerequisites
+To use Present CRM Analytics, your Salesforce org requires:
 
-- Salesforce CLI (sf/sfdx) installed
-- CRM Analytics enabled in the target org
-- `andmoney` namespace configured
-
-### Deploying to an Org
-
-```bash
-# Authenticate to your org
-sf org login web -a MyOrg
-
-# Deploy the analytics assets
-sf project deploy start --source-dir am-analytics -o MyOrg
-```
-
-### Scratch Org Development
-
-The repository includes a scratch org definition with CRM Analytics features enabled:
-
-```json
-{
-  "orgName": "andmoney analytics scratch",
-  "edition": "Developer",
-  "features": ["EnableSetPasswordInApi", "SharedActivities", "DevelopmentWave"],
-  "settings": {
-    "lightningExperienceSettings": { "enableS1DesktopEnabled": true },
-    "mobileSettings": { "enableS1EncryptedStoragePref2": false }
-  }
-}
-```
-
-Create a scratch org with:
-
-```bash
-sf org create scratch -f config/project-scratch-def.json -a analytics-scratch -d 7
-sf project deploy start --source-dir am-analytics -o analytics-scratch
-```
+- **CRM Analytics License**: CRM Analytics (formerly Einstein Analytics/Wave Analytics) must be enabled
+- **Present Package**: The `andmoney` Present managed package installed
+- **Data Population**: Generated presentations in your org to analyze
 
 {: .note }
 > **CRM Analytics Licensing**
 >
-> CRM Analytics requires specific licensing in Salesforce. Scratch orgs created with the `DevelopmentWave` feature include CRM Analytics capabilities for development and testing purposes.
+> CRM Analytics requires specific licensing in Salesforce. Contact your Salesforce account representative to enable CRM Analytics capabilities for your org.
 
 ## Understanding the File Formats
 

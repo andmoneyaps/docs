@@ -12,7 +12,7 @@ collection: present
 
 Present CRM Analytics provides business intelligence dashboards and datasets for analyzing presentation usage patterns within Salesforce CRM Analytics (formerly Wave Analytics/Einstein Analytics).
 
-The analytics assets are deployed to customer Salesforce orgs as part of the `andmoney` managed package.
+The analytics assets are deployed to customer Salesforce orgs as a supplement to the &money Present managed package. They enable organizations to gain insights into:
 
 {: .note }
 > **Obtaining the CRM Analytics Assets**

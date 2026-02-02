@@ -7,6 +7,21 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.21.0 (02-02-2026)
+Here is what's new in release 1.21.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002UiQfIAK`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002UiQfIAK`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Timezone handling for date selection**
+  - Fixed an issue where selecting a date in negative UTC offset timezones (e.g., Greenland) would return timeslots for the previous day.
+  - The fix ensures that dates are correctly parsed using local timezone components rather than UTC, preventing date shifts when users select dates in the booking calendar.
+  - Affected flows: Advisor planner, Customer planner, and Rescheduling.
+
 ## Release 1.19.0 (14-01-2026)
 Here is what's new in release 1.19.0 of &bookme.
 > **Managed Package Version ID**: `04tP7000002Qwf7IAC`.

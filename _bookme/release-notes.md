@@ -21,6 +21,8 @@ Here is what's new in release 1.21.0 of &bookme.
   - Fixed an issue where selecting a date in negative UTC offset timezones (e.g., Greenland) would return timeslots for the previous day.
   - The fix ensures that dates are correctly parsed using local timezone components rather than UTC, preventing date shifts when users select dates in the booking calendar.
   - Affected flows: Advisor planner, Customer planner, and Rescheduling.
+- **Customer email field retained when editing meetings**
+  - Fixed an issue where the customer's email field was not kept when an advisor opened an existing meeting to edit it.
 
 ## Release 1.19.0 (14-01-2026)
 Here is what's new in release 1.19.0 of &bookme.

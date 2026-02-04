@@ -58,7 +58,7 @@ The &money platform uses three distinct Entra Enterprise Applications to handle 
 
 This application manages role-based access control (RBAC) for the platform but does not perform any provisioning operations. All users that access any of the &money platforms Web UIs must be assigned roles through this Enterprise Application.
 
-There is an instance of this application for each environment (Test and Production), and role assignments must be configured separately for each environment. It is the recommentaion of &money that users are assigned to roles using security groups rather than individual user assignments to simplify management and ensure scalability as the number of users grows.
+There is an instance of this application for each environment (Test and Production), and role assignments must be configured separately for each environment. It is the recommendation of &money that users are assigned to roles using security groups rather than individual user assignments to simplify management and ensure scalability as the number of users grows.
 
 Once onboarding is complete, the following IDs can use used to identify the Role Assignment Enterprise Applications in the customer's tenant:
 
@@ -71,7 +71,7 @@ This application handles the provisioning of users (previously referred to as Ad
 
 This application is used to sync two types of users:
 
-- Users that should have avaiable timeslots for booking in BookMe
+- Users that should have available timeslots for booking in BookMe
 - Users of systems that require extra information such as Kreditbeslutning which needs a users EmployeeNumber attribute.
 
 Due to the high overlap on users that are provisioned and users that are assigned roles, it is common to use security groups for both provisioning and role assignment to simplify management.

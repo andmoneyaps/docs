@@ -32,21 +32,28 @@ This section contains comprehensive documentation about our processes, procedure
 - Testing and validation reports
 - Legal documentation
 
-### 4. [Setting Up](../setup)
+### 4. [Platform Authentication](../platform-authentication)
+- Platform-wide authentication and roles
+- Role-based access control (RBAC)
+- Role definitions and permissions
+- Product-to-role mappings
+- Security best practices
+
+### 5. [Setting Up](../setup)
 - Environment provisioning
 - Access management
 - Integration configuration
 - Customer responsibilities
 - System setup procedures
 
-### 5. [Support & Hypercare](../support-and-hypercare)
+### 6. [Support & Hypercare](../support-and-hypercare)
 - Support structure and levels
 - Service Level Agreements (SLA)
 - Consultancy services
 - Hypercare period details
 - Post-deployment support
 
-### 6. [Test & Validation](../test-validation)
+### 7. [Test & Validation](../test-validation)
 - Integration testing procedures
 - Configuration validation
 - Quality assurance processes
@@ -59,6 +66,7 @@ This documentation helps stakeholders understand:
 - Product implementation processes
 - Project management methodologies
 - Security and compliance requirements
+- Authentication and role-based access control
 - Setup and configuration procedures
 - Support and maintenance standards
 - Quality assurance practices

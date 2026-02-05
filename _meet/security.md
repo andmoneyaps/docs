@@ -36,14 +36,14 @@ flowchart TB
     MeetBE["Meet Backend (real-time WebSocket + APIs)"]
     MeetSvc["EngageMe Meet Service\n(Configuration API + Transcription Hub)"]
     Corax["&money AI Services (Corax / Playbooks)"]
-    Redis["Redis (session recovery snapshots)"]
     Obs["Monitoring & Logging"]
-    ConfigDB["Configuration DB (PostgreSQL)"]
   end
 
   subgraph Cloud["Cloud subprocessors (Microsoft Azure services)"]
     AzureSpeech["Azure Speech Service"]
     AzureOpenAI["Azure OpenAI / AI Foundry (where used)"]
+    AzureRedis["Azure Managed Redis\n(session recovery snapshots)"]
+    AzurePostgres["Azure Database for PostgreSQL\n(configuration metadata)"]
   end
 
   Advisor <-->|"HTTPS"| MeetUI
@@ -57,12 +57,12 @@ flowchart TB
   MeetBE <-->|"HTTPS (TLS)"| Corax
   Corax <-->|"HTTPS (TLS)"| AzureOpenAI
 
-  MeetBE <-->|"TLS"| Redis
+  MeetBE <-->|"TLS"| AzureRedis
   MeetSvc --> Obs
   MeetBE --> Obs
   Corax --> Obs
 
-  MeetSvc <-->|"SQL (TLS)"| ConfigDB
+  MeetSvc <-->|"SQL (TLS)"| AzurePostgres
 
   Corax -->|"Salesforce API (HTTPS)"| SF
   MeetBE -->|"Salesforce API (HTTPS)"| SF
@@ -199,7 +199,7 @@ This section is intended to help security reviewers quickly understand where con
 ### 2.2 Data backup and retention
 
 - **Backups**
-  - Customer data stored in **Salesforce** (including minutes fields) is backed up according to the customer’s Salesforce policies and tooling.
+  - Customer data stored in **Salesforce** is backed up according to the customer’s Salesforce policies and tooling.
   - &money-hosted configuration storage (PostgreSQL) is backed up using cloud-managed backup capabilities (platform-managed).
 - **Not backed up**
   - Redis session snapshots are **TTL-based** and are not a long-term backup mechanism; they exist to support session recovery only.
@@ -260,8 +260,6 @@ This section is intended to help security reviewers quickly understand where con
 
 **Scoutz**
 - Reads the minutes from Salesforce (no direct &money→Scoutz data feed is required for this feature).
-
-> Subprocessor relationships and legal terms (e.g., DPA) are handled contractually and can be provided through the standard commercial/security review process.
 
 ### 2.7 Physical security
 

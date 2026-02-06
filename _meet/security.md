@@ -19,7 +19,7 @@ parent: Meet
 
 ## 1. Solution Technical Information (Solution Description)
 
-### 1.1 Solution context (C4 Level 1-style)
+### 1.1 Solution architecture
 
 ```mermaid
 flowchart TB

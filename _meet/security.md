@@ -254,7 +254,7 @@ This section is intended to help security reviewers quickly understand where con
 
 **Azure OpenAI / AI Foundry (where used)**
 - Receives prompted text/embeddings for specific AI capabilities.
-- Abuse monitoring mode is configured as **modified** for the current deployment (`ContentLogging=false`).
+- Abuse monitoring mode is configured as **modified** for the current deployment.
 - With modified abuse monitoring, Microsoft states abuse-monitoring data storage and human review are not performed for that approved resource configuration.
 - Microsoft automated abuse detection and policy enforcement still apply in-line; severe or repeated abuse patterns can still trigger service-level enforcement actions.
 

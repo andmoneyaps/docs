@@ -14,7 +14,7 @@ parent: Meet
 | Document name | Meet Security Documentation |
 | Audience | External customers / security assessors |
 | Scope | Meet web app, transcription/AI services, and CRM (Salesforce) integration boundaries |
-| Last updated | 2026-02-05 |
+| Last updated | 2026-02-06 |
 | Owner | &money |
 
 ## 1. Solution Technical Information (Solution Description)
@@ -254,6 +254,9 @@ This section is intended to help security reviewers quickly understand where con
 
 **Azure OpenAI / AI Foundry (where used)**
 - Receives prompted text/embeddings for specific AI capabilities.
+- Abuse monitoring mode is configured as **modified** for the current deployment (`ContentLogging=false`).
+- With modified abuse monitoring, Microsoft states abuse-monitoring data storage and human review are not performed for that approved resource configuration.
+- Microsoft automated abuse detection and policy enforcement still apply in-line; severe or repeated abuse patterns can still trigger service-level enforcement actions.
 
 **Salesforce**
 - Customer system of record for minutes stored in customer-configured field(s) and/or related records.

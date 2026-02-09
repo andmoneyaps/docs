@@ -27,8 +27,6 @@ nav_order: 2
 
 - **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
 
-## January 2026
-
 ### _Management UI_
 
 - **Duration-Based Daily Meeting Time Limits**: Administrators can now configure maximum meeting time per advisor per day using duration-based limits instead of meeting counts. This feature provides:

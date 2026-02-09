@@ -246,8 +246,16 @@ This section is intended to help security reviewers quickly understand where con
 
 ### 2.6 Use of Third Parties
 
+**Licensing and contractual ownership**
+- All third-party agreements and service licenses used for Meet are held by **&money** (including Microsoft services).
+
 **Microsoft Azure (hosting and managed services)**
 - Used to host application components and managed services (e.g., monitoring, Redis, databases).
+- Processing of personal data for the data controller takes place in Microsoft EU datacenters within the Microsoft EU Data Boundary (EDB).
+- This means personal data may be stored and processed within the EU, and Microsoft does not transfer customer data to third countries as the default processing model.
+- Microsoft Customer Lockbox is enabled as a supplementary technical and organizational measure.
+- Customer Lockbox requires prior documented approval from &money and the relevant customer before Microsoft personnel (including personnel outside the EU) can obtain human access to personal data.
+- In practice, this access is not granted for Meet operations.
 
 **Azure Speech**
 - Receives in-session audio streams for speech-to-text and diarization.

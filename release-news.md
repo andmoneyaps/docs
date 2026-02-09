@@ -3,6 +3,12 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## February 2026
+
+### _BookMe_
+
+- **Version 1.23 Release**: Fixed customer email not displaying when editing meetings in the advisor flow. The issue was specific to the managed package context where sObject field names include the namespace prefix.
+
 ## January 2026
 
 ### _Timezone configuration for organizations_

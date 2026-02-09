@@ -265,6 +265,8 @@ This section is intended to help security reviewers quickly understand where con
 - Abuse monitoring mode is configured as **modified** for the current deployment.
 - With modified abuse monitoring, Microsoft states abuse-monitoring data storage and human review are not performed for that approved resource configuration.
 - Microsoft automated abuse detection and policy enforcement still apply in-line; severe or repeated abuse patterns can still trigger service-level enforcement actions.
+- &money is evaluating additional **EU-region fallback** options for AI-dependent services to reduce regional dependency and improve resilience.
+- Any future multi-region failover rollout for these services will remain within applicable EU data-boundary requirements.
 
 **Salesforce**
 - Customer system of record for minutes stored in customer-configured field(s) and/or related records.
@@ -281,6 +283,7 @@ This section is intended to help security reviewers quickly understand where con
 
 - Validated concurrent physical transcription sessions: **TBD** (pending load test report).
 - Known external quota dependencies: Azure Speech / Azure OpenAI / Corax capacity limits and quotas (deployment-specific).
+- Regional resilience roadmap: additional EU-region fallback options for AI-dependent services are being evaluated.
 - Monitoring guidance (capacity-related):
   - Alert on elevated transcription failure rates and latency
   - Alert on sustained resource saturation (CPU/memory) in Meet services

@@ -279,16 +279,14 @@ This section is intended to help security reviewers quickly understand where con
 - Meet relies on cloud provider physical security controls for data center access, surveillance, and hardware lifecycle management.
 - Redundancy and availability are achieved through cloud-managed services and platform operational practices (deployment-dependent).
 
-## 3. Capacity & Load Testing (Placeholder)
+## 3. Capacity & Load Testing
 
-- Validated concurrent physical transcription sessions: **TBD** (pending load test report).
-- Known external quota dependencies: Azure Speech / Azure OpenAI / Corax capacity limits and quotas (deployment-specific).
+- Known external quota dependencies: Azure Speech / Azure OpenAI quotas (deployment-specific).
 - Regional resilience roadmap: additional EU-region fallback options for AI-dependent services are being evaluated.
 - Monitoring guidance (capacity-related):
   - Alert on elevated transcription failure rates and latency
   - Alert on sustained resource saturation (CPU/memory) in Meet services
   - Alert on external dependency throttling/429 responses (where applicable)
-- This section will be updated once the load test deliverable is finalized and approved.
 
 ## 4. Appendix
 

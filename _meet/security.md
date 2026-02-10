@@ -82,14 +82,14 @@ flowchart TB
 |---|---|---|---|---|---|---|
 | Advisor browser ↔ Meet Web Application | UI content, session initialization | HTTPS | SSO via Entra ID / Azure AD (OIDC/JWT) | User identity-based access | TLS | No customer end-user login is provided in the standard deployment model (see Users section). |
 | Advisor browser ↔ Meet Backend | Audio chunks, real-time transcript/insight events, session control | WSS (Socket.IO) | SSO token with signed session context | Session scoped to authenticated user | TLS | Designed for real-time streaming; audio is processed in-session. |
-| Meet backend ↔ Vendor configuration service | Feature/variant configuration (no meeting content) | HTTPS | Forwarded user JWT (SSO/OIDC) | Tenant/bank claim scoping | TLS | Called by backend service; no direct browser call to vendor configuration APIs. |
+| Meet backend ↔ Vendor configuration service | Feature/variant configuration (no meeting content) | HTTPS | Forwarded user JWT (SSO/OIDC) | Tenant/bank claim scoping | TLS | Called by backend service. |
 | Meet application ↔ Vendor transcription service | PCM audio stream; transcription/diarization events | Encrypted WebSocket/HTTPS | Service-to-service authentication (vendor-managed) | Service-level authorization | TLS | Audio is streamed for transcription. |
 | Vendor transcription service ↔ Azure Speech | Audio stream; recognized text + diarization | Azure SDK | Azure-managed credentials | Azure resource access controls | TLS | Azure Speech performs speech-to-text and diarization. |
 | Meet backend ↔ Vendor AI services (Corax / Playbooks) | Transcript context; insights; minutes/summary | HTTPS | Service-to-service credentials (API key/managed credential) | Tenant/bank claim scoping | TLS | Backend-mediated call pattern. |
 | Vendor AI services ↔ Azure OpenAI / AI Foundry | Prompted text/embeddings; model outputs | HTTPS | Azure-managed credentials | Azure resource access controls | TLS | Used for AI capabilities including embeddings. |
-| Meet Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to object/field storage | HTTPS (Salesforce API) | OAuth (delegated user token) | Salesforce object/FLS/sharing model | TLS | Salesforce calls are made via &money backend APIs/services; browser clients do not call Salesforce directly. |
+| Meet Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to object/field storage | HTTPS (Salesforce API) | OAuth (delegated user token) | Salesforce object/FLS/sharing model | TLS | Salesforce calls are made via &money backend APIs/services. |
 | Meet services ↔ Redis | Session recovery snapshot read/write | TLS | Service identity authentication | Service identity scoped to Redis instance | TLS | Short-lived snapshots used for session recovery only. |
-| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a monitoring stack with Azure Monitor and Grafana-based observability components. |
+| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a centralized monitoring and observability stack. |
 
 ### 1.3 Users of the solution
 

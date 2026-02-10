@@ -86,10 +86,10 @@ flowchart TB
 | Meet application ↔ Vendor transcription service | PCM audio stream; transcription/diarization events | Encrypted WebSocket/HTTPS | Service-to-service authentication (vendor-managed) | Service-level authorization | TLS | Audio is streamed for transcription; no raw audio file storage by default. |
 | Vendor transcription service ↔ Azure Speech | Audio stream; recognized text + diarization | Azure SDK | Azure-managed credentials | Azure resource access controls | TLS | Azure Speech performs speech-to-text and diarization. |
 | Meet backend ↔ Vendor AI services (Corax / Playbooks) | Transcript context; insights; minutes/summary | HTTPS | Service-to-service credentials (API key/managed credential) | Tenant/bank scoping where applicable | TLS | Backend-mediated call pattern. |
-| Vendor AI services ↔ Azure OpenAI / AI Foundry (where used) | Prompted text/embeddings; model outputs | HTTPS | Azure-managed credentials | Azure resource access controls | TLS | Used for select AI capabilities (e.g., embeddings). |
+| Vendor AI services ↔ Azure OpenAI / AI Foundry (where used) | Prompted text/embeddings; model outputs | HTTPS | Azure-managed credentials | Azure resource access controls | TLS | Used for select AI capabilities, including embeddings. |
 | Meet Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to object/field storage | HTTPS (Salesforce API) | OAuth (delegated user token in current flow; integration identity in deployments explicitly configured for app-to-app CRM access) | Salesforce object/FLS/sharing model | TLS | Salesforce calls are made via &money backend APIs/services; browser clients do not call Salesforce directly. |
 | Meet services ↔ Redis | Session recovery snapshot read/write | TLS | Managed identity or service auth (deployment-dependent) | Service identity scoped to Redis instance | TLS | Short-lived snapshots used for session recovery only. |
-| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a monitoring stack (e.g., Azure Monitor and/or Grafana-based observability components). |
+| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a monitoring stack including Azure Monitor and/or Grafana-based observability components. |
 
 ### 1.3 Users of the solution
 
@@ -104,7 +104,7 @@ flowchart TB
 - Operations personnel with least-privilege access for incident response, monitoring, and platform maintenance.
 
 **System/service identities**
-- Service principals / managed identities for service-to-service access (e.g., monitoring, Redis, Azure services).
+- Service principals / managed identities for service-to-service access including monitoring, Redis, and Azure services.
 
 **End-customer access**
 - **Not provided**: Meet is designed for internal advisor usage; customer end-users do not log in to Meet directly in the standard deployment model.
@@ -122,7 +122,7 @@ flowchart TB
 - Meet **processes** audio and transcript text in real time to generate insights and minutes.
 - The **long-term system of record** for minutes is **Salesforce** (customer-controlled access and retention).
 - Meet does **not store raw audio recordings by default**; audio is streamed for transcription and handled in-session.
-- Short-lived operational data (e.g., session recovery snapshots and troubleshooting logs) should be treated as **potentially containing personal data** and is governed by retention controls described below.
+- Short-lived operational data including session recovery snapshots and troubleshooting logs should be treated as **potentially containing personal data** and is governed by retention controls described below.
 
 ### 1.5 Storage locations (explicit field-based storage)
 
@@ -131,11 +131,11 @@ flowchart TB
 | Meeting minutes (AI summary) | **Salesforce object/record field** on a meeting-related record (customer-configured) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Minutes classification/metadata (optional) | Salesforce object/record field(s) used to label or classify the minutes (customer-configured) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Minutes format + limit | Customer-configured; often stored as **HTML**. Field size limits depend on Salesforce field type (a common long text area limit is ~131,000 characters; content may truncate if exceeding the configured limit). | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
-| Post-meeting file artifact (lite/full variants) | Salesforce **ContentDocument/ContentVersion** linked to the meeting/event (e.g., `CustomerEmail.json`) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
-| Customer overview document (input) | Salesforce **ContentDocument/ContentVersion** linked to the customer account (e.g., `CustomerOverview.md`) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
+| Post-meeting file artifact (lite/full variants) | Salesforce **ContentDocument/ContentVersion** linked to the meeting/event, including `CustomerEmail.json` | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
+| Customer overview document (input) | Salesforce **ContentDocument/ContentVersion** linked to the customer account, including `CustomerOverview.md` | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Session recovery snapshots | Redis (session snapshot keys) | Short-lived TTL (typically ~30 minutes; deployment-dependent) | Azure-managed encryption for managed services | Service identity only (no end-user access) |
 | Configuration metadata | Configuration DB (PostgreSQL) | Platform-managed | Azure-managed encryption for managed services | Service identity + RBAC |
-| Operational logs/metrics/traces | Monitoring/logging stack (deployment-dependent; e.g., Azure Monitor and/or Grafana-based observability stack) | Default **31 days** (environment-dependent) | Platform-managed encryption at rest | RBAC-restricted access |
+| Operational logs/metrics/traces | Monitoring/logging stack (deployment-dependent; including Azure Monitor and/or Grafana-based observability stack) | Default **31 days** (environment-dependent) | Platform-managed encryption at rest | RBAC-restricted access |
 
 ### 1.6 Access control assumptions (who can see the field)
 
@@ -148,12 +148,12 @@ flowchart TB
 
 ### 1.7 Customer risk assessment inputs (BIA / impact for data subject)
 
-Many enterprise customers perform a Business Impact Analysis (BIA) and/or assess impact for data subjects when a solution processes personal data. &money can describe how Meet works and what data is processed/stored, but the **final risk classification** depends on customer context and controls (e.g., Salesforce permission model, conditional access, and internal policies).
+Many enterprise customers perform a Business Impact Analysis (BIA) and/or assess impact for data subjects when a solution processes personal data. &money can describe how Meet works and what data is processed/stored, but the **final risk classification** depends on customer context and controls including Salesforce permission model, conditional access, and internal policies.
 
 **Typical inputs for customer BIA**
 - **Confidentiality**: Meeting content may include personal data; review who can access the minutes field in Salesforce and whether additional controls (DLP, conditional access, auditing) are required.
 - **Integrity**: Minutes are drafts intended for advisor review before use; customers may require review/approval workflows before downstream sharing.
-- **Availability**: Meet is designed for real-time operation and includes best-effort recovery mechanisms (e.g., short-lived session recovery snapshots) to reduce impact from transient connectivity issues. If transcription/AI is temporarily unavailable or an outage occurs, advisors can continue the meeting but may need a fallback documentation workflow.
+- **Availability**: Meet is designed for real-time operation and includes best-effort recovery mechanisms including short-lived session recovery snapshots to reduce impact from transient connectivity issues. If transcription/AI is temporarily unavailable or an outage occurs, advisors can continue the meeting but may need a fallback documentation workflow.
 
 **Impact for data subjects (if applicable)**
 - The primary long-term storage location for minutes is Salesforce (customer tenant). Customers should assess whether the minutes contain personal data and whether a DPIA is required under their policies/regulatory obligations.
@@ -185,7 +185,7 @@ This section is intended to help security reviewers quickly understand where con
 
 **Recommended mitigating controls (customer-side)**
 - Restrict access to minutes fields using least-privilege (profiles/permission sets + FLS + sharing rules).
-- Enable Salesforce auditing features (e.g., Field History Tracking) where appropriate.
+- Enable Salesforce auditing features including Field History Tracking where appropriate.
 - Apply endpoint controls (managed browsers, device compliance, DLP, conditional access).
 
 ### 2.1 Operations
@@ -194,7 +194,7 @@ This section is intended to help security reviewers quickly understand where con
 - **Configuration management**: Environment-based configuration with validation at startup; sensitive values are not stored in source control.
 - **Change management**: Code review and automated checks in CI/CD prior to deployment; controlled rollout practices.
 - **Management of technical vulnerabilities**: Regular dependency updates and security patching; security fixes prioritized based on severity and exposure.
-- **Information security during disruption**: Designed to degrade safely (e.g., if session recovery storage is unavailable, meetings can continue without recovery features).
+- **Information security during disruption**: Designed to degrade safely, including operation without recovery features if session recovery storage is unavailable.
 
 ### 2.2 Data backup and retention
 
@@ -211,8 +211,8 @@ This section is intended to help security reviewers quickly understand where con
 ### 2.3 Data in transit, in-use and at rest
 
 - **Encryption in transit**: TLS is used for browser↔service traffic and service↔service integrations.
-- **Encryption at rest**: Managed services (e.g., Redis, PostgreSQL, monitoring storage) use cloud-provider encryption at rest; Salesforce provides encryption at rest for stored CRM data.
-- **Key management**: Secrets/keys are stored in a secret management solution (e.g., Key Vault) and/or accessed via managed identity patterns; keys are rotated as part of operational security procedures.
+- **Encryption at rest**: Managed services including Redis, PostgreSQL, and monitoring storage use cloud-provider encryption at rest; Salesforce provides encryption at rest for stored CRM data.
+- **Key management**: Secrets/keys are stored in a secret management solution including Key Vault and/or accessed via managed identity patterns; keys are rotated as part of operational security procedures.
 - **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Meet trusted URLs to reduce friction.
 
 ### 2.4 Identity and Access Management (IAM)
@@ -221,7 +221,7 @@ This section is intended to help security reviewers quickly understand where con
   - Advisor authentication is performed via customer identity (Entra ID / Azure AD SSO, OIDC/JWT-based).
   - Backend services validate tokens and establish session context for real-time features.
 - **Authorization**
-  - Service-level authorization enforces tenant/bank scoping where applicable (e.g., claim-based scoping).
+  - Service-level authorization enforces tenant/bank scoping where applicable, including claim-based scoping.
   - CRM access is governed by the customer’s Salesforce authorization model.
 - **Privileged access**
   - Administrative access to &money-managed components is restricted and granted on a least-privilege basis.
@@ -233,7 +233,7 @@ This section is intended to help security reviewers quickly understand where con
 - **Logging/auditing signals**
   - Session lifecycle: session start/stop, reconnect/recovery attempts, transcription service connectivity.
   - AI/minutes pipeline: summary generation events and CRM write attempts (success/failure) with correlation identifiers.
-  - CRM-side auditing: customers may enable Salesforce auditing features (e.g., Field History Tracking) for additional visibility on minutes field updates.
+  - CRM-side auditing: customers may enable Salesforce auditing features including Field History Tracking for additional visibility on minutes field updates.
 - **Monitoring**
   - Health and performance metrics for transcription and AI processing, error rate monitoring, and alerting on elevated failure patterns.
 - **Failure handling**
@@ -250,7 +250,7 @@ This section is intended to help security reviewers quickly understand where con
 - All third-party agreements and service licenses used for Meet are held by **&money** (including Microsoft services).
 
 **Microsoft Azure (hosting and managed services)**
-- Used to host application components and managed services (e.g., monitoring, Redis, databases).
+- Used to host application components and managed services including monitoring, Redis, and databases.
 - Processing of personal data for the data controller takes place in Microsoft EU datacenters within the Microsoft EU Data Boundary (EDB).
 - This means personal data may be stored and processed within the EU, and Microsoft does not transfer customer data to third countries as the default processing model.
 - Microsoft Customer Lockbox is enabled as a supplementary technical and organizational measure.
@@ -301,11 +301,11 @@ This section is intended to help security reviewers quickly understand where con
 | PII | Personal data processed in meeting content (may appear in transcript/minutes) |
 | Entra ID / Azure AD | Customer identity provider used for SSO |
 | FLS | Salesforce Field-Level Security |
-| TTL | Time-to-live; automatic expiry for short-lived data (e.g., session snapshots) |
+| TTL | Time-to-live; automatic expiry for short-lived data including session snapshots |
 
 ### B. Control framework crosswalk (optional)
 
-The table below provides an **indicative** mapping between this document’s control areas and common control catalogs (e.g., ISO/IEC 27002:2022). It is intended to accelerate security assessments and does not constitute a certification or attestation.
+The table below provides an **indicative** mapping between this document’s control areas and common control catalogs including ISO/IEC 27002:2022. It is intended to accelerate security assessments and does not constitute a certification or attestation.
 
 | Meet security documentation section | Related ISO/IEC 27002:2022 control areas (indicative) | Notes |
 |---|---|---|

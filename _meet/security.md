@@ -74,7 +74,7 @@ flowchart TB
 2. Browser streams audio to Meet backend over an encrypted WebSocket connection.
 3. Meet backend forwards audio to the transcription hub, which uses Azure Speech to produce live transcript events (including diarization signals).
 4. Transcript text is processed by &money AI services (Corax/Playbooks) to generate insights and meeting minutes.
-5. Final minutes are written to a customer-configured Salesforce storage location (typically a field on a meeting-related record), where Scoutz360 can read them.
+5. Final minutes are written via &money backend services to a customer-configured Salesforce storage location (typically an object/record field on a meeting-related record), where Scoutz360 can read them.
 
 ### 1.2 Integrations to existing systems and components
 
@@ -82,14 +82,14 @@ flowchart TB
 |---|---|---|---|---|---|---|
 | Advisor browser ↔ Meet Web Application | UI content, session initialization | HTTPS | SSO via Entra ID / Azure AD (OIDC/JWT) | User identity-based access | TLS | No customer end-user login is provided by default (see Users section). |
 | Advisor browser ↔ Meet Backend | Audio chunks, real-time transcript/insight events, session control | WSS (Socket.IO) | SSO token and/or signed session | Session scoped to authenticated user | TLS | Designed for real-time streaming; audio is processed in-session. |
-| Meet application ↔ Vendor configuration service | Feature/variant configuration (no meeting content) | HTTPS | JWT Bearer (vendor-managed) | Tenant/bank scoping (where applicable) | TLS | Configuration only (no transcript/audio payloads). |
+| Meet backend ↔ Vendor configuration service | Feature/variant configuration (no meeting content) | HTTPS | Forwarded user JWT (SSO/OIDC) | Tenant/bank scoping (where applicable) | TLS | Called by backend service; no direct browser call to vendor configuration APIs. |
 | Meet application ↔ Vendor transcription service | PCM audio stream; transcription/diarization events | Encrypted WebSocket/HTTPS | Service-to-service authentication (vendor-managed) | Service-level authorization | TLS | Audio is streamed for transcription; no raw audio file storage by default. |
 | Vendor transcription service ↔ Azure Speech | Audio stream; recognized text + diarization | Azure SDK | Azure-managed credentials | Azure resource access controls | TLS | Azure Speech performs speech-to-text and diarization. |
-| Meet application ↔ Vendor AI services (Corax / Playbooks) | Transcript context; insights; minutes/summary | HTTPS | Service-to-service credentials | Tenant/bank scoping where applicable | TLS | AI output is written to CRM per configured integration. |
+| Meet backend ↔ Vendor AI services (Corax / Playbooks) | Transcript context; insights; minutes/summary | HTTPS | Service-to-service credentials (API key/managed credential) | Tenant/bank scoping where applicable | TLS | Backend-mediated call pattern. |
 | Vendor AI services ↔ Azure OpenAI / AI Foundry (where used) | Prompted text/embeddings; model outputs | HTTPS | Azure-managed credentials | Azure resource access controls | TLS | Used for select AI capabilities (e.g., embeddings). |
-| Meet Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to fields | HTTPS (Salesforce API) | Customer identity / OAuth as configured | Salesforce object/FLS/sharing model | TLS | Salesforce is the long-term system of record for minutes. |
+| Meet Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to object/field storage | HTTPS (Salesforce API) | OAuth (delegated user token in current flow; integration identity may be used where configured) | Salesforce object/FLS/sharing model | TLS | Salesforce calls are made via &money backend APIs/services; browser clients do not call Salesforce directly. |
 | Meet services ↔ Redis | Session recovery snapshot read/write | TLS | Managed identity or service auth (deployment-dependent) | Service identity scoped to Redis instance | TLS | Short-lived snapshots used for session recovery only. |
-| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS | Azure-managed credentials | RBAC-controlled access | TLS | Log retention is configured in the monitoring stack. |
+| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a monitoring stack (e.g., Azure Monitor and/or Grafana-based observability components). |
 
 ### 1.3 Users of the solution
 
@@ -128,14 +128,14 @@ flowchart TB
 
 | Data type | Where stored | Default retention | Encryption at rest | Access control |
 |---|---|---|---|---|
-| Meeting minutes (AI summary) | **Salesforce field** on a meeting-related record (customer-configured) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
-| Minutes classification/metadata (optional) | Salesforce field(s) used to label or classify the minutes (customer-configured) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
+| Meeting minutes (AI summary) | **Salesforce object/record field** on a meeting-related record (customer-configured) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
+| Minutes classification/metadata (optional) | Salesforce object/record field(s) used to label or classify the minutes (customer-configured) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Minutes format + limit | Customer-configured; often stored as **HTML**. Field size limits depend on Salesforce field type (a common long text area limit is ~131,000 characters; content may truncate if exceeding the configured limit). | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Post-meeting file artifact (lite/full variants) | Salesforce **ContentDocument/ContentVersion** linked to the meeting/event (e.g., `CustomerEmail.json`) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Customer overview document (input) | Salesforce **ContentDocument/ContentVersion** linked to the customer account (e.g., `CustomerOverview.md`) | Customer-controlled | Salesforce-managed encryption at rest | Salesforce object permissions + FLS + record sharing |
 | Session recovery snapshots | Redis (session snapshot keys) | Short-lived TTL (typically ~30 minutes; deployment-dependent) | Azure-managed encryption for managed services | Service identity only (no end-user access) |
 | Configuration metadata | Configuration DB (PostgreSQL) | Platform-managed | Azure-managed encryption for managed services | Service identity + RBAC |
-| Operational logs/metrics/traces | Azure monitoring/logging stack | Default **31 days** (environment-dependent) | Azure-managed encryption at rest | RBAC-restricted access |
+| Operational logs/metrics/traces | Monitoring/logging stack (deployment-dependent; e.g., Azure Monitor and/or Grafana-based observability stack) | Default **31 days** (environment-dependent) | Platform-managed encryption at rest | RBAC-restricted access |
 
 ### 1.6 Access control assumptions (who can see the field)
 

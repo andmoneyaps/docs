@@ -94,7 +94,7 @@ Both the time range and the historic meetings contain time ranges reasons explai
 - **BankClosingDay**: Official bank holiday/closure
 - **Busy**: Default calendar busy status
 - **WorkingFromElsewhere**: Remote work status
-- **MaxMeetingsPerDay**: Daily meeting limit reached
+- **MaxMeetingTimePerDay**: Daily meeting time limit reached
 - **OutsideWorkday**: Outside configured working hours
 - **DayOfWeekUnavailable**: Blocked weekday in advisor's schedule
 - **MeetingTypeUnavailable**: Meeting type not available for advisor

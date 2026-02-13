@@ -39,7 +39,7 @@ Assign roles within the BookingPlatform Mgmt API to control access and permissio
 
 Easily install and configure our Azure Marketplace offer to configure Entra Enterprise Apps for SCIM provisioning and Microsoft Graph API access for calendar information.
 
-- **For detailed instructions, refer to the [Marketplace App Offer Installation Guide](./marketplace-installation).**
+- **For detailed instructions, refer to the [Marketplace App Offer Installation Guide](../marketplace-installation).**
 
 ## Accessing the Management UI
 

@@ -38,7 +38,7 @@ Before deploying the iframe component, ensure you have:
 
 ### Step 1: Setup Salesforce Connection
 
-Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup](./salesforce-connection-setup) guide which covers:
+Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup](../salesforce-connection-setup) guide which covers:
 - Configuring the External Client App in Salesforce
 - Setting up the Salesforce domain in the Management UI
 - Testing and provisioning the connection
@@ -76,7 +76,7 @@ The main iframe container component that:
 - Accepts configuration through the `configOverride` API property
 - Handles postMessage communication with the embedded iframe
 - Dynamically adjusts height based on content
-- Supports all configuration options documented in the [Iframe LWC Configuration guide](./salesforce-iframe-lwc)
+- Supports all configuration options documented in the [Iframe LWC Configuration guide](../salesforce-iframe-lwc)
 
 ### Deployment Contents
 - Lightning Web Component bundle
@@ -136,7 +136,7 @@ export default class CustomBookingWrapper extends LightningElement {
 
 ## Related Documentation
 
-- [Salesforce Connection Setup](./salesforce-connection-setup) - Detailed guide for establishing the BookMe-Salesforce connection
-- [Salesforce Iframe LWC Configuration](./salesforce-iframe-lwc) - Configuration options for the deployed iframe component
-- [Salesforce BookMe Integration Setup](./salesforce-setup) - Complete Salesforce package installation and metadata configuration
-- [CRM Integration Security](./crm-integration-security) - Security architecture and considerations
+- [Salesforce Connection Setup](../salesforce-connection-setup) - Detailed guide for establishing the BookMe-Salesforce connection
+- [Salesforce Iframe LWC Configuration](../salesforce-iframe-lwc) - Configuration options for the deployed iframe component
+- [Salesforce BookMe Integration Setup](../salesforce-setup) - Complete Salesforce package installation and metadata configuration
+- [CRM Integration Security](../crm-integration-security) - Security architecture and considerations

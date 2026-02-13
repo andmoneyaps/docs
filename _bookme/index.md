@@ -35,3 +35,5 @@ Navigate through the sections to find detailed information about:
 - Playbooks automation and workflows
 - Playbooks user guide
 - Relation Builder for data mapping
+- Labels
+- Advisor priority rules

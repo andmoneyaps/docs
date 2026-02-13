@@ -3,6 +3,42 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## February 2026
+
+### _BookMe_
+
+- **Version 1.23 Release**: Fixed customer email not displaying when editing meetings in the advisor flow. The issue was specific to the managed package context where sObject field names include the namespace prefix.
+
+## January 2026
+
+### _Timezone configuration for organizations_
+
+- Timezone Support: Banks can now be configured with a specific timezone (Romance Standard Time or Greenland Standard Time) that determines how meeting times are displayed in Outlook calendar invites
+- Timezone selector added to meeting setup in Management UI
+- Creating and updating Outlook events now respects the organization timezone
+
+### _Embeddable UI: Confirmation Screen_
+
+- **Confirmation Screen**: New session-based view displaying all meetings booked during the current session
+- **navigatetorecord event**: Emits Salesforce Event ID when a user clicks the "Åbn" button on a meeting card
+- **close event**: Notifies parent view when user returns to meeting overview, clearing session data
+
+### _BookMe_
+
+- **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
+
+### _Management UI_
+
+- **Duration-Based Daily Meeting Time Limits**: Administrators can now configure maximum meeting time per advisor per day using duration-based limits instead of meeting counts. This feature provides:
+  - **Configuration levels** (most specific wins):
+    - **Organization-wide default**: Set in Management UI under BookMe/Meeting Setup tab (applies to all advisors)
+    - **Service Group override**: Configure on Service Groups under the BookMe/Service Groups tab (applies to group members)
+    - **Advisor-specific override**: Set on advisor availability under the BookMe/Availaibility (Employees) tab (applies to individual advisor)
+  - **How it works**: System tracks total booked meeting duration per advisor per day. When an advisor reaches their limit, they are automatically excluded from available time slot searches
+  - **Benefits**:
+    - More accurate capacity management (30-minute and 2-hour meetings now count differently)
+    - Flexible scheduling based on actual meeting duration
+  - **Migration**: Existing count-based limits of "Max meetings per day" are automatically converted to duration-based limits using 1:1 hour conversion (e.g., 2 meetings → 2 hours). *Important: This is a behavioral change and might cause your advisor availability to change.*
 
 ## September 2025
 

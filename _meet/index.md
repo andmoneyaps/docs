@@ -87,3 +87,4 @@ Deploy via GPO, Intune, or MDM.
 ## Next Steps
 
 - [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Meet in your Salesforce organization
+- [Security]({{ site.baseurl }}/meet/security/) — Customer-facing security documentation (solution description + controls)

@@ -7,6 +7,48 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.23.0 (09-02-2026)
+Here is what's new in release 1.23.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002WqITIA0`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002WqITIA0`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Customer email field retained when editing meetings**
+  - Fixed an issue where the customer's email field was not displayed when an advisor opened an existing meeting to edit it.
+  - Root cause: In the managed package context, custom sObject field names include the package namespace prefix in the JSON response. The JavaScript code was accessing fields without the prefix, causing the contact and email data to be lost.
+  - This fix supersedes the incomplete fix in 1.21.0.
+
+## Release 1.21.0 (02-02-2026)
+Here is what's new in release 1.21.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002UiQfIAK`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002UiQfIAK`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Timezone handling for date selection**
+  - Fixed an issue where selecting a date in negative UTC offset timezones (e.g., Greenland) would return timeslots for the previous day.
+  - The fix ensures that dates are correctly parsed using local timezone components rather than UTC, preventing date shifts when users select dates in the booking calendar.
+  - Affected flows: Advisor planner, Customer planner, and Rescheduling.
+
+## Release 1.19.0 (14-01-2026)
+Here is what's new in release 1.19.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002Qwf7IAC`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002Qwf7IAC`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+- **Fixed issue with additional advisors**
+  - Removing an additional advisor no longer affects other meeting participants.
+
 ## Release 1.18.0 (24-09-2025)
 Here is what's new in release 1.18.0 of &bookme.
 > **Managed Package Version ID**: `04tP70000020PZxIAM`.

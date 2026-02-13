@@ -24,8 +24,16 @@ In order to use the `fast-slides` LWC component it needs the following inputs:
 
 ### The config object
 
-Currently, the config object in Present contains the following properties:
-1. `agenda` - Used to pass in predefined (or autocompleted) agenda text. An example of this is the use of Quick Texts in Salesforce standard text areas.
+The config object in Present supports the following properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `agenda` | `string` | Predefined agenda text (e.g., from Quick Texts) |
+| `preselectedLabel` | `string` | Label to pre-filter templates on load |
+| `labelWhitelist` | `string[]` | Only show these labels in the filter dropdown |
+| `hideLabelFilter` | `boolean` | Hide the label filter completely |
+
+All properties are optional. See [Template Labels](template-labels) for detailed documentation on label filtering configuration.
 
 An example implementation of a LWC wrapping the `fast-slides` component is shown below.
 ```html

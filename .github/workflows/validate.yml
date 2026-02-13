@@ -24,7 +24,8 @@ jobs:
         run: bundle exec jekyll build --baseurl "/docs"
         env:
           JEKYLL_ENV: production
-          PAGES_REPO_NWO: ${{ github.repository }}
+          PAGES_REPO_NWO: andmoneyaps/docs
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Validate links with HTMLProofer
         run: |
@@ -33,4 +34,4 @@ jobs:
             --ignore-status-codes "403,429" \
             --no-enforce-https \
             --allow-missing-href \
-            --swap-urls "^/docs/:/"
+            --swap-urls "^https\://andmoneyaps.github.io/docs/:/,^https\://github.com/docs/:/,^/docs/:/"

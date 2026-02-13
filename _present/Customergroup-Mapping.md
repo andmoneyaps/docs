@@ -4,6 +4,7 @@ title: Customer Type Mapping
 nav_order: 11
 parent: Present
 collection: present
+permalink: /present/customergroup-mapping/
 ---
 
 # Customer Type Mapping

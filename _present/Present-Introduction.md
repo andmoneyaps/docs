@@ -4,6 +4,7 @@ title: Present
 nav_order: 2
 has_children: true
 collection: present
+permalink: /present/present-introduction/
 ---
 
 # Present

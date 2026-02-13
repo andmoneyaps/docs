@@ -4,6 +4,7 @@ title: Template Validation
 nav_order: 7
 parent: Present
 collection: present
+permalink: /present/validation-tool-master-template/
 ---
 
 # Validation Tool - Master Template
@@ -27,13 +28,13 @@ This tool helps you to identify any issues with your templates before they are u
 1. Access the validation tool from the Management UI interface
 
 2. Click the validate button to start the validation process
-![Validate](<validate template.png>)
+![Validate](../../assets/images/present/validate_template_step1.png)
 
 3. Select your template file for validation
-![Uploade file](<validate template2.png>)
+![Upload file](../../assets/images/present/validate_template_step2.png)
 
 4. Review the validation results
-![Result](validateresult.png)
+![Result](../../assets/images/present/validate_template_result.png)
 
 
 

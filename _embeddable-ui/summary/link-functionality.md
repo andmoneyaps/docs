@@ -115,7 +115,7 @@ Your content is protected by multiple security measures:
 - **Safe Fallbacks**: If an unsafe protocol is detected, the link is replaced with a harmless placeholder rather than allowing potentially dangerous content
 - **Trusted Protocols Only**: Only industry-standard, safe link types are permitted - experimental or potentially harmful protocols are blocked
 
-## Supported browsers
+## Browser Compatibility
 
 - **Firefox**: 52+
 - **Chrome**: 49+

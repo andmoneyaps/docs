@@ -9,7 +9,7 @@ parent: BookMe
 
 ## What is the Iframe LWC Component?
 
-The &money EngageMe iframe Lightning Web Component (LWC) is a powerful integration tool that embeds BookMe's meeting booking functionality directly within Salesforce Lightning pages. For a complete overview of embeddable components and their capabilities, see the [Embeddable UI Documentation](../embeddable-ui/).
+The &money EngageMe iframe Lightning Web Component (LWC) is a powerful integration tool that embeds BookMe's meeting booking functionality directly within Salesforce Lightning pages. For a complete overview of embeddable components and their capabilities, see the [Embeddable UI Documentation]({{ site.baseurl }}/embeddable-ui/).
 
 This component enables users to:
 
@@ -32,13 +32,13 @@ Before deploying the iframe component, ensure you have:
 1. **Configured Salesforce Domain**: Your Salesforce organization's domain must be properly configured in the Management UI
 2. **Established Salesforce org connection**: The connection between BookMe and Salesforce must be provisioned and tested successfully
 3. **Administrator Access**: You need appropriate permissions in both the Management UI and Salesforce
-4. **User Access Configuration**: Bank employees who will use the iframe must have proper access configured. See [Embeddable UI Access Requirements](../embeddable-ui/#access-requirements) for an overview
+4. **User Access Configuration**: Bank employees who will use the iframe must have proper access configured. See [Embeddable UI Access Requirements]({{ site.baseurl }}/embeddable-ui/#access-requirements) for an overview
 
 ## Deployment Process
 
 ### Step 1: Setup Salesforce Connection
 
-Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup](./salesforce-connection-setup.md) guide which covers:
+Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup](../salesforce-connection-setup) guide which covers:
 - Configuring the External Client App in Salesforce
 - Setting up the Salesforce domain in the Management UI
 - Testing and provisioning the connection
@@ -76,7 +76,7 @@ The main iframe container component that:
 - Accepts configuration through the `configOverride` API property
 - Handles postMessage communication with the embedded iframe
 - Dynamically adjusts height based on content
-- Supports all configuration options documented in the [Iframe LWC Configuration guide](./salesforce-iframe-lwc.md)
+- Supports all configuration options documented in the [Iframe LWC Configuration guide](../salesforce-iframe-lwc)
 
 ### Deployment Contents
 - Lightning Web Component bundle
@@ -136,7 +136,7 @@ export default class CustomBookingWrapper extends LightningElement {
 
 ## Related Documentation
 
-- [Salesforce Connection Setup](./salesforce-connection-setup.md) - Detailed guide for establishing the BookMe-Salesforce connection
-- [Salesforce Iframe LWC Configuration](./salesforce-iframe-lwc.md) - Configuration options for the deployed iframe component
-- [Salesforce BookMe Integration Setup](./salesforce-setup.md) - Complete Salesforce package installation and metadata configuration
-- [CRM Integration Security](./crm-integration-security.md) - Security architecture and considerations
+- [Salesforce Connection Setup](../salesforce-connection-setup) - Detailed guide for establishing the BookMe-Salesforce connection
+- [Salesforce Iframe LWC Configuration](../salesforce-iframe-lwc) - Configuration options for the deployed iframe component
+- [Salesforce BookMe Integration Setup](../salesforce-setup) - Complete Salesforce package installation and metadata configuration
+- [CRM Integration Security](../crm-integration-security) - Security architecture and considerations

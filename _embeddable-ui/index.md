@@ -27,7 +27,7 @@ To use the BookMe iframe component, users must have proper access configured in 
 - **Authentication**: Users must be authenticated through Microsoft Entra ID (Azure AD)
 - **Permissions**: Access is granted through Enterprise Applications in the Azure portal
 
-For detailed technical configuration steps, see the [Entra ID Integration Guide](../bookme/entra-integration.md#iframe-access-configuration).
+For detailed technical configuration steps, see the [Entra ID Integration Guide]({{ site.baseurl }}/bookme/entra-integration#user-access-configuration).
 
 ### Summary Component
 The Summary component provides a rich text editor with advanced formatting capabilities that can be embedded in Salesforce and other CRM platforms. Key features include:
@@ -36,5 +36,5 @@ The Summary component provides a rich text editor with advanced formatting capab
 
 ### Component Documentation
 - **[Summary Component]({{ site.baseurl }}/embeddable-ui/summary/)** - Rich text editor with advanced formatting capabilities
-  - [Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/) - Complete guide to link management features
+  - **[Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/)** - Complete guide to link management features
 - **[Confirmation Screen]({{ site.baseurl }}/embeddable-ui/confirmation-screen/)** - Session-based meeting confirmation view with event integration

@@ -113,7 +113,7 @@ Users must be assigned appropriate app roles in Entra ID to access the BookingPl
 - **Employee**: Standard user access for day-to-day operations
 - **Customer**: Customer-facing access with limited permissions
 
-For detailed instructions on assigning users and groups to app roles, see the [App Registration Installation](app-registration-installation.md#role-assignment-for-the-management-ui) guide.
+For detailed instructions on assigning users and groups to app roles, see the [App Registration Installation](../app-registration-installation#role-assignment-for-the-management-ui) guide.
 
 ### Security Best Practices
 

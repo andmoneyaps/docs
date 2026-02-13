@@ -14,7 +14,7 @@ This article shows you how to upload new templates and deactivate existing templ
 
 Make sure that:
 - The latest Present package is installed in your org
-- Make sure all steps are completed in [technical details](../present-technical-details).
+- Make sure all steps are completed in [technical details]({{ site.baseurl }}/present/present-technical-details/).
 
 ## Uploading a new template
 
@@ -31,7 +31,7 @@ Make sure that:
 ![Upload finished](../../assets/images/present/upload_validate_results.png)
 
 5. Now select an appropriate customer type and click Upload
-![Customer type selection]()
+![Customer type selection](../../assets/images/present/customer_type_selection.png)
 
 
 {: .note }

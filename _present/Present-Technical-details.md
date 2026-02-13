@@ -5,6 +5,7 @@ nav_order: 16
 parent: Present
 collection: present
 has_children: true
+permalink: /present/present-technical-details/
 ---
 
 # Technical Details

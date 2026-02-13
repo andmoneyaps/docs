@@ -1,0 +1,47 @@
+name: Validate
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Validate markdown link style
+        run: |
+          set -euo pipefail
+          violations="$(rg -n '\]\(/' --glob '*.md' . | rg -v '\]\(//' || true)"
+          if [ -n "$violations" ]; then
+            echo "Root-relative markdown links found. Use {{ site.baseurl }}/... instead:"
+            echo "$violations"
+            exit 1
+          fi
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "/docs"
+        env:
+          JEKYLL_ENV: production
+          PAGES_REPO_NWO: andmoneyaps/docs
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate links with HTMLProofer
+        run: |
+          bundle exec htmlproofer ./_site \
+            --ignore-urls "/^http:\/\/localhost/,/^https:\/\/localhost/,/portal\.azure\.com.*GalleryItemDetailsBladeNopdl/,/apim-public-api.*\.azure-api\.net/" \
+            --ignore-status-codes "403,429" \
+            --no-enforce-https \
+            --allow-missing-href \
+            --swap-urls "^https\://andmoneyaps.github.io/docs/:/,^https\://github.com/docs/:/,^/docs/:/"

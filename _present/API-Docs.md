@@ -97,8 +97,8 @@ The Present API provides endpoints for:
 
 - [Full API Documentation]({{ site.baseurl }}/api/present)
 - [Download OpenAPI Specification]({{ site.baseurl }}/files/swagger.json)
-- [Present Overview]({{ site.baseurl }}/present/present-introduction)
-- [Template Guidelines]({{ site.baseurl }}/present/validation-tool-master-template)
+- [Present Overview]({{ site.baseurl }}/present/present-introduction/)
+- [Template Guidelines]({{ site.baseurl }}/present/validation-tool-master-template/)
 
 ## Authentication
 

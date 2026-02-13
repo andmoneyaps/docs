@@ -8,7 +8,7 @@ collection: bookme
 
 # Customer Meeting Booking in Public API
 
-This guide explains how to book a meeting through the Public API, allowing customers to search for available time slots, reserve a slot, and create a meeting.
+This guide explains how to book a meeting through the Public API, allowing customers to search for available time slots, reserve a slot, update the slot status to booked, and create a meeting.
 
 ![Customer Meeting Booking Sequence Diagram]({{ site.baseurl }}/assets/images/bookme_customer_meeting_sequence_diagram.png)
 
@@ -110,7 +110,34 @@ Authorization: Bearer <access_token>
 
 **Response:** Confirms the reservation of the selected time slot.
 
-## 4. Creating a Meeting
+## 4. Updating Time Slot Status to Booked
+
+After reserving a time slot, you must update its status from "Reserved" to "Booked" before creating the meeting:
+
+```http
+PATCH /bookme/time-slots/{timeSlotId}
+Content-Type: application/json
+Authorization: Bearer <access_token>
+```
+
+**Request Body:**
+
+```json
+[
+  {
+    "op": "replace",
+    "path": "/status",
+    "value": "Booked"
+  }
+]
+```
+
+**Response:** Confirms the time slot status has been updated to "Booked".
+
+{: .important }
+> The time slot must have "Booked" status before a meeting can be created. The MeetingService will reject meeting creation requests if the associated time slot is not in "Booked" status.
+
+## 5. Creating a Meeting
 
 Once the time slot is reserved, finalize the meeting by creating a meeting record:
 
@@ -138,7 +165,7 @@ Authorization: Bearer <access_token>
 
 **Response:** Returns confirmation of the created meeting.
 
-### Downloading an ICS File
+## 6. Downloading an ICS File
 
 To download the meeting details in iCal format, use the following endpoint:
 

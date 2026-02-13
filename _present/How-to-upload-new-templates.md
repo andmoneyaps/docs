@@ -31,7 +31,7 @@ Make sure that:
 ![Upload finished](../../assets/images/present/upload_validate_results.png)
 
 5. Now select an appropriate customer type and click Upload
-![Customer type selection]()
+![Customer type selection](../../assets/images/present/customer_type_selection.png)
 
 
 {: .note }

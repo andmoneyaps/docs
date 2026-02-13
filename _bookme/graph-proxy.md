@@ -13,7 +13,7 @@ It is an essential part of the Financial Booking Solutions and is deployed as pa
 ![Graph-Proxy and Key Vault Architecture](../../assets/images/graph-proxy-keyvault.png)
 
 {: .note }
-> For detailed installation instructions, please refer to the [Installation Guide](../installation-marketplace-app-offer).
+> For detailed installation instructions, please refer to the [Installation Guide](../marketplace-installation).
 >
 
 ## Deployment Options
@@ -103,7 +103,7 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Ensure that the App Registration in Entra ID has the correct **Calendar and Online Meeting Access** permission.
    - Test the Graph-Proxy by entering and testing the Graph-Proxy url in the Management UI. Under the 'Admin' → 'Microsoft'-tab in the Management UI.
 
-The above steps are explained in greater detail in the [Installation Guide](../installation-marketplace-app-offer).
+The above steps are explained in greater detail in the [Installation Guide](../marketplace-installation).
 
 ### How to set up the Graph API URL in the Management UI
 
@@ -119,8 +119,8 @@ Two services are then provided:
 ![management-ui-graph-test.png](../../assets/images/management-ui-graph-test.png)
 
 {: .note }
->  Be sure to follow the [Installation Marketplace App Offer](../installation-marketplace-app-offer) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
+>  Be sure to follow the [Installation Marketplace App Offer](../marketplace-installation) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
 
 This documentation provides an overview of the Graph-Proxy, its deployment options,
 integration with Azure Key Vault, and required configuration. For further details or assistance,
-please consult the accompanying [Installation Guide](../installation-marketplace-app-offer) or contact our support team.
+please consult the accompanying [Installation Guide](../marketplace-installation) or contact our support team.

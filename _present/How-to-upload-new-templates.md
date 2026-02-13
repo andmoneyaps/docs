@@ -14,7 +14,7 @@ This article shows you how to upload new templates and deactivate existing templ
 
 Make sure that:
 - The latest Present package is installed in your org
-- Make sure all steps are completed in [technical details](../present-technical-details).
+- Make sure all steps are completed in [technical details](../Present-Technical-details/).
 
 ## Uploading a new template
 

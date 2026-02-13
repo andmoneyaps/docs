@@ -24,7 +24,7 @@ You can now organize templates using labels and filter them when creating presen
 - **Filter by label** — Advisors can filter available templates by selecting a label from the dropdown
 - **Preselect label** — Configure a preselected label in your wrapper component to automatically filter templates based on context
 
-See [Template Labels](template-labels.md) for details.
+See [Template Labels](../template-labels/) for details.
 
 ### Installation
 

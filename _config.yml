@@ -63,6 +63,12 @@ aux_links:
     - "https://andmoney.dk"
 aux_links_new_tab: true
 
+# GitHub edit link
+gh_edit_link: true
+gh_edit_repository: "https://github.com/andmoneyaps/docs"
+gh_edit_branch: "main"
+gh_edit_view_mode: "tree"
+
 # Navigation structure
 just_the_docs:
   collections:

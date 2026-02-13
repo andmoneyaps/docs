@@ -14,13 +14,13 @@ collection: present
 
 ### New Features
 
-**Bulk Slide Selection** — Select or deselect multiple slides at once using "Vælg alle" and "Fravælg alle" buttons at both section and subsection levels. See [Bulk Slide Selection](bulk-slide-selection.md) for details.
+**Bulk Slide Selection** — Select or deselect multiple slides at once using "Vælg alle" and "Fravælg alle" buttons at both section and subsection levels. See [Bulk Slide Selection]({{ site.baseurl }}/present/bulk-slide-selection/) for details.
 
 **Label Filter Configuration** — New LWC config options for controlling the label filter:
 - `labelWhitelist` — Restrict the filter dropdown to only show specific labels
 - `hideLabelFilter` — Completely hide the label filter for use-cases where it's not relevant
 
-See [Template Labels](template-labels.md) for details.
+See [Template Labels]({{ site.baseurl }}/present/template-labels/) for details.
 
 ### Installation
 

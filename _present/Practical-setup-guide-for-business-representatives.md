@@ -55,14 +55,14 @@ Access: [https://management.andmoney.dk](https://management.andmoney.dk)
 - Multiple master templaes can be uploaded per type to avoid oversized master template files.
 
 > ✅ Master templates (Presentations) are automatically validated during upload.  
-> 📖 [Read more about validation](https://andmoneyaps.github.io/docs/present/Validation-tool-Master-template/)
+> 📖 [Read more about validation]({{ site.baseurl }}/present/validation-tool-master-template/)
 
 #### 5. Configure Master templates
 
 Follow these setup guides before employees begin using Present:
 
-- [Present Usage Guide](https://andmoneyaps.github.io/docs/present/Present-Usage/)
-- [Tag Mapping Guide](https://andmoneyaps.github.io/docs/present/tag-mapping/)
+- [Present Usage Guide]({{ site.baseurl }}/present/Present-Usage/)
+- [Tag Mapping Guide]({{ site.baseurl }}/present/tag-mapping/)
 
 Once this is complete, Present is ready for use in Salesforce. Employees will access Present from a meeting event within a customer account.
 

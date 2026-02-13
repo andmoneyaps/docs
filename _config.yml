@@ -4,7 +4,6 @@ title: "&money Documentation"
 description: Public documentation for &money products and services
 baseurl: "/docs"
 permalink: pretty
-url: "https://andmoneyaps.github.io"
 repository: andmoneyaps/docs
 
 # Collections configuration

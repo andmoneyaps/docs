@@ -33,7 +33,7 @@ The config object in Present supports the following properties:
 | `labelWhitelist` | `string[]` | Only show these labels in the filter dropdown |
 | `hideLabelFilter` | `boolean` | Hide the label filter completely |
 
-All properties are optional. See [Template Labels](template-labels) for detailed documentation on label filtering configuration.
+All properties are optional. See [Template Labels]({{ site.baseurl }}/present/template-labels/) for detailed documentation on label filtering configuration.
 
 An example implementation of a LWC wrapping the `fast-slides` component is shown below.
 ```html

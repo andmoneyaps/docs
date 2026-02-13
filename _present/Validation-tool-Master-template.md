@@ -4,6 +4,7 @@ title: Template Validation
 nav_order: 7
 parent: Present
 collection: present
+permalink: /present/validation-tool-master-template/
 ---
 
 # Validation Tool - Master Template

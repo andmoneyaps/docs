@@ -61,7 +61,7 @@ This implementation is very simple and can be modified to match your styling etc
 
 ![Present wrapper component](../../assets/images/present/present_wrapper.png){width="600"}
 
-In order to fetch the customer type passed to the `fast-slides` component we use the sample implementation found [here](../Customergroup-Mapping/).
+In order to fetch the customer type passed to the `fast-slides` component we use the sample implementation found [here]({{ site.baseurl }}/present/customergroup-mapping/).
 
 The Javascript for the PresentWrapper component can be found below. Here we use a wired function:
 

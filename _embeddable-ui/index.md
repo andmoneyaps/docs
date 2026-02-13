@@ -35,5 +35,5 @@ The Summary component provides a rich text editor with advanced formatting capab
 - **[Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/)** - Complete guide for integrating &Money Portal and quick actions in Salesforce
 
 ### Component Documentation  
-- **[Summary Component]({{ site.baseurl }}/embeddable-ui/summary/index/)** - Rich text editor with advanced formatting capabilities
-  - [Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/)** - Complete guide to link management features
+- **[Summary Component]({{ site.baseurl }}/embeddable-ui/summary/)** - Rich text editor with advanced formatting capabilities
+  - [Link Functionality]({{ site.baseurl }}/embeddable-ui/summary/link-functionality/) - Complete guide to link management features

@@ -59,7 +59,7 @@ For technical implementation details, refer to our API documentation and integra
 
 ## Documentation Updates
 
-Stay informed about our latest documentation improvements and additions by visiting our [Documentation Changelog](/CHANGELOG.md).
+Stay informed about our latest documentation improvements and additions by visiting our [Documentation Changelog]({{ site.baseurl }}/changelog/).
 
 ## Support
 

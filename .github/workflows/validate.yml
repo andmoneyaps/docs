@@ -20,6 +20,16 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
+      - name: Validate markdown link style
+        run: |
+          set -euo pipefail
+          violations="$(rg -n '\]\(/' --glob '*.md' . | rg -v '\]\(//' || true)"
+          if [ -n "$violations" ]; then
+            echo "Root-relative markdown links found. Use {{ site.baseurl }}/... instead:"
+            echo "$violations"
+            exit 1
+          fi
+
       - name: Build with Jekyll
         run: bundle exec jekyll build --baseurl "/docs"
         env:

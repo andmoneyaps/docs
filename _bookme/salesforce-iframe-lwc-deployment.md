@@ -9,7 +9,7 @@ parent: BookMe
 
 ## What is the Iframe LWC Component?
 
-The &money EngageMe iframe Lightning Web Component (LWC) is a powerful integration tool that embeds BookMe's meeting booking functionality directly within Salesforce Lightning pages. For a complete overview of embeddable components and their capabilities, see the [Embeddable UI Documentation](/embeddable-ui/).
+The &money EngageMe iframe Lightning Web Component (LWC) is a powerful integration tool that embeds BookMe's meeting booking functionality directly within Salesforce Lightning pages. For a complete overview of embeddable components and their capabilities, see the [Embeddable UI Documentation]({{ site.baseurl }}/embeddable-ui/).
 
 This component enables users to:
 
@@ -32,7 +32,7 @@ Before deploying the iframe component, ensure you have:
 1. **Configured Salesforce Domain**: Your Salesforce organization's domain must be properly configured in the Management UI
 2. **Established Salesforce org connection**: The connection between BookMe and Salesforce must be provisioned and tested successfully
 3. **Administrator Access**: You need appropriate permissions in both the Management UI and Salesforce
-4. **User Access Configuration**: Bank employees who will use the iframe must have proper access configured. See [Embeddable UI Access Requirements](/embeddable-ui/#access-requirements) for an overview
+4. **User Access Configuration**: Bank employees who will use the iframe must have proper access configured. See [Embeddable UI Access Requirements]({{ site.baseurl }}/embeddable-ui/#access-requirements) for an overview
 
 ## Deployment Process
 

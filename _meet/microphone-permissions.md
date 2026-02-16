@@ -19,6 +19,13 @@ Meet needs access to your microphone to transcribe the meeting. The first time y
 
 ![Chrome/Edge microphone permission prompt]({{ site.baseurl }}/assets/images/meet/microphone/chrome-edge-microphone-permission-prompt.png)
 
+{: .note}
+> **macOS prompt**
+>
+> On macOS, you may also see an operating system prompt asking whether your browser can access the microphone. Click **Allow**.
+
+![macOS microphone prompt (Edge)]({{ site.baseurl }}/assets/images/meet/microphone/macos-edge-microphone-permission-prompt.png)
+
 ## Select the Right Microphone in Meet
 
 1. In Meet, open **Settings** (gear icon).
@@ -36,8 +43,6 @@ If you clicked **Block** earlier, Meet will not be able to access your microphon
 3. Open **Site settings** (wording may vary).
 4. Set **Microphone** to **Allow** for the Meet site.
 5. Reload the page.
-
-![Chrome/Edge site settings for microphone]({{ site.baseurl }}/assets/images/meet/microphone/chrome-edge-site-settings-microphone-allow.png)
 
 ## Common Issues
 

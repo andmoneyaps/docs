@@ -19,19 +19,19 @@ Make sure that:
 ## Uploading a new template
 
 1. Go to the Management UI and select Present->Setup.
-![Present mgmt ui](../../assets/images/present/present_mgmt_ui_setup.png)
+![Present mgmt ui]({{ site.baseurl }}/assets/images/present/present_mgmt_ui_setup.png)
 
 2. Click the Upload button.
-![Upload](../../assets/images/present/upload_template_button.png)
+![Upload]({{ site.baseurl }}/assets/images/present/upload_template_button.png)
 
 3. Click Upload file and select file in the dialogue pop-up.
-![Upload file](../../assets/images/present/upload_file_dialog.png)
+![Upload file]({{ site.baseurl }}/assets/images/present/upload_file_dialog.png)
 
 4. When uploading the file is automatically validated and admin gets an overview of findings.
-![Upload finished](../../assets/images/present/upload_validate_results.png)
+![Upload finished]({{ site.baseurl }}/assets/images/present/upload_validate_results.png)
 
 5. Now select an appropriate customer type and click Upload
-![Customer type selection](../../assets/images/present/customer_type_selection.png)
+![Customer type selection]({{ site.baseurl }}/assets/images/present/customer_type_selection.png)
 
 
 {: .note }
@@ -46,10 +46,10 @@ You can deactivate/archive old templates in the Management UI. This will keep yo
 
 Go to the Management UI and select Present->Setup.
 1. Choose the template to be deactivated and click the trash-icon.
-![Deactivate](../../assets/images/present/deactivate_template.png)
+![Deactivate]({{ site.baseurl }}/assets/images/present/deactivate_template.png)
 
 2. Click Delete and the template will be deactivated.
-![Delete](../../assets/images/present/delete_template_confirm.png)
+![Delete]({{ site.baseurl }}/assets/images/present/delete_template_confirm.png)
 
 3. Deactivated templates can be listed in the Management UI.
-![Deactivated templates](../../assets/images/present/list_of_deactivated_templates.png)
+![Deactivated templates]({{ site.baseurl }}/assets/images/present/list_of_deactivated_templates.png)

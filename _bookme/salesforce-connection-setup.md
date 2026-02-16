@@ -31,7 +31,7 @@ The BookMe package includes an External Client App that enables secure communica
    - Add an integration user that will be used for the connection
    - This user should have appropriate permissions to manage BookMe-related objects
 
-![External Client App](../../assets/images/external-client-app.png)
+![External Client App]({{ site.baseurl }}/assets/images/external-client-app.png)
 
 {: .warning }
 > **Integration User Requirements**
@@ -49,7 +49,7 @@ The BookMe package includes an External Client App that enables secure communica
    - The system automatically formats it as `https://yourcompany.my.salesforce.com`
 3. **Click Save** to store the domain configuration
 
-![CRM Configuration](../../assets/images/mgmt-ui-crm-configuration.png)
+![CRM Configuration]({{ site.baseurl }}/assets/images/mgmt-ui-crm-configuration.png)
 
 ### Step 3: Test the Backend-to-Salesforce Connection
 
@@ -147,8 +147,8 @@ The Management UI provides visual status indicators for the connection:
 ## Next Steps
 
 Once the connection is successfully established:
-1. [Deploy the iframe LWC component](../salesforce-iframe-lwc-deployment) to enable embedded booking
-2. [Configure the component](../salesforce-iframe-lwc) for your specific use cases
+1. [Deploy the iframe LWC component]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) to enable embedded booking
+2. [Configure the component]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) for your specific use cases
 3. Set up custom metadata for meeting configurations
 
 ## Support

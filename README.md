@@ -66,31 +66,31 @@ docs/
 - Store images in the `assets/images/` directory
 - Reference images using relative paths:
 ```markdown 
-![Alt text](../../assets/images/your-image.png)
+![Alt text]({{ site.baseurl }}/assets/images/your-image.png)
 ```
 
 Alternatively you can ise the ´<img>` tag:
 ```html
-<img src="../../assets/images/your-image.png" alt="Alt text" width="500">
+<img src="{{ site.baseurl }}/assets/images/your-image.png" alt="Alt text" width="500">
 ```
 
 #### Examples of image references
 Example of use from: https://andmoneyaps.github.io/docs/bookme/microsoft-365-integration/
 
 ```markdown
-![Map users/groups to roles](../../assets/images/booking-platform-api-role-mappings.png)
+![Map users/groups to roles]({{ site.baseurl }}/assets/images/booking-platform-api-role-mappings.png)
 ```
 
 And from https://andmoneyaps.github.io/docs/present/How-to-upload-new-templates/
 ```html
-<img alt="Deactivate template" src="../../assets/images/present/deactivate.png" width="300"/>
+<img alt="Deactivate template" src="{{ site.baseurl }}/assets/images/present/deactivate.png" width="300"/>
 ```
 
 ### Links
 - Use relative links for internal documentation:
 
 ```markdown
-[Link text](../path/to/page)
+[Link text]({{ site.baseurl }}/path/to/page/)
 ```
 
 Note, no .md suffix is needed for internal links.
@@ -101,6 +101,5 @@ Example of use from: https://andmoneyaps.github.io/docs/bookme/microsoft-365-int
 To: https://andmoneyaps.github.io/docs/bookme/app-registration-installation/
 
 ```markdown
-For detailed steps, refer to the [Enterprise Application Installation Guide](../app-registration-installation)
+For detailed steps, refer to the [Enterprise Application Installation Guide]({{ site.baseurl }}/bookme/app-registration-installation/)
 ```
-

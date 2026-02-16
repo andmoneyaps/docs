@@ -41,7 +41,7 @@ Adding a link to your text is straightforward:
 3. **Add Your URL**: A small input box appears where you can type or paste your web address
 4. **Save Your Link**: Press Enter or click the checkmark to create the link
 
-![Create link](../../../assets/images/embeddable-ui/iframe-add-new-link.png)
+![Create link]({{ site.baseurl }}/assets/images/embeddable-ui/iframe-add-new-link.png)
 
 ### Editing an Existing Link
 
@@ -52,7 +52,7 @@ Need to update a link? Here's how:
 3. **Make Your Changes**: Edit the web address as needed
 4. **Save or Cancel**: Use the checkmark to save your changes or the X to cancel
 
-![Edit link](../../../assets/images/embeddable-ui/iframe-edit-existing-link.png)
+![Edit link]({{ site.baseurl }}/assets/images/embeddable-ui/iframe-edit-existing-link.png)
 
 ### Understanding the Link Workflow
 

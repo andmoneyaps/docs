@@ -28,13 +28,13 @@ This tool helps you to identify any issues with your templates before they are u
 1. Access the validation tool from the Management UI interface
 
 2. Click the validate button to start the validation process
-![Validate](../../assets/images/present/validate_template_step1.png)
+![Validate]({{ site.baseurl }}/assets/images/present/validate_button.png)
 
 3. Select your template file for validation
-![Upload file](../../assets/images/present/validate_template_step2.png)
+![Upload file]({{ site.baseurl }}/assets/images/present/validate_template.png)
 
 4. Review the validation results
-![Result](../../assets/images/present/validate_template_result.png)
+![Result]({{ site.baseurl }}/assets/images/present/validation_results.png)
 
 
 

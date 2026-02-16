@@ -50,9 +50,9 @@ The portal configuration is a crucial step that establishes the connection betwe
 2. Click on the **"CRM Configuration** tab
 3. Click **Create New**
 
-<img src="../../assets/images/bookme/portals/new-config.png" width="1000" alt="Create new portal configuration button"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/new-config.png" width="1000" alt="Create new portal configuration button"/>
 
-<img src="../../assets/images/bookme/portals/new-config-modal.png" width="1000" alt="Create new portal configuration modal"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/new-config-modal.png" width="1000" alt="Create new portal configuration modal"/>
 
 4. Enter **Configuration Name**
 5. Set up Portal configuration fields
@@ -98,9 +98,9 @@ A portal serves as the interface between your customers and your booking system.
 1. Go to **Management UI** and select **BookMe -> Portals**
 2. Click **Create Portal**
 
-<img src="../../assets/images/bookme/portals/create-portal.png" width="1000" alt="Create new portal button"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/create-portal.png" width="1000" alt="Create new portal button"/>
 
-<img src="../../assets/images/bookme/portals/create-new-portal.png" width="1000" alt="Create new portal modal"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/create-new-portal.png" width="1000" alt="Create new portal modal"/>
 
 3. Enter the **Portal Name** This will appear in the created portal
 4. Choose **Configuration** (select after the configuration has been created)
@@ -162,21 +162,21 @@ A portal serves as the interface between your customers and your booking system.
      - **Custom regex**: Create your own validation patterns for specific business requirements
    - **Example of field setup**
 
-   <img src="../../assets/images/bookme/portals/field-setup.png" width="700" alt="Field setup example"/>
+   <img src="{{ site.baseurl }}/assets/images/bookme/portals/field-setup.png" width="700" alt="Field setup example"/>
    
    And the field will look like this in the portal:
 
-   <img src="../../assets/images/bookme/portals/field-portal.png" width="500" alt="Field in portal"/>
+   <img src="{{ site.baseurl }}/assets/images/bookme/portals/field-portal.png" width="500" alt="Field in portal"/>
 
    Where an example of error input can be seen:
 
-   <img src="../../assets/images/bookme/portals/field-error.png" width="300" alt="Field in portal"/>
+   <img src="{{ site.baseurl }}/assets/images/bookme/portals/field-error.png" width="300" alt="Field in portal"/>
 
 
 10. Finalize by clicking **Create**
 11. Test the Portal by clicking on the portal icon (square with an arrow) on the homepage
 
-<img src="../../assets/images/bookme/portals/test-a-portal.png" width="1000" alt="Test a portal"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/test-a-portal.png" width="1000" alt="Test a portal"/>
 
 Note: Before using the portal, it must be configured with your CRM system.
 

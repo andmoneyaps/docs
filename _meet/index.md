@@ -64,14 +64,11 @@ Before configuring Meet in Salesforce, ensure you have:
 
 ## Browser Permissions
 
-### First-Time User Experience
+Meet needs microphone access to transcribe your meeting. The first time you open Meet, your browser will ask for permission. If you clicked **Block** earlier, you can change it and reload.
 
-1. Browser prompts for microphone access on first use
-2. User clicks **Allow** in browser permission dialog
-3. Once granted, device names appear in Meet's microphone selector
-4. Permission is remembered for future sessions
+- Step-by-step guide (with screenshots): [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/)
 
-### Enterprise Deployment
+### Enterprise Deployment (Managed Devices)
 
 Pre-configure browser policies to skip permission prompts for managed devices:
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Security
-nav_order: 2
+nav_order: 3
 parent: Meet
 ---
 
@@ -213,7 +213,7 @@ This section is intended to help security reviewers quickly understand where con
 - **Encryption in transit**: TLS is used for browser↔service traffic and service↔service integrations.
 - **Encryption at rest**: Managed services including Redis, PostgreSQL, and monitoring storage use cloud-provider encryption at rest; Salesforce provides encryption at rest for stored CRM data.
 - **Key management**: Secrets/keys are stored in a secret management solution including Key Vault and accessed via managed identity patterns; keys are rotated as part of operational security procedures.
-- **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Meet trusted URLs to reduce friction.
+- **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Meet trusted URLs to reduce friction. For end-user steps, see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
 
 ### 2.4 Identity and Access Management (IAM)
 

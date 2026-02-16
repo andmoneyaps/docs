@@ -27,7 +27,13 @@ jobs:
       - name: Validate markdown link style
         run: |
           set -euo pipefail
-          violations="$(rg -n '\]\(/' --glob '*.md' . | rg -v '\]\(//' || true)"
+          violations="$(
+            if command -v rg >/dev/null 2>&1; then
+              rg -n '\]\(/' --glob '*.md' .
+            else
+              grep -RIn --include='*.md' -E '\]\(/' .
+            fi | grep -v '\]\(//' || true
+          )"
           if [ -n "$violations" ]; then
             echo "Root-relative markdown links found. Use {{ site.baseurl }}/... instead:"
             echo "$violations"
@@ -46,7 +52,11 @@ jobs:
           set -euo pipefail
 
           mapfile -t image_srcs < <(
-            rg -No '<img [^>]*src="[^"]+"' _site \
+            if command -v rg >/dev/null 2>&1; then
+              rg -No '<img [^>]*src="[^"]+"' _site
+            else
+              grep -RhoE '<img [^>]*src="[^"]+"' _site
+            fi \
               | sed -E 's/.*src="([^"]+)".*/\1/' \
               | sed -E 's/[?#].*$//' \
               | sort -u

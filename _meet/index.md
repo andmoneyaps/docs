@@ -68,7 +68,7 @@ Meet needs microphone access to transcribe your meeting. The first time you open
 
 - Step-by-step guide (with screenshots): [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/)
 
-### Managed Devices
+### Enterprise Deployment (Managed Devices)
 
 Pre-configure browser policies to skip permission prompts for managed devices:
 

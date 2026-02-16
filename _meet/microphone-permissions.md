@@ -50,7 +50,7 @@ If you clicked **Block** earlier, Meet will not be able to access your microphon
 |---|---|
 | No microphone prompt appears | Check you didn't previously block microphone access (see the section above). Try Chrome/Edge. If nobody in your organization ever gets the prompt, contact your admin (see below). |
 | Microphone list is empty in Meet | Confirm the browser permission is **Allowed**. Reload the page after changing permissions. Unplug/replug your headset and re-select the device in Meet settings. |
-| Others can hear me sometimes / wrong mic is used | Select your headset microphone explicitly. Avoid duplicate devices (Bluetooth headset + dock + laptop mic) and reconnect the device. |
+| Transcription is poor or intermittent / wrong mic is used | Select your headset microphone explicitly. Avoid duplicate devices (Bluetooth headset + dock + laptop mic) and reconnect the device. |
 | Mic works in other apps but not in Meet | Check OS microphone privacy settings (next section). |
 
 ## OS Privacy Checks (If Browser Permission Is Correct)

@@ -125,6 +125,11 @@ After completing the setup, verify that Meet is working correctly:
 3. Grant microphone access when prompted
 4. Verify that the microphone selector shows available devices
 
+{: .note}
+> **End-user microphone help**
+>
+> For step-by-step browser instructions (including fixing "Blocked"), see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
+
 ### Step 4: Confirm Record Context
 
 1. Participants from the Event record should be auto-suggested

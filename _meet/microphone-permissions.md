@@ -7,13 +7,13 @@ nav_order: 2
 
 # Microphone Permissions
 
-Meet needs access to your microphone to transcribe the meeting. The first time you open Meet in Salesforce, your browser will ask for permission.
+Meet needs access to your microphone to transcribe the meeting. The first time you open Meet, your browser will ask for permission.
 
 **Supported browsers:** Chrome and Edge (recommended). Safari has limited support.
 
 ## Allow Microphone (First Time)
 
-1. Open Meet inside Salesforce.
+1. Open Meet.
 2. When the browser asks to use your microphone, click **Allow**.
 3. Go back to Meet and confirm you can select a microphone device.
 
@@ -31,11 +31,11 @@ Meet needs access to your microphone to transcribe the meeting. The first time y
 
 If you clicked **Block** earlier, Meet will not be able to access your microphone until you change the site permission.
 
-1. Open Meet in Salesforce.
+1. Open Meet.
 2. In the browser address bar, click the lock icon (site controls).
 3. Open **Site settings** (wording may vary).
 4. Set **Microphone** to **Allow** for the Meet site.
-5. Reload the Salesforce page.
+5. Reload the page.
 
 ![Chrome/Edge site settings for microphone]({{ site.baseurl }}/assets/images/meet/microphone/chrome-edge-site-settings-microphone-allow.png)
 
@@ -43,7 +43,7 @@ If you clicked **Block** earlier, Meet will not be able to access your microphon
 
 | Symptom | What you can do |
 |---|---|
-| No microphone prompt appears | Check you didn't previously block microphone access (see the section above). Try Chrome/Edge. If nobody in your organization ever gets the prompt in Salesforce, contact your Salesforce admin (see below). |
+| No microphone prompt appears | Check you didn't previously block microphone access (see the section above). Try Chrome/Edge. If nobody in your organization ever gets the prompt, contact your admin (see below). |
 | Microphone list is empty in Meet | Confirm the browser permission is **Allowed**. Reload the page after changing permissions. Unplug/replug your headset and re-select the device in Meet settings. |
 | Others can hear me sometimes / wrong mic is used | Select your headset microphone explicitly. Avoid duplicate devices (Bluetooth headset + dock + laptop mic) and reconnect the device. |
 | Mic works in other apps but not in Meet | Check OS microphone privacy settings (next section). |
@@ -66,9 +66,11 @@ If you clicked **Block** earlier, Meet will not be able to access your microphon
 
 If you are on a managed company device, your IT department may lock microphone settings or pre-approve access. If you cannot change the setting, contact IT support.
 
-## When to Contact Your Salesforce Admin
+## When to Contact Your Admin
 
-If nobody in your organization gets the microphone prompt inside Salesforce, your Salesforce admin may need to adjust Salesforce org settings for Meet.
+If nobody in your organization gets a microphone prompt when opening Meet, your admin may need to adjust your organization's settings.
 
-- Admin reference: [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/)
-
+{: .note}
+> **If you use Meet in Salesforce**
+>
+> Your Salesforce admin may need to adjust Salesforce org settings for Meet. Admin reference: [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/)

@@ -41,6 +41,67 @@ jobs:
           PAGES_REPO_NWO: andmoneyaps/docs
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Validate local image assets
+        run: |
+          set -euo pipefail
+
+          mapfile -t image_srcs < <(
+            rg -No '<img [^>]*src="[^"]+"' _site \
+              | sed -E 's/.*src="([^"]+)".*/\1/' \
+              | sed -E 's/[?#].*$//' \
+              | sort -u
+          )
+
+          failures=0
+          for src in "${image_srcs[@]}"; do
+            case "$src" in
+              http://*|https://*|data:*|//*) continue ;;
+            esac
+
+            if [[ -n "${BASE_PATH:-}" && "$src" == "${BASE_PATH}/"* ]]; then
+              rel="${src#${BASE_PATH}/}"
+            elif [[ "$src" == /* ]]; then
+              rel="${src#/}"
+            else
+              rel="$src"
+            fi
+
+            case "$rel" in
+              assets/*) ;;
+              *) continue ;;
+            esac
+
+            if [[ ! -f "$rel" ]]; then
+              echo "Missing image file: $src -> $rel"
+              failures=1
+              continue
+            fi
+
+            ext="${rel##*.}"
+            ext="$(echo "$ext" | tr '[:upper:]' '[:lower:]')"
+            mime="$(file --brief --mime-type "$rel")"
+
+            case "$ext" in
+              png) [[ "$mime" == "image/png" ]] || { echo "Invalid PNG: $rel (mime: $mime)"; failures=1; } ;;
+              jpg|jpeg) [[ "$mime" == "image/jpeg" ]] || { echo "Invalid JPEG: $rel (mime: $mime)"; failures=1; } ;;
+              gif) [[ "$mime" == "image/gif" ]] || { echo "Invalid GIF: $rel (mime: $mime)"; failures=1; } ;;
+              webp) [[ "$mime" == "image/webp" ]] || { echo "Invalid WEBP: $rel (mime: $mime)"; failures=1; } ;;
+              svg)
+                case "$mime" in
+                  image/svg+xml|text/plain|text/xml|application/xml) ;;
+                  *) echo "Invalid SVG: $rel (mime: $mime)"; failures=1 ;;
+                esac
+                ;;
+            esac
+          done
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "Image asset validation failed."
+            exit 1
+          fi
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
       - name: Validate links with HTMLProofer
         run: |
           bundle exec htmlproofer ./_site \

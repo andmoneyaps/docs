@@ -10,19 +10,21 @@ collection: bookme
 
 ## What Are Available Timeslots?
 
-When a customer opens the booking page, BookMe calculates which timeslots to show based on a combination of factors: **who** is qualified to take the meeting, **when** they are free, **where** the meeting can happen, and **how** the meeting will be conducted. This guide explains each factor and how they interact.
+BookMe calculates which timeslots to show as available for a meeting based on a combination of factors: **who** is qualified to take the meeting, **when** they are free, **where** the meeting can happen, and **how** the meeting will be conducted. This guide explains each factor and how they interact.
 
 ---
 
 ## Meeting Types
 
-BookMe supports three meeting types. Each timeslot is tied to a specific type:
+BookMe supports four meeting types. Each timeslot is tied to a specific type:
 
 | Meeting Type | Description |
 |---|---|
 | **Online** | Video meeting (e.g., Microsoft Teams) |
 | **Physical** | In-person meeting at a branch location |
 | **Telephone** | Phone call |
+| **Offsite** | In-person meeting at the customer's location |
+
 
 Advisors can be configured to offer different meeting types on different days. For example, an advisor might offer Online and Physical meetings on Mondays but only Online meetings on Fridays.
 

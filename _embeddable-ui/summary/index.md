@@ -4,6 +4,7 @@ title: Summary Component
 parent: Embeddable UI
 nav_order: 1
 has_children: true
+permalink: /embeddable-ui/summary/
 ---
 
 # Summary Component

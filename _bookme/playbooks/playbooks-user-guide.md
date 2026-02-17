@@ -31,7 +31,7 @@ You'll see the Playbooks overview page displaying existing playbooks with their 
 
 Click the **"Create"** button on the Playbooks page to open the creation modal.
 
-![Playbook Creation Modal](../../../assets/images/bookme/playbooks/playbook-create-initial.png)
+![Playbook Creation Modal]({{ site.baseurl }}/assets/images/bookme/playbooks/playbook-create-initial.png)
 
 ### Step 2: Configure Basic Information
 
@@ -52,7 +52,7 @@ Every playbook must start with a Trigger block:
 
 Click **"Add block"** to add more blocks to your playbook:
 
-![Playbook with Multiple Blocks](../../../assets/images/bookme/playbooks/playbook-create-with-blocks.png)
+![Playbook with Multiple Blocks]({{ site.baseurl }}/assets/images/bookme/playbooks/playbook-create-with-blocks.png)
 
 For each new block:
 
@@ -210,7 +210,7 @@ To add an input relation to a block:
    - Click Save to apply the relation
    - The block will now receive data from the source block
 
-![Playbook with Multiple input relations](../../../assets/images/bookme/playbooks/playbook-mappings.png)
+![Playbook with Multiple input relations]({{ site.baseurl }}/assets/images/bookme/playbooks/playbook-mappings.png)
 
 ### Visual Guide: Using the Relation Builder
 
@@ -248,7 +248,7 @@ The Relation Builder modal contains:
 - **Cancel**: Close without saving
 - **Save**: Create / update the playbook (enabled when path is back to home)
 
-![Playbook relation builder for input](../../../assets/images/bookme/playbooks/playbook-relation-builder.png)
+![Playbook relation builder for input]({{ site.baseurl }}/assets/images/bookme/playbooks/playbook-relation-builder.png)
 
 #### Example: Creating a Complex Relation
 
@@ -271,7 +271,7 @@ The Relation Builder modal contains:
 
 ### Configuring Transformations
 
-![Playbook Transformations Modal](../../../assets/images/bookme/playbooks/playbook-transformations.png)
+![Playbook Transformations Modal]({{ site.baseurl }}/assets/images/bookme/playbooks/playbook-transformations.png)
 
 Transformations modify data as it flows between blocks:
 

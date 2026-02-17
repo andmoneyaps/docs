@@ -50,7 +50,7 @@ Historic Meeting Data provides comprehensive analytics on completed meetings, en
 - **Service Metrics**: Performance analysis by service type, customer category, and meeting format
 - **Duration Analysis**: Comparison of actual vs. configured meeting durations for efficiency insights
 
-For detailed field descriptions and data structure information, see [Technical Details - Historic Meeting Fields](../insights-details#historic-meeting-fields).
+For detailed field descriptions and data structure information, see [Technical Details - Historic Meeting Fields]({{ site.baseurl }}/insights/insights-details/#historic-meeting-fields).
 
 #### Data Processing and Upload
 

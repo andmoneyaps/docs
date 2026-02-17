@@ -168,5 +168,5 @@ Present CRM Analytics enables organizations to:
 
 ## Related Documentation
 
-- [Template Creation Guide](../Present-Usage) - How to create master templates with slides
-- [Tag Mapping](../tag-mapping) - Configuring data tags in templates
+- [Template Creation Guide]({{ site.baseurl }}/present/Present-Usage/) - How to create master templates with slides
+- [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/) - Configuring data tags in templates

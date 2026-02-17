@@ -187,7 +187,9 @@ GET /time-slots/available
 
 **Response:** Array of available TimeSlot objects
 
-**employeeTypes:** The `employeeTypes` parameter is only relevant when `requireEmployeeParticipation` is set to `false`. At least one value must be provided.
+##### Employee Types (V2)
+
+The `employeeTypes` parameter is only relevant when `requireEmployeeParticipation` is set to `false`. At least one value must be provided.
 
 This parameter controls which pools of employees to search. Multiple types can be combined:
 

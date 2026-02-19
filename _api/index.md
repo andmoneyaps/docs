@@ -3,7 +3,7 @@ layout: default
 title: Public API
 nav_order: 5
 has_children: true
-permalink: /api
+permalink: /api/
 ---
 
 # &money Public API Documentation

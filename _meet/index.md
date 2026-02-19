@@ -3,7 +3,7 @@ layout: default
 title: Meet
 nav_order: 7
 has_children: true
-permalink: /meet
+permalink: /meet/
 ---
 
 # Meet Documentation

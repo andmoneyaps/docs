@@ -3,7 +3,7 @@ layout: default
 title: Embeddable UI
 nav_order: 6
 has_children: true
-permalink: /embeddable-ui
+permalink: /embeddable-ui/
 ---
 
 # Embeddable UI Documentation

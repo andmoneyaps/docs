@@ -7,6 +7,19 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.24.0 (10-03-2026)
+Here is what's new in release 1.24.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002d6kLIAQ`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002d6kLIAQ`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **"Send meeting confirmation to customer participants" checkbox had no effect**
+  - Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
+
 ## Release 1.23.0 (09-02-2026)
 Here is what's new in release 1.23.0 of &bookme.
 > **Managed Package Version ID**: `04tP7000002WqITIA0`.

@@ -3,6 +3,12 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## March 2026
+
+### _BookMe_
+
+- **Version 1.24 Release**: Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
+
 ## February 2026
 
 ### _BookMe_

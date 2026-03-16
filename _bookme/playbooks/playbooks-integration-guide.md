@@ -9,7 +9,7 @@ nav_order: 13
 
 This guide explains how playbook blocks connect to the platform's AI, CRM, and template systems. Each integration follows the same pattern: a block references a configured resource by ID, sends data in, and receives structured results back.
 
-```
+```text
 ┌──────────────────────────────────────────────────────────┐
 │                    PLAYBOOK ENGINE                       │
 │                                                          │
@@ -92,7 +92,7 @@ When configuring an entity pattern block:
 
 **Example — reading advisor data from a portal trigger:**
 
-```
+```text
 Trigger (PortalMeetings)
   → EntityPatternRead (Advisors)
     Input: Meeting.MeetingOwner.Email → email search parameter
@@ -105,7 +105,7 @@ The Relation Builder dynamically fetches the entity pattern's field structure, s
 
 EntityPatternFilter blocks define query conditions that EntityPatternRead blocks consume. A common pattern:
 
-```
+```text
 Trigger → EntityPatternFilter (set filter criteria)
        → EntityPatternRead (fetch filtered results)
 ```
@@ -138,7 +138,7 @@ When configuring a Template block:
 
 **Example — formatting an AI summary into a report:**
 
-```
+```text
 AI block (meeting summary)
   → Template (Customer Report Template)
     Input: summary text, key points, attendee names

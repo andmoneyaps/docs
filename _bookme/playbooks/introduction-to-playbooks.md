@@ -25,7 +25,7 @@ You build playbooks in a drag-and-drop visual editor. No code is required.
 
 Every playbook follows the same pattern:
 
-```
+```text
 Event happens  →  Trigger fires  →  Blocks execute in order  →  Result written
 ```
 

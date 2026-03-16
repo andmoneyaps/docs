@@ -17,7 +17,7 @@ This page explains the model conceptually. For how entity patterns are used insi
 
 The system has two layers:
 
-```
+```text
 Entity Definitions     →  "What CRM objects and fields exist"
 Entity Patterns        →  "How to combine them for a specific task"
 ```

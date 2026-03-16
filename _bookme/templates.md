@@ -19,7 +19,7 @@ Templates are managed under **Admin > Templates** in the Management UI.
 
 A template is a piece of text with **variable placeholders** written in [Liquid syntax](https://shopify.github.io/liquid/). When a playbook runs, the Template block replaces the placeholders with actual data from earlier blocks and produces the final formatted text.
 
-```
+```text
 Template text (with variables)  +  Input data  →  Rendered output
 ```
 
@@ -36,7 +36,7 @@ Advisor: {% raw %}{{ advisorName }}{% endraw %}
 ```
 
 Input data:
-```
+```text
 customerName = "Jane Doe"
 meetingDate = "2026-03-15"
 advisorName = "Thomas Berg"
@@ -44,7 +44,7 @@ summaryText = "Discussed Q1 portfolio review..."
 ```
 
 Rendered output:
-```
+```text
 Meeting summary for Jane Doe
 
 Date: 2026-03-15

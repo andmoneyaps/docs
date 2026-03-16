@@ -262,7 +262,7 @@ This example walks through building a playbook that automatically creates a CRM 
 
 ### The workflow
 
-```
+```text
 Portal meeting booked
   → Trigger (PortalMeetings)
   → EntityPatternFilter (filter by booking ID)
@@ -322,7 +322,7 @@ This example shows a more complex playbook that gathers CRM data, runs AI analys
 
 ### The workflow
 
-```
+```text
 Customer overview requested
   → Trigger (CustomerOverview)
   → EntityPatternRead (fetch opportunities)

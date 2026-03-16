@@ -94,11 +94,12 @@ Click the Trigger block to expand it and reveal the configuration form.
    - **PortalMeetingCancelled** — fires when a portal meeting is cancelled
    - **CustomerOverview** — fires when a customer overview is requested
    - **TranscriptReady** — fires when a meeting transcript is ready
+   - **MeetMeetingEnded** — fires when a Meet video meeting ends
 2. **Name** — give the trigger a descriptive name (e.g., *"Portal Meeting Trigger"*)
 3. **Portal selection** (PortalMeetings and PortalMeetingCancelled only) — choose which portals this playbook responds to. If none are selected, it responds to all portals.
 
 {: .hint }
-The trigger block determines what data is available to the rest of the playbook. A PortalMeetings trigger provides meeting details (title, dates, advisors, attendees, etc.), while a CustomerOverview trigger provides only an account ID.
+The trigger block determines what data is available to the rest of the playbook. A PortalMeetings trigger provides meeting details (title, dates, advisor info, attendees, theme, customer category, custom fields), while a CustomerOverview trigger provides only an account ID. A TranscriptReady trigger provides the transcript content, meeting ID, and transcript ID. Use the Relation Builder to explore exactly which fields are available for each trigger type.
 
 ### Step 4: Add Blocks
 
@@ -154,7 +155,7 @@ When configuring source or destination fields, you can use the **Relation Builde
    - **All** — selects every item in the array
 5. Click **Apply** to set the selected path
 
-The builder generates a dot-notation path automatically. For example, navigating into `Meeting` → `Participants` (First) → `Email` produces the path `Meeting.Participants[0].Email`.
+The builder generates a dot-notation path automatically. For example, navigating into `Meeting` → `ExternalAttendees` (First) → `Email` produces the path `Meeting.ExternalAttendees[0].Email`.
 
 ### Step 7: Add Transformations to Relations
 
@@ -297,7 +298,7 @@ Portal meeting booked
    - Name: *"Read Advisor"*
    - Value: Select the advisor entity pattern
    - Add an input relation **from the Trigger block**:
-     - Source field: use the Relation Builder to navigate to `PrimaryAdvisor.Email`
+     - Source field: use the Relation Builder to navigate to `Meeting.MeetingOwner.Email`
      - Destination field: the email search parameter
    - This fetches the advisor's CRM record using the email from the trigger data
 
@@ -317,7 +318,7 @@ When a customer books a meeting through a BookMe portal:
 1. The portal fires a **PortalMeetings** event containing all meeting details
 2. The playbook engine matches the event to playbooks whose trigger type is `PortalMeetings` and whose portal selection includes that portal
 3. The trigger block receives the meeting data and makes it available as output fields
-4. Downstream blocks pull the data they need via relations — for example, extracting `PrimaryAdvisor.Email` to look up the advisor in the CRM
+4. Downstream blocks pull the data they need via relations — for example, extracting `Meeting.MeetingOwner.Email` to look up the advisor in the CRM
 5. The playbook executes blocks in order, with each block able to use data from any previous block
 
 {: .hint }

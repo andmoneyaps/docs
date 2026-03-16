@@ -72,10 +72,11 @@ Every playbook must have exactly one trigger block as its first block.
 
 | Trigger | When it fires | Key data provided |
 |---------|---------------|-------------------|
-| **PortalMeetings** | A meeting is booked through a portal | Meeting ID, title, dates, advisors, attendees, theme, customer category, custom fields |
-| **PortalMeetingCancelled** | A portal meeting is cancelled | Meeting ID and cancellation context |
+| **PortalMeetings** | A meeting is booked through a portal | Meeting ID, title, start/end dates, advisor (name, email, initials), additional advisors, external attendees, theme, customer category, room, custom fields |
+| **PortalMeetingCancelled** | A portal meeting is cancelled | Meeting ID, portal ID, cancelled by, cancellation reason |
 | **CustomerOverview** | A customer overview is requested | Account ID |
-| **TranscriptReady** | A meeting transcript becomes available | Meeting ID, transcript content, event IDs |
+| **TranscriptReady** | A meeting transcript becomes available | Meeting ID, transcript content, transcript ID, online meeting ID, event ID |
+| **MeetMeetingEnded** | A Meet video meeting ends | Meeting ID and meeting ended context |
 
 Portal-based triggers (PortalMeetings, PortalMeetingCancelled) can be scoped to specific portals — only meetings from selected portals will activate the playbook.
 

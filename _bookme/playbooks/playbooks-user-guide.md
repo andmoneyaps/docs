@@ -90,156 +90,146 @@ Click the Trigger block to expand it and reveal the configuration form.
 ![Trigger block expanded]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/editor-trigger-expanded.png)
 
 1. **Trigger Type** — select the event that starts the playbook:
-   - **PortalMeetings** — fires when a meeting is booked through a portal
+   - **PortalMeetings** — fires when a customer books a meeting through a BookMe portal
    - **PortalMeetingCancelled** — fires when a portal meeting is cancelled
-   - **CustomerOverview** — fires when a customer overview is requested
-   - **TranscriptReady** — fires when a meeting transcript is ready
-   - **MeetMeetingEnded** — fires when a Meet video meeting ends
+   - **CustomerOverview** — fires when a customer overview report is requested
+   - **TranscriptReady** — fires when a recorded meeting's transcript becomes available
+   - **MeetMeetingEnded** — fires when an &Money Meet video meeting ends
 2. **Name** — give the trigger a descriptive name (e.g., *"Portal Meeting Trigger"*)
 3. **Portal selection** (PortalMeetings and PortalMeetingCancelled only) — choose which portals this playbook responds to. If none are selected, it responds to all portals.
 
 {: .hint }
 The trigger block determines what data is available to the rest of the playbook. A PortalMeetings trigger provides meeting details (title, dates, advisor info, attendees, theme, customer category, custom fields), while a CustomerOverview trigger provides only an account ID. A TranscriptReady trigger provides the transcript content, meeting ID, and transcript ID. Use the Relation Builder to explore exactly which fields are available for each trigger type.
 
-### Step 4: Add Blocks
+### Step 4: Add a Block
 
-Build your workflow by adding blocks. Each block performs a specific task:
+Click **"+ Add block"** in the toolbar. A new **Untyped** block appears below the existing blocks on the canvas.
+
+![A new Untyped block appears after clicking Add block]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/guide-add-block.png)
+
+The new block shows "Untyped" in its header and "Unnamed block" as its name. The number badge (**2** in this example) shows its position in the execution order — blocks run top to bottom.
+
+{: .hint }
+You can also add blocks by clicking one of the **suggestion cards** that appear below blocks on the canvas. These suggest common next steps (e.g., "Filter results", "Run AI", "Format with template") and add a pre-typed block directly.
+
+### Step 5: Select the Block Type
+
+Click the new block to select it. The block automatically enters **edit mode**, showing a configuration form with:
+
+- **Block type** — a required dropdown to choose what this block does
+- **Name** — a descriptive label for this block
+
+Click the **Block type** dropdown to see the available types:
+
+![Block type dropdown showing all available types]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/guide-select-type.png)
 
 | Block Type | What it does |
 |-----------|--------------|
-| **AI** | Process data with an AI capability (summarization, extraction, etc.) |
-| **EntityPatternRead** | Fetch records from the CRM |
-| **EntityPatternCreate** | Create new records in the CRM |
-| **EntityPatternUpdate** | Update existing CRM records |
-| **EntityPatternFilter** | Add filter conditions for entity queries |
-| **Template** | Format data using a predefined template |
+| **Ai** | Send data to an AI capability for processing (summarization, extraction, classification, etc.) |
+| **EntityPatternRead** | Fetch records from the CRM using a configured entity pattern |
+| **EntityPatternFilter** | Add filter conditions (e.g., "where email equals X") for CRM queries |
+| **Template** | Format data into a structured output using a predefined template |
+| **EntityPatternCreate** | Create a new record in the CRM |
+| **EntityPatternUpdate** | Update an existing CRM record |
 
-**To add a block:**
-1. Click **"+ Add block"** in the toolbar, or click a suggested block below the trigger
-2. Click the new block to expand it
-3. Select its **Block Type** from the dropdown
-4. Select its **Value** — the specific capability, entity pattern, or template to use
-5. Give it a descriptive **Name**
+After selecting a type, a **Value** dropdown appears where you choose the specific resource — for example, which AI capability, which entity pattern, or which template this block should use.
 
-Blocks execute in order from top to bottom. The number badge on each block shows its position in the execution order.
+Fill in all three fields:
+1. **Block type** — e.g., *EntityPatternRead*
+2. **Value** — e.g., *Advisors* (the entity pattern to query)
+3. **Name** — e.g., *"Read Advisor"*
 
-### Step 5: Connect Blocks with Relations
+Click the **green checkmark** in the block header to confirm and exit edit mode. Click the **pencil icon** to re-enter edit mode later.
 
-Relations define how data flows from one block to the next. When you expand a block, you'll see **Inputs** and **Outputs** sections at the bottom.
+### Step 6: Connect Blocks
 
-![Block with input and output connections]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/editor-block-connections.png)
+Connections define how data flows between blocks. There are two ways to create a connection:
 
-**To create a connection:**
+**Option A — Drag between handles:**
+Each block has small **connection handles** (dots) on its edges. Click and drag from a **source handle** on one block to a **target handle** on the destination block. The editor validates the connection as you drag — you can only connect forwards (source must be earlier in the execution order) and you cannot connect to the Trigger block.
 
-1. Click the **destination block** (the block that needs data) to expand it
-2. Click **"Connect from..."** in the Inputs section
-3. Choose the **source block** from the menu — only blocks earlier in the flow are listed
-4. A new empty relation appears — configure the **source field** and **destination field**
+**Option B — Use the "Connect from..." button:**
+1. Click the **destination block** (the block that needs data) to select it
+2. In the **INPUTS** section at the bottom of the block, click **"Connect from..."**
+3. A dropdown menu lists all blocks earlier in the flow — select the **source block**
 
-Each relation has:
-- **Source field** — the output field from the source block (where the data comes from)
-- **Destination field** — the input field on the destination block (where the data goes)
+Both methods produce the same result:
+
+![A dashed edge appears between connected blocks]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/guide-connection-edge.png)
+
+A **dashed edge** appears between the two blocks with a *"Click to configure"* label. This means the connection exists but has no field mappings yet — the next step is to map which specific data fields flow through this connection.
 
 {: .note }
-A block can have multiple input relations from different source blocks. This lets you combine data from several sources into a single block.
+A block can receive data from **multiple** source blocks. For example, an EntityPatternCreate block might pull the meeting title from the Trigger and the advisor ID from an EntityPatternRead block. Drag another connection or click "Connect from..." again to add another source.
 
-### Step 6: Use the Relation Builder to Select Fields
+### Step 7: Map Fields Between Blocks
 
-When configuring source or destination fields, you can use the **Relation Builder** — a visual tool for navigating a block's data structure.
+Each connection can carry multiple **field mappings** — individual data paths from the source block to the destination block. When you expand a connection group, you see the mapping rows:
 
-1. Click the **field picker icon** next to the source or destination field
-2. The Relation Builder modal opens, showing the block's available fields in a tree
-3. Click a field to navigate into it. For nested objects, keep clicking to drill deeper.
-4. For **array fields**, choose:
-   - **First** — selects the first item (adds `[0]` to the path)
-   - **All** — selects every item in the array
-5. Click **Apply** to set the selected path
+![Block showing inputs with a mapping row]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/guide-mapping-row.png)
 
-The builder generates a dot-notation path automatically. For example, navigating into `Meeting` → `ExternalAttendees` (First) → `Email` produces the path `Meeting.ExternalAttendees[0].Email`.
+In this example, the "Read theme" block has:
+- **INPUTS** — a connection from "theme filter" with 1 mapping: `output → taxonomy`
+- **OUTPUTS** — data flowing to "Create portal entities": `Results[0].taxonomy[0].Id`
 
-### Step 7: Add Transformations to Relations
+**To add a field mapping:**
 
-Transformations modify data as it passes through a relation. You can chain multiple transformations — each one receives the output of the previous.
+1. Click a connection group name (e.g., "theme filter") to expand it
+2. Click the **+** button to add a new mapping row
+3. Each mapping row has these controls:
+
+| Icon | What it does |
+|------|-------------|
+| **Pencil (source)** | Open the Relation Builder to pick the source field |
+| **Pencil (destination)** | Open the Relation Builder to pick the destination field |
+| **fx** | Add data transformations to this mapping |
+| **Trash** | Remove this mapping |
+
+**To pick a field using the Relation Builder:**
+
+Click the pencil icon on a source or destination field. The **Data relationship builder** modal opens:
+
+![Relation Builder modal for selecting a field path]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/guide-relation-builder.png)
+
+1. Use the **Select field** dropdown to browse the available fields from the source block
+2. For nested objects, the dropdown updates to show child fields as you drill deeper
+3. For **array fields**, choose **First** (selects item `[0]`) or **All** (selects every item)
+4. Click **Save** to apply the selected field path
+
+The builder generates a **dot-notation path** like `Meeting.ExternalAttendees[0].Email` — you don't need to type these paths manually.
+
+**Connection edges on the canvas** show how many mappings each connection carries:
+
+![Edge labels showing mapping counts between blocks]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/guide-mapping-counts.png)
+
+Labels like "1 mapping" or "10 mappings" appear on the connection edges, giving you an at-a-glance view of how much data flows between blocks.
+
+### Step 8: Add Transformations (Optional)
+
+Transformations modify data as it passes through a mapping. You can chain multiple transformations — each one receives the output of the previous.
 
 **To add a transformation:**
 
-1. Expand a block and locate an input relation
-2. Click the **"+ Add"** button on the relation to add a transformation
-3. Select the transformation type
+1. Expand a connection group and locate a mapping row
+2. Click the **fx** button on the mapping row
+3. Select the transformation type from the dropdown
 
-Here are the available types with practical examples:
+Available transformation types:
 
-#### Identity
-Passes data through unchanged. This is the default — use it when the source field maps directly to the destination field with no modification needed.
-
-#### Extract
-Picks a single value out of a nested object.
-
-**Example:** Your trigger provides a complex meeting object, but the AI block only needs the meeting title.
-
-| | |
-|---|---|
-| **Source data** | `{ Meeting: { Title: "Q1 Review", Date: "2026-03-15", Room: { Name: "Room A" } } }` |
-| **Extract path** | `Meeting.Title` |
-| **Result** | `"Q1 Review"` |
-
-#### Project
-Keeps only specific fields from an object, dropping everything else.
-
-**Example:** A CRM read returns a full contact record, but you only need the name and email.
-
-| | |
-|---|---|
-| **Source data** | `{ Name: "Jane Doe", Email: "jane@example.com", Phone: "+45...", Address: "..." }` |
-| **Project paths** | `Name, Email` |
-| **Result** | `{ Name: "Jane Doe", Email: "jane@example.com" }` |
-
-#### Join
-Combines array elements into a single text string using a separator.
-
-**Example:** An entity pattern returns a list of attendee names, and you need them as a single comma-separated string for a template.
-
-| | |
-|---|---|
-| **Source data** | `["John Smith", "Jane Doe", "Bob Wilson"]` |
-| **Separator** | `, ` |
-| **Result** | `"John Smith, Jane Doe, Bob Wilson"` |
-
-Separator presets: Comma (`, `), Comma no space (`,`), Semicolon (`; `), Space, Newline, Pipe (` | `), or custom.
-
-#### Split
-Divides a text string into an array.
-
-**Example:** A field contains comma-separated email addresses that you need to process individually.
-
-| | |
-|---|---|
-| **Source data** | `"john@example.com, jane@example.com"` |
-| **Separator** | `, ` |
-| **Result** | `["john@example.com", "jane@example.com"]` |
-
-#### Serialize
-Converts an object to a JSON text string.
-
-**Example:** You need to pass structured data as a text input to an AI capability.
-
-| | |
-|---|---|
-| **Source data** | `{ Name: "Jane", Role: "Advisor" }` |
-| **Result** | `'{"name":"Jane","role":"Advisor"}'` |
-
-#### Base64Decode
-Decodes Base64-encoded text back to a readable string.
-
-| | |
-|---|---|
-| **Source data** | `"SGVsbG8gV29ybGQ="` |
-| **Result** | `"Hello World"` |
+| Type | Input | What it does | Example |
+|------|-------|-------------|---------|
+| **Identity** | Any | Passes data through unchanged | Direct field-to-field copy |
+| **Extract** | Object | Picks a single value using a dot-path | `Meeting.Title` → `"Q1 Review"` |
+| **Project** | Object | Keeps only selected fields | `Name, Email` → drops Phone, Address |
+| **Join** | Array | Combines items into a string | `["A","B","C"]` → `"A, B, C"` |
+| **Split** | Text | Divides a string into an array | `"a@x.com, b@x.com"` → `["a@x.com","b@x.com"]` |
+| **Serialize** | Object | Converts to JSON text | `{Name:"Jane"}` → `'{"name":"Jane"}'` |
+| **Base64Decode** | Text | Decodes Base64 to plain text | `"SGVsbG8="` → `"Hello"` |
 
 {: .important }
-Transformations have compatibility rules. Extract and Project require an **object** as input. Join works on **arrays**. Split and Base64Decode work on **text**. The editor shows warnings if you chain incompatible transformations.
+Transformations have compatibility rules. Extract and Project require an **object** as input. Join works on **arrays**. Split and Base64Decode work on **text**. The editor shows warnings if you chain incompatible types.
 
-### Step 8: Validate
+### Step 9: Validate
 
 Click **"Validate"** in the toolbar to check your playbook for issues.
 
@@ -258,7 +248,7 @@ After validation:
 {: .warning }
 All validation errors must be fixed before you can save. The Save button automatically runs validation and will not proceed if there are errors.
 
-### Step 9: Save
+### Step 10: Save
 
 Click **"Save"** (or press **Ctrl+S** / **Cmd+S**). For new playbooks, the button reads **"Create Playbook"**.
 
@@ -426,98 +416,6 @@ AI capabilities can have multiple versions. When configuring an AI block:
 - **Specific version** — pin a particular version to ensure consistent behavior even when a newer version is released
 
 The version selector appears after you choose an AI capability that has multiple versions available.
-
----
-
-## End-to-End Tutorial: Building a Playbook Step by Step
-
-This walkthrough creates a simple "Portal Meeting — Lead Creation" playbook from scratch, demonstrating every major feature of the visual editor along the way.
-
-### 1. Open the Editor
-
-From the Playbooks list, click **"Create in Graph"**.
-
-![Playbooks list]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-playbooks-list.png)
-
-A new editor opens with a toolbar at the top, a single Trigger block on the canvas, and suggested next blocks below it.
-
-![New playbook canvas]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-new-canvas.png)
-
-The toolbar provides quick access to all editor actions:
-
-![Editor toolbar]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-toolbar.png)
-
-### 2. Name and Configure the Trigger
-
-Enter a name for the playbook in the **Name** field — for example, *"Portal Meeting — Lead Creation"*.
-
-Then click the Trigger block to select it. When selected, the block expands to show its name, description, and a header with controls: **order arrows** (to move the block up or down), a **pencil icon** (to enter edit mode), and a **delete icon** (for non-trigger blocks).
-
-Click the **pencil icon** to enter edit mode. The block now shows a configuration form:
-
-![Trigger configuration]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-trigger-config.png)
-
-Configure the trigger:
-- **Block type** — already set to *Trigger* (cannot be changed)
-- **Trigger type** — select *PortalMeetings* from the dropdown
-- **Name** — enter *"Portal Meeting Trigger"*
-- **Choose portals** — optionally select which portals this playbook responds to
-
-Click the **green checkmark** to confirm your changes and exit edit mode.
-
-### 3. Add an EntityPatternRead Block
-
-Click **"+ Add block"** in the toolbar. A new empty block appears below the trigger.
-
-Click the new block to select it — the editor automatically enters edit mode for new blocks. Configure it:
-
-1. Set **Block type** to *EntityPatternRead*
-2. Select a **Value** — this is the entity pattern to query (e.g., *"Advisors"*)
-3. Enter a **Name** — e.g., *"Read Advisor"*
-
-### 4. Connect Blocks
-
-With the Read Advisor block still open, click **"Connect from..."** in the Inputs section. A menu lists all blocks earlier in the flow — select **"Portal Meeting Trigger"**.
-
-A new input relation appears, and a connection edge is drawn between the blocks on the canvas:
-
-![Connected blocks]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-block-connected.png)
-
-The dashed red edge with a *"Click to configure"* label indicates an incomplete relation — you still need to map which fields flow between the blocks.
-
-### 5. Build the Complete Flow
-
-Continue adding blocks to complete the workflow. In this example, add an **EntityPatternCreate** block named *"Create Lead"* and connect it to both the Trigger and the Read Advisor blocks.
-
-After clicking **Auto-layout** (bottom-left controls), the editor arranges the graph automatically:
-
-![Flow overview]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-flow-overview.png)
-
-Each block shows its type, name, and current validation status. The number badge indicates execution order.
-
-### 6. Validate
-
-Click **"Validate"** in the toolbar. The editor checks every block and relation for issues:
-
-![Validation results]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-validation.png)
-
-- **Red badges** with error counts appear on blocks that have issues
-- **Red-bordered blocks** need attention before saving
-- **Green badges** appear on blocks that pass validation
-
-Fix any errors by entering edit mode on the flagged blocks, completing missing fields, and configuring relation mappings. Then validate again until all blocks show green.
-
-### 7. Save
-
-Once validation passes, click **"Create Playbook"** (or **"Save"** when editing an existing playbook). The editor stays open so you can continue making changes.
-
-### What a Complete Playbook Looks Like
-
-Here is a real-world customer overview playbook with 21 blocks — multiple CRM reads, AI processing, template formatting, and final storage:
-
-![Complex playbook]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-complex-playbook.png)
-
-This demonstrates how playbooks scale to handle complex workflows while remaining visually navigable through the graph editor.
 
 ---
 

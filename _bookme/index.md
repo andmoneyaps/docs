@@ -29,6 +29,8 @@ Navigate through the sections to find detailed information about:
 - Calendar monitoring and management
 - SCIM provisioning
 - CRM integration security
+- Entities and entity patterns (CRM abstraction layer)
+- Templates (reusable text formatting)
 - Portal configuration
 - Service competence groups
 - Meeting iCal generation

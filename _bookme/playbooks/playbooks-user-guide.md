@@ -428,6 +428,98 @@ The version selector appears after you choose an AI capability that has multiple
 
 ---
 
+## End-to-End Tutorial: Building a Playbook Step by Step
+
+This walkthrough creates a simple "Portal Meeting — Lead Creation" playbook from scratch, demonstrating every major feature of the visual editor along the way.
+
+### 1. Open the Editor
+
+From the Playbooks list, click **"Create in Graph"**.
+
+![Playbooks list]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-playbooks-list.png)
+
+A new editor opens with a toolbar at the top, a single Trigger block on the canvas, and suggested next blocks below it.
+
+![New playbook canvas]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-new-canvas.png)
+
+The toolbar provides quick access to all editor actions:
+
+![Editor toolbar]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-toolbar.png)
+
+### 2. Name and Configure the Trigger
+
+Enter a name for the playbook in the **Name** field — for example, *"Portal Meeting — Lead Creation"*.
+
+Then click the Trigger block to select it. When selected, the block expands to show its name, description, and a header with controls: **order arrows** (to move the block up or down), a **pencil icon** (to enter edit mode), and a **delete icon** (for non-trigger blocks).
+
+Click the **pencil icon** to enter edit mode. The block now shows a configuration form:
+
+![Trigger configuration]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-trigger-config.png)
+
+Configure the trigger:
+- **Block type** — already set to *Trigger* (cannot be changed)
+- **Trigger type** — select *PortalMeetings* from the dropdown
+- **Name** — enter *"Portal Meeting Trigger"*
+- **Choose portals** — optionally select which portals this playbook responds to
+
+Click the **green checkmark** to confirm your changes and exit edit mode.
+
+### 3. Add an EntityPatternRead Block
+
+Click **"+ Add block"** in the toolbar. A new empty block appears below the trigger.
+
+Click the new block to select it — the editor automatically enters edit mode for new blocks. Configure it:
+
+1. Set **Block type** to *EntityPatternRead*
+2. Select a **Value** — this is the entity pattern to query (e.g., *"Advisors"*)
+3. Enter a **Name** — e.g., *"Read Advisor"*
+
+### 4. Connect Blocks
+
+With the Read Advisor block still open, click **"Connect from..."** in the Inputs section. A menu lists all blocks earlier in the flow — select **"Portal Meeting Trigger"**.
+
+A new input relation appears, and a connection edge is drawn between the blocks on the canvas:
+
+![Connected blocks]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-block-connected.png)
+
+The dashed red edge with a *"Click to configure"* label indicates an incomplete relation — you still need to map which fields flow between the blocks.
+
+### 5. Build the Complete Flow
+
+Continue adding blocks to complete the workflow. In this example, add an **EntityPatternCreate** block named *"Create Lead"* and connect it to both the Trigger and the Read Advisor blocks.
+
+After clicking **Auto-layout** (bottom-left controls), the editor arranges the graph automatically:
+
+![Flow overview]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-flow-overview.png)
+
+Each block shows its type, name, and current validation status. The number badge indicates execution order.
+
+### 6. Validate
+
+Click **"Validate"** in the toolbar. The editor checks every block and relation for issues:
+
+![Validation results]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-validation.png)
+
+- **Red badges** with error counts appear on blocks that have issues
+- **Red-bordered blocks** need attention before saving
+- **Green badges** appear on blocks that pass validation
+
+Fix any errors by entering edit mode on the flagged blocks, completing missing fields, and configuring relation mappings. Then validate again until all blocks show green.
+
+### 7. Save
+
+Once validation passes, click **"Create Playbook"** (or **"Save"** when editing an existing playbook). The editor stays open so you can continue making changes.
+
+### What a Complete Playbook Looks Like
+
+Here is a real-world customer overview playbook with 21 blocks — multiple CRM reads, AI processing, template formatting, and final storage:
+
+![Complex playbook]({{ site.baseurl }}/assets/images/bookme/playbooks/editor/tut-complex-playbook.png)
+
+This demonstrates how playbooks scale to handle complex workflows while remaining visually navigable through the graph editor.
+
+---
+
 ## Tips and Best Practices
 
 ### Planning

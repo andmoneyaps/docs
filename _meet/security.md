@@ -216,6 +216,12 @@ This section is intended to help security reviewers quickly understand where con
 - **Backup content boundaries**
   - PostgreSQL backups contain **configuration metadata and operational data** (service configuration, scheduling rules, CRM field mappings, submission tracking metadata). They do **not** contain transcript text or meeting content; the database stores only a content hash (SHA-256) for idempotency, never the text itself.
   - Redis uses append-only file (AOF) persistence for durability, but session snapshot keys are governed by **TTL (default 30 minutes)** and auto-expire. AOF persistence therefore does not result in long-term retention of session data.
+
+  | Data category | In PostgreSQL backups? | In Redis (AOF, TTL-governed)? | In observability backups? |
+  |---|---|---|---|
+  | **Session metadata** (meeting ID, timestamps, submission status) | Yes | Yes (expires within 30 min) | Yes (in session lifecycle log events) |
+  | **Transcript / meeting content** | **No** (only a SHA-256 content hash, never text) | Yes, temporarily (expires within 30 min) | **No** (not written to logs or telemetry) |
+  | **Personal data** (advisor identifiers, participant context) | Limited (tenant IDs, advisor references in operational tables) | Yes, temporarily (expires within 30 min) | Limited (tenant and correlation IDs in logs; no names or meeting content) |
 - **Not backed up**
   - Redis session snapshots are **TTL-based** and are not a long-term backup mechanism; they exist to support session recovery only.
 - **Disaster recovery**
@@ -301,6 +307,10 @@ This section is intended to help security reviewers quickly understand where con
 **Azure Speech**
 - Receives in-session audio streams for speech-to-text and diarization.
 - Deployed in **Sweden Central** and **North Europe** (both EU regions).
+- Customer audio and transcript data is **not used by Microsoft to train, improve, or develop** speech models or any other Microsoft service. This applies under Microsoft's standard Azure Cognitive Services data processing terms.
+
+**No sub-processor model training (general)**
+- No sub-processor engaged by &money uses customer data for model training, service improvement, or any purpose beyond delivering the contracted service. This applies to all Azure services (Speech, OpenAI, infrastructure) as well as any other sub-processors involved in the Meet solution.
 
 **Azure OpenAI / AI Foundry**
 - Receives prompted text/embeddings for specific AI capabilities.

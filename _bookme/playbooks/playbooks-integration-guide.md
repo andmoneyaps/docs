@@ -201,5 +201,4 @@ For details on how CRM data access is secured, see [CRM Integration Security]({{
 - [Portal Configuration]({{ site.baseurl }}/bookme/portals/) — setting up the portals that trigger playbooks
 - [Templates]({{ site.baseurl }}/bookme/templates/) — creating and managing text formatting templates
 - [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — the entity model, pattern parts, and how CRM abstraction works
-- [Setup Entity Pattern Mappers]({{ site.baseurl }}/embeddable-ui/setup-entity-pattern-mappers/) — operational guide for setting up mappers in a new bank
 - [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/) — security model for CRM data access

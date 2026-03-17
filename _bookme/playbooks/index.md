@@ -35,4 +35,3 @@ Playbooks connect to several other parts of the &Money platform. These features 
 - [Portals]({{ site.baseurl }}/bookme/portals/) — the customer-facing booking pages that trigger playbooks
 - [Meet]({{ site.baseurl }}/meet/) — the video meeting product whose transcripts and meeting-end events can trigger playbooks
 - [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/) — security model for CRM data access
-- [Entity Pattern Mappers]({{ site.baseurl }}/embeddable-ui/setup-entity-pattern-mappers/) — how entity patterns are configured for CRM integration

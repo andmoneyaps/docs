@@ -69,7 +69,7 @@ Discussed Q1 portfolio review...
 
 4. Click **Save**
 
-![Template editor with Name, Description, and rich text content fields — note the Liquid variable button in the toolbar]({{ site.baseurl }}/assets/images/bookme/templates/template-edit.png)
+![Template editor showing Name, Description, detected variable chips, and the rich text content editor with Liquid variable toolbar button]({{ site.baseurl }}/assets/images/bookme/templates/template-edit.png)
 
 ### Writing template content
 

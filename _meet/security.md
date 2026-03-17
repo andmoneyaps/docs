@@ -122,7 +122,7 @@ flowchart TB
 - Meet **processes** audio and transcript text in real time to generate insights and minutes.
 - The **long-term system of record** for minutes is **Salesforce** (customer-controlled access and retention).
 - Meet does **not store raw audio recordings**; audio is streamed for transcription and handled in-session.
-- Short-lived operational data including session recovery snapshots and troubleshooting logs should be treated as **potentially containing personal data** and is governed by retention controls described below.
+- **Session recovery snapshots** temporarily contain personal data (transcript text and session context) and are governed by a short TTL (see retention controls below). **Logs and telemetry do not contain transcript text or meeting content**; they contain only operational metadata such as connection identifiers, error codes, and numeric performance counters.
 
 **In-session data lifecycle**
 - During an active meeting, transcript text is held **in application memory only** and is released when the session ends (client disconnect or meeting conclusion). No transcript text is written to disk or to a database by the transcription or backend services.
@@ -305,8 +305,9 @@ This section is intended to help security reviewers quickly understand where con
 **Azure OpenAI / AI Foundry**
 - Receives prompted text/embeddings for specific AI capabilities.
 - Deployed in **Sweden Central** using the **DataZoneStandard** deployment type, which provides EU data zone processing guarantees.
+- **No model training or service improvement**: Customer data processed through Azure OpenAI is **not used by Microsoft to train, retrain, or improve** foundation models or any other Microsoft service. This is a contractual guarantee under the Microsoft Azure OpenAI data processing terms. &money does not use customer data for model training or service improvement purposes.
 - Abuse monitoring mode is configured as **modified** for the current deployment.
-- With modified abuse monitoring, Microsoft states abuse-monitoring data storage and human review are not performed for that approved resource configuration.
+- With modified abuse monitoring, prompts and completions are **not stored** for abuse monitoring, and no human review of customer data takes place.
 - Microsoft automated abuse detection and policy enforcement still apply in-line; severe or repeated abuse patterns can still trigger service-level enforcement actions.
 - &money is evaluating additional **EU-region fallback** options for AI-dependent services to reduce regional dependency and improve resilience.
 - Any future multi-region failover rollout for these services will remain within applicable EU data-boundary requirements.

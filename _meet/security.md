@@ -128,8 +128,8 @@ flowchart TB
 - During an active meeting, transcript text is held **in application memory only** and is released when the session ends (client disconnect or meeting conclusion). No transcript text is written to disk or to a database by the transcription or backend services.
 - **Session recovery snapshots** are written to Redis with a default **TTL of 30 minutes**; snapshots expire automatically and are not accessible after expiry. Their sole purpose is to enable session recovery after transient connectivity interruptions.
 - At meeting conclusion, transcript and summary data pass through an **internal message queue** for downstream processing (minutes generation, CRM write). Messages are consumed immediately by the receiving service and are not persisted after processing.
-- The Meet database stores only a **content hash** (SHA-256) of manually submitted transcripts for idempotency control; the transcript text itself is never written to the database.
-- After minutes are written to Salesforce, **no &money service retains or has access to the minutes content**. The end-to-end data flow is pass-through: each service processes meeting content in memory and forwards it to the next stage. No service persists meeting content (transcript, summary, or minutes) in a database after the Salesforce write is complete.
+- The Meet database may store a **content hash** for idempotency control of transcript submissions; the transcript text itself is never written to the database.
+- After minutes are written to the customer's CRM, **no &money service retains or has access to the minutes content**. The end-to-end data flow is pass-through: each service processes meeting content in memory and forwards it to the next stage. No service persists meeting content (transcript, summary, or minutes) in a database after the CRM write is complete.
 - Logs and telemetry produced during a session contain **only operational metadata** (connection identifiers, error codes, numeric counters, performance metrics). Transcript text and meeting content are not included in logs or telemetry (see section 2.5 for details).
 
 ### 1.5 Storage locations (explicit field-based storage)
@@ -214,13 +214,13 @@ This section is intended to help security reviewers quickly understand where con
   - &money-hosted configuration storage (PostgreSQL) is backed up using cloud-managed automatic backup with **point-in-time restore (PITR)** within a **7-day retention window**.
   - Observability data (logs, traces) is stored on zone-redundant cloud blob storage with retention governed by the monitoring stack (see section 2.5 for specific retention periods).
 - **Backup content boundaries**
-  - PostgreSQL backups contain **configuration metadata and operational data** (service configuration, scheduling rules, CRM field mappings, submission tracking metadata). They do **not** contain transcript text or meeting content; the database stores only a content hash (SHA-256) for idempotency, never the text itself.
+  - PostgreSQL backups contain **configuration metadata and operational data** (service configuration, scheduling rules, CRM field mappings, submission tracking metadata). They do **not** contain transcript text or meeting content; the database may store a content hash for idempotency, never the text itself.
   - Redis uses append-only file (AOF) persistence for durability, but session snapshot keys are governed by **TTL (default 30 minutes)** and auto-expire. AOF persistence therefore does not result in long-term retention of session data.
 
   | Data category | In PostgreSQL backups? | In Redis (AOF, TTL-governed)? | In observability backups? |
   |---|---|---|---|
   | **Session metadata** (meeting ID, timestamps, submission status) | Yes | Yes (expires within 30 min) | Yes (in session lifecycle log events) |
-  | **Transcript / meeting content** | **No** (only a SHA-256 content hash, never text) | Yes, temporarily (expires within 30 min) | **No** (not written to logs or telemetry) |
+  | **Transcript / meeting content** | **No** (a content hash may be stored for idempotency, never text) | Yes, temporarily (expires within 30 min) | **No** (not written to logs or telemetry) |
   | **Personal data** (advisor identifiers, participant context) | Limited (tenant IDs, advisor references in operational tables) | Yes, temporarily (expires within 30 min) | Limited (tenant and correlation IDs in logs; no names or meeting content) |
 - **Not backed up**
   - Redis session snapshots are **TTL-based** and are not a long-term backup mechanism; they exist to support session recovery only.

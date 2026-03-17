@@ -219,9 +219,7 @@ This section is intended to help security reviewers quickly understand where con
 - **Not backed up**
   - Redis session snapshots are **TTL-based** and are not a long-term backup mechanism; they exist to support session recovery only.
 - **Disaster recovery**
-  - A dedicated disaster-recovery environment mirrors the production infrastructure and can be deployed using the same infrastructure-as-code pipelines.
-  - PostgreSQL supports point-in-time restore within the backup retention window via cloud-managed capabilities.
-  - Alerting and monitoring for service health and resource health support timely incident detection.
+  - Disaster recovery is provided as a managed capability through &money's infrastructure operations partner and covers failover, restore procedures, and continuity measures for the hosted platform.
 - **Deletion pathways**
   - Deleting or updating minutes in Salesforce is **customer-controlled** (standard Salesforce operations).
   - Session recovery snapshots expire automatically by TTL.

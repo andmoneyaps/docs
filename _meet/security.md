@@ -125,11 +125,11 @@ flowchart TB
 - **Session recovery snapshots** temporarily contain personal data (transcript text and session context) and are governed by a short TTL (see retention controls below). **Logs and telemetry do not contain transcript text or meeting content**; they contain only operational metadata such as connection identifiers, error codes, and numeric performance counters.
 
 **In-session data lifecycle**
-- During an active meeting, transcript text is held **in application memory only** and is released when the session ends (client disconnect or meeting conclusion). No transcript text is written to disk or to a database by the transcription or backend services.
-- **Session recovery snapshots** are written to Redis with a default **TTL of 30 minutes**; snapshots expire automatically and are not accessible after expiry. Their sole purpose is to enable session recovery after transient connectivity interruptions.
+- During an active meeting, transcript text is processed **primarily in application memory** and is released when the session ends (client disconnect or meeting conclusion). The only temporary persistence used for meeting content is the short-lived **session recovery snapshot** described below; outside that recovery mechanism, transcript text is not written to persistent storage or the application database.
+- **Session recovery snapshots** are written to Redis with a default **TTL of 30 minutes**; they may temporarily contain recent transcript text and session context to support recovery after transient connectivity interruptions. Snapshots expire automatically and are not accessible after expiry.
 - At meeting conclusion, transcript and summary data pass through an **internal message queue** for downstream processing (minutes generation, CRM write). Messages are consumed immediately by the receiving service and are not persisted after processing.
 - The Meet database may store a **content hash** for idempotency control of transcript submissions; the transcript text itself is never written to the database.
-- After minutes are written to the customer's CRM, **no &money service retains or has access to the minutes content**. The end-to-end data flow is pass-through: each service processes meeting content in memory and forwards it to the next stage. No service persists meeting content (transcript, summary, or minutes) in a database after the CRM write is complete.
+- After minutes are written to the customer's CRM, the customer's CRM remains the **primary long-term system of record** for stored minutes. &money services do **not** persist a separate copy of the minutes in &money-managed databases after the CRM write is complete; however, &money services may read minutes content from the customer's CRM when required to complete configured product features or customer-authorized workflows.
 - Logs and telemetry produced during a session contain **only operational metadata** (connection identifiers, error codes, numeric counters, performance metrics). Transcript text and meeting content are not included in logs or telemetry (see section 2.5 for details).
 
 ### 1.5 Storage locations (explicit field-based storage)
@@ -215,13 +215,14 @@ This section is intended to help security reviewers quickly understand where con
   - Observability data (logs, traces) is stored on zone-redundant cloud blob storage with retention governed by the monitoring stack (see section 2.5 for specific retention periods).
 - **Backup content boundaries**
   - PostgreSQL backups contain **configuration metadata and operational data** (service configuration, scheduling rules, CRM field mappings, submission tracking metadata). They do **not** contain transcript text or meeting content; the database may store a content hash for idempotency, never the text itself.
-  - Redis uses append-only file (AOF) persistence for durability, but session snapshot keys are governed by **TTL (default 30 minutes)** and auto-expire. AOF persistence therefore does not result in long-term retention of session data.
+  - Redis uses append-only file (AOF) persistence for durability. Session snapshot keys are governed by **TTL (default 30 minutes)** and auto-expire from the active dataset; however, previously written values may remain in persistence artifacts until AOF rewrite/compaction and backup lifecycle expiration.
 
   | Data category | In PostgreSQL backups? | In Redis (AOF, TTL-governed)? | In observability backups? |
   |---|---|---|---|
   | **Session metadata** (meeting ID, timestamps, submission status) | Yes | Yes (expires within 30 min) | Yes (in session lifecycle log events) |
   | **Transcript / meeting content** | **No** (a content hash may be stored for idempotency, never text) | Yes, temporarily (expires within 30 min) | **No** (not written to logs or telemetry) |
   | **Personal data** (advisor identifiers, participant context) | Limited (tenant IDs, advisor references in operational tables) | Yes, temporarily (expires within 30 min) | Limited (tenant and correlation IDs in logs; no names or meeting content) |
+
 - **Not backed up**
   - Redis session snapshots are **TTL-based** and are not a long-term backup mechanism; they exist to support session recovery only.
 - **Disaster recovery**
@@ -256,7 +257,6 @@ This section is intended to help security reviewers quickly understand where con
 - **Logging/auditing signals**
   - Session lifecycle: session start/stop, reconnect/recovery attempts, transcription service connectivity.
   - AI/minutes pipeline: summary generation events and CRM write attempts (success/failure) with correlation identifiers.
-  - Authentication events: successful and failed login attempts, token issuance, and authentication errors.
   - CRM-side auditing: Salesforce auditing features including Field History Tracking provide additional visibility on minutes field updates.
 - **Log content boundaries**
   - Logs and telemetry contain **operational metadata only**: connection identifiers, error codes, numeric counters (chunk counts, phrase counts, session durations), and performance metrics.
@@ -271,15 +271,13 @@ This section is intended to help security reviewers quickly understand where con
   | Metrics | Metrics storage (persistent volume) | 24 months |
   | Database diagnostic logs | Cloud log analytics | 31 days |
   | Application-level event logs | Application database | 30 days (automated cleanup) |
-  | Audit trail records | Application database | Retained (no automated deletion) |
+  | Audit trail records | Application database | Retained with no automated cleanup |
 
 - **Audit trail for administrative and configuration changes**
   - Administrative and configuration changes are captured automatically via a database-level audit interceptor. All create, update, and delete operations on auditable configuration entities are recorded with: the acting user, the tenant/organization, a UTC timestamp, the entity type, and the previous and new values.
   - Audited entity types include service configuration, meeting configuration, scheduling rules, portal settings, CRM field mappings, and access-related configuration (17+ entity types).
   - A centralized audit query API aggregates audit records from multiple services and is restricted to administrative users.
   - An administrative UI provides searchable and filterable access to the audit log.
-  - Authentication events (login success/failure, token issuance, errors) are logged by the identity service.
-  - Audit trail records are retained indefinitely in the application database.
 - **Monitoring**
   - Health and performance metrics for transcription and AI processing, error rate monitoring, and alerting on elevated failure patterns.
 - **Failure handling**
@@ -335,10 +333,10 @@ This section is intended to help security reviewers quickly understand where con
 
 ### 2.8 Environment separation and test data
 
-- **Infrastructure isolation**: Test and production environments run on **separate Kubernetes clusters** with fully independent backing services (separate PostgreSQL servers, Redis instances, Key Vaults, message queues, and virtual networks with distinct address spaces). There is no network path or replication mechanism between environments.
+- **Infrastructure isolation**: Development runs on a separate Kubernetes cluster. Test and production are logically separated within the shared platform using distinct namespaces, environment-specific configuration, and separate backing services where applicable.
 - **No production data in test environments**: Production data is never copied, replicated, or restored into test environments. This is enforced architecturally through infrastructure separation rather than policy alone.
-- **Synthetic test data**: All test data is generated synthetically. Automated tests use in-memory databases, mocks, and programmatically seeded fixture data. Local development environments are bootstrapped with generated configuration data. AI-related testing uses scenario simulations with synthetic conversation data.
-- **Developer access controls**: Developer access to the production cluster is restricted; test-cluster access is granted on a least-privilege basis.
+- **Test and evaluation data**: Test data is synthetic. Testing uses a mix of mocks, seeded fixture data, dedicated end-to-end test banks/tenants, and scenario-based datasets. AI-related testing and evaluations in &money's AI platform (Corax AI) use synthetic or otherwise non-production evaluation datasets rather than copied production meeting data.
+- **Developer access controls**: Developer access to production is restricted; non-production access is granted on a least-privilege basis.
 
 ## 3. Capacity & Load Testing
 

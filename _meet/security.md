@@ -275,8 +275,7 @@ This section is intended to help security reviewers quickly understand where con
   | Audit trail records | Application database | Retained with no automated cleanup |
 
 - **Audit trail for administrative and configuration changes**
-  - Administrative and configuration changes are captured automatically via a database-level audit interceptor. All create, update, and delete operations on auditable configuration entities are recorded with: the acting user, the tenant/organization, a UTC timestamp, the entity type, and the previous and new values.
-  - Audited entity types include service configuration, meeting configuration, scheduling rules, portal settings, CRM field mappings, and access-related configuration (17+ entity types).
+  - Administrative and configuration changes within the configuration service are captured in audit logs. This includes meeting configuration changes and other designated configuration entities, with records of the acting user, organization, timestamp, affected entity, and previous/new values.
   - A centralized audit query API aggregates audit records from multiple services and is restricted to administrative users.
   - An administrative UI provides searchable and filterable access to the audit log.
 - **Monitoring**

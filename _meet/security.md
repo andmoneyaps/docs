@@ -335,7 +335,7 @@ This section is intended to help security reviewers quickly understand where con
 
 ### 2.8 Environment separation and test data
 
-- **Infrastructure isolation**: Test and production environments run on **separate Kubernetes clusters** with fully independent backing services (separate PostgreSQL servers, Redis instances, Key Vaults, message queues, and virtual networks with distinct address spaces). There is no network path or replication mechanism between environments.
+- **Infrastructure isolation**: Test and production environments run on **separate Kubernetes clusters** with fully independent backing services (separate PostgreSQL servers, Redis instances, Key Vaults, message queues, and virtual networks with distinct address spaces). There is no data replication mechanism between environments.
 - **No production data in test environments**: Production data is never copied, replicated, or restored into test environments. This is enforced architecturally through infrastructure separation rather than policy alone.
 - **Synthetic test data**: All test data is generated synthetically. Automated tests use in-memory databases, mocks, and programmatically seeded fixture data. Local development environments are bootstrapped with generated configuration data. AI-related testing uses scenario simulations with synthetic conversation data.
 - **Developer access controls**: Developer access to the production cluster is restricted; test-cluster access is granted on a least-privilege basis.

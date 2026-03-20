@@ -19,6 +19,7 @@ BookMe is our industry-leading booking and scheduling solution specifically desi
 - Secure SCIM-based user provisioning
 - Custom portal solutions
 - Powerful playbook automation workflows
+- Reporting dashboard with portal source tracking
 
 ## Documentation Structure
 
@@ -32,6 +33,7 @@ Navigate through the sections to find detailed information about:
 - Entities and entity patterns (CRM abstraction layer)
 - Templates (reusable text formatting)
 - Portal configuration
+- Reporting and analytics
 - Service competence groups
 - Meeting iCal generation
 - Playbooks automation and workflows

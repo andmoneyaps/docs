@@ -124,3 +124,6 @@ Two services are then provided:
 This documentation provides an overview of the Graph-Proxy, its deployment options,
 integration with Azure Key Vault, and required configuration. For further details or assistance,
 please consult the accompanying [Installation Guide]({{ site.baseurl }}/bookme/marketplace-installation/) or contact our support team.
+
+{: .note }
+> **Migrating to a new Azure tenant?** See the [Graph Proxy Tenant Migration Guide]({{ site.baseurl }}/bookme/graph-proxy-tenant-migration/) for step-by-step instructions on moving your Graph Proxies between tenants.

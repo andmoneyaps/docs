@@ -422,11 +422,21 @@ Internal meetings do **not** use Account-level fields for location or customer c
 {: .note }
 > `AMB_Location__c` and `AMB_Customer_Category__c` **are** required for the customer booking flow ("Book Meeting"). See [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/salesforce-setup/) for customer booking data requirements.
 
-### 6b. Employee Email Matching
+### 6b. Employee Identity Matching
 
-| Requirement | Why |
-|-------------|-----|
-| Employee's **Entra ID UPN must match their SCIM-synced email** | The booking component pre-selects the logged-in employee by matching their Entra ID UPN (User Principal Name) against the `email` field on SCIM-provisioned employees. The match is case-insensitive. If no match is found, it falls back to the `externalId` field. If neither matches, the employee must manually select themselves. |
+Two Salesforce user fields are passed to the booking component. They serve different purposes:
+
+| Salesforce User Field | URL Parameter | Purpose |
+|----------------------|---------------|---------|
+| `Email` | `user_email` | Fallback login hint for SSO, and the basis for advisor pre-selection |
+| `FederationIdentifier` | `federation_id` | Primary login hint for SSO — used to silently authenticate the correct Entra ID user |
+
+**Authentication**: The component uses `FederationIdentifier` (if populated) as the MSAL login hint to silently authenticate the employee via Entra ID. If `FederationIdentifier` is empty, it falls back to `Email`. This determines *which Entra user is signed in*.
+
+**Advisor pre-selection**: After authentication, the component takes the signed-in user's **Entra ID UPN** (from the token) and matches it against the `email` field on SCIM-provisioned employees (case-insensitive). If no match is found, it falls back to the `externalId` field. If neither matches, the employee must manually select themselves.
+
+{: .warning }
+> The `FederationIdentifier` and the Entra UPN can be different values. If `FederationIdentifier` authenticates user A but user A's UPN doesn't match any SCIM-synced employee email, the employee won't be pre-selected. Ensure the Salesforce user's `FederationIdentifier` corresponds to an Entra user whose UPN matches the SCIM-synced employee email.
 
 ### 6c. Custom Metadata
 

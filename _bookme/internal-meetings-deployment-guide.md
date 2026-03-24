@@ -17,7 +17,7 @@ It covers:
 5. [**Non-Account Record Pages**](#5-placing-the-booking-component-on-non-account-record-pages) — enabling booking from Case, Opportunity, or custom objects
 6. [**Managing Entity Configurations**](#6-managing-entity-configurations-across-environments) — exporting, source-tracking, and distributing configurations across banks
 7. [**Salesforce Data**](#7-salesforce-data-requirements) — Account fields, email matching, and custom metadata
-8. [**LWC configOverride**](#8-lwc-configoverride--properties-by-flow) — which wrapper properties affect internal meetings
+8. [**LWC Component Variants**](#8-lwc-component-variants-and-configoverride) — managed package vs standalone, and which configOverride properties affect internal meetings
 9. [**How It Works**](#9-how-internal-meeting-booking-works) — the end-to-end booking flow
 10. [**UI Behavior**](#10-ui-behavior-reference) — what the employee sees based on configuration and data
 11. [**Validation Checklist**](#11-post-deployment-validation-checklist) — verify your deployment
@@ -436,20 +436,34 @@ For custom field mappings or additional sObject configurations, see [Salesforce 
 
 ---
 
-## 8. LWC configOverride — Properties by Flow
+## 8. LWC Component Variants and configOverride
 
-The `configOverride` object allows you to customize the behavior of the booking component from your LWC wrapper. The existing [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) documents all available properties. This section clarifies which properties apply to the internal meeting flow, which only affect the customer booking flow, and which are shared.
+The &money Portal component exists in two variants. The variant deployed to a Salesforce org is selected in the Management UI under **Admin → CRM → Configuration** when deploying the component. The choice affects how internal meetings and customer bookings interact.
+
+### Choosing a variant
+
+| Variant | When to use | How internal meetings work |
+|---------|-------------|---------------------------|
+| **With managed package** | The bank has the BookMe managed package installed. The managed package handles customer bookings via its own LWC components. | The Portal iframe handles internal meetings and the meeting overview. Customer bookings are handled by the managed package. The "Book Meeting" button switches from the iframe to the managed package's LWC. |
+| **Standalone** | The bank does **not** have the managed package. All booking is done through the Portal iframe. | The Portal iframe handles both internal meetings and customer bookings. The landing page shows both buttons, and employees stay within the iframe for both flows. |
+
+{: .note }
+> In the **managed package variant**, `disablecustomermeetings` is always forced to `true` — this is hardcoded in the component and cannot be overridden via `configOverride`. In the **standalone variant**, `disablecustomermeetings` is configurable and defaults to `false`.
+
+### configOverride properties
+
+The `configOverride` object allows you to customize the behavior of the booking component from your LWC wrapper. The existing [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) documents all available properties. This section clarifies which properties apply to the internal meeting flow.
 
 #### Properties that affect the Internal Meeting Flow
 
-| Property | Type | Effect |
-|----------|------|--------|
-| `meetingtitle` | String | Pre-fills the meeting title field. Falls back to user-entered title if not set. |
-| `disablecustomermeetings` | Boolean | Controls landing page behavior. When `true`, the "Book Meeting" button redirects to the LWC instead of showing the embedded booking flow. |
+| Property | Type | Effect | Standalone only? |
+|----------|------|--------|-----------------|
+| `meetingtitle` | String | Pre-fills the meeting title field. Falls back to user-entered title if not set. | No — works in both variants |
+| `disablecustomermeetings` | Boolean | Controls landing page behavior. When `true`, the "Book Meeting" button redirects to the LWC instead of showing the embedded booking flow. | Yes — only configurable in the standalone variant. Hardcoded to `true` in the managed package variant. |
 
 #### Properties consumed by the Booking Flow only
 
-All other properties documented in the [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) (`subthemeid`, `customflow`, `disableheaders`, `disableprogressbar`, `advisortypewhitelist`, `configid`, etc.) have **no effect** on the internal meeting flow — they only apply to the customer booking flow.
+All other properties documented in the [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) (`subthemeid`, `customflow`, `disableheaders`, `disableprogressbar`, `advisortypewhitelist`, `configid`, etc.) have **no effect** on the internal meeting flow — they only apply to the customer booking flow. In the standalone variant, these properties control the embedded customer booking experience.
 
 #### Properties consumed by both flows (shared context)
 
@@ -461,6 +475,8 @@ All other properties documented in the [Salesforce Iframe LWC Configuration]({{ 
 | `objectApiName` | String | Salesforce object API name |
 
 #### Example: Custom LWC Wrapper
+
+If you need to customize behavior beyond what the deployed Portal component provides, create a wrapper component:
 
 ```javascript
 // internalMeetingWrapper.js
@@ -494,7 +510,7 @@ export default class InternalMeetingWrapper extends LightningElement {
 
 For the full property reference, see [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/).
 
-In short, only `meetingtitle` and `disablecustomermeetings` affect internal meetings. All other configOverride properties are for the customer booking flow.
+In short, only `meetingtitle` affects internal meetings in both variants. All other configOverride properties are for the customer booking flow.
 
 ---
 

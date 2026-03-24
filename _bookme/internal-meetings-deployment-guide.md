@@ -426,7 +426,7 @@ Internal meetings do **not** use Account-level fields for location or customer c
 
 | Requirement | Why |
 |-------------|-----|
-| Employee's **Salesforce email must match their Entra/SCIM email** exactly | The booking component pre-selects the logged-in employee by matching the Azure AD username against employee emails. If emails don't match, the employee won't be pre-selected. |
+| Employee's **Entra ID UPN must match their SCIM-synced email** | The booking component pre-selects the logged-in employee by matching their Entra ID UPN (User Principal Name) against the `email` field on SCIM-provisioned employees. The match is case-insensitive. If no match is found, it falls back to the `externalId` field. If neither matches, the employee must manually select themselves. |
 
 ### 6c. Custom Metadata
 
@@ -625,11 +625,11 @@ This section covers the most common issues encountered during and after deployme
 
 **Check these in order**:
 
-1. **Email mismatch**: The booking component matches the logged-in employee's Azure AD username (email) against the `email` field on SCIM-provisioned employees. The comparison is case-insensitive, but the values must otherwise match exactly. **Fix**: Verify the employee's Salesforce user email matches their Entra ID email. Check the employee record in the Management UI to confirm the SCIM-synced email is correct.
+1. **UPN / email mismatch**: The booking component takes the logged-in employee's **UPN** (User Principal Name) from the Entra ID token and matches it against the `email` field on SCIM-provisioned employees. The comparison is case-insensitive, but the values must otherwise match exactly. **Fix**: Verify the employee's UPN in Entra ID matches the email synced via SCIM. Check the employee record in **BookMe → Advisors → Manage Availability** in the Management UI to confirm the SCIM-synced email.
 
-2. **Employee not provisioned via SCIM**: If the logged-in employee doesn't exist in the booking platform's employee list, there's nothing to match against. **Fix**: Verify SCIM provisioning has synced the employee from Entra ID. Check **BookMe → Advisors → Manage Availability** in the Management UI.
+2. **Employee not provisioned via SCIM**: If the logged-in employee doesn't exist in the booking platform's employee list, there's nothing to match against. **Fix**: Verify SCIM provisioning has synced the employee from Entra ID.
 
-3. **ExternalId fallback**: If email matching fails, the component falls back to matching by `externalId`. If neither matches, the field stays empty. **Fix**: Check that the employee's `externalId` in SCIM matches their Azure AD username.
+3. **ExternalId fallback**: If email matching fails, the component falls back to matching the UPN against the employee's `externalId` field. If neither matches, the field stays empty. **Fix**: Check that the employee's `externalId` in the booking platform matches their Entra ID UPN.
 
 ### No available times unless selecting self
 

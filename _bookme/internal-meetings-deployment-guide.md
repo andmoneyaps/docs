@@ -5,9 +5,24 @@ nav_order: 10.3
 parent: BookMe
 ---
 
-# Internal Meetings (Interne Møder) — Deployment Guide
+# Internal Meetings — Deployment Guide
 
-This guide covers every configuration requirement for deploying the internal meetings feature to a new bank. Follow the sections in order — each step depends on the ones before it.
+This guide walks you through every configuration step needed to deploy the internal meetings feature to a new bank.
+
+It covers:
+1. [**Overview**](#1-overview) — what internal meetings are and how they differ from customer bookings
+2. [**Prerequisites**](#2-prerequisites) — what must be in place before you start
+3. [**Backend Configuration**](#3-backend-configuration-management-ui) — bank options, locations, schedules, themes, and service groups
+4. [**Meeting Creation**](#4-configuring-meeting-creation-in-salesforce) — entity definitions and patterns that write meetings to Salesforce
+5. [**Non-Account Record Pages**](#5-placing-the-booking-component-on-non-account-record-pages) — enabling booking from Case, Opportunity, or custom objects
+6. [**Salesforce Data**](#6-salesforce-data-requirements) — Account fields, email matching, and custom metadata
+7. [**LWC configOverride**](#7-lwc-configoverride--properties-by-flow) — which wrapper properties affect internal meetings
+8. [**How It Works**](#8-how-internal-meeting-booking-works) — the end-to-end booking flow
+9. [**UI Behavior**](#9-ui-behavior-reference) — what the employee sees based on configuration and data
+10. [**Validation Checklist**](#10-post-deployment-validation-checklist) — verify your deployment
+11. [**Troubleshooting**](#11-troubleshooting) — diagnosing common issues
+
+Follow the sections in order — each step depends on the ones before it.
 
 ---
 
@@ -61,6 +76,8 @@ Before configuring internal meetings, ensure these are in place:
 ---
 
 ## 3. Backend Configuration (Management UI)
+
+This section covers the Management UI settings that must be in place for internal meetings to work: bank-wide defaults, locations, employee schedules, themes, and service groups.
 
 ### 3a. Bank Options
 
@@ -297,6 +314,8 @@ For instructions on adding the component to a record page, see [Deploying Iframe
 
 ## 6. Salesforce Data Requirements
 
+This section covers the Salesforce data and metadata that internal meetings depend on. Notably, internal meetings have fewer Salesforce data requirements than customer bookings.
+
 ### 6a. Account Data
 
 Internal meetings do **not** use Account-level fields for location or customer category. The only requirement is that the Account record exists so the meeting can be associated with it.
@@ -402,7 +421,7 @@ Key behaviors:
 
 ## 9. UI Behavior Reference
 
-This section documents how the booking component behaves based on configuration and data. Understanding these behaviors helps diagnose issues where the UI doesn't show what's expected.
+This section documents how the booking component behaves based on configuration and data. If the UI doesn't show what you expect — empty dropdowns, disabled buttons, missing timeslots — check the conditions below.
 
 ### Landing Page
 
@@ -469,6 +488,8 @@ This section documents how the booking component behaves based on configuration 
 
 ## 11. Troubleshooting
 
+This section covers the most common issues encountered during and after deployment, with step-by-step diagnosis for each.
+
 ### Constant spinner when booking (400 Bad Request)
 
 **Symptom**: The booking component shows a permanent loading spinner after clicking "Internal Meeting".
@@ -508,6 +529,21 @@ This section documents how the booking component behaves based on configuration 
 3. **Availability intersection**: When multiple employees are selected, available times are calculated as the overlap of **all** selected employees' schedules for each meeting type. If one employee has no "Physical" availability at that location, Physical timeslots disappear for everyone. **Fix**: Ensure all employees at the location have consistent meeting type availability in their schedules.
 
 4. **Missing service group configuration**: If the employee selection uses "local employees" or "all employees" mode, service groups must be configured with matching activation rules (location + customer category + theme). **Fix**: Create service groups and set activation rules as described in [Service & Competence Groups]({{ site.baseurl }}/bookme/service-competence-groups/).
+
+---
+
+## Summary
+
+To deploy internal meetings, you need:
+
+1. **Backend configuration** — Bank Options (timezone, meeting type labels, business hours), locations matching SCIM entries, employee schedules with correct meeting types and locations
+2. **Meeting creation entities** — six entity definitions (Account, Owner, Event, Event Detail, Advisors, Advisor Event Relations), the Internal BookMe Meeting pattern, and the InternalBookMeMeeting mapper
+3. **Account resolution** (if booking from non-Account pages) — an entity definition per sObject mapping its Account lookup field, the AccountId Resolver pattern, and the CustomerOverviewAccountIdResolver mapper
+4. **Salesforce data** — employee emails matching Entra/SCIM, the booking component placed on record pages, and trusted URLs configured
+
+Internal meetings do **not** require `AMB_Location__c` or `AMB_Customer_Category__c` on the Account — location comes from the employee's SCIM profile, and customer categories are not used.
+
+Use the [validation checklist](#10-post-deployment-validation-checklist) to verify your deployment, and the [troubleshooting section](#11-troubleshooting) if issues arise.
 
 ---
 

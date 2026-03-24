@@ -619,6 +619,18 @@ This section covers the most common issues encountered during and after deployme
 
 4. **Record has no Account**: If the record's Account lookup field is empty, there's no Account to resolve. **Fix**: Ensure the record is associated with an Account.
 
+### Employee not pre-selected when opening internal meeting form
+
+**Symptom**: The internal meeting form opens but the employee (meeting owner) field is empty instead of pre-selecting the logged-in employee. The employee has to manually search for themselves.
+
+**Check these in order**:
+
+1. **Email mismatch**: The booking component matches the logged-in employee's Azure AD username (email) against the `email` field on SCIM-provisioned employees. The comparison is case-insensitive, but the values must otherwise match exactly. **Fix**: Verify the employee's Salesforce user email matches their Entra ID email. Check the employee record in the Management UI to confirm the SCIM-synced email is correct.
+
+2. **Employee not provisioned via SCIM**: If the logged-in employee doesn't exist in the booking platform's employee list, there's nothing to match against. **Fix**: Verify SCIM provisioning has synced the employee from Entra ID. Check **BookMe → Advisors → Manage Availability** in the Management UI.
+
+3. **ExternalId fallback**: If email matching fails, the component falls back to matching by `externalId`. If neither matches, the field stays empty. **Fix**: Check that the employee's `externalId` in SCIM matches their Azure AD username.
+
 ### No available times unless selecting self
 
 **Symptom**: Available timeslots appear when the employee searches for their own times, but disappear when other employees are included or when "local employees" is selected.

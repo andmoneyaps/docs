@@ -425,17 +425,6 @@ This section documents how the booking component behaves based on configuration 
 | Custom time picker constrained | Always | Time input bounded by `openingTime` and `closingTime` from [Bank Options]({{ site.baseurl }}/bookme/bank-options/); times outside this range cannot be selected |
 | Advisor dropdown filtered | Always | The meeting owner cannot be selected as an additional employee, and vice versa |
 
-### Meeting Overview (Landing Page)
-
-| Behavior | Condition | What the employee sees |
-|----------|-----------|----------------------|
-| Internal meeting icon | Meeting was booked as internal | Work icon with brand color |
-| Customer meeting icon | Meeting was booked as customer meeting | Groups icon with Salesforce color |
-| "Start" button on meeting card | Meeting is upcoming **and** has a Teams meeting link | Button to join the meeting |
-| "Start" button hidden | Meeting is in the past, or no Teams link | No start button |
-| Edit/Cancel menu | Meeting is upcoming | Context menu with Edit and Cancel options |
-| Edit/Cancel menu hidden | Meeting is in the past | No context menu |
-| Historic meetings | Past meetings exist | Expandable section below upcoming meetings |
 
 ---
 

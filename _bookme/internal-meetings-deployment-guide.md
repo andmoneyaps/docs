@@ -15,12 +15,13 @@ It covers:
 3. [**Backend Configuration**](#3-backend-configuration-management-ui) — bank options, locations, schedules, themes, and service groups
 4. [**Meeting Creation**](#4-configuring-meeting-creation-in-salesforce) — entity definitions and patterns that write meetings to Salesforce
 5. [**Non-Account Record Pages**](#5-placing-the-booking-component-on-non-account-record-pages) — enabling booking from Case, Opportunity, or custom objects
-6. [**Salesforce Data**](#6-salesforce-data-requirements) — Account fields, email matching, and custom metadata
-7. [**LWC configOverride**](#7-lwc-configoverride--properties-by-flow) — which wrapper properties affect internal meetings
-8. [**How It Works**](#8-how-internal-meeting-booking-works) — the end-to-end booking flow
-9. [**UI Behavior**](#9-ui-behavior-reference) — what the employee sees based on configuration and data
-10. [**Validation Checklist**](#10-post-deployment-validation-checklist) — verify your deployment
-11. [**Troubleshooting**](#11-troubleshooting) — diagnosing common issues
+6. [**Managing Entity Configurations**](#6-managing-entity-configurations-across-environments) — exporting, source-tracking, and distributing configurations across banks
+7. [**Salesforce Data**](#7-salesforce-data-requirements) — Account fields, email matching, and custom metadata
+8. [**LWC configOverride**](#8-lwc-configoverride--properties-by-flow) — which wrapper properties affect internal meetings
+9. [**How It Works**](#9-how-internal-meeting-booking-works) — the end-to-end booking flow
+10. [**UI Behavior**](#10-ui-behavior-reference) — what the employee sees based on configuration and data
+11. [**Validation Checklist**](#11-post-deployment-validation-checklist) — verify your deployment
+12. [**Troubleshooting**](#12-troubleshooting) — diagnosing common issues
 
 Follow the sections in order — each step depends on the ones before it.
 
@@ -246,7 +247,7 @@ Import the **Internal BookMe Meeting** entity pattern and create the **InternalB
 {: .note }
 > The setup guide also covers additional patterns used by other flows (Bookme meeting, Salesforce meeting id resolver). It is recommended to import all patterns at once.
 
-With meeting creation configured, the platform can write internal meetings to Salesforce from Account record pages. If you also need to book from other record pages (Case, Opportunity, etc.), continue to Section 5. Otherwise, skip to [Section 6](#6-salesforce-data-requirements).
+With meeting creation configured, the platform can write internal meetings to Salesforce from Account record pages. If you also need to book from other record pages (Case, Opportunity, etc.), continue to Section 5. Otherwise, skip to [Section 7](#7-salesforce-data-requirements).
 
 ---
 
@@ -324,11 +325,83 @@ After creating the entity definition, place the `bookmeEmployeeFlow` component o
 
 For instructions on adding the component to a record page, see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/).
 
-With account resolution configured, employees can book internal meetings from any record page that has an entity definition and the component placed. Next, we'll cover the remaining Salesforce data requirements.
+With account resolution configured, employees can book internal meetings from any record page that has an entity definition and the component placed. Next, we'll cover how to manage these entity configurations across environments.
 
 ---
 
-## 6. Salesforce Data Requirements
+## 6. Managing Entity Configurations Across Environments
+
+Entity definitions and patterns need to be consistent across all banks that use internal meetings. Rather than manually recreating them in each bank, you should maintain a **single source of truth** and distribute configurations from there.
+
+This section covers:
+- [Source of truth](#source-of-truth) — where to maintain the master configuration
+- [Exporting configurations](#exporting-configurations) — how to extract JSON from the source bank
+- [Source tracking](#source-tracking-the-json) — storing exports in version control
+- [Importing to target banks](#importing-to-target-banks) — distributing configurations as part of onboarding
+
+### Source of truth
+
+Designate one bank as the master for entity configurations — typically your **test environment**. All entity definitions and patterns should be created and validated in this bank first. Changes are made here, exported, and then distributed to customer banks.
+
+### Exporting configurations
+
+Entity patterns and definitions are exported as JSON from the Management UI:
+
+1. Navigate to **Admin → Entities → Entity Patterns** in the source bank
+2. Find the pattern you want to export (e.g., **Internal BookMe Meeting**)
+3. Click the **export icon** on the pattern row
+4. In the modal that opens, click **Copy** to copy the JSON to your clipboard
+
+{: .hint }
+> Entity pattern exports **automatically include all referenced entity definitions**. When you export the Internal BookMe Meeting pattern, the JSON will contain the Account, Owner, Event, Event Detail, Advisors, and Advisor Event Relations definitions. You do not need to export them separately.
+
+Each exported entity has a **semantic ID** — a stable identifier that persists across environments. When the same JSON is imported into a different bank, the platform uses the semantic ID to determine whether to create a new entity or update an existing one.
+
+You can also export individual entity definitions from **Admin → Entities → Entity Definitions** if needed (e.g., for account resolution sObject definitions like Case or Lead that are not part of a pattern).
+
+### Source tracking the JSON
+
+Store the exported JSON files in version control alongside your deployment scripts or onboarding documentation. A recommended structure:
+
+```
+entity-configurations/
+├── patterns/
+│   ├── internal-bookme-meeting.json
+│   └── accountid-resolver.json
+└── definitions/
+    ├── case.json
+    ├── lead-fsc.json
+    └── custom-object.json
+```
+
+This gives you:
+- A versioned history of configuration changes
+- A reviewable diff when entity definitions are modified
+- A reliable source for automated or manual onboarding
+
+### Importing to target banks
+
+When onboarding a new bank:
+
+1. Navigate to **Admin → Entities → Entity Patterns** in the target bank
+2. Click **Import** in the top right corner
+3. Paste the JSON from your source-tracked file into the textarea
+4. Confirm the import
+
+The import is **atomic** — if any part fails (e.g., a field type mismatch), the entire import is rolled back. Referenced entity definitions are imported automatically as part of the pattern import.
+
+For sObject-specific definitions (e.g., Case, Lead) that are not part of a pattern, import them individually via **Admin → Entities → Entity Definitions → Import**.
+
+After importing, create the required **entity pattern mappers** as described in [Section 4b](#4b-entity-pattern-and-mapper) and [Section 5b](#5b-entity-pattern-and-mapper). Mappers are not included in the export — they must be created per bank because they link a pattern to a use case within that bank's context.
+
+{: .warning }
+> **Mappers are bank-specific and cannot be exported.** After importing patterns into a new bank, you must manually create the `InternalBookMeMeeting` and `CustomerOverviewAccountIdResolver` mappers. See [Setup Entity Pattern Mappers]({{ site.baseurl }}/embeddable-ui/setup-entity-pattern-mappers/) for step-by-step instructions.
+
+With entity configurations managed, next we'll cover the remaining Salesforce data requirements.
+
+---
+
+## 7. Salesforce Data Requirements
 
 This section covers the Salesforce data and metadata that internal meetings depend on:
 - [Account Data](#6a-account-data) — which Account fields are (and aren't) needed
@@ -363,7 +436,7 @@ For custom field mappings or additional sObject configurations, see [Salesforce 
 
 ---
 
-## 7. LWC configOverride — Properties by Flow
+## 8. LWC configOverride — Properties by Flow
 
 The `configOverride` object allows you to customize the behavior of the booking component from your LWC wrapper. The existing [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) documents all available properties. This section clarifies which properties apply to the internal meeting flow, which only affect the customer booking flow, and which are shared.
 
@@ -425,7 +498,7 @@ In short, only `meetingtitle` and `disablecustomermeetings` affect internal meet
 
 ---
 
-## 8. How Internal Meeting Booking Works
+## 9. How Internal Meeting Booking Works
 
 With all configuration in place, here is the end-to-end flow when an employee books an internal meeting. Understanding this helps with troubleshooting when something doesn't work as expected.
 
@@ -444,7 +517,7 @@ That covers the happy path. The next two sections help you verify and diagnose i
 
 ---
 
-## 9. UI Behavior Reference
+## 10. UI Behavior Reference
 
 This section documents how the booking component behaves based on configuration and data. If the UI doesn't show what you expect — empty dropdowns, disabled buttons, missing timeslots — check the conditions below. Behaviors are grouped by screen:
 - [Landing Page](#landing-page) — button visibility and error states
@@ -471,11 +544,11 @@ This section documents how the booking component behaves based on configuration 
 | Custom time picker constrained | Always | Time input bounded by `openingTime` and `closingTime` from [Bank Options]({{ site.baseurl }}/bookme/bank-options/); times outside this range cannot be selected |
 | Advisor dropdown filtered | Always | The meeting owner cannot be selected as an additional employee, and vice versa |
 
-If the behavior you're seeing isn't listed here, check the [Troubleshooting](#11-troubleshooting) section for specific error scenarios.
+If the behavior you're seeing isn't listed here, check the [Troubleshooting](#12-troubleshooting) section for specific error scenarios.
 
 ---
 
-## 10. Post-Deployment Validation Checklist
+## 11. Post-Deployment Validation Checklist
 
 Work through each group in order. Each checkbox corresponds to a configuration step from the sections above.
 
@@ -490,19 +563,19 @@ Work through each group in order. Each checkbox corresponds to a configuration s
 - [ ] Employee schedules configured: `CanBeBooked=true`, workdays with correct meeting types and locations
 - [ ] **Manage Availability** page in Management UI shows **no red crosses**
 
-### Meeting Creation (Section 4)
+### Meeting Creation ([Section 4](#4-configuring-meeting-creation-in-salesforce))
 - [ ] Entity definitions created for Account, Contact, and Event
 - [ ] Internal BookMe Meeting pattern imported
 - [ ] `InternalBookMeMeeting` mapper created
 
-### Non-Account Record Pages (Section 5, if applicable)
+### Non-Account Record Pages ([Section 5](#5-placing-the-booking-component-on-non-account-record-pages), if applicable)
 - [ ] Entity definition created for each sObject you want to book from (with AccountId field mapped)
 - [ ] AccountId Resolver pattern imported
 - [ ] `CustomerOverviewAccountIdResolver` mapper created
 - [ ] `bookmeEmployeeFlow` placed on each sObject's record page
 - [ ] Source records have an associated Account (Account lookup populated)
 
-### Salesforce Data (Section 6)
+### Salesforce Data ([Section 7](#7-salesforce-data-requirements))
 - [ ] Employee emails in Salesforce match their Entra/SCIM emails
 - [ ] `bookmeEmployeeFlow` placed on Account record page
 - [ ] Trusted URLs configured for embeddable domain
@@ -516,7 +589,7 @@ Work through each group in order. Each checkbox corresponds to a configuration s
 
 ---
 
-## 11. Troubleshooting
+## 12. Troubleshooting
 
 This section covers the most common issues encountered during and after deployment, with step-by-step diagnosis for each.
 
@@ -573,7 +646,7 @@ To deploy internal meetings, you need:
 
 Internal meetings do **not** require `AMB_Location__c` or `AMB_Customer_Category__c` on the Account — location comes from the employee's SCIM profile, and customer categories are not used.
 
-Use the [validation checklist](#10-post-deployment-validation-checklist) to verify your deployment, and the [troubleshooting section](#11-troubleshooting) if issues arise.
+Use the [validation checklist](#11-post-deployment-validation-checklist) to verify your deployment, and the [troubleshooting section](#12-troubleshooting) if issues arise.
 
 ---
 

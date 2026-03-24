@@ -77,7 +77,12 @@ Before configuring internal meetings, ensure these are in place:
 
 ## 3. Backend Configuration (Management UI)
 
-This section covers the Management UI settings that must be in place for internal meetings to work: bank-wide defaults, locations, employee schedules, themes, and service groups.
+This section covers the Management UI settings that must be in place for internal meetings to work:
+- [Bank Options](#3a-bank-options) — business hours, timezone, meeting type labels
+- [Location Configuration](#3b-location-configuration) — how locations are provisioned and matched
+- [Employee Schedules](#3c-employee-schedules) — availability, meeting types, and locations per employee
+- [Themes](#3d-themes-optional) — optional meeting categorization
+- [Competence & Service Groups](#3e-competence-groups--service-groups) — scaling availability beyond individual employees
 
 ### 3a. Bank Options
 
@@ -134,11 +139,15 @@ Key points for internal meetings:
 - Service group members must include employees at the customer's location with the right meeting types enabled
 - Competence groups should be linked to service groups for scaling employee pools
 
+At this point, bank options, locations, schedules, and (optionally) themes and service groups are configured. Next, you'll set up the entity configuration that tells the platform how to write meetings to Salesforce.
+
 ---
 
 ## 4. Configuring Meeting Creation in Salesforce
 
-When an employee books an internal meeting, the platform creates a Salesforce Event record and links it to the correct Account. This section covers the entity configuration that makes this possible.
+When an employee books an internal meeting, the platform creates a Salesforce Event record and links it to the correct Account. This section covers the entity configuration that makes this possible:
+- [Entity Definitions](#4a-entity-definitions) — the six Salesforce objects and their field mappings
+- [Entity Pattern and Mapper](#4b-entity-pattern-and-mapper) — importing the pattern and linking it to the internal meeting use case
 
 Entity definitions, patterns, and mappers are the abstraction layer between the booking platform and Salesforce. They tell the platform how to read and write Salesforce data without being tied to specific field names. For a conceptual overview, see [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/).
 
@@ -237,11 +246,16 @@ Import the **Internal BookMe Meeting** entity pattern and create the **InternalB
 {: .note }
 > The setup guide also covers additional patterns used by other flows (Bookme meeting, Salesforce meeting id resolver). It is recommended to import all patterns at once.
 
+With meeting creation configured, the platform can write internal meetings to Salesforce from Account record pages. If you also need to book from other record pages (Case, Opportunity, etc.), continue to Section 5. Otherwise, skip to [Section 6](#6-salesforce-data-requirements).
+
 ---
 
 ## 5. Placing the Booking Component on Non-Account Record Pages
 
-By default, internal meetings can only be booked from **Account** record pages, because the booking component needs an Account ID to associate the meeting with.
+By default, internal meetings can only be booked from **Account** record pages, because the booking component needs an Account ID to associate the meeting with. This section covers how to extend booking to other record pages:
+- [Entity Definitions](#5a-entity-definitions-for-each-sobject) — mapping each sObject's Account lookup field
+- [Entity Pattern and Mapper](#5b-entity-pattern-and-mapper) — the AccountId Resolver configuration
+- [Place the Component](#5c-place-the-component) — adding the LWC to the record page
 
 If you want employees to book internal meetings from other record pages (e.g., Case, Opportunity, Lead, or a custom object), you need to configure **account resolution** — telling the platform how to find the Account from that sObject.
 
@@ -310,11 +324,18 @@ After creating the entity definition, place the `bookmeEmployeeFlow` component o
 
 For instructions on adding the component to a record page, see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/).
 
+With account resolution configured, employees can book internal meetings from any record page that has an entity definition and the component placed. Next, we'll cover the remaining Salesforce data requirements.
+
 ---
 
 ## 6. Salesforce Data Requirements
 
-This section covers the Salesforce data and metadata that internal meetings depend on. Notably, internal meetings have fewer Salesforce data requirements than customer bookings.
+This section covers the Salesforce data and metadata that internal meetings depend on:
+- [Account Data](#6a-account-data) — which Account fields are (and aren't) needed
+- [Employee Email Matching](#6b-employee-email-matching) — how the component identifies the logged-in employee
+- [Custom Metadata](#6c-custom-metadata) — default field mappings and how to customize them
+
+Notably, internal meetings have fewer Salesforce data requirements than customer bookings.
 
 ### 6a. Account Data
 
@@ -344,7 +365,7 @@ For custom field mappings or additional sObject configurations, see [Salesforce 
 
 ## 7. LWC configOverride — Properties by Flow
 
-The `configOverride` object allows you to customize the behavior of the booking component from your LWC wrapper. The existing [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) documents all available properties. This section clarifies which properties apply to the internal meeting flow.
+The `configOverride` object allows you to customize the behavior of the booking component from your LWC wrapper. The existing [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) documents all available properties. This section clarifies which properties apply to the internal meeting flow, which only affect the customer booking flow, and which are shared.
 
 #### Properties that affect the Internal Meeting Flow
 
@@ -400,11 +421,13 @@ export default class InternalMeetingWrapper extends LightningElement {
 
 For the full property reference, see [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/).
 
+In short, only `meetingtitle` and `disablecustomermeetings` affect internal meetings. All other configOverride properties are for the customer booking flow.
+
 ---
 
 ## 8. How Internal Meeting Booking Works
 
-Understanding the booking flow helps with troubleshooting:
+With all configuration in place, here is the end-to-end flow when an employee books an internal meeting. Understanding this helps with troubleshooting when something doesn't work as expected.
 
 1. **Employee clicks "Internal Meeting"** on the BookMe component in Salesforce
 2. **The booking form loads** with the logged-in employee pre-selected, their SCIM location as the default location, and default meeting duration of 30 minutes
@@ -417,11 +440,15 @@ Key behaviors:
 - When multiple employees are selected, availability is calculated as the **intersection** of all selected employees' schedules. If any one employee has no availability for a given meeting type, that type won't show times for anyone
 - The **"Mark as busy"** toggle controls whether the employee is shown as busy during the meeting. It is automatically forced on when a room or additional employees are added
 
+That covers the happy path. The next two sections help you verify and diagnose issues with the deployed configuration.
+
 ---
 
 ## 9. UI Behavior Reference
 
-This section documents how the booking component behaves based on configuration and data. If the UI doesn't show what you expect — empty dropdowns, disabled buttons, missing timeslots — check the conditions below.
+This section documents how the booking component behaves based on configuration and data. If the UI doesn't show what you expect — empty dropdowns, disabled buttons, missing timeslots — check the conditions below. Behaviors are grouped by screen:
+- [Landing Page](#landing-page) — button visibility and error states
+- [Internal Meeting Form](#internal-meeting-form) — form field behavior based on configuration and data
 
 ### Landing Page
 
@@ -444,10 +471,13 @@ This section documents how the booking component behaves based on configuration 
 | Custom time picker constrained | Always | Time input bounded by `openingTime` and `closingTime` from [Bank Options]({{ site.baseurl }}/bookme/bank-options/); times outside this range cannot be selected |
 | Advisor dropdown filtered | Always | The meeting owner cannot be selected as an additional employee, and vice versa |
 
+If the behavior you're seeing isn't listed here, check the [Troubleshooting](#11-troubleshooting) section for specific error scenarios.
 
 ---
 
 ## 10. Post-Deployment Validation Checklist
+
+Work through each group in order. Each checkbox corresponds to a configuration step from the sections above.
 
 ### Infrastructure
 - [ ] SCIM provisioning shows employees with correct emails and locations

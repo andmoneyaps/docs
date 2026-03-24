@@ -15,9 +15,9 @@ It covers:
 3. [**Backend Configuration**](#3-backend-configuration-management-ui) — bank options, locations, schedules, themes, and service groups
 4. [**Meeting Creation**](#4-configuring-meeting-creation-in-salesforce) — entity definitions and patterns that write meetings to Salesforce
 5. [**Non-Account Record Pages**](#5-placing-the-booking-component-on-non-account-record-pages) — enabling booking from Case, Opportunity, or custom objects
-6. [**Managing Entity Configurations**](#6-managing-entity-configurations-across-environments) — exporting, source-tracking, and distributing configurations across banks
+6. [**Managing Entity Configurations**](#6-managing-entity-configurations-across-environments) — distributing configurations across banks
 7. [**Salesforce Data**](#7-salesforce-data-requirements) — Account fields, email matching, and custom metadata
-8. [**LWC Component Variants**](#8-lwc-component-variants-and-configoverride) — managed package vs standalone, and which configOverride properties affect internal meetings
+8. [**LWC configOverride**](#8-lwc-configoverride--properties-for-internal-meetings) — which wrapper properties affect internal meetings
 9. [**How It Works**](#9-how-internal-meeting-booking-works) — the end-to-end booking flow
 10. [**UI Behavior**](#10-ui-behavior-reference) — what the employee sees based on configuration and data
 11. [**Validation Checklist**](#11-post-deployment-validation-checklist) — verify your deployment
@@ -331,71 +331,9 @@ With account resolution configured, employees can book internal meetings from an
 
 ## 6. Managing Entity Configurations Across Environments
 
-Entity definitions and patterns need to be consistent across all banks that use internal meetings. Rather than manually recreating them in each bank, you should maintain a **single source of truth** and distribute configurations from there.
+Rather than manually recreating entity definitions and patterns in each bank, maintain a single source of truth and distribute configurations via export/import. See [Entity Configuration Management]({{ site.baseurl }}/bookme/entity-configuration-management/) for the full workflow covering exporting, source tracking in version control, and importing to target banks.
 
-This section covers:
-- [Source of truth](#source-of-truth) — where to maintain the master configuration
-- [Exporting configurations](#exporting-configurations) — how to extract JSON from the source bank
-- [Source tracking](#source-tracking-the-json) — storing exports in version control
-- [Importing to target banks](#importing-to-target-banks) — distributing configurations as part of onboarding
-
-### Source of truth
-
-Designate one bank as the master for entity configurations — typically your **test environment**. All entity definitions and patterns should be created and validated in this bank first. Changes are made here, exported, and then distributed to customer banks.
-
-### Exporting configurations
-
-Entity patterns and definitions are exported as JSON from the Management UI:
-
-1. Navigate to **Admin → Entities → Entity Patterns** in the source bank
-2. Find the pattern you want to export (e.g., **Internal BookMe Meeting**)
-3. Click the **export icon** on the pattern row
-4. In the modal that opens, click **Copy** to copy the JSON to your clipboard
-
-{: .hint }
-> Entity pattern exports **automatically include all referenced entity definitions**. When you export the Internal BookMe Meeting pattern, the JSON will contain the Account, Owner, Event, Event Detail, Advisors, and Advisor Event Relations definitions. You do not need to export them separately.
-
-Each exported entity has a **semantic ID** — a stable identifier that persists across environments. When the same JSON is imported into a different bank, the platform uses the semantic ID to determine whether to create a new entity or update an existing one.
-
-You can also export individual entity definitions from **Admin → Entities → Entity Definitions** if needed (e.g., for account resolution sObject definitions like Case or Lead that are not part of a pattern).
-
-### Source tracking the JSON
-
-Store the exported JSON files in version control alongside your deployment scripts or onboarding documentation. A recommended structure:
-
-```
-entity-configurations/
-├── patterns/
-│   ├── internal-bookme-meeting.json
-│   └── accountid-resolver.json
-└── definitions/
-    ├── case.json
-    ├── lead-fsc.json
-    └── custom-object.json
-```
-
-This gives you:
-- A versioned history of configuration changes
-- A reviewable diff when entity definitions are modified
-- A reliable source for automated or manual onboarding
-
-### Importing to target banks
-
-When onboarding a new bank:
-
-1. Navigate to **Admin → Entities → Entity Patterns** in the target bank
-2. Click **Import** in the top right corner
-3. Paste the JSON from your source-tracked file into the textarea
-4. Confirm the import
-
-The import is **atomic** — if any part fails (e.g., a field type mismatch), the entire import is rolled back. Referenced entity definitions are imported automatically as part of the pattern import.
-
-For sObject-specific definitions (e.g., Case, Lead) that are not part of a pattern, import them individually via **Admin → Entities → Entity Definitions → Import**.
-
-After importing, create the required **entity pattern mappers** as described in [Section 4b](#4b-entity-pattern-and-mapper) and [Section 5b](#5b-entity-pattern-and-mapper). Mappers are not included in the export — they must be created per bank because they link a pattern to a use case within that bank's context.
-
-{: .warning }
-> **Mappers are bank-specific and cannot be exported.** After importing patterns into a new bank, you must manually create the `InternalBookMeMeeting` and `CustomerOverviewAccountIdResolver` mappers. See [Setup Entity Pattern Mappers]({{ site.baseurl }}/embeddable-ui/setup-entity-pattern-mappers/) for step-by-step instructions.
+After importing patterns into a new bank, create the required mappers (`InternalBookMeMeeting` and `CustomerOverviewAccountIdResolver`) as described in [Section 4b](#4b-entity-pattern-and-mapper) and [Section 5b](#5b-entity-pattern-and-mapper).
 
 With entity configurations managed, next we'll cover the remaining Salesforce data requirements.
 
@@ -424,19 +362,9 @@ Internal meetings do **not** use Account-level fields for location or customer c
 
 ### 6b. Employee Identity Matching
 
-Two Salesforce user fields are passed to the booking component. They serve different purposes:
+The booking component uses Salesforce user fields (`FederationIdentifier` and `Email`) for SSO authentication and employee pre-selection. See [Employee Identity Matching]({{ site.baseurl }}/embeddable-ui/employee-identity-matching/) for the full details on how authentication and pre-selection work.
 
-| Salesforce User Field | URL Parameter | Purpose |
-|----------------------|---------------|---------|
-| `Email` | `user_email` | Fallback login hint for SSO, and the basis for advisor pre-selection |
-| `FederationIdentifier` | `federation_id` | Primary login hint for SSO — used to silently authenticate the correct Entra ID user |
-
-**Authentication**: The component uses `FederationIdentifier` (if populated) as the MSAL login hint to silently authenticate the employee via Entra ID. If `FederationIdentifier` is empty, it falls back to `Email`. This determines *which Entra user is signed in*.
-
-**Advisor pre-selection**: After authentication, the component takes the signed-in user's **Entra ID UPN** (from the token) and matches it against the `email` field on SCIM-provisioned employees (case-insensitive). If no match is found, it falls back to the `externalId` field. If neither matches, the employee must manually select themselves.
-
-{: .warning }
-> The `FederationIdentifier` and the Entra UPN can be different values. If `FederationIdentifier` authenticates user A but user A's UPN doesn't match any SCIM-synced employee email, the employee won't be pre-selected. Ensure the Salesforce user's `FederationIdentifier` corresponds to an Entra user whose UPN matches the SCIM-synced employee email.
+For internal meetings, the key requirement is: the signed-in employee's **Entra ID UPN** must match the `email` field on their SCIM-provisioned employee record. If it doesn't match, the employee won't be pre-selected in the booking form.
 
 ### 6c. Custom Metadata
 
@@ -446,21 +374,9 @@ For custom field mappings or additional sObject configurations, see [Salesforce 
 
 ---
 
-## 8. LWC Component Variants and configOverride
+## 8. LWC configOverride — Properties for Internal Meetings
 
-The &money Portal component exists in two variants. The variant deployed to a Salesforce org is selected in the Management UI under **Admin → CRM → Configuration** when deploying the component. The choice affects how internal meetings and customer bookings interact.
-
-### Choosing a variant
-
-| Variant | When to use | How internal meetings work |
-|---------|-------------|---------------------------|
-| **With managed package** | The bank has the BookMe managed package installed. The managed package handles customer bookings via its own LWC components. | The Portal iframe handles internal meetings and the meeting overview. Customer bookings are handled by the managed package. The "Book Meeting" button switches from the iframe to the managed package's LWC. |
-| **Standalone** | The bank does **not** have the managed package. All booking is done through the Portal iframe. | The Portal iframe handles both internal meetings and customer bookings. The landing page shows both buttons, and employees stay within the iframe for both flows. |
-
-{: .note }
-> In the **managed package variant**, `disablecustomermeetings` is always forced to `true` — this is hardcoded in the component and cannot be overridden via `configOverride`. In the **standalone variant**, `disablecustomermeetings` is configurable and defaults to `false`.
-
-### configOverride properties
+The &money Portal component exists in two variants (with managed package and standalone) that affect how internal meetings and customer bookings interact. See [Component Variants]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/#component-variants) for details on choosing and deploying the right variant.
 
 The `configOverride` object allows you to customize the behavior of the booking component from your LWC wrapper. The existing [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) documents all available properties. This section clarifies which properties apply to the internal meeting flow.
 
@@ -551,13 +467,7 @@ This section documents how the booking component behaves based on configuration 
 
 ### Landing Page
 
-| Behavior | Condition | What the employee sees |
-|----------|-----------|----------------------|
-| Both buttons shown | Employee is authenticated via Entra ID | "Internal Meeting" and "Book Meeting" buttons |
-| Not signed in | Employee not authenticated | Welcome message with "not signed in" text; no buttons |
-| "Book Meeting" disabled | Component placed on unsupported sObject (only Account, Event, Opportunity are supported) | Button grayed out and not clickable |
-| Auto-redirect to LWC | `disableCustomerMeetings` set to `true` in configOverride | Landing page is skipped entirely; employee is redirected to the Salesforce LWC booking flow |
-| Error banner | Account resolution fails (missing entity definition, missing mapper, or empty Account lookup) | Sticky error banner at top of page with error code. Buttons remain visible below. |
+For landing page behaviors (button states, authentication, error banners), see [Meeting Overview]({{ site.baseurl }}/embeddable-ui/meeting-overview/).
 
 ### Internal Meeting Form
 
@@ -647,15 +557,9 @@ This section covers the most common issues encountered during and after deployme
 
 ### Employee not pre-selected when opening internal meeting form
 
-**Symptom**: The internal meeting form opens but the employee (meeting owner) field is empty instead of pre-selecting the logged-in employee. The employee has to manually search for themselves.
+**Symptom**: The internal meeting form opens but the employee (meeting owner) field is empty instead of pre-selecting the logged-in employee.
 
-**Check these in order**:
-
-1. **UPN / email mismatch**: The booking component takes the logged-in employee's **UPN** (User Principal Name) from the Entra ID token and matches it against the `email` field on SCIM-provisioned employees. The comparison is case-insensitive, but the values must otherwise match exactly. **Fix**: Verify the employee's UPN in Entra ID matches the email synced via SCIM. Check the employee record in **BookMe → Advisors → Manage Availability** in the Management UI to confirm the SCIM-synced email.
-
-2. **Employee not provisioned via SCIM**: If the logged-in employee doesn't exist in the booking platform's employee list, there's nothing to match against. **Fix**: Verify SCIM provisioning has synced the employee from Entra ID.
-
-3. **ExternalId fallback**: If email matching fails, the component falls back to matching the UPN against the employee's `externalId` field. If neither matches, the field stays empty. **Fix**: Check that the employee's `externalId` in the booking platform matches their Entra ID UPN.
+See [Employee Identity Matching — Troubleshooting]({{ site.baseurl }}/embeddable-ui/employee-identity-matching/#troubleshooting) for the full diagnosis steps. The most common cause is a mismatch between the employee's Entra ID UPN and their SCIM-synced email.
 
 ### No available times unless selecting self
 
@@ -691,12 +595,15 @@ Use the [validation checklist](#11-post-deployment-validation-checklist) to veri
 ## Related Documentation
 
 - [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — conceptual overview of the entity abstraction layer
+- [Entity Configuration Management]({{ site.baseurl }}/bookme/entity-configuration-management/) — exporting, source tracking, and distributing entity configurations across banks
 - [Setup Entity Pattern Mappers]({{ site.baseurl }}/embeddable-ui/setup-entity-pattern-mappers/) — step-by-step mapper setup guide
 - [Bank Options]({{ site.baseurl }}/bookme/bank-options/) — organization-wide booking defaults
 - [Employee Schedules]({{ site.baseurl }}/bookme/employee-schedules/) — availability, workdays, meeting types, and location configuration
+- [Employee Identity Matching]({{ site.baseurl }}/embeddable-ui/employee-identity-matching/) — SSO authentication and employee pre-selection
+- [Meeting Overview]({{ site.baseurl }}/embeddable-ui/meeting-overview/) — landing page buttons and meeting list behavior
 - [Service & Competence Groups]({{ site.baseurl }}/bookme/service-competence-groups/) — employee grouping and service level configuration
 - [Salesforce Connection Setup]({{ site.baseurl }}/bookme/salesforce-connection-setup/) — establishing the BookMe-Salesforce connection
 - [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) — full configOverride property reference
-- [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) — component deployment guide
+- [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) — component variants and deployment guide
 - [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/) — Trusted URLs, quick actions, portal component placement
 - [Microsoft Entra Integration]({{ site.baseurl }}/bookme/entra-integration/) — user access and role configuration

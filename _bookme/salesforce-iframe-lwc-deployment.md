@@ -134,6 +134,18 @@ export default class CustomBookingWrapper extends LightningElement {
 ```
 
 
+## Component Variants
+
+The &money Portal component exists in two variants. The variant is selected in the Management UI under **Admin → CRM → Configuration** when deploying the component.
+
+| Variant | When to use | Behavior |
+|---------|-------------|----------|
+| **With managed package** | The bank has the BookMe managed package installed. The managed package handles customer bookings via its own LWC components. | The Portal iframe handles internal meetings and the meeting overview. Customer bookings are handled by the managed package. The "Book Meeting" button switches from the iframe to the managed package's LWC. `disablecustomermeetings` is hardcoded to `true`. |
+| **Standalone** | The bank does **not** have the managed package. All booking is done through the Portal iframe. | The Portal iframe handles both internal meetings and customer bookings. The landing page shows both buttons, and employees stay within the iframe for both flows. `disablecustomermeetings` is configurable via `configOverride`. |
+
+{: .note }
+> In the **managed package variant**, `disablecustomermeetings` is always forced to `true` and cannot be overridden via `configOverride`. In the **standalone variant**, it defaults to `false` and can be set via `configOverride`.
+
 ## Related Documentation
 
 - [Salesforce Connection Setup]({{ site.baseurl }}/bookme/salesforce-connection-setup/) - Detailed guide for establishing the BookMe-Salesforce connection

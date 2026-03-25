@@ -7,6 +7,19 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.25.0 (25-03-2026)
+Here is what's new in release 1.25.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002giWXIAY`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002giWXIAY`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Meeting cancellation error when meeting no longer exists in Salesforce**
+  - Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
+
 ## Release 1.24.0 (10-03-2026)
 Here is what's new in release 1.24.0 of &bookme.
 > **Managed Package Version ID**: `04tP7000002d6kLIAQ`.

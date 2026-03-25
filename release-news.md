@@ -7,6 +7,7 @@ nav_order: 2
 
 ### _BookMe_
 
+- **Version 1.25 Release**: Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
 - **Version 1.24 Release**: Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
 
 ## February 2026

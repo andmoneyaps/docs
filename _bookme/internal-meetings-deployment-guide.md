@@ -343,7 +343,7 @@ With entity configurations managed, next we'll cover the remaining Salesforce da
 
 This section covers the Salesforce data and metadata that internal meetings depend on:
 - [Account Data](#6a-account-data) — which Account fields are (and aren't) needed
-- [Employee Email Matching](#6b-employee-email-matching) — how the component identifies the logged-in employee
+- [Employee Identity Matching](#6b-employee-identity-matching) — how the component identifies the logged-in employee
 - [Custom Metadata](#6c-custom-metadata) — default field mappings and how to customize them
 
 Notably, internal meetings have fewer Salesforce data requirements than customer bookings.

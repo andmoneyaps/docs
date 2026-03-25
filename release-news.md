@@ -7,6 +7,7 @@ nav_order: 2
 
 ### _BookMe_
 
+- **Version 1.25 Release**: Fixed a `NullPointerException` when cancelling a meeting that no longer exists in Salesforce. The delete endpoint now returns success for already-deleted meetings (idempotent delete).
 - **Version 1.24 Release**: Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
 
 ## February 2026

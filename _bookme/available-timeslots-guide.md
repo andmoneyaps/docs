@@ -23,7 +23,7 @@ BookMe supports four meeting types. Each timeslot is tied to a specific type:
 | **Online** | Video meeting (e.g., Microsoft Teams) |
 | **Physical** | In-person meeting at a branch location |
 | **Telephone** | Phone call |
-| **Offsite** | In-person meeting at the customer's location |
+| **OffSite** | In-person meeting at the customer's location |
 
 
 Advisors can be configured to offer different meeting types on different days. For example, an advisor might offer Online and Physical meetings on Mondays but only Online meetings on Fridays.
@@ -116,7 +116,7 @@ When both local and service group advisors are available for the same timeslot, 
 
 | Priority | Advisor Type | Description |
 |---|---|---|
-| 1 (Highest) | **Requested** | Advisors specifically chosen by the caller |
+| 1 (Highest) | **Explicitly selected** | Advisors specifically chosen by the caller |
 | 2 | **Local** | Qualified advisors at the meeting location |
 | 3 (Lowest) | **Service Group** | Advisors from a triggered service group |
 
@@ -141,7 +141,7 @@ For each day of the week, an advisor's workday specifies:
 
 ### Internal vs. Customer-Initiated Bookings
 
-When a booking is made **internally** (by a bank employee rather than a customer), the available hours are expanded to cover the bank's full opening hours, even if the advisor's normal customer-facing schedule is narrower. This gives internal staff more flexibility when scheduling meetings.
+When a booking is made **internally** (by a bank employee rather than a customer), the maximum meeting time per day limit is bypassed. This gives internal staff more flexibility when scheduling meetings, even if the advisor's customer-facing daily cap would otherwise be reached.
 
 ---
 
@@ -187,7 +187,7 @@ BookMe can enforce a **daily cap** on how much meeting time an advisor handles. 
 
 The limit is resolved in order of specificity:
 1. **Advisor-level setting** --- Takes precedence if configured
-2. **Service group setting** --- Used if the advisor belongs to a service group with a limit
+2. **Service group setting** --- Used if the advisor belongs to a service group with a limit. If the advisor belongs to multiple service groups, the highest (most permissive) limit is used.
 3. **Organization-wide default** --- The fallback if no specific limit is set
 4. **No limit** --- If none of the above are configured, there is no cap
 
@@ -209,7 +209,7 @@ Once BookMe determines each advisor's available windows (after applying all the 
 
 ### 30-Minute Intervals
 
-Timeslots are offered at **30-minute intervals**. The start of each timeslot is rounded up to the nearest half hour.
+By default, timeslots are offered at **30-minute intervals**. The start of each timeslot is rounded up to the nearest half hour.
 
 **Example**: If an advisor becomes available at 09:07, the first offered timeslot starts at 09:30.
 
@@ -228,7 +228,7 @@ The customer selects one of these options.
 
 ### Best Advisor Selection
 
-By default, when multiple advisors are available at the same time for the same meeting type, BookMe selects **one advisor** per timeslot based on the priority system (Requested > Local > Service Group). If multiple advisors share the same priority level, one is chosen at random to distribute workload evenly.
+By default, when multiple advisors are available at the same time for the same meeting type, BookMe selects **one advisor** per timeslot based on the priority system (Explicitly selected > Local > Service Group). If multiple advisors share the same priority level, one is chosen at random to distribute workload evenly.
 
 This means the booking page shows clean, non-duplicated timeslots --- one option per time and meeting type --- rather than listing every available advisor.
 
@@ -272,7 +272,7 @@ If no custom configuration has been set up, the default order is:
 
 | Priority | Advisor Type |
 |---|---|
-| 1 (Highest) | **Requested** --- advisors specifically chosen by the caller |
+| 1 (Highest) | **Explicitly selected** --- advisors specifically chosen by the caller |
 | 2 | **Local** --- qualified advisors at the branch |
 | 3 (Lowest) | **Service Group** --- advisors from a triggered service group |
 
@@ -286,7 +286,7 @@ The default order can be customized. The most powerful feature is the ability to
 
 | Priority | Rule |
 |---|---|
-| 1 | Requested advisors |
+| 1 | Explicitly selected advisors |
 | 2 | Service groups labeled **VIP** |
 | 3 | Local advisors |
 | 4 | All remaining service groups |
@@ -317,6 +317,6 @@ A timeslot is shown to the customer when **all** of the following are true:
 8. The advisor is **not working from a different location** (for physical meetings)
 9. The advisor has **not exceeded their daily meeting time limit**
 10. A **meeting room is available** (if required for physical meetings)
-11. The timeslot falls on a **30-minute interval** and fits the meeting duration
+11. The timeslot falls on a **30-minute interval** (by default) and fits the meeting duration
 
 If any one of these conditions is not met, the timeslot will not appear in the booking options.

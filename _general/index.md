@@ -53,6 +53,12 @@ This section contains comprehensive documentation about our processes, procedure
 - Success criteria
 - Final validation steps
 
+### 7. [Auditing M365 Integration]({{ site.baseurl }}/general/m365-audit-guide/)
+- Preventive controls for restricting application access
+- Detective controls for monitoring API activity
+- Microsoft Graph Activity Log audit queries
+- Licensing requirements
+
 ## Purpose
 
 This documentation helps stakeholders understand:

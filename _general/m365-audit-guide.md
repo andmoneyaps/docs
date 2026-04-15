@@ -37,7 +37,7 @@ The &money service principal in your tenant uses **app-only authentication** (OA
 | Meeting transcripts | Read | Retrieve transcripts for meetings managed by the platform |
 | Subscriptions | Create, renew | Receive real-time change notifications for the above resources |
 
-The application does **not** access mailbox contents, Teams chat messages, files, or any resources beyond those listed above.
+The application **cannot** access mailbox contents, Teams chat messages, files, or any resources beyond those listed above — it does not hold the Graph API permissions required to do so.
 
 ## 3. Preventive Controls
 
@@ -70,7 +70,7 @@ Get-CsOnlineUser -Filter "ApplicationAccessPolicy -eq 'Bookme-OnlineMeetingAcces
 
 ### 3.2 Exchange Online RBAC for Applications
 
-Exchange Online Role Based Access Control (RBAC) for Applications scopes calendar access to specific mailboxes.
+Exchange Online Role-Based Access Control (RBAC) for Applications scopes calendar access to specific mailboxes.
 
 **What it does:** Restricts which users' calendars our application can read and write. You define a Management Scope (based on user attributes, group membership, or administrative units) and assign calendar permissions only within that scope.
 
@@ -121,7 +121,7 @@ Graph Activity Logs are the primary tool for auditing our application's data acc
 
 **What this means in practice:** The `RequestUri` field contains the specific user ID and resource ID for every call. For example, a transcript fetch appears as:
 
-```
+```http
 GET /users/{userId}/onlineMeetings/{meetingId}/transcripts/{transcriptId}/content
 ```
 
@@ -167,7 +167,7 @@ Service principal sign-in logs capture each time our application authenticates t
 
 These logs show **authentication events**, not individual API calls. They are useful for verifying that our application only authenticates from expected IP addresses and at expected frequencies.
 
-**Microsoft documentation:** [Service principal sign-in logs in Entra ID](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins-service-principal)
+**Microsoft documentation:** [Service principal sign-in logs in Entra ID](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-service-principal-sign-ins)
 
 ## 5. Example Audit Queries
 
@@ -196,7 +196,7 @@ MicrosoftGraphActivityLogs
 | order by TimeGenerated desc
 ```
 
-### 5.3 All calendar event subscriptions created
+### 5.3 Subscription creation requests
 
 ```kusto
 MicrosoftGraphActivityLogs
@@ -205,6 +205,9 @@ MicrosoftGraphActivityLogs
 | project TimeGenerated, RequestUri, ResponseStatusCode, IPAddress
 | order by TimeGenerated desc
 ```
+
+{: .note }
+> This query shows when the application created or renewed webhook subscriptions. The subscribed resource path (e.g., which user's calendar) is part of the request body, which is **not** captured in Graph Activity Logs. To see which users have active subscriptions, review the Teams Application Access Policy (section 3.1) or request the subscription list from &money.
 
 ### 5.4 Detect transcript access for users outside an expected list
 
@@ -223,27 +226,26 @@ If this query returns any rows, the application accessed a transcript for a user
 
 ### 5.5 Cross-reference transcript access against platform-created meetings
 
+Graph Activity Logs do not capture response bodies, so the meeting ID assigned by Microsoft Graph when a meeting is created is not directly available in the logs. To cross-reference transcript access against platform-created meetings, populate the `platformMeetings` list with meeting IDs from your own records or from data provided by &money.
+
 ```kusto
 let appId = "<app-id>";
-// Meetings created by the app (POST to onlineMeetings)
-let createdMeetings = MicrosoftGraphActivityLogs
-    | where AppId == appId
-    | where RequestMethod == "POST" and RequestUri has "onlineMeetings"
-    | where ResponseStatusCode == 201
-    | extend MeetingId = extract(@"/onlineMeetings/([^/\?]+)", 1, RequestUri)
-    | where isnotempty(MeetingId)
-    | distinct MeetingId;
-// Transcript fetches for meetings NOT created by the app
+// Populate from platform records (&money can provide this list on request)
+let platformMeetings = datatable(MeetingId:string)
+[
+    "<meeting-id-1>",
+    "<meeting-id-2>"
+];
+// Transcript fetches for meetings NOT in the platform-created list
 MicrosoftGraphActivityLogs
 | where AppId == appId
 | where RequestUri has "transcripts" and RequestUri has "content"
 | extend MeetingId = extract(@"/onlineMeetings/([^/]+)/", 1, RequestUri)
-| where MeetingId !in (createdMeetings)
+| where MeetingId !in (platformMeetings)
 | project TimeGenerated, MeetingId, RequestUri, ResponseStatusCode
 ```
 
-{: .important }
-> The meeting creation POST may not always contain the meeting ID in the request URL (it is returned in the response body, which is not logged). For the most reliable cross-referencing, combine this query with your own records of which meetings were created through the &money platform. &money can provide meeting identifiers for reconciliation upon request.
+If this query returns any rows, a transcript was fetched for a meeting not in the platform-created list. &money can provide meeting identifiers for reconciliation upon request.
 
 ### 5.6 Set up an alert for unexpected transcript access
 
@@ -278,6 +280,6 @@ You can create an Azure Monitor alert rule based on any of the queries above. Fo
 | Teams Application Access Policy | [learn.microsoft.com/en-us/graph/cloud-communication-online-meeting-application-access-policy](https://learn.microsoft.com/en-us/graph/cloud-communication-online-meeting-application-access-policy) |
 | Exchange RBAC for Applications | [learn.microsoft.com/en-us/exchange/permissions-exo/application-rbac](https://learn.microsoft.com/en-us/exchange/permissions-exo/application-rbac) |
 | App Governance | [learn.microsoft.com/en-us/defender-cloud-apps/app-governance-manage-app-governance](https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-manage-app-governance) |
-| Service Principal Sign-In Logs | [learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins-service-principal](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins-service-principal) |
+| Service Principal Sign-In Logs | [learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins-service-principal](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-service-principal-sign-ins) |
 | Enterprise App Permission Review | [learn.microsoft.com/en-us/entra/identity/enterprise-apps/manage-application-permissions](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/manage-application-permissions) |
 | Log Search Alert Rules | [learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-create-log-alert-rule](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-create-log-alert-rule) |

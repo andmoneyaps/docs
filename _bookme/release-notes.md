@@ -7,6 +7,20 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.26.0 (28-04-2026)
+Here is what's new in release 1.26.0 of &bookme.
+
+> **Managed Package Version ID**: `04tP7000002qN7RIAU`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002qN7RIAU`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Customer email field is now read-only in the booking contact form**
+  - The email field in the booking contact form is now locked to prevent advisors from editing it.
+
 ## Release 1.25.0 (25-03-2026)
 Here is what's new in release 1.25.0 of &bookme.
 > **Managed Package Version ID**: `04tP7000002giWXIAY`.

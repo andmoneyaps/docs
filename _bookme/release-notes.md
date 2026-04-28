@@ -8,7 +8,7 @@ parent: BookMe
 # Release Notes—BookMe
 
 ## Release 1.26.0 (28-04-2026)
-Here' is what's new in release 1.26.0 of &bookme.
+Here is what's new in release 1.26.0 of &bookme.
 
 > **Managed Package Version ID**: `04tP7000002qN7RIAU`.
 >

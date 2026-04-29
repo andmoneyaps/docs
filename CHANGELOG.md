@@ -9,6 +9,15 @@ permalink: /changelog/
 
 This changelog tracks significant updates and changes to the AndMoney documentation.
 
+## April 2026
+
+### Added
+- New [Managed Playbooks]({{ site.baseurl }}/bookme/playbooks/managed-playbooks/) page — explains the "Managed" badge and lock icon you'll see on some playbooks, the fork workflow for customising a managed playbook, and how update notifications work for forks
+- Smart Playbook Deployments feature is rolling out: &Money now centrally maintains and updates a curated catalog of playbooks across all customer banks, with a clear path to fork for bank-specific customisation
+
+### Updated
+- [Playbooks User Guide]({{ site.baseurl }}/bookme/playbooks/playbooks-user-guide/) — Accessing Playbooks section now references the Managed badge and the Fork action for customising managed playbooks
+
 ## January 2026
 
 ### Added

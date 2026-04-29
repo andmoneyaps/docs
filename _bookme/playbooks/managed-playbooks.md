@@ -20,7 +20,7 @@ You'll see a green **"Managed"** badge (with a checkmark icon) next to managed p
 The Managed badge means the playbook is read-only for you. You can see how it's built, run it, and (if it's marked as Open) export it — but you can't edit the blocks or delete it. We keep it consistent across banks on purpose, so the same playbook always behaves the same way.
 
 {: .note }
-Managed playbooks usually represent &Money's recommended way of doing something — for example, the standard "Book Meeting" or "Customer Overview" workflow. You always have the option to **fork** the playbook (see below) if you need behaviour that doesn't fit the standard.
+Managed playbooks usually represent &Money's recommended way of doing something — for example, the standard "Book Meeting" or "Customer Overview" workflow. In most cases, you can **fork** the playbook (see below) if you need behaviour that doesn't fit the standard. The exception is **Proprietary** managed playbooks (rare) — see the [FAQ](#why-is-this-playbook-marked-proprietary) for why those can't be forked.
 
 ## What can I do with a managed playbook?
 

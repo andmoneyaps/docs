@@ -13,11 +13,11 @@ Some playbooks in your environment are **managed by &Money** — we build them, 
 
 A managed playbook is a playbook that &Money deploys and maintains for you. We build the playbook once in our environment, then push it out to all the customer banks that have opted in. When we improve the playbook — fix a bug, add a feature, or adapt to a Salesforce change — every bank receives the updated version automatically.
 
-You'll see a **blue "Managed" badge** with a lock icon next to managed playbooks in your playbook list:
+You'll see a green **"Managed"** badge (with a checkmark icon) next to managed playbooks in your playbook list. Hover the badge to see which package and version the playbook came from:
 
-<!-- screenshot: playbook list showing managed badge and lock icon -->
+<!-- screenshot: playbook list showing managed badge and tooltip -->
 
-The lock icon means the playbook is read-only for you. You can see how it's built, run it, and (if it's marked as Open) export it — but you can't edit the blocks or delete it. We keep it consistent across banks on purpose, so the same playbook always behaves the same way.
+The Managed badge means the playbook is read-only for you. You can see how it's built, run it, and (if it's marked as Open) export it — but you can't edit the blocks or delete it. We keep it consistent across banks on purpose, so the same playbook always behaves the same way.
 
 {: .note }
 Managed playbooks usually represent &Money's recommended way of doing something — for example, the standard "Book Meeting" or "Customer Overview" workflow. You always have the option to **fork** the playbook (see below) if you need behaviour that doesn't fit the standard.
@@ -35,6 +35,8 @@ Managed playbooks usually represent &Money's recommended way of doing something 
 
 A small number of managed playbooks are marked **Proprietary** — for those, the inner block configuration is hidden but you can still use the playbook. Most managed playbooks are Open, meaning you can see exactly what the playbook does.
 
+After you fork a managed playbook, the badge changes: you'll see a blue **"Forked"** badge (with a fork icon) on your copy in place of the Managed badge.
+
 ## When you need to customise — Forking
 
 If a managed playbook doesn't quite fit your bank's setup — for example, your Salesforce uses different objects, or your business has a step the standard playbook doesn't include — you can **fork** the playbook. Forking creates a fully editable copy that belongs to you.
@@ -42,14 +44,16 @@ If a managed playbook doesn't quite fit your bank's setup — for example, your 
 ### How forking works
 
 1. Open the managed playbook from your playbook list
-2. Click the **Fork** button in the top-right
-3. **Name your copy** — by default it's named after the original, but you can rename it (e.g. "Book Meeting — FSC version")
+2. Click the **Fork** action on the playbook
+3. The fork dialog confirms which playbook you're forking and shows the source package and version
 4. Choose what happens to the original:
-   - **Disable the original** (default) — your fork takes over. The managed original stays in the system but is hidden from your day-to-day playbook list. You can re-enable it later if needed.
-   - **Keep the original active** — both run in parallel. Use this if you want different triggers or audiences to use different playbooks.
+   - **Disable the original** (default — checkbox is ticked) — your fork takes over. The managed original stays in the system but is hidden from your day-to-day playbook list. We can re-enable it for you later if needed.
+   - **Keep the original active** (uncheck the box) — both run in parallel. Use this if you want different triggers or audiences to use different playbooks.
 5. Click **Confirm**
 
-<!-- screenshot: fork modal with name field and disable-original toggle -->
+Your fork inherits the original playbook's name. You can rename it from the playbook list afterwards if you want a clearer label (e.g. "Book Meeting — FSC version").
+
+<!-- screenshot: fork modal showing playbook name + disable-original checkbox -->
 
 Your fork appears in your playbook list immediately. It's marked as a **forked playbook** (a different badge from "Managed") and is fully editable like any playbook you'd create yourself.
 
@@ -75,17 +79,17 @@ If you decide the standard managed playbook is fine after all, contact &Money su
 When &Money releases a new version of a managed playbook, two things happen:
 
 1. **Banks still using the managed version** receive the update automatically. Nothing for you to do.
-2. **Banks that have forked** see an **"Update Available" banner** on the fork in the playbook editor. The banner shows the version your fork is based on (e.g. v2) and the latest available version (e.g. v4):
+2. Banks that have forked see an **"Update Available"** badge on the forked playbook (replacing the regular "Forked" badge). Hover the badge for the version comparison — for example, "You're on v2, latest is v4":
 
-<!-- screenshot: update available banner in editor -->
+<!-- screenshot: forked playbook showing update-available badge with version tooltip -->
 
-The banner is informational — your fork keeps working exactly as it did. We're letting you know that the standard version has moved on so you can decide:
+The badge is informational — your fork keeps working exactly as it did. We're letting you know that the standard version has moved on so you can decide:
 
 - **Stay on your fork** — your customisations are important; you don't need anything &Money added in the new version
 - **Switch back to the managed version** — &Money's improvements are valuable enough to give up your customisations
 - **Reapply your customisations on top of the new version** — you want both. This is a manual process today; contact &Money support and we'll help you plan it.
 
-There's no in-app "accept update" button on a fork. Forks are deliberately independent so updates can never accidentally overwrite your work.
+There's no in-app "accept update" action on a fork. Forks are deliberately independent so updates can never accidentally overwrite your work.
 
 ## Frequently asked questions
 
@@ -99,7 +103,7 @@ A new playbook is created in your bank as a fully editable copy of the managed o
 
 ### Will my fork get automatic updates?
 
-No. Forks are independent — that's the point of forking. When &Money updates the managed original, your fork shows an "Update Available" banner so you know there's a newer version, but it keeps running your customised version until you decide otherwise.
+No. Forks are independent — that's the point of forking. When &Money updates the managed original, your fork shows an "Update Available" badge so you know there's a newer version, but it keeps running your customised version until you decide otherwise.
 
 ### Can I un-fork or go back to the managed version?
 

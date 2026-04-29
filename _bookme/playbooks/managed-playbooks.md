@@ -15,7 +15,7 @@ A managed playbook is a playbook that &Money deploys and maintains for you. We b
 
 You'll see a green **"Managed"** badge (with a checkmark icon) next to managed playbooks in your playbook list. Hover the badge to see which package and version the playbook came from:
 
-<!-- screenshot: playbook list showing managed badge and tooltip -->
+![Playbook list with Managed badges]({{ site.baseurl }}/assets/images/bookme/playbooks/managed/playbook-list-managed-badges.png)
 
 The Managed badge means the playbook is read-only for you. You can see how it's built, run it, and (if it's marked as Open) export it — but you can't edit the blocks or delete it. We keep it consistent across banks on purpose, so the same playbook always behaves the same way.
 
@@ -43,17 +43,18 @@ If a managed playbook doesn't quite fit your bank's setup — for example, your 
 
 ### How forking works
 
-1. Open the managed playbook from your playbook list
-2. Click the **Fork** action on the playbook
-3. The fork dialog confirms which playbook you're forking and shows the source package and version
+1. Find the managed playbook in your playbook list
+2. Click the **Fork** action (the fork icon next to the Export action in the row)
+3. The Fork Playbook dialog opens. It shows which playbook you're forking and which package + version it came from:
+
+   ![Fork Playbook dialog]({{ site.baseurl }}/assets/images/bookme/playbooks/managed/fork-modal.png)
+
 4. Choose what happens to the original:
-   - **Disable the original** (default — checkbox is ticked) — your fork takes over. The managed original stays in the system but is hidden from your day-to-day playbook list. We can re-enable it for you later if needed.
+   - **Disable the original managed playbook (recommended)** (default — checkbox is ticked) — your fork takes over. The managed original stays in the system but is hidden from your day-to-day playbook list. We can re-enable it for you later if needed.
    - **Keep the original active** (uncheck the box) — both run in parallel. Use this if you want different triggers or audiences to use different playbooks.
-5. Click **Confirm**
+5. Click **Fork Playbook**
 
 Your fork inherits the original playbook's name. You can rename it from the playbook list afterwards if you want a clearer label (e.g. "Book Meeting — FSC version").
-
-<!-- screenshot: fork modal showing playbook name + disable-original checkbox -->
 
 Your fork appears in your playbook list immediately. It's marked as a **forked playbook** (a different badge from "Managed") and is fully editable like any playbook you'd create yourself.
 
@@ -81,7 +82,7 @@ When &Money releases a new version of a managed playbook, two things happen:
 1. **Banks still using the managed version** receive the update automatically. Nothing for you to do.
 2. Banks that have forked see an **"Update Available"** badge on the forked playbook (replacing the regular "Forked" badge). Hover the badge for the version comparison — for example, "You're on v2, latest is v4":
 
-<!-- screenshot: forked playbook showing update-available badge with version tooltip -->
+<!-- screenshot pending: a forked playbook with hasUpdate=true. Will be added once a bank with a forked playbook on an outdated version is available. Badge layout matches the green Managed and blue Forked badges shown in the playbook-list screenshot above. -->
 
 The badge is informational — your fork keeps working exactly as it did. We're letting you know that the standard version has moved on so you can decide:
 

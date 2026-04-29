@@ -28,7 +28,7 @@ A managed playbook with no badge means there's nothing notable; the standard pla
 | View it | ✅ |
 | Run it (when triggered) | ✅ |
 | Export it (Open visibility only) | ✅ |
-| Edit blocks or settings | ❌ — fork to customise |
+| Edit blocks or settings | ❌ — fork to customize |
 | Delete it | ❌ |
 
 A few managed playbooks are marked **Proprietary** — block contents are hidden, and you can't fork them. The rest are **Open**, meaning you can read every block and fork freely.
@@ -53,9 +53,9 @@ Forks are **independent**: they don't receive automatic updates from &Money, and
 
 When &Money releases a new version of a managed playbook, your fork keeps running unchanged but gets an **Update Available** badge. The fork *never* updates automatically — that's the point of forking.
 
-If you want the new behaviour:
+If you want the new behavior:
 - **Switch back to the managed version** — drop your fork; the managed original takes over again. Contact &Money support.
-- **Reapply your customisations on top of the new version** — manual process; contact &Money support to plan it.
+- **Reapply your customizations on top of the new version** — manual process; contact &Money support to plan it.
 
 If you want to stay on your fork, no action needed.
 

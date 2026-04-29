@@ -59,8 +59,6 @@ If you want the new behaviour:
 
 If you want to stay on your fork, no action needed.
 
-<!-- screenshot pending: a forked playbook with hasUpdate=true; will be added once a bank in dev has a fork on an outdated version. -->
-
 ## FAQ
 
 **Why can't I edit this playbook?**

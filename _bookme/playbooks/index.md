@@ -19,12 +19,14 @@ Start here and follow the pages in order, or jump to the section you need:
 | [Introduction to Playbooks]({{ site.baseurl }}/bookme/playbooks/introduction-to-playbooks/) | What playbooks are, key concepts, and how they work |
 | [Playbooks User Guide]({{ site.baseurl }}/bookme/playbooks/playbooks-user-guide/) | Step-by-step instructions for building playbooks in the visual editor |
 | [Playbooks Integrations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/) | How playbooks connect to AI, CRM, and templates |
+| [Managed Playbooks]({{ site.baseurl }}/bookme/playbooks/managed-playbooks/) | Playbooks &Money builds and maintains for you, plus how forking works |
 
 ## Quick Start
 
 1. **New to playbooks?** Read the [Introduction]({{ site.baseurl }}/bookme/playbooks/introduction-to-playbooks/) to understand the building blocks
 2. **Ready to build?** Follow the [User Guide]({{ site.baseurl }}/bookme/playbooks/playbooks-user-guide/) step by step
 3. **Need integration details?** Check the [Integrations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/) page
+4. **See a "Managed" badge on a playbook?** [Managed Playbooks]({{ site.baseurl }}/bookme/playbooks/managed-playbooks/) explains what those are and how forking works
 
 ## Related Platform Features
 

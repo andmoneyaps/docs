@@ -34,6 +34,9 @@ From here you can:
 - **Import** — upload a previously exported playbook
 - **Delete** — permanently remove a playbook
 
+{: .note }
+Some playbooks may show a green **"Managed"** badge (with a checkmark icon). Those are maintained by &Money — you can view and use them, but Edit / Delete are unavailable. If you need to customize a managed playbook, use the **Fork** action to create your own editable copy. See [Managed Playbooks]({{ site.baseurl }}/bookme/playbooks/managed-playbooks/) for the full details.
+
 ---
 
 ## The Visual Editor

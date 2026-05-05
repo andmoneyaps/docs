@@ -17,16 +17,9 @@ After installing or upgrading the **BookMe** managed package — and during onbo
 
 These policies are not part of the managed package — Salesforce treats them as subscriber policies, so each customer org configures them independently. This is required to comply with Salesforce's AppExchange partner security mandate (deadline 11 May 2026).
 
-## andmoney service egress IPs to allow
+## andmoney service egress IPs
 
-All three apps need the same set of allowed IPs. These are the public IPs that the andmoney integration services use to reach your Salesforce org.
-
-| Environment | IP address |
-|---|---|
-| andmoney production | `<TBD>` |
-| andmoney test | `<TBD>` |
-
-> **Note**: If andmoney migrates infrastructure, your admin will be notified ahead of time and asked to update the allow list.
+All three apps need the same set of allowed IPs — the public IPs that the andmoney integration services use to reach your Salesforce org. These are not published here for security reasons; they will be supplied as part of your onboarding handoff. If you need them re-sent, ask your andmoney contact.
 
 ## 1. BookMe External Client App
 
@@ -37,7 +30,7 @@ The BookMe ECA ships with **PKCE** and **Refresh Token Rotation** already enable
 | Setting | Required value |
 |---|---|
 | Idle Refresh Token TTL | **30 days or less** |
-| Refresh Token IP Range Allow List | All andmoney IPs above |
+| Refresh Token IP Range Allow List | The andmoney IPs supplied during onboarding |
 
 ### Steps
 
@@ -45,7 +38,7 @@ The BookMe ECA ships with **PKCE** and **Refresh Token Rotation** already enable
 2. Find **BookMe External Client App** in the list and click **Edit Policies**.
 3. Open the **OAuth Policies** section.
 4. Set **Idle Refresh Token TTL** to `30` days (or lower).
-5. Under **Refresh Token IP Range Allow List**, add one entry per andmoney service egress IP listed above. Use the same IP for both Start and End to add a single address.
+5. Under **Refresh Token IP Range Allow List**, add one entry per andmoney service egress IP (supplied during onboarding). Use the same IP for both Start and End to add a single address.
 6. Save.
 
 ## 2. AMB_INTEGRATION Connected App
@@ -58,7 +51,7 @@ This Connected App is created in your org during BookMe onboarding (not via the 
 |---|---|---|
 | Permitted Users | **Admin approved users are pre-authorized** | Restricts who can use the app |
 | IP Relaxation | **Enforce IP restrictions** | Required for the IP allow list to take effect |
-| Trusted IP Range / Login IP Ranges | All andmoney IPs above | Same list as the ECA section |
+| Trusted IP Range / Login IP Ranges | The andmoney IPs supplied during onboarding | Same list as the ECA section |
 | Refresh Token Policy | Refresh token is valid for 30 days or less | Mostly informational — JWT Bearer flow doesn't issue refresh tokens, but Salesforce requires the policy to be set |
 
 ### Steps
@@ -67,7 +60,7 @@ This Connected App is created in your org during BookMe onboarding (not via the 
 2. Click **AMB_INTEGRATION**.
 3. Click **Edit Policies**.
 4. Under **OAuth Policies**, set Permitted Users and IP Relaxation as above.
-5. Under **Trusted IP Ranges** (or **Login IP Ranges** depending on your org), add one entry per andmoney IP. Use the same IP for both Start and End.
+5. Under **Trusted IP Ranges** (or **Login IP Ranges** depending on your org), add one entry per andmoney IP (supplied during onboarding). Use the same IP for both Start and End.
 6. Set **Refresh Token Policy** to expire after 30 days of inactivity.
 7. Save.
 
@@ -79,7 +72,7 @@ This Connected App is created in your org during Present onboarding. It's used b
 
 ### What you need to configure
 
-The same settings as AMB_INTEGRATION above — Permitted Users (Admin approved), IP Relaxation (Enforce), Trusted IP Range (all andmoney IPs), and Refresh Token Policy (≤30 days).
+The same settings as AMB_INTEGRATION above — Permitted Users (Admin approved), IP Relaxation (Enforce), Trusted IP Range (the andmoney IPs supplied during onboarding), and Refresh Token Policy (≤30 days).
 
 ### Steps
 

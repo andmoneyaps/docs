@@ -1,42 +1,25 @@
 ---
 layout: default
-title: ECA Security Policies — Post-Install
+title: Salesforce App Security Policies — Post-Install
 nav_order: 14
 parent: BookMe
 ---
 
-# External Client App Security Policies — Post-Install Configuration
+# Salesforce App Security Policies — Post-Install Configuration
 
-After installing or upgrading the **BookMe** managed package, your Salesforce admin must configure two security policies on the `BookMe External Client App` in your org. These policies are not part of the managed package — Salesforce treats them as subscriber policies, so each customer org configures them independently.
+After installing or upgrading the **BookMe** managed package — and during onboarding for **Present** — your Salesforce admin must configure security policies on up to three Salesforce apps used by the andmoney integration:
 
-This is required to comply with Salesforce's AppExchange partner security mandate (deadline 11 May 2026).
+| App | Type | Used by |
+|---|---|---|
+| **BookMe External Client App** | External Client App (ECA) | BookMe CRM integration |
+| **AMB_INTEGRATION** | Connected App | BookMe meeting/attendee sync |
+| **PresentBackendConnected** | Connected App | Present (only customers using Present need this section) |
 
-## What's already configured by the package
-
-The new package version ships with these enabled — no action needed:
-
-- Proof Key for Code Exchange (PKCE)
-- Refresh Token Rotation
-
-## What you need to configure
-
-| Setting | Required value |
-|---|---|
-| Idle Refresh Token TTL | **30 days or less** |
-| Refresh Token IP Range Allow List | The andmoney service egress IPs (see below) |
-
-## Steps
-
-1. In Salesforce Setup, search for **External Client App Manager**.
-2. Find **BookMe External Client App** in the list and click **Edit Policies**.
-3. Open the **OAuth Policies** section.
-4. Set **Idle Refresh Token TTL** to `30` days (or lower).
-5. Under **Refresh Token IP Range Allow List**, add one entry per andmoney service egress IP listed below. Use the same IP for both Start and End to add a single address.
-6. Save.
+These policies are not part of the managed package — Salesforce treats them as subscriber policies, so each customer org configures them independently. This is required to comply with Salesforce's AppExchange partner security mandate (deadline 11 May 2026).
 
 ## andmoney service egress IPs to allow
 
-These are the public IPs that the BookMe CRM integration service uses to reach your Salesforce org. Add all of them.
+All three apps need the same set of allowed IPs. These are the public IPs that the andmoney integration services use to reach your Salesforce org.
 
 | Environment | IP address |
 |---|---|
@@ -45,17 +28,74 @@ These are the public IPs that the BookMe CRM integration service uses to reach y
 
 > **Note**: This list will be kept current at this URL. If andmoney migrates infrastructure, your admin will be notified ahead of time and asked to update the allow list.
 
+## 1. BookMe External Client App
+
+The BookMe ECA ships with **PKCE** and **Refresh Token Rotation** already enabled in the new package version — no admin action needed for those.
+
+### What you need to configure
+
+| Setting | Required value |
+|---|---|
+| Idle Refresh Token TTL | **30 days or less** |
+| Refresh Token IP Range Allow List | All andmoney IPs above |
+
+### Steps
+
+1. In Salesforce Setup, search for **External Client App Manager**.
+2. Find **BookMe External Client App** in the list and click **Edit Policies**.
+3. Open the **OAuth Policies** section.
+4. Set **Idle Refresh Token TTL** to `30` days (or lower).
+5. Under **Refresh Token IP Range Allow List**, add one entry per andmoney service egress IP listed above. Use the same IP for both Start and End to add a single address.
+6. Save.
+
+## 2. AMB_INTEGRATION Connected App
+
+This Connected App is created in your org during BookMe onboarding (not via the managed package). It's used by the andmoney meeting sync service via the JWT Bearer flow.
+
+### What you need to configure
+
+| Setting | Required value | Notes |
+|---|---|---|
+| Permitted Users | **Admin approved users are pre-authorized** | Restricts who can use the app |
+| IP Relaxation | **Enforce IP restrictions** | Required for the IP allow list to take effect |
+| Trusted IP Range / Login IP Ranges | All andmoney IPs above | Same list as the ECA section |
+| Refresh Token Policy | Refresh token is valid for 30 days or less | Mostly informational — JWT Bearer flow doesn't issue refresh tokens, but Salesforce requires the policy to be set |
+
+### Steps
+
+1. In Salesforce Setup, search for **Manage Connected Apps**.
+2. Click **AMB_INTEGRATION**.
+3. Click **Edit Policies**.
+4. Under **OAuth Policies**, set Permitted Users and IP Relaxation as above.
+5. Under **Trusted IP Ranges** (or **Login IP Ranges** depending on your org), add one entry per andmoney IP. Use the same IP for both Start and End.
+6. Set **Refresh Token Policy** to expire after 30 days of inactivity.
+7. Save.
+
+## 3. PresentBackendConnected Connected App
+
+**Skip this section if your org does not use Present.**
+
+This Connected App is created in your org during Present onboarding. It's used by the andmoney Present service via the JWT Bearer flow.
+
+### What you need to configure
+
+The same settings as AMB_INTEGRATION above — Permitted Users (Admin approved), IP Relaxation (Enforce), Trusted IP Range (all andmoney IPs), and Refresh Token Policy (≤30 days).
+
+### Steps
+
+Identical to AMB_INTEGRATION, but click **PresentBackendConnected** in the Manage Connected Apps list.
+
 ## Verifying the configuration
 
-After saving, you can confirm the integration still works by:
+After saving, confirm each integration still works:
 
-1. Triggering a test booking through the BookMe portal.
-2. Confirming a corresponding Event (and any configured related records) appears in your Salesforce org.
+- **BookMe**: trigger a test booking through the BookMe portal and confirm a corresponding Event (and any configured related records) appears in your Salesforce org.
+- **Present**: open a Present-enabled session and confirm meeting/attendee data flows as expected.
 
-If the integration fails after these changes, the most common cause is a missing IP range in step 5 — double-check the values match exactly.
+If an integration fails after these changes, the most common cause is a missing or mistyped IP range — double-check the values match exactly.
 
 ## Why these settings are not in the package
 
-Salesforce's External Client App architecture separates *developer settings* (packageable) from *subscriber policies* (per-org). PKCE and Refresh Token Rotation are developer settings; refresh-token validity windows and IP restrictions are subscriber policies that each org's admin owns.
+Salesforce's app architecture separates *developer settings* (packageable, e.g. PKCE and Refresh Token Rotation on the BookMe ECA) from *subscriber policies* (per-org, e.g. refresh-token validity, IP restrictions, permitted users). The Connected Apps `AMB_INTEGRATION` and `PresentBackendConnected` are not packaged at all — they're created in your org during onboarding — so all of their settings are subscriber-owned.
 
 This split is documented by Salesforce in [Secure Your Org with External Client Apps](https://developer.salesforce.com/blogs/2025/01/secure-your-org-with-external-client-apps).

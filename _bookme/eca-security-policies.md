@@ -26,7 +26,7 @@ All three apps need the same set of allowed IPs. These are the public IPs that t
 | andmoney production | `<TBD>` |
 | andmoney test | `<TBD>` |
 
-> **Note**: This list will be kept current at this URL. If andmoney migrates infrastructure, your admin will be notified ahead of time and asked to update the allow list.
+> **Note**: If andmoney migrates infrastructure, your admin will be notified ahead of time and asked to update the allow list.
 
 ## 1. BookMe External Client App
 

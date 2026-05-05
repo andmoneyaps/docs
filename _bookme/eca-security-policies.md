@@ -29,17 +29,21 @@ The BookMe ECA ships with **PKCE** and **Refresh Token Rotation** already enable
 
 | Setting | Required value |
 |---|---|
+| Client Credentials Flow | **Enabled**, with a dedicated integration user assigned as **Run As** |
 | Idle Refresh Token TTL | **30 days or less** |
 | Refresh Token IP Range Allow List | The andmoney IPs supplied during onboarding |
+
+> **Note**: Client Credentials Flow is the OAuth flow the andmoney CRM integration uses to authenticate to your org. The flow is only allowed for the user you select as Run As — that user's permissions become the integration's permissions. Use the dedicated BookMe integration user, not a person's account.
 
 ### Steps
 
 1. In Salesforce Setup, search for **External Client App Manager**.
 2. Find **BookMe External Client App** in the list and click **Edit Policies**.
 3. Open the **OAuth Policies** section.
-4. Set **Idle Refresh Token TTL** to `30` days (or lower).
-5. Under **Refresh Token IP Range Allow List**, add one entry per andmoney service egress IP (supplied during onboarding). Use the same IP for both Start and End to add a single address.
-6. Save.
+4. Tick **Enable Client Credentials Flow** and select your dedicated BookMe integration user under **Run As**.
+5. Set **Idle Refresh Token TTL** to `30` days (or lower).
+6. Under **Refresh Token IP Range Allow List**, add one entry per andmoney service egress IP (supplied during onboarding). Use the same IP for both Start and End to add a single address.
+7. Save.
 
 ## 2. AMB_INTEGRATION Connected App
 

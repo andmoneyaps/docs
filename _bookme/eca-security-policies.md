@@ -23,7 +23,7 @@ All three apps need the same set of allowed IPs — the public IPs that the andm
 
 ## 1. BookMe External Client App
 
-The BookMe ECA ships with **PKCE** and **Refresh Token Rotation** already enabled in the new package version — no admin action needed for those.
+The BookMe ECA already has **PKCE** and **Refresh Token Rotation** enabled in your org — Salesforce replicates these developer-side settings from the BookMe source org to every customer org automatically, so no admin action is needed for those.
 
 ### What you need to configure
 
@@ -91,8 +91,8 @@ After saving, confirm each integration still works:
 
 If an integration fails after these changes, the most common cause is a missing or mistyped IP range — double-check the values match exactly.
 
-## Why these settings are not in the package
+## Why these settings need to be configured per-org
 
-Salesforce's app architecture separates *developer settings* (packageable, e.g. PKCE and Refresh Token Rotation on the BookMe ECA) from *subscriber policies* (per-org, e.g. refresh-token validity, IP restrictions, permitted users). The Connected Apps `AMB_INTEGRATION` and `PresentBackendConnected` are not packaged at all — they're created in your org during onboarding — so all of their settings are subscriber-owned.
+Salesforce's app architecture separates *developer-controlled* settings (e.g. PKCE and Refresh Token Rotation on the BookMe ECA — replicated automatically from the andmoney source org) from *subscriber policies* (per-org, e.g. refresh-token validity, IP restrictions, permitted users, run-as user assignment). The Connected Apps `AMB_INTEGRATION` and `PresentBackendConnected` are not packaged or replicated — they're created in your org during onboarding — so all of their settings are subscriber-owned.
 
 This split is documented by Salesforce in [Secure Your Org with External Client Apps](https://developer.salesforce.com/blogs/2025/01/secure-your-org-with-external-client-apps).

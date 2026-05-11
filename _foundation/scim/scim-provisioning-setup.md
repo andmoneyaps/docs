@@ -2,7 +2,8 @@
 layout: default
 title: SCIM Provisioning Setup
 nav_order: 6
-parent: BookMe
+parent: SCIM Provisioning
+grand_parent: Foundation
 ---
 
 # SCIM Provisioning Setup
@@ -116,7 +117,7 @@ To Monitor that the SCIM provisioning is working as intended continuously it is 
 This will need to be configured for each Enterprise Application Registration that needs to be monitored. 
 More Advanced monitoring scenarios can be achieved by integrating the Enterprise Application Registrations with Azure Log Analytics.  
 
-![Monitoring]({{ site.baseurl }}/assets/images/bookme/implementation-guide/monitoring.png)
+![Monitoring]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/monitoring.png)
 
 
 ---

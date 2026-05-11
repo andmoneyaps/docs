@@ -4,6 +4,7 @@ title: Phase 3 - Adaptation & Development
 description: Technical implementation and customization phase
 nav_order: 4
 parent: Implementation Guide
+grand_parent: Onboarding
 ---
 
 # Phase 3 - Adaptation & Development
@@ -158,7 +159,7 @@ This defines where &bookme – Scheduler can read and write from, and whether th
 
 Recommendation - We currently recommend leaving sharing disabled as customers will not normally have CRUD access to the sales pipeline.
 
-![Sales pipeline]({{ site.baseurl }}/assets/images/bookme/implementation-guide/sales-pipeline.png)
+![Sales pipeline]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/sales-pipeline.png)
 
 *Figure 1- Data model for sObject data access through configuration*
 
@@ -318,7 +319,7 @@ This feature is used if an advisor wants to be available outside of the availabi
 To use the feature, the advisor must book the &bookme - Scheduler Integration User in their outlook calendar (the user that the bank has set up for the MS365 integration service - e.g. the bank's IT department has the details of this user).
 This signals to &bookme - Scheduler that the advisor is available outside of normal availability, but only for online and telephone meetings.
 
-![Extraordinary calendar availability]({{ site.baseurl }}/assets/images/bookme/implementation-guide/calendar-availability.png)
+![Extraordinary calendar availability]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/calendar-availability.png)
 
 ### Offer of advisor for given configuration
 This section provides an overview of when appointments are scheduled for an advisor in different scenarios.

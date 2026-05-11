@@ -195,5 +195,5 @@ When a playbook is imported into a new environment, entity patterns referenced b
 
 - [Introduction to Playbooks — Block Types]({{ site.baseurl }}/bookme/playbooks/introduction-to-playbooks/#block-types) — how EntityPatternRead, Create, Update, and Filter blocks use entity patterns
 - [Playbooks Integrations — Entity Pattern Integration]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#entity-pattern-integration) — integration details for CRM blocks
-- [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/) — security model for CRM data access
+- [CRM Integration Security]({{ site.baseurl }}/bookme/onboarding/crm-integration-security/) — security model for CRM data access
 - [Setup Entity Pattern Mappers]({{ site.baseurl }}/embeddable-ui/setup-entity-pattern-mappers/) — operational guide for setting up mappers in a new bank

@@ -4,6 +4,7 @@ title: Phase 1 - Pre-Analysis
 description: Pre-analysis phase including workshop and initial planning
 nav_order: 1
 parent: Implementation Guide
+grand_parent: Onboarding
 ---
 
 # Phase 1 - Pre-Analysis

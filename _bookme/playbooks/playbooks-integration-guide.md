@@ -190,7 +190,7 @@ Portal-based triggers can be scoped to specific portals in the trigger block's c
 3. **Scoped access** — entity patterns and AI capabilities enforce their own access controls
 4. **Audit logging** — all playbook operations are logged, enabling full tracing and error identification
 
-For details on how CRM data access is secured, see [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/).
+For details on how CRM data access is secured, see [CRM Integration Security]({{ site.baseurl }}/bookme/onboarding/crm-integration-security/).
 
 ---
 
@@ -201,4 +201,4 @@ For details on how CRM data access is secured, see [CRM Integration Security]({{
 - [Portal Configuration]({{ site.baseurl }}/bookme/portals/) — setting up the portals that trigger playbooks
 - [Templates]({{ site.baseurl }}/bookme/templates/) — creating and managing text formatting templates
 - [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — the entity model, pattern parts, and how CRM abstraction works
-- [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/) — security model for CRM data access
+- [CRM Integration Security]({{ site.baseurl }}/bookme/onboarding/crm-integration-security/) — security model for CRM data access

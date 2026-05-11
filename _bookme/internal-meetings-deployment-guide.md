@@ -68,11 +68,11 @@ When the BookMe component is placed on a Salesforce record page, the employee se
 Before configuring internal meetings, ensure these are in place:
 
 - [ ] BookMe package **v1.14+** installed in Salesforce
-- [ ] [Salesforce connection established]({{ site.baseurl }}/bookme/salesforce-connection-setup/) (External Client App configured, Named Credential provisioned and authenticated)
-- [ ] [SCIM provisioning active]({{ site.baseurl }}/bookme/scim-provisioning-setup/) — employees and rooms synced from Entra ID
+- [ ] [Salesforce connection established]({{ site.baseurl }}/bookme/onboarding/salesforce-connection-setup/) (External Client App configured, Named Credential provisioned and authenticated)
+- [ ] [SCIM provisioning active]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) — employees and rooms synced from Entra ID
 - [ ] [Embeddable UI deployed]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) — Portal component pushed to Salesforce via Management UI
 - [ ] [Trusted URLs configured]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/#configuring-trusted-urls) in Salesforce (frame-src and img-src for embeddable domain)
-- [ ] Users assigned the **Employee** role in the BookingPlatform Management API enterprise application ([Entra integration guide]({{ site.baseurl }}/bookme/entra-integration/#user-access-configuration))
+- [ ] Users assigned the **Employee** role in the BookingPlatform Management API enterprise application ([Entra integration guide]({{ site.baseurl }}/foundation/identity/entra-integration/#user-access-configuration))
 
 ---
 
@@ -107,7 +107,7 @@ Locations are automatically created from SCIM provisioning entries. Verify that 
 **How location works in internal meetings**: The default location is derived from the **logged-in employee's SCIM location** (from Entra ID), not from the Account record. The employee can also manually select a different location from the dropdown in the booking form. Available rooms and employees are then filtered based on the selected location.
 
 {: .warning }
-> **Location matching is case-sensitive and exact.** If employee and room SCIM entries use different casing or spelling for the same branch, they will not match. See [Location matching between Entra and Salesforce]({{ site.baseurl }}/bookme/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) for detailed matching rules and examples.
+> **Location matching is case-sensitive and exact.** If employee and room SCIM entries use different casing or spelling for the same branch, they will not match. See [Location matching between Entra and Salesforce]({{ site.baseurl }}/bookme/onboarding/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) for detailed matching rules and examples.
 
 ### 3c. Employee Schedules
 
@@ -358,7 +358,7 @@ Internal meetings do **not** use Account-level fields for location or customer c
 | `AMB_Customer_Category__c` | **No** | Customer categories are not used in internal meetings. Themes are loaded without category filtering. |
 
 {: .note }
-> `AMB_Location__c` and `AMB_Customer_Category__c` **are** required for the customer booking flow ("Book Meeting"). See [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/salesforce-setup/) for customer booking data requirements.
+> `AMB_Location__c` and `AMB_Customer_Category__c` **are** required for the customer booking flow ("Book Meeting"). See [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-setup/) for customer booking data requirements.
 
 ### 6b. Employee Identity Matching
 
@@ -370,7 +370,7 @@ For internal meetings, the key requirement is: the signed-in employee's **Entra 
 
 The BookMe package includes default field mapping configurations for Event and Opportunity sObjects. Internal meetings use these defaults automatically to create Event records in Salesforce.
 
-For custom field mappings or additional sObject configurations, see [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/salesforce-setup/).
+For custom field mappings or additional sObject configurations, see [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-setup/).
 
 ---
 
@@ -602,8 +602,8 @@ Use the [validation checklist](#11-post-deployment-validation-checklist) to veri
 - [Employee Identity Matching]({{ site.baseurl }}/embeddable-ui/employee-identity-matching/) — SSO authentication and employee pre-selection
 - [Meeting Overview]({{ site.baseurl }}/embeddable-ui/meeting-overview/) — landing page buttons and meeting list behavior
 - [Service & Competence Groups]({{ site.baseurl }}/bookme/service-competence-groups/) — employee grouping and service level configuration
-- [Salesforce Connection Setup]({{ site.baseurl }}/bookme/salesforce-connection-setup/) — establishing the BookMe-Salesforce connection
+- [Salesforce Connection Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-connection-setup/) — establishing the BookMe-Salesforce connection
 - [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) — full configOverride property reference
 - [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) — component variants and deployment guide
 - [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/) — Trusted URLs, quick actions, portal component placement
-- [Microsoft Entra Integration]({{ site.baseurl }}/bookme/entra-integration/) — user access and role configuration
+- [Microsoft Entra Integration]({{ site.baseurl }}/foundation/identity/entra-integration/) — user access and role configuration

@@ -13,8 +13,8 @@ Employee schedules control when each employee is available for meeting bookings.
 
 ## Prerequisites
 
-- Employees must be provisioned via [SCIM]({{ site.baseurl }}/bookme/scim-provisioning-setup/) before they appear in the Manage Availability page
-- [Locations]({{ site.baseurl }}/bookme/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) must be configured before assigning per-weekday locations
+- Employees must be provisioned via [SCIM]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) before they appear in the Manage Availability page
+- [Locations]({{ site.baseurl }}/bookme/onboarding/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) must be configured before assigning per-weekday locations
 
 ---
 
@@ -39,7 +39,7 @@ Each weekday (Monday–Sunday) is configured independently:
 | **IsAvailable** | Whether the employee is available for bookings on this day. |
 | **From / To** | The time window during which the employee can be booked. Times outside this window are not offered. |
 | **AvailableMeetingTypes** | Which meeting types (Physical, Online, Telephone, OffSite) are available on this day. Only the selected types are offered to customers and employees. |
-| **Location** | The employee's location for this day. This determines which customers and rooms the employee is matched with — the location string must exactly match the [location configuration]({{ site.baseurl }}/bookme/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) in the Management UI and SCIM. |
+| **Location** | The employee's location for this day. This determines which customers and rooms the employee is matched with — the location string must exactly match the [location configuration]({{ site.baseurl }}/bookme/onboarding/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) in the Management UI and SCIM. |
 
 {: .hint }
 > An employee can have different locations on different weekdays — for example, working from the Copenhagen office on Monday–Wednesday and the Aarhus office on Thursday–Friday.
@@ -78,7 +78,7 @@ For details, see [Service & Competence Groups — Daily Meeting Time Limits]({{ 
 
 ## Related Documentation
 
-- [SCIM Provisioning Setup]({{ site.baseurl }}/bookme/scim-provisioning-setup/) — how employees are synced from Entra ID
+- [SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) — how employees are synced from Entra ID
 - [Service & Competence Groups]({{ site.baseurl }}/bookme/service-competence-groups/) — grouping employees and configuring service levels
 - [Internal Meetings Deployment Guide]({{ site.baseurl }}/bookme/internal-meetings-deployment-guide/) — schedule requirements specific to internal meetings
-- [Location Matching]({{ site.baseurl }}/bookme/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) — how location strings are matched
+- [Location Matching]({{ site.baseurl }}/bookme/onboarding/implementation-guide/phase3-adaptation/#location-matching-between-entra-and-salesforce) — how location strings are matched

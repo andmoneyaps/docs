@@ -2,8 +2,7 @@
 layout: default
 title: Engage Platform Integration Onboarding
 nav_order: 8
-parent: General
-collection: general
+parent: Foundation
 ---
 
 # Engage Platform Integration Onboarding
@@ -59,15 +58,17 @@ graph LR
 
 ### Integration points
 
-| # | Surface | Direction | Customer-side responsibility | Purpose | Section |
-|---|---|---|---|---|---|
-| 1 | **Microsoft 365 (Graph API — Teams + Outlook)** | Outbound — Engage Integration layer → your M365 tenant. Two access modes: direct Graph API access, or via a Graph-Proxy container installed in your Azure perimeter. OAuth tokens acquired from your Entra tenant in both modes. | Azure / Entra admin | Read employee calendar free/busy data, create and update Teams meetings tied to booked appointments, and manage calendar events for the meetings Engage schedules on behalf of your employees. | 1 |
-| 2a | **Microsoft Entra ID — Management Portal** | Inbound — your Entra tenant → Engage Public API. Customer grants admin consent on the Engage-owned `BookingPlatform Mgmt UI` + `BookingPlatform Mgmt API` multi-tenant apps and maps users to app roles | Azure / Entra admin | Authenticate your staff signing into the Management Portal using their existing credentials, MFA, and conditional access policies. App roles (`Admin`, `Configurator`, `Manager`, `Employee`, `Customer`) determine what each user can do. | 2a |
-| 2b | **Microsoft Entra ID — Customer Portal** | Inbound — your Entra tenant → Engage Public API. Customer grants admin consent on a separate Engage-owned Customer Portal app; Engage generates and stores per-customer credentials | Azure / Entra admin | Authenticate users from your enterprise customers (e.g. partner organisations operating under their own Entra tenants) signing into the Customer Portal. | 2b |
-| 2c | **MitID — Customer Portal** | Inbound — your MitID broker → Engage Public API (Engage consumes the broker's OpenID Connect configuration) | MitID / customer portal | Authenticate individual Danish citizens signing into the Customer Portal. Engage does not participate in your MitID broker contract; it consumes the discovery and authorization-code flow only. (Danish-market customers only.) | 2c |
-| 3 | **Directory data — SCIM provisioning** | Inbound — your Entra tenant → Engage Public API, on a ~40-minute cycle | Azure / Entra admin | Continuously synchronise employee and meeting-room records from your directory into Engage. Engage always reflects the current state of your directory — joiners, movers, leavers, room additions — without manual reconciliation. | 3 |
-| 4 | **Engage Public API** | Inbound — your bespoke systems → Engage Public API, over REST. Two OAuth2 flows supported: client credentials (token issued by Engage's external Entra tenant — the System Integration app registration lives there, not in your tenant) and authorization code (user-delegated via your Entra tenant against the Mgmt API app's `access_as_user` scope). | Public API consumer | Programmatic access for any system on your side that needs to read or write Engage-managed records — custom dashboards, integrations with your internal business or CRM systems, data extracts, and bespoke automation. | 4 |
-| 5 | **Dynamics 365 (Dataverse Web API)** | Outbound — Engage Integration layer → your Dataverse environment. OAuth tokens acquired from your Entra tenant (client credentials for system flows; OBO for user-attributed flows). | Dynamics 365 admin | Read your customer, contact, and employee records as the system of record, and (where in scope) create/update appointment and annotation records reflecting meeting activity. Operated through your declared Entity Patterns, so the platform reads/writes only the Dataverse columns you have mapped. | 5 |
+Each surface is labelled **Foundation** if it is platform-wide (configured once per tenant, reused across all Engage products), or **BookMe / Meet / Present** if it is product-specific.
+
+| # | Scope | Surface | Direction | Customer-side responsibility | Purpose | Section |
+|---|---|---|---|---|---|---|
+| 1 | **Foundation** (M365) | **Microsoft 365 (Graph API — Teams + Outlook)** | Outbound — Engage Integration layer → your M365 tenant. Two access modes: direct Graph API access, or via a Graph-Proxy container installed in your Azure perimeter. OAuth tokens acquired from your Entra tenant in both modes. | Azure / Entra admin | Read employee calendar free/busy data, create and update Teams meetings tied to booked appointments, and manage calendar events for the meetings Engage schedules on behalf of your employees. | 1 |
+| 2a | **Foundation** (Identity) | **Microsoft Entra ID — Management Portal** | Inbound — your Entra tenant → Engage Public API. Customer grants admin consent on the Engage-owned `BookingPlatform Mgmt UI` + `BookingPlatform Mgmt API` multi-tenant apps and maps users to app roles | Azure / Entra admin | Authenticate your staff signing into the Management Portal using their existing credentials, MFA, and conditional access policies. App roles (`Admin`, `Configurator`, `Manager`, `Employee`, `Customer`) determine what each user can do. | 2a |
+| 2b | **Foundation** (Identity) | **Microsoft Entra ID — Customer Portal** | Inbound — your Entra tenant → Engage Public API. Customer grants admin consent on a separate Engage-owned Customer Portal app; Engage generates and stores per-customer credentials | Azure / Entra admin | Authenticate users from your enterprise customers (e.g. partner organisations operating under their own Entra tenants) signing into the Customer Portal. | 2b |
+| 2c | **Foundation** (Identity) | **MitID — Customer Portal** | Inbound — your MitID broker → Engage Public API (Engage consumes the broker's OpenID Connect configuration) | MitID / customer portal | Authenticate individual Danish citizens signing into the Customer Portal. Engage does not participate in your MitID broker contract; it consumes the discovery and authorization-code flow only. (Danish-market customers only.) | 2c |
+| 3 | **Foundation** (SCIM) | **Directory data — SCIM provisioning** | Inbound — your Entra tenant → Engage Public API, on a ~40-minute cycle | Azure / Entra admin | Continuously synchronise employee and meeting-room records from your directory into Engage. Engage always reflects the current state of your directory — joiners, movers, leavers, room additions — without manual reconciliation. | 3 |
+| 4 | **Foundation** (Public API) | **Engage Public API** | Inbound — your bespoke systems → Engage Public API, over REST. Two OAuth2 flows supported: client credentials (token issued by Engage's external Entra tenant — the System Integration app registration lives there, not in your tenant) and authorization code (user-delegated via your Entra tenant against the Mgmt API app's `access_as_user` scope). | Public API consumer | Programmatic access for any system on your side that needs to read or write Engage-managed records — custom dashboards, integrations with your internal business or CRM systems, data extracts, and bespoke automation. | 4 |
+| 5 | **BookMe** (CRM) | **Dynamics 365 (Dataverse Web API)** | Outbound — Engage Integration layer → your Dataverse environment. OAuth tokens acquired from your Entra tenant (client credentials for system flows; OBO for user-attributed flows). | Dynamics 365 admin | Read your customer, contact, and employee records as the system of record, and (where in scope) create/update appointment and annotation records reflecting meeting activity. Operated through your declared Entity Patterns, so the platform reads/writes only the Dataverse columns you have mapped. | 5 |
 
 ## Roles and responsibilities
 
@@ -131,7 +132,7 @@ These items are referenced by multiple section prerequisites and are delivered b
 
 ## 1. Microsoft 365 integration
 
-**Customer-side responsibility:** Azure / Entra administration
+**Scope:** Foundation (M365) · **Customer-side responsibility:** Azure / Entra administration
 
 ### Architecture overview and reasoning
 
@@ -169,7 +170,7 @@ The Graph-Proxy and its supporting resources are delivered as a single Azure Man
 
 | Component | Purpose |
 |---|---|
-| Container App ([Graph-Proxy]({{ site.baseurl }}/bookme/graph-proxy/)) | Runtime that intercepts and forwards Graph calls |
+| Container App ([Graph-Proxy]({{ site.baseurl }}/foundation/m365/graph-proxy/)) | Runtime that intercepts and forwards Graph calls |
 | Key Vault | Stores the app registration's client secret inside your Azure perimeter, so the secret never leaves your environment |
 | Managed Identity (single-tenant deployments only) | Gives the Graph-Proxy the application-mode Graph permissions and Teams role it needs |
 
@@ -203,7 +204,7 @@ In Graph-Proxy mode, two topologies are supported. The runtime behaviour is the 
 
 The access mode decision is locked first (as part of the [Starting inputs](#starting-inputs)). Once locked, follow the relevant installation guide:
 
-- **Proxy mode** — see [Marketplace Installation]({{ site.baseurl }}/bookme/marketplace-installation/) for the full single-tenant and multi-tenant install procedures, including the PowerShell scripts ([Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/bookme/enable-scim-provisioning/) and [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/bookme/add-teams-access-policy/)) that provision the Entra ID part.
+- **Proxy mode** — see [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/) for the full single-tenant and multi-tenant install procedures, including the PowerShell scripts ([Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/) and [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/)) that provision the Entra ID part.
 - **Direct mode** — provision the equivalent Entra resources directly in your tenant (Entra app registration with Calendar + Teams permissions, client secret, security group, Teams access policy, SCIM service principal). The Engage platform team confirms the specific Graph scopes during onboarding.
 
 #### Validation
@@ -230,7 +231,7 @@ The access mode decision is locked first (as part of the [Starting inputs](#star
 
 ## 2. Identity and portal authentication
 
-**Customer-side responsibilities:** Azure / Entra administration (2a + 2b); MitID / customer portal (2c)
+**Scope:** Foundation (Identity) · **Customer-side responsibilities:** Azure / Entra administration (2a + 2b); MitID / customer portal (2c)
 
 The Engage platform serves two distinct portal surfaces, with three identity paths between them:
 
@@ -454,7 +455,7 @@ A citizen session created via MitID carries **no tenant ID and no Engage backend
 
 ## 3. Entra SCIM provisioning
 
-**Customer-side responsibility:** Azure / Entra administration
+**Scope:** Foundation (SCIM) · **Customer-side responsibility:** Azure / Entra administration
 
 ### Architecture overview and reasoning
 
@@ -475,7 +476,7 @@ Two SCIM-enabled enterprise applications are created in your Entra tenant — on
 - **Attribute mappings** — how Entra attributes translate into the customappsso schema Engage understands.
 - **Users and groups** — the set of identities to provision (typically Entra security groups you maintain).
 
-They are typically created by the PowerShell script [`Enable-SCIM-Provisioning.ps1`]({{ site.baseurl }}/bookme/enable-scim-provisioning/) covered in section 1's multi-tenant flow, but can be created manually if you prefer.
+They are typically created by the PowerShell script [`Enable-SCIM-Provisioning.ps1`]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/) covered in section 1's multi-tenant flow, but can be created manually if you prefer.
 
 ### Deployment prerequisites
 
@@ -490,7 +491,7 @@ They are typically created by the PowerShell script [`Enable-SCIM-Provisioning.p
 
 ### Concrete implementation steps
 
-See [SCIM Provisioning Setup]({{ site.baseurl }}/bookme/scim-provisioning-setup/) for the configuration procedure, including the environment-specific tenant URLs, attribute mappings for employee and room applications, user/group assignment, and how to configure monitoring of provisioning failures.
+See [SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) for the configuration procedure, including the environment-specific tenant URLs, attribute mappings for employee and room applications, user/group assignment, and how to configure monitoring of provisioning failures.
 
 #### Validation
 
@@ -512,7 +513,7 @@ See [SCIM Provisioning Setup]({{ site.baseurl }}/bookme/scim-provisioning-setup/
 
 ## 4. Engage Public API
 
-**Customer-side responsibility:** Public API consumer
+**Scope:** Foundation (Public API) · **Customer-side responsibility:** Public API consumer
 
 ### Architecture overview and reasoning
 
@@ -630,7 +631,7 @@ For a user-facing application calling the Public API on behalf of a signed-in us
 
 ## 5. Dynamics 365 CRM Integration
 
-**Customer-side responsibility:** Dynamics 365 administration
+**Scope:** BookMe (CRM integration) · **Customer-side responsibility:** Dynamics 365 administration
 
 > If your CRM is Salesforce rather than Dynamics 365, refer to the existing Engage platform customer-facing Salesforce setup documentation instead of this section.
 

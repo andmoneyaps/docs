@@ -62,6 +62,6 @@ The matching logic is:
 
 ## Related Documentation
 
-- [SCIM Provisioning Setup]({{ site.baseurl }}/bookme/scim-provisioning-setup/) — how employees are synced from Entra ID
-- [Microsoft Entra Integration]({{ site.baseurl }}/bookme/entra-integration/) — user access and role configuration
+- [SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) — how employees are synced from Entra ID
+- [Microsoft Entra Integration]({{ site.baseurl }}/foundation/identity/entra-integration/) — user access and role configuration
 - [Meeting Overview]({{ site.baseurl }}/embeddable-ui/meeting-overview/) — landing page behavior and button states

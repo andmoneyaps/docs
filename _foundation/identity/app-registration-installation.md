@@ -2,8 +2,8 @@
 layout: default
 title: App Registration Installation
 nav_order: 1
-parent: BookMe
-collection: bookme
+parent: Identity
+grand_parent: Foundation
 ---
 
 # Ensuring access to the &money Financial Platform Management UI

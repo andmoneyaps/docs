@@ -669,14 +669,14 @@ You therefore have complete control over which Dataverse columns the platform re
 
 #### Authentication architecture
 
-The integration uses two authentication flows against Dynamics, each serving a distinct purpose:
+The integration uses a **dual-flow** approach against Dynamics. **On-Behalf-Of (OBO) is the default** — every operation that can be attributed to an acting employee runs as that employee, so the Application User's security role and your own Dataverse audit trail govern what the platform can read and write. A separate **client-credentials** flow exists as an escalation path for the rare cases where the operation needs access the individual employee does not have (for example, background sync of records outside any single employee's scope, or platform-wide metadata reads).
 
 | Flow | Used for | Caller identity in Dynamics |
 |---|---|---|
-| OAuth 2.0 client credentials | Unattended system operations — scheduled sync, playbook runs without a user context, metadata reads | A Dataverse **Application User** bound to the app registration |
-| OAuth 2.0 On-Behalf-Of (OBO) | User-attributed operations — playbook actions that should be attributed to the signed-in employee when they reach Dynamics | The signed-in employee's Dynamics user, via token exchange |
+| OAuth 2.0 On-Behalf-Of (OBO) — **default** | The default for all employee-initiated operations. The acting employee's Dataverse permissions govern what is readable and writable; actions appear in Dynamics audit and downstream automation as that employee. | The acting employee's Dynamics user, via token exchange |
+| OAuth 2.0 client credentials — **escalation** | The rare operations where the platform needs to create or read data the individual employee does not have access to — for example, cross-employee background sync, or system-wide metadata reads | A Dataverse **Application User** bound to the app registration, governed by its security role |
 
-The reasoning for two flows: some operations have no signed-in user (background sync, metadata reads) and must run as a system identity; others must appear in Dynamics as the acting employee for audit and downstream automation in your environment. A single flow could not serve both correctly.
+A single flow could not serve both correctly: OBO alone cannot reach data outside the employee's role, and client-credentials alone cannot attribute actions to the acting employee for audit and downstream automation.
 
 The exact number and tenancy of Entra enterprise apps that back these flows — for example, whether a single multi-tenant Engage app is consented into your tenant, or whether a separate app registration is created in your tenant dedicated to OBO — is confirmed during the implementation design phase. The user-visible Dynamics behaviour is identical regardless of topology.
 
@@ -718,26 +718,27 @@ Authoring playbooks is typically not part of your Dynamics administration scope 
 
 ### Concrete implementation steps
 
-#### Step 1 — Create the system-integration app registration
+#### Step 1 — Create the system-integration app registration (escalation flow)
 
-The system-integration app registration backs the client-credentials flow and is the first piece of the integration you provision.
+The system-integration app registration backs the client-credentials escalation flow — the rare operations where the platform needs access beyond what the acting employee has. Provision it as part of initial onboarding so the escalation path is ready when the first such playbook lands; day-to-day OBO traffic does not depend on it.
+
+For Dataverse, the authorization boundary on this flow is **the Application User and its security role**, not an Entra API permission — `Dynamics CRM` / `user_impersonation` is a Delegated permission used by the OBO flow (Step 3), not by client credentials.
 
 1. Create an **Entra app registration** named e.g. `Engage-Dynamics-System-Integration`, in your Entra tenant.
 2. Create a **client secret** with an expiration policy compatible with your rotation cadence. Recommended: 12 or 24 months, with a rotation process agreed with the Engage platform team in advance.
-3. Grant the **API permission** `Dynamics CRM` → `user_impersonation` (**Application** permission). Tenant admin consent must be granted.
-4. Create a **Dataverse Application User** in your target Dynamics environment, bound to this app registration's Application ID.
+3. Create a **Dataverse Application User** in your target Dynamics environment, bound to this app registration's Application ID.
    - Power Platform admin centre → Environments → {your env} → Settings → Users + permissions → Application users → New app user.
-5. Assign a **security role** to the Application User. The role is your enforcement point for column-level access. Recommended approach: start from a copy of a built-in role and narrow it down to exactly the entities and columns you have decided to expose via Entity Definitions. The role is reviewed and tightened further during implementation.
+4. Assign a **security role** to the Application User. The role is your enforcement point for what the escalation flow can read or write. Recommended approach: start from a copy of a built-in role and narrow it down to exactly the entities and columns the escalation scenarios in scope require — not the full set of entities the integration touches, since the per-employee OBO flow handles those under each employee's own role. The role is reviewed and tightened further during implementation.
 
 #### Step 2 — Configure Entity Definitions and Entity Patterns
 
 In the Engage Management UI, import the starter Entity Definition exports the Engage platform team provides, then review and adjust each abstract-field-to-Dataverse-column mapping against your local schema. Define the Entity Patterns covering the integration scenarios in scope.
 
-#### Step 3 — User-context (OBO) app registration
+#### Step 3 — User-context (OBO) app registration — default flow
 
-This step is performed once the OBO topology is locked during the implementation design phase. The choice does not affect what entities the platform accesses or how you operate the integration; it only affects how the OAuth token exchange is wired.
+OBO is the **default** authorization path the platform uses against Dynamics; it carries every operation that can be attributed to an acting employee. The registration topology — whether OBO runs through a multi-tenant Engage app consented into your tenant or through a separate app registration created in your tenant dedicated to OBO — is locked during the implementation design phase. The choice does not affect what entities the platform accesses or how you operate the integration; it only affects how the OAuth token exchange is wired.
 
-Once the topology is confirmed, the registration to create (in your Entra tenant or via consent to a multi-tenant Engage app), the required delegated `Dynamics CRM` / `user_impersonation` permission, admin consent steps, whether a client secret is required on your side, and the audience and scope values will be communicated. The handover artifacts table is amended at that point.
+Once the topology is confirmed, the registration to create (in your Entra tenant or via consent to a multi-tenant Engage app), the required Delegated `Dynamics CRM` / `user_impersonation` permission, admin consent steps, whether a client secret is required on your side, and the audience and scope values will be communicated. The handover artifacts table is amended at that point.
 
 #### Validation
 

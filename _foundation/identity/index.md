@@ -4,6 +4,7 @@ title: Identity
 nav_order: 1
 parent: Foundation
 has_children: true
+permalink: /foundation/identity/
 ---
 
 # Identity

@@ -4,6 +4,7 @@ title: Microsoft 365
 nav_order: 3
 parent: Foundation
 has_children: true
+permalink: /foundation/m365/
 ---
 
 # Microsoft 365

@@ -4,6 +4,7 @@ title: Onboarding
 nav_order: 1
 parent: BookMe
 has_children: true
+permalink: /bookme/onboarding/
 ---
 
 # BookMe Onboarding

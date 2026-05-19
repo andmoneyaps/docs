@@ -4,6 +4,7 @@ title: Playbooks
 parent: BookMe
 nav_order: 10
 has_children: true
+permalink: /bookme/playbooks/
 ---
 
 # Playbooks

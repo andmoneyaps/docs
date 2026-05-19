@@ -4,6 +4,7 @@ title: Foundation
 nav_order: 2
 has_children: true
 collection: foundation
+permalink: /foundation/
 ---
 
 # Foundation

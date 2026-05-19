@@ -4,6 +4,7 @@ title: SCIM Provisioning
 nav_order: 2
 parent: Foundation
 has_children: true
+permalink: /foundation/scim/
 ---
 
 # SCIM Provisioning

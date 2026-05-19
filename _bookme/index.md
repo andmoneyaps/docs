@@ -4,6 +4,7 @@ title: BookMe
 nav_order: 3
 has_children: true
 collection: bookme
+permalink: /bookme/
 ---
 
 # BookMe

@@ -738,7 +738,7 @@ In the Engage Management UI, import the starter Entity Definition exports the En
 
 OBO is the **default** authorization path the platform uses against Dynamics; it carries every operation that can be attributed to an acting employee. The registration topology — whether OBO runs through a multi-tenant Engage app consented into your tenant or through a separate app registration created in your tenant dedicated to OBO — is locked during the implementation design phase. The choice does not affect what entities the platform accesses or how you operate the integration; it only affects how the OAuth token exchange is wired.
 
-Once the topology is confirmed, the registration to create (in your Entra tenant or via consent to a multi-tenant Engage app), the required Delegated `Dynamics CRM` / `user_impersonation` permission, admin consent steps, whether a client secret is required on your side, and the audience and scope values will be communicated. The handover artifacts table is amended at that point.
+Once the topology is confirmed, the registration to create (in your Entra tenant or via consent to a multi-tenant Engage app), the `Dynamics CRM` / `user_impersonation` Delegated permission, admin consent steps, whether a client secret is required on your side, and the audience and scope values will be communicated. The handover artifacts table is amended at that point.
 
 #### Validation
 

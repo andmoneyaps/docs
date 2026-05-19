@@ -120,7 +120,7 @@ Two services are then provided:
 ![management-ui-graph-test.png]({{ site.baseurl }}/assets/images/management-ui-graph-test.png)
 
 {: .note }
->  Be sure to follow the [Installation Marketplace App Offer]({{ site.baseurl }}/foundation/m365/marketplace-installation/) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
+> Be sure to follow the [Installation Marketplace App Offer]({{ site.baseurl }}/foundation/m365/marketplace-installation/) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
 
 This documentation provides an overview of the Graph-Proxy, its deployment options,
 integration with Azure Key Vault, and required configuration. For further details or assistance,

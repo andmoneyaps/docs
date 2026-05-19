@@ -108,7 +108,7 @@ If your CRM is Salesforce rather than Dynamics 365, refer to the existing Engage
 
 ## Starting inputs
 
-A few decisions and items apply across multiple sections of this document. They are resolved before per-section work begins and are referenced by the [Prerequisites](#prerequisites) tables in each section.
+A few decisions and items apply across multiple sections of this document. They are resolved before per-section work begins and are referenced by the **Deployment prerequisites** subsection in each integration section below.
 
 ### Cross-cutting decisions
 
@@ -297,7 +297,7 @@ Tokens issued by your Entra tenant carry your tenant ID as the issuer claim. Eng
 
 Engage provides two admin-consent URLs per environment:
 
-```
+```text
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtUiAppClientId}
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtApiAppClientId}
 ```
@@ -365,7 +365,7 @@ Engage provides a per-environment admin-consent link for the Customer Portal app
 
 Engage provides the admin-consent URL for the Customer Portal app per environment:
 
-```
+```text
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={CustomerPortalAppGuid}
 ```
 
@@ -459,7 +459,7 @@ A citizen session created via MitID carries **no tenant ID and no Engage backend
 
 ### Architecture overview and reasoning
 
-SCIM provisioning keeps your employee and meeting-room records synchronised into the Engage platform automatically. Entra's built-in SCIM service runs on a ~40 minute cycle by default and pushes user and group changes to Engage's SCIM endpoint whenever your directory changes — joiners, movers, leavers, and room additions all propagate without manual reconciliation.
+SCIM provisioning keeps your employee and meeting-room records synchronised into the Engage platform automatically. Entra's built-in SCIM service runs on a ~40-minute cycle by default and pushes user and group changes to Engage's SCIM endpoint whenever your directory changes — joiners, movers, leavers, and room additions all propagate without manual reconciliation.
 
 The reasoning for using SCIM (rather than a custom sync API or a periodic export):
 
@@ -467,7 +467,7 @@ The reasoning for using SCIM (rather than a custom sync API or a periodic export
 - Provisioning is **push-from-the-source**: Engage receives writes from Entra. Engage holds no standing credentials in your directory, and no scheduled job on Engage's side reaches into your tenant.
 - Per-resource scoping — employees and rooms have separate SCIM-enabled enterprise applications, with separate attribute mappings and separate user/group assignments. You can ramp them up independently and operate them at different cadences if you need.
 
-##### Resource model
+#### Resource model
 
 Two SCIM-enabled enterprise applications are created in your Entra tenant — one targeting Engage's `employees/scim` endpoint, one targeting `rooms/scim`. Each carries:
 
@@ -521,7 +521,7 @@ The Engage Public API is a RESTful API exposing scheduling (BookMe), presentatio
 
 Calls are authenticated using **OAuth2 bearer tokens issued by Microsoft Entra ID**. Tokens are validated by Engage at the API layer; tenant scoping is enforced from the token's claims (issuer for user-delegated flow, authorised party for client-credentials flow).
 
-##### Two authentication flows are supported
+#### Two authentication flows are supported
 
 The Public API supports two OAuth2 flows, each suited to a different consumption pattern:
 
@@ -534,17 +534,17 @@ The two flows share the same API endpoints; the difference is only in how the be
 
 Critically — in **both flows** the Entra app registration the token is issued against is owned by Engage, not by you. You do not create an app registration on your side. For client-credentials flow, Engage creates a per-customer System Integration app registration in its own tenant and provides you with the Client ID and Client Secret to put in your consuming system. For authorization-code flow, the BookingPlatform Mgmt API app is consented into your tenant once during §2a setup, and the same admin consent unlocks user-delegated calls from anywhere — including the Public API.
 
-##### API version and base URL
+#### API version and base URL
 
 The current Public API version is **v3**:
 
-```
+```text
 https://apim-public-api.azure-api.net/api/v3/
 ```
 
 Versions are pinned in the base URL. When Engage publishes a future major version, it runs alongside v3 — clients opt in by changing the base URL. Inside a version, changes are additive and backward-compatible.
 
-##### Endpoint surface (high level)
+#### Endpoint surface (high level)
 
 | API area | Examples |
 |---|---|
@@ -570,17 +570,17 @@ The complete list, request/response schemas, and field semantics are in the Swag
 
 ### Concrete implementation steps
 
-##### Required request header
+#### Required request header
 
 Every Public API request carries an OAuth2 bearer token:
 
-```
+```http
 Authorization: Bearer {access_token}
 ```
 
 `{access_token}` is acquired against Entra using one of the two flows below.
 
-##### Client-credentials flow (system-to-system)
+#### Client-credentials flow (system-to-system)
 
 For a backend process on your side calling the API without a user context:
 
@@ -592,7 +592,7 @@ For a backend process on your side calling the API without a user context:
    - **Scope** — `https://{engage-tenant-domain}/{engage-api-app-id}/.default` (concrete values provided by Engage)
 3. Configure your consuming system to acquire tokens against:
 
-   ```
+   ```text
    https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/token
    ```
 
@@ -601,7 +601,7 @@ For a backend process on your side calling the API without a user context:
 
 Engage monitors the client secret expiry (default lifetime is 2 years) and re-issues credentials a few months before expiry. Use the secret-handover channel agreed during onboarding to receive rotated values.
 
-##### Authorization-code flow (user-delegated)
+#### Authorization-code flow (user-delegated)
 
 For a user-facing application calling the Public API on behalf of a signed-in user — typically the same identity context the Management Portal uses:
 
@@ -610,14 +610,14 @@ For a user-facing application calling the Public API on behalf of a signed-in us
 3. The user's Entra admin must have already granted admin consent on the BookingPlatform Mgmt API app as part of §2a setup. The same consent unlocks Public API access.
 4. Attach the acquired bearer token on every request.
 
-##### Validation
+#### Validation
 
 - [ ] (Client-credentials) Your consuming system acquires a token against `login.microsoftonline.com/{EngageTenantId}/oauth2/v2.0/token` with the provided Client ID + Secret and `/.default` scope.
 - [ ] (Authorization-code) A user-facing application acquires a token via authorization code flow with the `access_as_user` scope.
 - [ ] A simple read (e.g. `GET /config/employees`) returns a 200 response in the target environment with the bearer token attached.
 - [ ] Rate-limit response headers from the API are understood by the consuming system; retry/backoff behaviour is in place.
 
-##### Handover artifacts
+#### Handover artifacts
 
 | Artifact | From | To | Channel |
 |---|---|---|---|

@@ -2,8 +2,8 @@
 layout: default
 title: Salesforce BookMe Integration Setup
 nav_order: 8
-parent: BookMe
-collection: bookme
+parent: Onboarding
+grand_parent: BookMe
 ---
 
 

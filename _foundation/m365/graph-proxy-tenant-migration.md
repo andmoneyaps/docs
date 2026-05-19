@@ -2,17 +2,18 @@
 layout: default
 title: Graph Proxy Tenant Migration
 nav_order: 7
-parent: BookMe
+parent: Microsoft 365
+grand_parent: Foundation
 ---
 
 # Graph Proxy Tenant Migration Guide
 
 This guide walks you through migrating your &money Graph Proxies (BookMe Graph Proxy) from one Azure tenant to another. The Graph Proxies are deployed as Azure Container Apps via the Azure Marketplace and act as a secure proxy between Microsoft Graph API and &money's systems.
 
-Each Graph Proxy deployment creates a Managed Application containing a [Container App (Graph-Proxy)]({{ site.baseurl }}/bookme/graph-proxy/), a Key Vault (storing secrets), and a User-Assigned Managed Identity.
+Each Graph Proxy deployment creates a Managed Application containing a [Container App (Graph-Proxy)]({{ site.baseurl }}/foundation/m365/graph-proxy/), a Key Vault (storing secrets), and a User-Assigned Managed Identity.
 
 {: .note }
-> This guide assumes you are using a **Partial Deployment** (multi-tenant) setup. For more details on deployment modes, see the [Marketplace Installation Guide]({{ site.baseurl }}/bookme/marketplace-installation/).
+> This guide assumes you are using a **Partial Deployment** (multi-tenant) setup. For more details on deployment modes, see the [Marketplace Installation Guide]({{ site.baseurl }}/foundation/m365/marketplace-installation/).
 
 ---
 
@@ -148,7 +149,7 @@ After all Graph Proxies have been deployed in the new tenant:
    - The **Container App** (`app-graph-proxy`) is running and healthy
    - The **Key Vault** contains the correct secrets (`entraClientId`, `entraClientSecret`, `scimSecretToken`)
    - Container App logs show successful startup (check **Log stream** in the Container App)
-3. Test the Graph-Proxy connection via the Management UI under **Admin** → **Microsoft** (see [Graph Proxy documentation]({{ site.baseurl }}/bookme/graph-proxy/#how-to-set-up-the-graph-api-url-in-the-management-ui))
+3. Test the Graph-Proxy connection via the Management UI under **Admin** → **Microsoft** (see [Graph Proxy documentation]({{ site.baseurl }}/foundation/m365/graph-proxy/#how-to-set-up-the-graph-api-url-in-the-management-ui))
 4. Notify &money that the migration is complete so they can verify connectivity and update any routing on their end
 
 ---

@@ -4,6 +4,7 @@ title: Playbooks
 parent: BookMe
 nav_order: 10
 has_children: true
+permalink: /bookme/playbooks/
 ---
 
 # Playbooks
@@ -36,4 +37,4 @@ Playbooks connect to several other parts of the &Money platform. These features 
 - [Templates]({{ site.baseurl }}/bookme/templates/) — reusable text formatting used by Template blocks
 - [Portals]({{ site.baseurl }}/bookme/portals/) — the customer-facing booking pages that trigger playbooks
 - [Meet]({{ site.baseurl }}/meet/) — the video meeting product whose transcripts and meeting-end events can trigger playbooks
-- [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/) — security model for CRM data access
+- [CRM Integration Security]({{ site.baseurl }}/bookme/onboarding/crm-integration-security/) — security model for CRM data access

@@ -2,8 +2,8 @@
 layout: default
 title: Enable-SCIM-Provisioning.ps1
 nav_order: 5
-parent: BookMe
-collection: bookme
+parent: SCIM Provisioning
+grand_parent: Foundation
 ---
 # Enable-SCIM-Provisioning.ps1
 ```PowerShell

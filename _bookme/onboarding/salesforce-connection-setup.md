@@ -2,7 +2,8 @@
 layout: default
 title: Salesforce Connection Setup
 nav_order: 10
-parent: BookMe
+parent: Onboarding
+grand_parent: BookMe
 ---
 
 # Salesforce Connection Setup

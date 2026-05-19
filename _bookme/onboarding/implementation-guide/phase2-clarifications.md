@@ -4,6 +4,7 @@ title: Phase 2 - Clarifications & Staging
 description: Technical and business clarifications phase
 nav_order: 2
 parent: Implementation Guide
+grand_parent: Onboarding
 ---
 
 # Phase 2 - Clarifications & Staging
@@ -158,7 +159,7 @@ Create an auth. provider for outgoing calls to &bookme – Scheduler backend.
 | Execute Registration |	Insert the integration user created in the section “Creating an integration user in the deployment environment” |
 | Include Consumer Secret in API Responses |	False |
 
-![Auth provider]({{ site.baseurl }}/assets/images/bookme/implementation-guide/auth-prov.png)
+![Auth provider]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/auth-prov.png)
 
 ### Verify booking platform client credential metadata 
 Check that a custom metadata record has now been created in “Booking Platform Client Credentials”.
@@ -170,7 +171,7 @@ Check that a custom metadata record has now been created in “Booking Platform 
 | Client Secret  | See the data sheet provided |
 | URL |	See the data sheet provided |
 
-![Booking platform client credential]({{ site.baseurl }}/assets/images/bookme/implementation-guide/bp-client-cred.png)
+![Booking platform client credential]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/bp-client-cred.png)
 
 ### Create named credentials
 Create a set of named credentials for the &money booking backend
@@ -185,7 +186,7 @@ Create a set of named credentials for the &money booking backend
 | Start Authentication Flow on Save |	True |
 | Generate Authorization Header |	True |
 
-![Named credentials]({{ site.baseurl }}/assets/images/bookme/implementation-guide/named-creds.png)
+![Named credentials]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/named-creds.png)
 
 ### Salesforce connected app to event integration 
 1. Create a Connected App in Salesforce Orgen with Oauth flow (see Connected app guide.pdf)

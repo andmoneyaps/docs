@@ -4,6 +4,7 @@ title: Phase 5 - Operations
 description: Ongoing maintenance and support procedures
 nav_order: 8
 parent: Implementation Guide
+grand_parent: Onboarding
 ---
 
 # Phase 5 - Operations

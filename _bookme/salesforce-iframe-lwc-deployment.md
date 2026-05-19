@@ -38,7 +38,7 @@ Before deploying the iframe component, ensure you have:
 
 ### Step 1: Setup Salesforce Connection
 
-Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup]({{ site.baseurl }}/bookme/salesforce-connection-setup/) guide which covers:
+Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-connection-setup/) guide which covers:
 - Configuring the External Client App in Salesforce
 - Setting up the Salesforce domain in the Management UI
 - Testing and provisioning the connection
@@ -148,7 +148,7 @@ The &money Portal component exists in two variants. The variant is selected in t
 
 ## Related Documentation
 
-- [Salesforce Connection Setup]({{ site.baseurl }}/bookme/salesforce-connection-setup/) - Detailed guide for establishing the BookMe-Salesforce connection
+- [Salesforce Connection Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-connection-setup/) - Detailed guide for establishing the BookMe-Salesforce connection
 - [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) - Configuration options for the deployed iframe component
-- [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/salesforce-setup/) - Complete Salesforce package installation and metadata configuration
-- [CRM Integration Security]({{ site.baseurl }}/bookme/crm-integration-security/) - Security architecture and considerations
+- [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-setup/) - Complete Salesforce package installation and metadata configuration
+- [CRM Integration Security]({{ site.baseurl }}/bookme/onboarding/crm-integration-security/) - Security architecture and considerations

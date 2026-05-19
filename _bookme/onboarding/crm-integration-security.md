@@ -2,7 +2,8 @@
 layout: default
 title: CRM Integration Security
 nav_order: 7
-parent: BookMe
+parent: Onboarding
+grand_parent: BookMe
 ---
 
 # Portals CRM Integration Security

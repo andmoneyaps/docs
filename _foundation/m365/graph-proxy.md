@@ -2,7 +2,8 @@
 layout: default
 title: Graph Proxy
 nav_order: 6
-parent: BookMe
+parent: Microsoft 365
+grand_parent: Foundation
 ---
 
 # Graph-Proxy
@@ -13,7 +14,7 @@ It is an essential part of the Financial Booking Solutions and is deployed as pa
 ![Graph-Proxy and Key Vault Architecture]({{ site.baseurl }}/assets/images/graph-proxy-keyvault.png)
 
 {: .note }
-> For detailed installation instructions, please refer to the [Installation Guide]({{ site.baseurl }}/bookme/marketplace-installation/).
+> For detailed installation instructions, please refer to the [Installation Guide]({{ site.baseurl }}/foundation/m365/marketplace-installation/).
 >
 
 ## Deployment Options
@@ -85,12 +86,12 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Sign in with a user account that has the following permissions:
      - `Application.ReadWrite.All`
      - `Synchronization.ReadWrite.All`
-   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/bookme/enable-scim-provisioning/) to deploy the Entra ID components.
+   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/) to deploy the Entra ID components.
    - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** and **Online Meeting** permissions.
 
 2. **Configure Teams access policy**
     - Sign in with a user account that has one of the two Teams admin roles `Teams Communications Administrator` or `Teams Administrator`.
-    - Execute the PowerShell script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/bookme/add-teams-access-policy/) to create a Teams access policy for the above generated App Registration. This step is necessary to allow the Graph-Proxy to manage online meetings in Microsoft Teams.
+    - Execute the PowerShell script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/) to create a Teams access policy for the App Registration generated above. This step is necessary to allow the Graph-Proxy to manage online meetings in Microsoft Teams.
 
 3. **Deploy the Azure Part**
 
@@ -103,7 +104,7 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Ensure that the App Registration in Entra ID has the correct **Calendar and Online Meeting Access** permission.
    - Test the Graph-Proxy by entering and testing the Graph-Proxy url in the Management UI. Under the 'Admin' → 'Microsoft'-tab in the Management UI.
 
-The above steps are explained in greater detail in the [Installation Guide]({{ site.baseurl }}/bookme/marketplace-installation/).
+The above steps are explained in greater detail in the [Installation Guide]({{ site.baseurl }}/foundation/m365/marketplace-installation/).
 
 ### How to set up the Graph API URL in the Management UI
 
@@ -119,11 +120,11 @@ Two services are then provided:
 ![management-ui-graph-test.png]({{ site.baseurl }}/assets/images/management-ui-graph-test.png)
 
 {: .note }
->  Be sure to follow the [Installation Marketplace App Offer]({{ site.baseurl }}/bookme/marketplace-installation/) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
+> Be sure to follow the [Installation Marketplace App Offer]({{ site.baseurl }}/foundation/m365/marketplace-installation/) guide carefully to ensure all required resources are correctly configured, especially in multi-tenant deployments where Entra ID resources must be set up manually.
 
 This documentation provides an overview of the Graph-Proxy, its deployment options,
 integration with Azure Key Vault, and required configuration. For further details or assistance,
-please consult the accompanying [Installation Guide]({{ site.baseurl }}/bookme/marketplace-installation/) or contact our support team.
+please consult the accompanying [Installation Guide]({{ site.baseurl }}/foundation/m365/marketplace-installation/) or contact our support team.
 
 {: .note }
-> **Migrating to a new Azure tenant?** See the [Graph Proxy Tenant Migration Guide]({{ site.baseurl }}/bookme/graph-proxy-tenant-migration/) for step-by-step instructions on moving your Graph Proxies between tenants.
+> **Migrating to a new Azure tenant?** See the [Graph Proxy Tenant Migration Guide]({{ site.baseurl }}/foundation/m365/graph-proxy-tenant-migration/) for step-by-step instructions on moving your Graph Proxies between tenants.

@@ -61,7 +61,7 @@ Get-CsApplicationAccessPolicy
 Get-CsOnlineUser -Filter "ApplicationAccessPolicy -eq 'Bookme-OnlineMeetingAccess-Policy-Production'" | Select DisplayName, UserPrincipalName
 ```
 
-**How to modify scope:** Add or remove users from the policy to control which advisors' meetings are accessible. See [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/bookme/add-teams-access-policy/) for the setup script used during onboarding.
+**How to modify scope:** Add or remove users from the policy to control which advisors' meetings are accessible. See [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/) for the setup script used during onboarding.
 
 {: .important }
 > The Teams Application Access Policy controls access at the **user level** — it determines which users' meetings the application can access. It does not distinguish between meetings a user organized themselves and meetings created by our platform. To verify that our application only accesses platform-created meetings, use the detective controls described in section 4.

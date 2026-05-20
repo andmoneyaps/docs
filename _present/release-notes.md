@@ -8,6 +8,30 @@ collection: present
 
 # Release Notes—Present
 
+## Version 1.33
+
+**Release Date:** May 2026
+
+### Bug Fixes
+
+**Duplicate Sections in Present Tab**
+
+Resolved an issue where "Sektioner" would occasionally appear twice when switching between sub-tabs (e.g. "Private Banking" → "Pension") in the Present tab.
+
+- **Impact:** Sections rendered twice for users who switched tabs while the initial page load was still in progress, making the presentation view appear duplicated
+- **Resolution:** Added a request ID guard to `populateArraysWithDataFromService()` to discard stale API responses when a newer request has already been initiated
+
+### Installation
+
+> **Subscriber Package Version ID:** *(to be added after release)*
+>
+> **Installation URL:**
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=`
+>
+> **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
+
+---
+
 ## Version 1.32
 
 **Release Date:** January 2026

@@ -8,7 +8,7 @@ collection: present
 
 # Release Notes—Present
 
-## Version 1.33
+## Version 1.34
 
 **Release Date:** May 2026
 

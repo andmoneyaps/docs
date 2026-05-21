@@ -26,7 +26,7 @@ Resolved an issue where "Sektioner" would occasionally appear twice when switchi
 > **Subscriber Package Version ID:** `04tP7000002xIqzIAE`
 >
 > **Installation URL:**
-> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=`
+> `https://[YOUR_DOMAIN].lightning.force.com/packagingSetupUI/ipLanding.app?apvId=04tP7000002xIqzIAE`
 >
 > **Note:** Replace `[YOUR_DOMAIN]` with your organization's Salesforce domain.
 

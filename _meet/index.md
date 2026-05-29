@@ -84,4 +84,5 @@ Deploy via GPO, Intune, or MDM.
 ## Next Steps
 
 - [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Meet in your Salesforce organization
+- [Meeting Goals]({{ site.baseurl }}/meet/meeting-goals/) — Define the objectives Meet's AI tracks during each meeting type
 - [Security]({{ site.baseurl }}/meet/security/) — Customer-facing security documentation (solution description + controls)

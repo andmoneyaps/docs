@@ -1,13 +1,19 @@
 ---
 layout: default
 title: Release Notes
-nav_order: 4
+nav_order: 5
 parent: Meet
 ---
 
 # Release Notes—Meet
 
 Meet is continuously improved and deployed. This page highlights notable updates and newly published documentation.
+
+## May 2026
+
+### Configuration
+
+- **Meeting Goals** — New configuration page in the Management UI for defining per-topic and per-subtopic meeting objectives. Includes AI Instruction generation, inheritance from topic to subtopic, per-subtopic exclusions, and handling for orphaned goals. See [Meeting Goals]({{ site.baseurl }}/meet/meeting-goals/).
 
 ## February 2026
 

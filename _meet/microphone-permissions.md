@@ -2,7 +2,7 @@
 layout: default
 title: Microphone Permissions
 parent: Meet
-nav_order: 2
+nav_order: 3
 ---
 
 # Microphone Permissions

@@ -235,6 +235,58 @@ The final goal states — including the AI's evidence for each one — are inclu
 
 ---
 
+## Reporting
+
+The final goal states recorded during each meeting roll up into a dashboard so configurators and team leads can see how the goal configuration is performing across the organisation. There is nothing extra to enable — every Meet session with goals turned on automatically contributes to this dashboard.
+
+### Accessing the dashboard
+
+1. Open the Management UI
+2. Navigate to **Meet** → **Reporting** → **Reporting**
+
+![Standard reporting dashboard with goal data]({{ site.baseurl }}/assets/images/meet/meeting-goals/09-reporting-dashboard.png)
+
+### Filters
+
+Two filters at the top of the page narrow the data:
+
+| Filter | Behavior |
+|--------|----------|
+| **Period** | Rolling window of the last *N* days (default: 30). Every metric and chart on the page is restricted to meetings that ended within this window. |
+| **Customer type** | Limits the data to a single customer category, or **All** for everything. Useful when goal configurations differ by segment. |
+
+### KPI tiles
+
+A row of four tiles sits at the top of the dashboard:
+
+| Tile | Meaning |
+|------|---------|
+| **Assist meetings** | Total number of Meet sessions in the period (whether or not goals were enabled). The baseline everything else is measured against. |
+| **Meetings with goals** | Share of those sessions where the advisor turned **Meeting Goals** on, shown as a percentage with the underlying numerator/denominator (e.g. *2 of 37 meetings*). A low number here usually means goals weren't enabled, not that goals failed. |
+| **Goal count** | Total number of goal *evaluations* across every goal-tracked meeting in the period. A single meeting with 5 goals contributes 5 to this number. |
+| **Goal completion rate** | Share of those evaluations that ended in **Done**, shown as a percentage with the underlying *done / total* counts. |
+
+### Charts
+
+| Chart | What it shows |
+|-------|---------------|
+| **Goal outcomes over the period** | Stacked bar of goal-evaluation outcomes (Done · Addressed · Not started) bucketed by ISO week of the meeting end. Lets you spot trends or sudden drops over time. |
+| **Outcomes overall** | Donut of the same Done/Addressed/Not started split for the entire period. The Done slice always matches the **Goal completion rate** KPI tile. |
+| **Outcomes by goal** | Horizontal stacked bar — one row per individual goal — showing how each goal performs across all meetings. Useful for spotting goals that are consistently *Not started* (poorly worded, irrelevant to the topic) or rarely *Done* (AI Instruction too strict). |
+| **Outcomes by topic** | Stacked bar grouped by **Topic** rather than by individual goal. Useful for comparing how well goal sets perform across different meeting topics. |
+
+![Outcomes by goal and Outcomes by topic charts]({{ site.baseurl }}/assets/images/meet/meeting-goals/10-reporting-by-goal-and-topic.png)
+
+Across every chart and tile, **Done**, **Addressed**, and **Not started** carry the same meaning as the live Goal Tracker statuses — the dashboard simply aggregates the final state each goal reached at the end of its meeting.
+
+### How the dashboard relates to configuration
+
+- A goal that never moves out of **Not started** across many meetings usually means it is not surfacing in the conversation. Consider whether the goal really belongs on that Topic, or whether the AI Instruction is too narrow.
+- A goal that reaches **Addressed** but rarely **Done** is being touched on but the AI is not seeing enough evidence to commit. Tightening the Description or relaxing the AI Instruction often helps.
+- A low **Meetings with goals** percentage is a roll-out signal: advisors aren't turning the feature on. The dashboard surfaces this but does not enforce anything; the toggle stays per-meeting.
+
+---
+
 ## Recommended Configuration
 
 - **Keep goals focused.** One clear objective per goal works better than a single goal that tries to cover multiple outcomes — the AI evaluates each goal independently.

@@ -22,7 +22,7 @@ Assist - Meeting Goals gives the Admin/configurators access to define the object
 | **Topic** | A top-level meeting category (for example *Investment*, *Homeloan advisory*). Meeting goals attached to a topic apply to every meeting in that topic. |
 | **Subtopic** | A child of a topic (for example *First-time mortgage*, *Refinancing*). Subtopics inherit every goal from their parent topic by default. |
 | **Goal** | A named objective with a description and an AI Instruction. Each meeting goal belongs to one topic or subtopic. If its owning topic or subtopic is deleted the goal persists as an orphan — still in the system, but no longer attached to any topic until it is reassigned or removed. |
-| **AI Instruction** | The natural-language rule sent to AssMeet's AI that tells it when the meeting goal is considered reached. |
+| **AI Instruction** | The natural-language rule sent to Assist's AI that tells it when the meeting goal is considered reached. |
 | **Inheritance** | Every meeting goal defined on a topic applies to all of its subtopics by default. Any individual goal can be excluded from any specific subtopic — exclusions are per-goal and per-subtopic, never global. |
 | **Orphaned goal** | A goal whose original topic was deleted. The goal still exists but no longer applies to any meeting until it is reassigned or deleted. |
 
@@ -68,7 +68,7 @@ The page renders one or more sections depending on the current filter:
 |--------|-------------|
 | **Name** | The Meeting goal's display name. |
 | **Description** | A short description of the meeting goal. Shown to employee and also fed to the AI together with the **Name** when generating the AI Instruction via **Create instructions**. Its important, that the description also include your guidance to how the AI should see the meeting goal as reached, touched or not touched during the meeting. |
-| **AI Instruction** | Shows **Configured** (green check) when an AI Instruction is set or **Missing** (red cross) when it is not. If a meeting goal is **Missing** at meeting time, Meet falls back to using the **Description** as the AI Instruction — the goal is still evaluated, but with materially lower quality. Always configure an explicit AI Instruction in production. |
+| **AI Instruction** | Shows **Configured** (green check) when an AI Instruction is set or **Missing** (red cross) when it is not. If a meeting goal is **Missing** at meeting time, Assist falls back to using the **Description** as the AI Instruction — the goal is still evaluated, but with materially lower quality. Always configure an explicit AI Instruction in production. |
 | **Include** *(inherited only)* | Toggle that controls whether the inherited goal applies to the selected subtopic. On by default; switching it off creates an exclusion for that goal on that subtopic. |
 | **Actions** *(owned only)* | Edit and delete buttons. |
 
@@ -168,7 +168,7 @@ Once the goals are configured, the advisor never has to fetch or assign them man
 
 ### Enabling Meeting Goals for a meeting
 
-Meeting Goals is an opt-in feature on each meeting. Before starting the meeting, the advisor opens **Settings** on the Meet setup screen and toggles **Meeting Goals** on. Until it is enabled, no preview is shown, no goals are tracked during the meeting, and the live Goal Tracker does not appear.
+Meeting Goals is an opt-in feature on each meeting. Before starting the meeting, the advisor opens **Settings** on the Assist setup screen and toggles **Meeting Goals** on. Until it is enabled, no preview is shown, no goals are tracked during the meeting, and the live Goal Tracker does not appear.
 
 ![Settings panel with Meeting Goals toggle]({{ site.baseurl }}/assets/images/meet/meeting-goals/06-settings-toggle.png)
 <!-- TODO(screenshot): drop the Settings panel screenshot in as

@@ -32,7 +32,7 @@ Assist needs access to your microphone to transcribe the meeting. The first time
 2. Under **Microphone**, choose the device you want to use (for example your headset instead of the laptop microphone).
 3. If you have multiple similar devices, unplug/replug your headset and re-open the selector.
 
-![Meet microphone selector]({{ site.baseurl }}/assets/images/meet/microphone/meet-microphone-selector.png)
+![Assist microphone selector]({{ site.baseurl }}/assets/images/meet/microphone/meet-microphone-selector.png)
 
 ## If You Clicked "Block" (Chrome/Edge)
 

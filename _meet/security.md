@@ -107,7 +107,7 @@ flowchart TB
 - Service principals / managed identities for service-to-service access including monitoring, Redis, and Azure services.
 
 **End-customer access**
-- **Not provided**: Meet is designed for internal advisor usage; customer end-users do not log in to Assist directly in the standard deployment model.
+- **Not provided**: Assist is designed for internal advisor usage; customer end-users do not log in to Assist directly in the standard deployment model.
 
 ### 1.4 Data processing
 
@@ -164,7 +164,7 @@ Many enterprise customers perform a Business Impact Analysis (BIA) and assess im
 **Typical inputs for customer BIA**
 - **Confidentiality**: Meeting content can include personal data; review who can access the minutes field in the customer's CRM and which additional controls (DLP, conditional access, auditing) are required.
 - **Integrity**: Minutes are drafts intended for advisor review before use; customers define review/approval workflows before downstream sharing.
-- **Availability**: Meet is designed for real-time operation and includes best-effort recovery mechanisms including short-lived session recovery snapshots to reduce impact from transient connectivity issues. If transcription/AI is unavailable, advisors continue the meeting and use fallback documentation workflows.
+- **Availability**: Assist is designed for real-time operation and includes best-effort recovery mechanisms including short-lived session recovery snapshots to reduce impact from transient connectivity issues. If transcription/AI is unavailable, advisors continue the meeting and use fallback documentation workflows.
 
 **Impact for data subjects**
 - The primary long-term storage location for minutes is the customer's CRM. Customers assess personal-data content and DPIA requirements under their policies and regulatory obligations.
@@ -192,7 +192,7 @@ This section is intended to help security reviewers quickly understand where con
 
 **Common circumvention paths (by design or by customer configuration)**
 - Any user who is legitimately granted access to the relevant CRM record/field can view or export the minutes.
-- Minutes copied from the customer's CRM into other systems are governed by the customer’s downstream controls, not Meet.
+- Minutes copied from the customer's CRM into other systems are governed by the customer’s downstream controls, not Assist.
 
 **Recommended mitigating controls (customer-side)**
 - Restrict access to minutes fields using least-privilege CRM access controls (for example, roles, permission sets, field/object permissions, and record sharing where supported).
@@ -238,7 +238,7 @@ This section is intended to help security reviewers quickly understand where con
 - **Encryption in transit**: TLS is used for browser↔service traffic and service↔service integrations.
 - **Encryption at rest**: Managed services including Redis, PostgreSQL, and monitoring storage use cloud-provider encryption at rest; the customer's CRM platform provides encryption at rest for stored CRM data.
 - **Key management**: Secrets/keys are stored in a secret management solution including Key Vault and accessed via managed identity patterns; keys are rotated as part of operational security procedures.
-- **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Meet trusted URLs to reduce friction. For end-user steps, see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
+- **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Assist trusted URLs to reduce friction. For end-user steps, see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
 
 ### 2.4 Identity and Access Management (IAM)
 
@@ -300,7 +300,7 @@ This section is intended to help security reviewers quickly understand where con
 - Personal data is stored and processed within the EU under the configured Microsoft EU Data Boundary setup.
 - Microsoft Customer Lockbox is enabled as a supplementary technical and organizational measure.
 - Customer Lockbox requires prior documented approval from &money and the relevant customer before Microsoft personnel (including personnel outside the EU) can obtain human access to personal data.
-- In practice, this access is not granted for Meet operations.
+- In practice, this access is not granted for Assist operations.
 
 **Azure Speech**
 - Receives in-session audio streams for speech-to-text and diarization.
@@ -308,7 +308,7 @@ This section is intended to help security reviewers quickly understand where con
 - Customer audio and transcript data is **not used by Microsoft to train, improve, or develop** speech models or any other Microsoft service. This applies under Microsoft's standard Azure Cognitive Services data processing terms.
 
 **No sub-processor model training (general)**
-- No sub-processor engaged by &money uses customer data for model training, service improvement, or any purpose beyond delivering the contracted service. This applies to all Azure services (Speech, OpenAI, infrastructure) as well as any other sub-processors involved in the Meet solution.
+- No sub-processor engaged by &money uses customer data for model training, service improvement, or any purpose beyond delivering the contracted service. This applies to all Azure services (Speech, OpenAI, infrastructure) as well as any other sub-processors involved in the Assist solution.
 
 **Azure OpenAI / AI Foundry**
 - Receives prompted text/embeddings for specific AI capabilities.
@@ -344,7 +344,7 @@ This section is intended to help security reviewers quickly understand where con
 - Regional resilience roadmap: additional EU-region fallback options for AI-dependent services are being evaluated.
 - Monitoring guidance (capacity-related):
   - Alert on elevated transcription failure rates and latency
-  - Alert on sustained resource saturation (CPU/memory) in Meet services
+  - Alert on sustained resource saturation (CPU/memory) in Assist services
   - Alert on external dependency throttling/429 responses
 
 ## 4. Appendix
@@ -368,7 +368,7 @@ This section is intended to help security reviewers quickly understand where con
 
 The table below provides an **indicative** mapping between this document’s control areas and common control catalogs including ISO/IEC 27002:2022. It is intended to accelerate security assessments and does not constitute a certification or attestation.
 
-| Meet security documentation section | Related ISO/IEC 27002:2022 control areas (indicative) | Notes |
+| Assist security documentation section | Related ISO/IEC 27002:2022 control areas (indicative) | Notes |
 |---|---|---|
 | 2.1 Operations | 5.29, 5.37, 8.8, 8.9, 8.32 | Operations, resilience, vulnerability/change/config management. |
 | 2.2 Data backup and retention | 8.13 | Backup expectations and responsibilities. |

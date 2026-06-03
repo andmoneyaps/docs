@@ -3,7 +3,6 @@ layout: default
 title: Assist
 nav_order: 7
 has_children: true
-permalink: /Assist/
 ---
 
 # Assist Documentation
@@ -84,6 +83,6 @@ Deploy via GPO, Intune, or MDM.
 
 ## Next Steps
 
-- [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Asssit in your Salesforce organization
+- [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Assist in your Salesforce organization
 - [Meeting Goals]({{ site.baseurl }}/meet/meeting-goals/) — Define the objectives Assist's AI tracks during each meeting type
 - [Security]({{ site.baseurl }}/meet/security/) — Customer-facing security documentation (solution description + controls)

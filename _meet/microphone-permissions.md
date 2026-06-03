@@ -1,21 +1,21 @@
 ---
 layout: default
 title: Microphone Permissions
-parent: Meet
+parent: Assist
 nav_order: 3
 ---
 
 # Microphone Permissions
 
-Meet needs access to your microphone to transcribe the meeting. The first time you open Meet, your browser will ask for permission.
+Assist needs access to your microphone to transcribe the meeting. The first time you open Assist, your browser will ask for permission.
 
 **Supported browsers:** Chrome and Edge (recommended). Safari has limited support.
 
 ## Allow Microphone (First Time)
 
-1. Open Meet.
+1. Open Assist.
 2. When the browser asks to use your microphone, click **Allow**.
-3. Go back to Meet and confirm you can select a microphone device.
+3. Go back to Assist tab in your CRM, and confirm you can select a microphone device.
 
 ![Chrome/Edge microphone permission prompt]({{ site.baseurl }}/assets/images/meet/microphone/chrome-edge-microphone-permission-prompt.png)
 
@@ -26,9 +26,9 @@ Meet needs access to your microphone to transcribe the meeting. The first time y
 
 ![macOS microphone prompt (Edge)]({{ site.baseurl }}/assets/images/meet/microphone/macos-edge-microphone-permission-prompt.png)
 
-## Select the Right Microphone in Meet
+## Select the Right Microphone in Assist
 
-1. In Meet, open **Settings** (gear icon).
+1. In Assist, open **Settings** (gear icon).
 2. Under **Microphone**, choose the device you want to use (for example your headset instead of the laptop microphone).
 3. If you have multiple similar devices, unplug/replug your headset and re-open the selector.
 
@@ -36,12 +36,12 @@ Meet needs access to your microphone to transcribe the meeting. The first time y
 
 ## If You Clicked "Block" (Chrome/Edge)
 
-If you clicked **Block** earlier, Meet will not be able to access your microphone until you change the site permission.
+If you clicked **Block** earlier, Assist will not be able to access your microphone until you change the site permission.
 
-1. Open Meet.
+1. Open Assist.
 2. In the browser address bar, click the lock icon (site controls).
 3. Open **Site settings** (wording may vary).
-4. Set **Microphone** to **Allow** for the Meet site.
+4. Set **Microphone** to **Allow** for the Assist site.
 5. Reload the page.
 
 ## Common Issues
@@ -49,9 +49,9 @@ If you clicked **Block** earlier, Meet will not be able to access your microphon
 | Symptom | What you can do |
 |---|---|
 | No microphone prompt appears | Check you didn't previously block microphone access (see the section above). Try Chrome/Edge. If nobody in your organization ever gets the prompt, contact your admin (see below). |
-| Microphone list is empty in Meet | Confirm the browser permission is **Allowed**. Reload the page after changing permissions. Unplug/replug your headset and re-select the device in Meet settings. |
+| Microphone list is empty in Assist | Confirm the browser permission is **Allowed**. Reload the page after changing permissions. Unplug/replug your headset and re-select the device in Assist settings. |
 | Transcription is poor or intermittent / wrong mic is used | Select your headset microphone explicitly. Avoid duplicate devices (Bluetooth headset + dock + laptop mic) and reconnect the device. |
-| Mic works in other apps but not in Meet | Check OS microphone privacy settings (next section). |
+| Mic works in other apps but not in Assist | Check OS microphone privacy settings (next section). |
 
 ## OS Privacy Checks (If Browser Permission Is Correct)
 
@@ -73,9 +73,9 @@ If you are on a managed company device, your IT department may lock microphone s
 
 ## When to Contact Your Admin
 
-If nobody in your organization gets a microphone prompt when opening Meet, your admin may need to adjust your organization's settings.
+If nobody in your organization gets a microphone prompt when opening Assist, your admin may need to adjust your organization's settings.
 
 {: .note}
-> **If you use Meet in Salesforce**
+> **If you use Assist in Salesforce**
 >
-> Your Salesforce admin may need to adjust Salesforce org settings for Meet. Admin reference: [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/)
+> Your Salesforce admin may need to adjust Salesforce org settings for Assist. Admin reference: [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/)

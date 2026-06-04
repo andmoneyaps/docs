@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Meet
+title: Assist
 nav_order: 7
 has_children: true
 permalink: /meet/
 ---
 
-# Meet Documentation
+# Assist Documentation
 
-Meet is an AI-powered real-time meeting assistant designed for financial advisors. It provides live transcription with speaker identification, real-time customer insights, and automatic summary generation—eliminating manual note-taking.
+Assist is an AI-powered real-time meeting assistant designed for financial employees. It provides live transcription with speaker identification, real-time customer insights, and automatic summary generation—eliminating manual note-taking.
 
 ## Key Features
 
@@ -25,7 +25,7 @@ Meet is an AI-powered real-time meeting assistant designed for financial advisor
 ### Automatic Summary Generation
 - Customer-facing summary generated at meeting end
 - Zero manual work required
-- Immediate sync to Salesforce CRM
+- Immediate sync to CRM
 
 ### Session Recovery
 - Automatic recovery after network disconnections
@@ -33,7 +33,7 @@ Meet is an AI-powered real-time meeting assistant designed for financial advisor
 
 ## Three-Phase Workflow
 
-Meet follows a simple three-phase workflow:
+Assist follows a simple three-phase workflow:
 
 1. **Setup** — Select language, microphone, and add participants
 2. **Live Meeting** — Real-time transcription and AI insights
@@ -41,11 +41,11 @@ Meet follows a simple three-phase workflow:
 
 ## Prerequisites
 
-Before configuring Meet in Salesforce, ensure you have:
+Before configuring Assist in your CRM (Salesforce or Microsoft), ensure you have:
 
-- Administrator access to your Salesforce organization
+- Administrator access to your Salesforce and Microsoft organizations
 - The &money Portal component deployed to Salesforce (see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/))
-- Access to the Meet environment URLs (provided by &money)
+- Access to the Assist environment URLs (provided by &money)
 
 ## Browser Requirements
 
@@ -60,11 +60,12 @@ Before configuring Meet in Salesforce, ensure you have:
 - **Participants**: Up to 4 participants with speaker identification
 - **Duration**: Designed for standard advisory meetings (up to 2 hours)
 - **Microphone**: Use laptop microphone or external microphone connected to laptop
-- **During Meeting**: Keep the Meet browser tab active throughout the session. If you need Salesforce during the meeting, open a separate browser tab
+- **During Meeting**: Keep the Assist browser tab active throughout the session. If you need other services/screens in your CRM during the meeting, we recommend to open a separate browser tab
+- **Create summary**: The users should always remember to click "Close & create summary" after the meeting, so the transcription and summary are not lost.
 
 ## Browser Permissions
 
-Meet needs microphone access to transcribe your meeting. The first time you open Meet, your browser will ask for permission. If you clicked **Block** earlier, you can change it and reload.
+Assist needs microphone access to transcribe your meeting. The first time you open Assist, your browser will ask for permission. If you clicked **Block** earlier, you can change it and reload.
 
 - Step-by-step guide (with screenshots): [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/)
 
@@ -83,5 +84,6 @@ Deploy via GPO, Intune, or MDM.
 
 ## Next Steps
 
-- [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Meet in your Salesforce organization
+- [Salesforce Setup]({{ site.baseurl }}/meet/salesforce-setup/) — Configure Assist in your Salesforce organization
+- [Meeting Goals]({{ site.baseurl }}/meet/meeting-goals/) — Define the objectives Assist's AI tracks during each meeting type
 - [Security]({{ site.baseurl }}/meet/security/) — Customer-facing security documentation (solution description + controls)

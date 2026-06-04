@@ -1,19 +1,19 @@
 ---
 layout: default
 title: Security
-nav_order: 3
-parent: Meet
+nav_order: 4
+parent: Assist
 ---
 
-# Meet Security Documentation
+# Assist Security Documentation
 
 ## 0. Document metadata
 
 | Field | Value |
 |---|---|
-| Document name | Meet Security Documentation |
+| Document name | Assist Security Documentation |
 | Audience | External customers / security assessors |
-| Scope | Meet web app, transcription/AI services, and CRM (Salesforce) integration boundaries |
+| Scope | Assist web app, transcription/AI services, and CRM (Salesforce) integration boundaries |
 | Last updated | 2026-03-17 |
 | Owner | &money |
 
@@ -70,9 +70,9 @@ flowchart TB
 ```
 
 **Data flow (high level):**
-1. Advisor runs Meet in a browser embedded in Salesforce (or accessed directly depending on deployment).
-2. Browser streams audio to Meet backend over an encrypted WebSocket connection.
-3. Meet backend forwards audio to the transcription hub, which uses Azure Speech to produce live transcript events (including diarization signals).
+1. Advisor runs Assist in a browser embedded in Salesforce (or accessed directly depending on deployment).
+2. Browser streams audio to Assist backend over an encrypted WebSocket connection.
+3. Assist backend forwards audio to the transcription hub, which uses Azure Speech to produce live transcript events (including diarization signals).
 4. Transcript text is processed by &money AI services (Corax/Playbooks) to generate insights and meeting minutes.
 5. Final minutes are written via &money backend services to a customer-configured Salesforce storage location (an object/record field on a meeting-related record), where Scoutz360 can read them.
 
@@ -80,16 +80,16 @@ flowchart TB
 
 | From / To | Data exchanged | Protocol | AuthN method | AuthZ model | Encryption in transit | Notes |
 |---|---|---|---|---|---|---|
-| Advisor browser ↔ Meet Web Application | UI content, session initialization | HTTPS | SSO via Entra ID / Azure AD (OIDC/JWT) | User identity-based access | TLS | No customer end-user login is provided in the standard deployment model (see Users section). |
-| Advisor browser ↔ Meet Backend | Audio chunks, real-time transcript/insight events, session control | WSS (Socket.IO) | SSO token with signed session context | Session scoped to authenticated user | TLS | Designed for real-time streaming; audio is processed in-session. |
-| Meet backend ↔ Vendor configuration service | Feature/variant configuration (no meeting content) | HTTPS | Forwarded user JWT (SSO/OIDC) | Tenant/bank claim scoping | TLS | Called by backend service. |
-| Meet application ↔ Vendor transcription service | PCM audio stream; transcription/diarization events | Encrypted WebSocket/HTTPS | Service-to-service authentication (vendor-managed) | Service-level authorization | TLS | Audio is streamed for transcription. |
+| Advisor browser ↔ Assist Web Application | UI content, session initialization | HTTPS | SSO via Entra ID / Azure AD (OIDC/JWT) | User identity-based access | TLS | No customer end-user login is provided in the standard deployment model (see Users section). |
+| Advisor browser ↔ Assist Backend | Audio chunks, real-time transcript/insight events, session control | WSS (Socket.IO) | SSO token with signed session context | Session scoped to authenticated user | TLS | Designed for real-time streaming; audio is processed in-session. |
+| Assist backend ↔ Vendor configuration service | Feature/variant configuration (no meeting content) | HTTPS | Forwarded user JWT (SSO/OIDC) | Tenant/bank claim scoping | TLS | Called by backend service. |
+| Assist application ↔ Vendor transcription service | PCM audio stream; transcription/diarization events | Encrypted WebSocket/HTTPS | Service-to-service authentication (vendor-managed) | Service-level authorization | TLS | Audio is streamed for transcription. |
 | Vendor transcription service ↔ Azure Speech | Audio stream; recognized text + diarization | Azure SDK | Azure-managed credentials | Azure resource access controls | TLS | Azure Speech performs speech-to-text and diarization. |
-| Meet backend ↔ Vendor AI services (Corax / Playbooks) | Transcript context; insights; minutes/summary | HTTPS | Service-to-service credentials (API key/managed credential) | Tenant/bank claim scoping | TLS | Backend-mediated call pattern. |
+| Assist backend ↔ Vendor AI services (Corax / Playbooks) | Transcript context; insights; minutes/summary | HTTPS | Service-to-service credentials (API key/managed credential) | Tenant/bank claim scoping | TLS | Backend-mediated call pattern. |
 | Vendor AI services ↔ Azure OpenAI / AI Foundry | Prompted text/embeddings; model outputs | HTTPS | Azure-managed credentials | Azure resource access controls | TLS | Used for AI capabilities including embeddings. |
-| Meet Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to object/field storage | HTTPS (Salesforce API) | OAuth (delegated user token) | Salesforce object/FLS/sharing model | TLS | Salesforce calls are made via &money backend APIs/services. |
-| Meet services ↔ Redis | Session recovery snapshot read/write | TLS | Service identity authentication | Service identity scoped to Redis instance | TLS | Short-lived snapshots used for session recovery only. |
-| Meet services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a centralized monitoring and observability stack. |
+| Assist Backend / AI Services ↔ Salesforce | Meeting metadata reads; minutes written to object/field storage | HTTPS (Salesforce API) | OAuth (delegated user token) | Salesforce object/FLS/sharing model | TLS | Salesforce calls are made via &money backend APIs/services. |
+| Assist services ↔ Redis | Session recovery snapshot read/write | TLS | Service identity authentication | Service identity scoped to Redis instance | TLS | Short-lived snapshots used for session recovery only. |
+| Assist services ↔ Monitoring/logging | Metrics, logs, traces | HTTPS/OTLP | Service credentials (platform-managed) | RBAC-controlled access | TLS | Deployment uses a centralized monitoring and observability stack. |
 
 ### 1.3 Users of the solution
 
@@ -107,7 +107,7 @@ flowchart TB
 - Service principals / managed identities for service-to-service access including monitoring, Redis, and Azure services.
 
 **End-customer access**
-- **Not provided**: Meet is designed for internal advisor usage; customer end-users do not log in to Meet directly in the standard deployment model.
+- **Not provided**: Assist is designed for internal advisor usage; customer end-users do not log in to Assist directly in the standard deployment model.
 
 ### 1.4 Data processing
 
@@ -119,16 +119,16 @@ flowchart TB
 - **Technical telemetry**: Timestamps, correlation IDs, session state, error codes, performance metrics.
 
 **PII boundaries**
-- Meet **processes** audio and transcript text in real time to generate insights and minutes.
+- Assist **processes** audio and transcript text in real time to generate insights and minutes.
 - The **primary long-term system of record** for minutes is the customer's **CRM** (customer-controlled access and retention).
-- Meet does **not store raw audio recordings**; audio is streamed for transcription and handled in-session.
+- Assist does **not store raw audio recordings**; audio is streamed for transcription and handled in-session.
 - **Session recovery snapshots** temporarily contain personal data (transcript text and session context) and are governed by a short TTL (see retention controls below). **Logs and telemetry do not contain transcript text or meeting content**; they contain only operational metadata such as connection identifiers, error codes, and numeric performance counters.
 
 **In-session data lifecycle**
 - During an active meeting, transcript text is processed **primarily in application memory** and is released when the session ends (client disconnect or meeting conclusion). The only temporary persistence used for meeting content is the short-lived **session recovery snapshot** described below; outside that recovery mechanism, transcript text is not written to persistent storage or the application database.
 - **Session recovery snapshots** are written to Redis with a default **TTL of 30 minutes**; they may temporarily contain recent transcript text and session context to support recovery after transient connectivity interruptions. Snapshots expire automatically and are not accessible after expiry.
 - At meeting conclusion, transcript and summary data may pass through an **internal transient processing queue** for downstream processing (minutes generation and CRM write). Queue payloads are **non-persistent**, exist only for the short period required for asynchronous processing, are **not used as a storage layer**, and are **not included in long-term backups**.
-- The Meet database may store a **content hash** for idempotency control of transcript submissions; the transcript text itself is never written to the database.
+- The Assist database may store a **content hash** for idempotency control of transcript submissions; the transcript text itself is never written to the database.
 - After minutes are written to the customer's CRM, &money services do **not** persist a separate copy of the minutes in &money-managed databases after the CRM write is complete; however, &money retains **integration-level read/write access** to the customer's CRM environment where required to complete configured product features, CRM synchronization, or customer-authorized workflows.
 - Logs and telemetry produced during a session contain **only operational metadata** (connection identifiers, error codes, numeric counters, performance metrics). Transcript text and meeting content are not included in logs or telemetry (see section 2.5 for details).
 
@@ -144,7 +144,7 @@ flowchart TB
 | In-session processing data (audio, transcript, insights) | **Application memory only** | Session duration (released on disconnect) | In-memory; not persisted to disk | Session-scoped; no external access |
 | Session recovery snapshots | Redis (session snapshot keys) | **30-minute TTL** (auto-expire) | Azure-managed encryption for managed services | Service identity only (no end-user access) |
 | Internal message queue payloads (meeting events) | Internal transient processing queue | Transient (non-persistent payloads; retained only for short-lived asynchronous processing and not included in long-term backups) | Platform-managed encryption in transit | Service identity only |
-| Transcript submission metadata | Meet database (PostgreSQL) | Platform-managed | Azure-managed encryption for managed services | Service identity + RBAC |
+| Transcript submission metadata | Assist database (PostgreSQL) | Platform-managed | Azure-managed encryption for managed services | Service identity + RBAC |
 | Configuration metadata | Configuration DB (PostgreSQL) | Platform-managed | Azure-managed encryption for managed services | Service identity + RBAC |
 | Operational logs/metrics/traces | Monitoring/logging stack | 365 days (logs/traces); 24 months (metrics) | Platform-managed encryption at rest | RBAC-restricted access |
 
@@ -159,12 +159,12 @@ flowchart TB
 
 ### 1.7 Customer risk assessment inputs (BIA / impact for data subject)
 
-Many enterprise customers perform a Business Impact Analysis (BIA) and assess impact for data subjects when a solution processes personal data. &money can describe how Meet works and what data is processed/stored, but the **final risk classification** depends on customer context and controls including the customer's CRM permission model, conditional access, and internal policies.
+Many enterprise customers perform a Business Impact Analysis (BIA) and assess impact for data subjects when a solution processes personal data. &money can describe how Assist works and what data is processed/stored, but the **final risk classification** depends on customer context and controls including the customer's CRM permission model, conditional access, and internal policies.
 
 **Typical inputs for customer BIA**
 - **Confidentiality**: Meeting content can include personal data; review who can access the minutes field in the customer's CRM and which additional controls (DLP, conditional access, auditing) are required.
 - **Integrity**: Minutes are drafts intended for advisor review before use; customers define review/approval workflows before downstream sharing.
-- **Availability**: Meet is designed for real-time operation and includes best-effort recovery mechanisms including short-lived session recovery snapshots to reduce impact from transient connectivity issues. If transcription/AI is unavailable, advisors continue the meeting and use fallback documentation workflows.
+- **Availability**: Assist is designed for real-time operation and includes best-effort recovery mechanisms including short-lived session recovery snapshots to reduce impact from transient connectivity issues. If transcription/AI is unavailable, advisors continue the meeting and use fallback documentation workflows.
 
 **Impact for data subjects**
 - The primary long-term storage location for minutes is the customer's CRM. Customers assess personal-data content and DPIA requirements under their policies and regulatory obligations.
@@ -176,7 +176,7 @@ Many enterprise customers perform a Business Impact Analysis (BIA) and assess im
 This section is intended to help security reviewers quickly understand where controls apply, where they do not, and what mitigations are expected.
 
 **In scope**
-- Meet web application and backend services operated by &money.
+- Assist web application and backend services operated by &money.
 - Transcription and AI processing components operated by &money (including managed cloud services used for those components).
 - Data flows into/out of the customer's CRM required to store minutes.
 
@@ -192,7 +192,7 @@ This section is intended to help security reviewers quickly understand where con
 
 **Common circumvention paths (by design or by customer configuration)**
 - Any user who is legitimately granted access to the relevant CRM record/field can view or export the minutes.
-- Minutes copied from the customer's CRM into other systems are governed by the customer’s downstream controls, not Meet.
+- Minutes copied from the customer's CRM into other systems are governed by the customer’s downstream controls, not Assist.
 
 **Recommended mitigating controls (customer-side)**
 - Restrict access to minutes fields using least-privilege CRM access controls (for example, roles, permission sets, field/object permissions, and record sharing where supported).
@@ -238,7 +238,7 @@ This section is intended to help security reviewers quickly understand where con
 - **Encryption in transit**: TLS is used for browser↔service traffic and service↔service integrations.
 - **Encryption at rest**: Managed services including Redis, PostgreSQL, and monitoring storage use cloud-provider encryption at rest; the customer's CRM platform provides encryption at rest for stored CRM data.
 - **Key management**: Secrets/keys are stored in a secret management solution including Key Vault and accessed via managed identity patterns; keys are rotated as part of operational security procedures.
-- **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Meet trusted URLs to reduce friction. For end-user steps, see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
+- **Endpoint devices**: Customer-managed endpoint and browser security controls apply. For managed devices, browser policies can be used to pre-approve microphone access for Assist trusted URLs to reduce friction. For end-user steps, see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
 
 ### 2.4 Identity and Access Management (IAM)
 
@@ -291,7 +291,7 @@ This section is intended to help security reviewers quickly understand where con
 ### 2.6 Use of Third Parties
 
 **Licensing and contractual ownership**
-- All third-party agreements and service licenses used for Meet are held by **&money** (including Microsoft services).
+- All third-party agreements and service licenses used for Assist are held by **&money** (including Microsoft services).
 
 **Microsoft Azure (hosting and managed services)**
 - Used to host application components and managed services including monitoring, Redis, and databases.
@@ -300,7 +300,7 @@ This section is intended to help security reviewers quickly understand where con
 - Personal data is stored and processed within the EU under the configured Microsoft EU Data Boundary setup.
 - Microsoft Customer Lockbox is enabled as a supplementary technical and organizational measure.
 - Customer Lockbox requires prior documented approval from &money and the relevant customer before Microsoft personnel (including personnel outside the EU) can obtain human access to personal data.
-- In practice, this access is not granted for Meet operations.
+- In practice, this access is not granted for Assist operations.
 
 **Azure Speech**
 - Receives in-session audio streams for speech-to-text and diarization.
@@ -308,7 +308,7 @@ This section is intended to help security reviewers quickly understand where con
 - Customer audio and transcript data is **not used by Microsoft to train, improve, or develop** speech models or any other Microsoft service. This applies under Microsoft's standard Azure Cognitive Services data processing terms.
 
 **No sub-processor model training (general)**
-- No sub-processor engaged by &money uses customer data for model training, service improvement, or any purpose beyond delivering the contracted service. This applies to all Azure services (Speech, OpenAI, infrastructure) as well as any other sub-processors involved in the Meet solution.
+- No sub-processor engaged by &money uses customer data for model training, service improvement, or any purpose beyond delivering the contracted service. This applies to all Azure services (Speech, OpenAI, infrastructure) as well as any other sub-processors involved in the Assist solution.
 
 **Azure OpenAI / AI Foundry**
 - Receives prompted text/embeddings for specific AI capabilities.
@@ -328,7 +328,7 @@ This section is intended to help security reviewers quickly understand where con
 
 ### 2.7 Physical security
 
-- Meet relies on cloud provider physical security controls for data center access, surveillance, and hardware lifecycle management.
+- Assist relies on cloud provider physical security controls for data center access, surveillance, and hardware lifecycle management.
 - Redundancy and availability are achieved through cloud-managed services and platform operational practices.
 
 ### 2.8 Environment separation and test data
@@ -344,7 +344,7 @@ This section is intended to help security reviewers quickly understand where con
 - Regional resilience roadmap: additional EU-region fallback options for AI-dependent services are being evaluated.
 - Monitoring guidance (capacity-related):
   - Alert on elevated transcription failure rates and latency
-  - Alert on sustained resource saturation (CPU/memory) in Meet services
+  - Alert on sustained resource saturation (CPU/memory) in Assist services
   - Alert on external dependency throttling/429 responses
 
 ## 4. Appendix
@@ -353,7 +353,7 @@ This section is intended to help security reviewers quickly understand where con
 
 | Term | Meaning |
 |---|---|
-| Meet | &money real-time meeting assistant (transcription + AI insights + minutes) |
+| Assist | &money real-time meeting assistant (transcription + AI insights + minutes) |
 | Transcript | Text derived from in-session audio speech recognition |
 | Diarization | Speaker separation/attribution in transcription output |
 | Corax / Playbooks | &money AI services used to derive insights and generate minutes |
@@ -368,7 +368,7 @@ This section is intended to help security reviewers quickly understand where con
 
 The table below provides an **indicative** mapping between this document’s control areas and common control catalogs including ISO/IEC 27002:2022. It is intended to accelerate security assessments and does not constitute a certification or attestation.
 
-| Meet security documentation section | Related ISO/IEC 27002:2022 control areas (indicative) | Notes |
+| Assist security documentation section | Related ISO/IEC 27002:2022 control areas (indicative) | Notes |
 |---|---|---|
 | 2.1 Operations | 5.29, 5.37, 8.8, 8.9, 8.32 | Operations, resilience, vulnerability/change/config management. |
 | 2.2 Data backup and retention | 8.13 | Backup expectations and responsibilities. |

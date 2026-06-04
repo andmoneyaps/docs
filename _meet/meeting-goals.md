@@ -105,7 +105,7 @@ When a goal is created on a topic that has subtopics (i.e. **Subtopic** is left 
 
 ### Name Conflicts
 
-If a meeting goal with the same name already exists in the topic hierarchy, the form rejects the create with an error. Pick a unique name and try again.
+If a meeting goal with the same name already exists in the topic hierarchy, the form rejects the create request with an error. Pick a unique name and try again.
 
 ---
 
@@ -171,9 +171,6 @@ Once the goals are configured, the advisor never has to fetch or assign them man
 Meeting Goals is an opt-in feature on each meeting. Before starting the meeting, the advisor opens **Settings** on the Assist setup screen and toggles **Meeting Goals** on. Until it is enabled, no preview is shown, no goals are tracked during the meeting, and the live Goal Tracker does not appear.
 
 ![Settings panel with Meeting Goals toggle]({{ site.baseurl }}/assets/images/meet/meeting-goals/06-settings-toggle.png)
-<!-- TODO(screenshot): drop the Settings panel screenshot in as
-     assets/images/meet/meeting-goals/06-settings-toggle.png -->
-
 
 ### Setup: previewing the goals
 
@@ -182,9 +179,6 @@ As soon as the employee enables **Meeting Goals** in the settings, Assist resolv
 If the booked Topic has no goals configured, the preview card shows an informational message ("No goals are set for this meeting yet.") and the live Goal Tracker is hidden during the meeting.
 
 ![Goal preview card before the meeting starts]({{ site.baseurl }}/assets/images/meet/meeting-goals/07-preview-card.png)
-<!-- TODO(screenshot): drop the pre-meeting preview card screenshot in as
-     assets/images/meet/meeting-goals/07-preview-card.png -->
-
 
 ### Live: the Goal Tracker
 
@@ -196,9 +190,6 @@ During the meeting, a **Meeting Goals** tracker card appears in the live insight
 The list and progress bar update on their own while the conversation unfolds; the advisor does not interact with the card.
 
 ![Live Goal Tracker during a meeting]({{ site.baseurl }}/assets/images/meet/meeting-goals/08-live-tracker.png)
-<!-- TODO(screenshot): drop the live Goal Tracker screenshot in as
-     assets/images/meet/meeting-goals/08-live-tracker.png -->
-
 
 ### Goal statuses
 

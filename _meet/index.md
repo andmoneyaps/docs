@@ -42,7 +42,7 @@ Assist follows a simple three-phase workflow:
 
 Before configuring Assist in your CRM (Salesforce or Microsoft), ensure you have:
 
-- Administrator access to your Salesforce & Microsoft organization
+- Administrator access to your Salesforce and Microsoft organizations
 - The &money Portal component deployed to Salesforce (see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/))
 - Access to the Assist environment URLs (provided by &money)
 
@@ -60,7 +60,7 @@ Before configuring Assist in your CRM (Salesforce or Microsoft), ensure you have
 - **Duration**: Designed for standard advisory meetings (up to 2 hours)
 - **Microphone**: Use laptop microphone or external microphone connected to laptop
 - **During Meeting**: Keep the Assist browser tab active throughout the session. If you need other services/screens in your CRM during the meeting, we recommend to open a separate browser tab
-- **Create summary**: The users should always remember to click "Close & create summary" after the meeting, so the transscription and summary are not lost.
+- **Create summary**: The users should always remember to click "Close & create summary" after the meeting, so the transcription and summary are not lost.
 
 ## Browser Permissions
 

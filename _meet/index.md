@@ -3,6 +3,7 @@ layout: default
 title: Assist
 nav_order: 7
 has_children: true
+permalink: /meet/
 ---
 
 # Assist Documentation

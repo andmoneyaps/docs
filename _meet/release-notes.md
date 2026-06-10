@@ -13,7 +13,7 @@ Assist is continuously improved and deployed. This page highlights notable updat
 
 ### Reliability
 
-- **Automatic summary recovery** — If a meeting ends without the advisor pressing **End meeting** (for example, the laptop is closed or the browser tab is shut), Assist now automatically detects the unfinished meeting and generates its summary anyway. The summary appears in Salesforce exactly as it would have if the meeting had been ended normally, so advisors no longer lose the record of a real customer conversation. Recovery happens behind the scenes shortly after the meeting is detected as abandoned, while the meeting's transcript is still available, and never produces a duplicate summary.
+- **Automatic summary recovery** — If a meeting ends without the advisor pressing **End meeting** (for example, the laptop is closed or the browser tab is shut), Assist now automatically detects the unfinished meeting and generates its summary anyway. The summary appears in Salesforce exactly as it would have if the meeting had been ended normally, so advisors no longer lose the record of a real customer conversation. Recovery happens behind the scenes shortly after the meeting is detected as abandoned, while the meeting's transcript is still available — so eligible meetings still end up with a summary instead of none.
 
 ## May 2026
 

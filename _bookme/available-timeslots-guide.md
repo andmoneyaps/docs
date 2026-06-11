@@ -103,12 +103,18 @@ A service group is triggered when the booking request matches its configured cri
 - **Customer category** --- the customer segment
 - **Customer location** --- where the customer is located
 
+A criterion that is left empty acts as a wildcard: the group matches any value for that dimension. A group with no criteria at all is triggered by every booking request.
+
 **Example**: A "National Mortgage Team" service group might be triggered whenever a customer requests a mortgage meeting. The group contains five advisors from various branches who can serve the customer via Online or Telephone meetings.
 
 Service groups have a **service level** that defines:
 - Which meeting types the group offers (e.g., Online and Telephone only)
 - Which locations the group can serve for physical meetings (if any)
 - An optional maximum meeting time per day for group members
+
+**Important:** Unlike the trigger criteria, an empty service level is *restrictive*, not a wildcard:
+- If **no meeting types** are selected, the group offers no timeslots at all --- even when its trigger matches. A newly created service group starts in this state, so meeting types must always be configured.
+- If **no locations** are selected, the group cannot offer Physical meetings. Remote meeting types (Online, Telephone, Off-site) still work, so locations can be left empty for purely remote groups.
 
 ### How They Work Together
 

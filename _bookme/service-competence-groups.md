@@ -115,6 +115,7 @@ This will search for available advisors from configured Service Groups.
     - Determine what should be offered to customers beyond current services.
     - Customers can access selected locations in addition to their regular department.
     - Meeting themes must fulfill the activation rules.
+    - **Important:** At least one meeting type must be selected --- a service group with no meeting types configured will not offer any time slots, even when its activation rules match. Locations are only required if the group should offer physical meetings; they can be left empty for purely remote groups (Online/Telephone).
 
 4. **Set Service Level by Location/Meeting Type:**
 

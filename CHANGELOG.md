@@ -9,6 +9,11 @@ permalink: /changelog/
 
 This changelog tracks significant updates and changes to the AndMoney documentation.
 
+## June 2026
+
+### Added
+- [Assist Release Notes]({{ site.baseurl }}/meet/release-notes/) — added **Automatic summary recovery**: meetings that end without pressing *End meeting* now still produce a summary in Salesforce
+
 ## April 2026
 
 ### Added

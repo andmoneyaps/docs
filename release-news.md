@@ -3,6 +3,12 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## June 2026
+
+### _Assist_
+
+- **Automatic summary recovery**: Meetings that end without the advisor pressing **End meeting** (laptop closed, browser tab shut) are now automatically detected and still get a summary written to Salesforce — no advisor action needed and no duplicate summary. See [Assist Release Notes]({{ site.baseurl }}/meet/release-notes/).
+
 ## March 2026
 
 ### _BookMe_

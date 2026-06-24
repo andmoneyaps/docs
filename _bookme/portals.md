@@ -44,15 +44,34 @@ The portal configuration is a crucial step that establishes the connection betwe
 - Essential for tracking and managing appointments in your CRM system
 - Enables automated workflow triggers based on meeting status
 
+### CRM Creation Strategy
+
+Each portal has a **CRM Creation Strategy** setting that controls how meeting data is written to the CRM when a customer books through the portal.
+
+| Strategy | What it does |
+|----------|-------------|
+| **CRM Configuration (standard)** | Uses a CRM mapping configuration to write meeting data directly to the CRM. You select which configuration to use from the portal's settings. This is the default for existing portals. |
+| **Playbook** | Delegates CRM record creation to one or more playbooks. Instead of writing directly to the CRM, the portal fires a **PortalMeetings** event that triggers any playbook configured with a portal trigger for that portal. |
+
+When using the **Playbook** strategy:
+
+- Create one or more playbooks with a **PortalMeetings** trigger scoped to the portal (see [Introduction to Playbooks — Triggers]({{ site.baseurl }}/bookme/playbooks/introduction-to-playbooks/#triggers))
+- Multiple playbooks can respond to the same portal — for example, one playbook creates a CRM lead while another sends a notification email
+- The portal does not need a CRM mapping configuration — the playbook's entity pattern blocks handle the CRM write
+- The playbook has full access to the portal's meeting data (title, dates, advisor, attendees, custom fields) through the trigger block's output
+
+{: .hint }
+Choosing the Playbook strategy gives you more flexibility than the standard CRM configuration. Playbooks can run AI processing, read additional CRM data, apply business logic, and write to multiple CRM objects — all triggered automatically when a meeting is booked.
+
 ### Steps to Configure a Portal:
 
 1. Go to **Management UI** and select **BookMe -> Portals**
 2. Click on the **"CRM Configuration** tab
 3. Click **Create New**
 
-<img src="../../assets/images/bookme/portals/new-config.png" width="1000" alt="Create new portal configuration button"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/new-config.png" width="1000" alt="Create new portal configuration button"/>
 
-<img src="../../assets/images/bookme/portals/new-config-modal.png" width="1000" alt="Create new portal configuration modal"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/new-config-modal.png" width="1000" alt="Create new portal configuration modal"/>
 
 4. Enter **Configuration Name**
 5. Set up Portal configuration fields
@@ -98,25 +117,26 @@ A portal serves as the interface between your customers and your booking system.
 1. Go to **Management UI** and select **BookMe -> Portals**
 2. Click **Create Portal**
 
-<img src="../../assets/images/bookme/portals/create-portal.png" width="1000" alt="Create new portal button"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/create-portal.png" width="1000" alt="Create new portal button"/>
 
-<img src="../../assets/images/bookme/portals/create-new-portal.png" width="1000" alt="Create new portal modal"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/create-new-portal.png" width="1000" alt="Create new portal modal"/>
 
 3. Enter the **Portal Name** This will appear in the created portal
-4. Choose **Configuration** (select after the configuration has been created)
-5. Select **Login Type** (Azure AD / MitID) Choose the appropriate authentication method based on your audience
+4. Select the **CRM Creation Strategy** — choose **CRM Configuration (standard)** to use a mapping configuration, or **Playbook** to delegate to playbook workflows (see [CRM Creation Strategy](#crm-creation-strategy) above)
+5. If using CRM Configuration strategy, choose the **Configuration** (select after the configuration has been created)
+6. Select **Login Type** (Azure AD / MitID) Choose the appropriate authentication method based on your audience
    - **Azure AD**: For enterprise customers and internal users
    - **MitID**: For Danish citizen authentication
-6. Enable/disable **iCal** integration 
-7. Configure **Styling**
+7. Enable/disable **iCal** integration
+8. Configure **Styling**
     - Insert URL to the logo
     - Enter desired logo height
     - Customize portal styling such as colors for bullets, header background, buttons, etc.
-8. Configure **Customer Data** setup
+9. Configure **Customer Data** setup
    - Select **Customer type**
    - Choose **Meeting topic** (Theme for the meeting, e.g., "Investment", "Car insurance")
    - Assign **Location** (department)
-9. Set up Fields for the Portal
+10. Set up Fields for the Portal
    - Click **Add Field**
    Initiate the process to create a new field in your portal’s configuration interface.
    - Enter **Key**
@@ -162,21 +182,21 @@ A portal serves as the interface between your customers and your booking system.
      - **Custom regex**: Create your own validation patterns for specific business requirements
    - **Example of field setup**
 
-   <img src="../../assets/images/bookme/portals/field-setup.png" width="700" alt="Field setup example"/>
+   <img src="{{ site.baseurl }}/assets/images/bookme/portals/field-setup.png" width="700" alt="Field setup example"/>
    
    And the field will look like this in the portal:
 
-   <img src="../../assets/images/bookme/portals/field-portal.png" width="500" alt="Field in portal"/>
+   <img src="{{ site.baseurl }}/assets/images/bookme/portals/field-portal.png" width="500" alt="Field in portal"/>
 
    Where an example of error input can be seen:
 
-   <img src="../../assets/images/bookme/portals/field-error.png" width="300" alt="Field in portal"/>
+   <img src="{{ site.baseurl }}/assets/images/bookme/portals/field-error.png" width="300" alt="Field in portal"/>
 
 
-10. Finalize by clicking **Create**
-11. Test the Portal by clicking on the portal icon (square with an arrow) on the homepage
+11. Finalize by clicking **Create**
+12. Test the Portal by clicking on the portal icon (square with an arrow) on the homepage
 
-<img src="../../assets/images/bookme/portals/test-a-portal.png" width="1000" alt="Test a portal"/>
+<img src="{{ site.baseurl }}/assets/images/bookme/portals/test-a-portal.png" width="1000" alt="Test a portal"/>
 
 Note: Before using the portal, it must be configured with your CRM system.
 

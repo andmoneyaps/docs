@@ -9,7 +9,7 @@ parent: BookMe
 
 ## What is the Iframe LWC Component?
 
-The &money EngageMe iframe Lightning Web Component (LWC) is a powerful integration tool that embeds BookMe's meeting booking functionality directly within Salesforce Lightning pages. For a complete overview of embeddable components and their capabilities, see the [Embeddable UI Documentation](../embeddable-ui/).
+The &money EngageMe iframe Lightning Web Component (LWC) is a powerful integration tool that embeds BookMe's meeting booking functionality directly within Salesforce Lightning pages. For a complete overview of embeddable components and their capabilities, see the [Embeddable UI Documentation]({{ site.baseurl }}/embeddable-ui/).
 
 This component enables users to:
 
@@ -32,13 +32,13 @@ Before deploying the iframe component, ensure you have:
 1. **Configured Salesforce Domain**: Your Salesforce organization's domain must be properly configured in the Management UI
 2. **Established Salesforce org connection**: The connection between BookMe and Salesforce must be provisioned and tested successfully
 3. **Administrator Access**: You need appropriate permissions in both the Management UI and Salesforce
-4. **User Access Configuration**: Bank employees who will use the iframe must have proper access configured. See [Embeddable UI Access Requirements](../embeddable-ui/#access-requirements) for an overview
+4. **User Access Configuration**: Bank employees who will use the iframe must have proper access configured. See [Embeddable UI Access Requirements]({{ site.baseurl }}/embeddable-ui/#access-requirements) for an overview
 
 ## Deployment Process
 
 ### Step 1: Setup Salesforce Connection
 
-Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup](./salesforce-connection-setup.md) guide which covers:
+Before deploying the component, you must establish a secure connection between BookMe and your Salesforce organization. Follow the comprehensive instructions in the [Salesforce Connection Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-connection-setup/) guide which covers:
 - Configuring the External Client App in Salesforce
 - Setting up the Salesforce domain in the Management UI
 - Testing and provisioning the connection
@@ -76,7 +76,7 @@ The main iframe container component that:
 - Accepts configuration through the `configOverride` API property
 - Handles postMessage communication with the embedded iframe
 - Dynamically adjusts height based on content
-- Supports all configuration options documented in the [Iframe LWC Configuration guide](./salesforce-iframe-lwc.md)
+- Supports all configuration options documented in the [Iframe LWC Configuration guide]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/)
 
 ### Deployment Contents
 - Lightning Web Component bundle
@@ -134,9 +134,21 @@ export default class CustomBookingWrapper extends LightningElement {
 ```
 
 
+## Component Variants
+
+The &money Portal component exists in two variants. The variant is selected in the Management UI under **Admin → CRM → Configuration** when deploying the component.
+
+| Variant | When to use | Behavior |
+|---------|-------------|----------|
+| **With managed package** | The bank has the BookMe managed package installed. The managed package handles customer bookings via its own LWC components. | The Portal iframe handles internal meetings and the meeting overview. Customer bookings are handled by the managed package. The "Book Meeting" button switches from the iframe to the managed package's LWC. `disablecustomermeetings` is hardcoded to `true`. |
+| **Standalone** | The bank does **not** have the managed package. All booking is done through the Portal iframe. | The Portal iframe handles both internal meetings and customer bookings. The landing page shows both buttons, and employees stay within the iframe for both flows. `disablecustomermeetings` is configurable via `configOverride`. |
+
+{: .note }
+> In the **managed package variant**, `disablecustomermeetings` is always forced to `true` and cannot be overridden via `configOverride`. In the **standalone variant**, it defaults to `false` and can be set via `configOverride`.
+
 ## Related Documentation
 
-- [Salesforce Connection Setup](./salesforce-connection-setup.md) - Detailed guide for establishing the BookMe-Salesforce connection
-- [Salesforce Iframe LWC Configuration](./salesforce-iframe-lwc.md) - Configuration options for the deployed iframe component
-- [Salesforce BookMe Integration Setup](./salesforce-setup.md) - Complete Salesforce package installation and metadata configuration
-- [CRM Integration Security](./crm-integration-security.md) - Security architecture and considerations
+- [Salesforce Connection Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-connection-setup/) - Detailed guide for establishing the BookMe-Salesforce connection
+- [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) - Configuration options for the deployed iframe component
+- [Salesforce BookMe Integration Setup]({{ site.baseurl }}/bookme/onboarding/salesforce-setup/) - Complete Salesforce package installation and metadata configuration
+- [CRM Integration Security]({{ site.baseurl }}/bookme/onboarding/crm-integration-security/) - Security architecture and considerations

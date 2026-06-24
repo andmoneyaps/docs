@@ -4,6 +4,7 @@ title: General
 nav_order: 1
 has_children: true
 collection: general
+permalink: /general/
 ---
 
 # General Documentation
@@ -12,46 +13,52 @@ This section contains comprehensive documentation about our processes, procedure
 
 ## Documentation Overview
 
-### 1. [Product Approval](../product-approval)
+### 1. [Product Approval]({{ site.baseurl }}/general/product-approval/)
 - Product and feature presentations
 - Documentation requirements
 - Business case development
 - Technical assessment procedures
 
-### 2. [Project Management & Quality Assurance](../project-management)
+### 2. [Project Management & Quality Assurance]({{ site.baseurl }}/general/project-management/)
 - Requirement gathering
 - Project planning methodologies
 - Quality assurance processes
 - Implementation support
 - Documentation standards
 
-### 3. [Security Authorization](../security-authorization)
+### 3. [Security Authorization]({{ site.baseurl }}/general/security-authorization/)
 - Security compliance documentation
 - Product security architecture
 - Data privacy policies
 - Testing and validation reports
 - Legal documentation
 
-### 4. [Setting Up](../setup)
+### 4. [Setting Up]({{ site.baseurl }}/general/setup/)
 - Environment provisioning
 - Access management
 - Integration configuration
 - Customer responsibilities
 - System setup procedures
 
-### 5. [Support & Hypercare](../support-and-hypercare)
+### 5. [Support & Hypercare]({{ site.baseurl }}/general/support-and-hypercare/)
 - Support structure and levels
 - Service Level Agreements (SLA)
 - Consultancy services
 - Hypercare period details
 - Post-deployment support
 
-### 6. [Test & Validation](../test-validation)
+### 6. [Test & Validation]({{ site.baseurl }}/general/test-validation/)
 - Integration testing procedures
 - Configuration validation
 - Quality assurance processes
 - Success criteria
 - Final validation steps
+
+### 7. [Auditing M365 Integration]({{ site.baseurl }}/general/m365-audit-guide/)
+- Preventive controls for restricting application access
+- Detective controls for monitoring API activity
+- Microsoft Graph Activity Log audit queries
+- Licensing requirements
 
 ## Purpose
 

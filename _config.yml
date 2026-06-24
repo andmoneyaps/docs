@@ -1,13 +1,18 @@
 # Theme configuration
-remote_theme: just-the-docs/just-the-docs
+theme: just-the-docs
 title: "&money Documentation"
 description: Public documentation for &money products and services
 baseurl: "/docs"
 permalink: pretty
+url: "https://andmoneyaps.github.io"
+repository: andmoneyaps/docs
 
 # Collections configuration
 collections:
   general:
+    permalink: "/:collection/:path/"
+    output: true
+  foundation:
     permalink: "/:collection/:path/"
     output: true
   bookme:
@@ -63,11 +68,18 @@ aux_links:
     - "https://andmoney.dk"
 aux_links_new_tab: true
 
+# GitHub edit link
+gh_edit_link: false
+
 # Navigation structure
 just_the_docs:
   collections:
     general:
       # name: "General"
+      # nav_exclude: false
+      # nav_fold: true
+    foundation:
+      # name: "Foundation"
       # nav_exclude: false
       # nav_fold: true
     bookme:

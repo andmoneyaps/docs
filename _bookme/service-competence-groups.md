@@ -115,6 +115,7 @@ This will search for available advisors from configured Service Groups.
     - Determine what should be offered to customers beyond current services.
     - Customers can access selected locations in addition to their regular department.
     - Meeting themes must fulfill the activation rules.
+    - **Important:** At least one meeting type must be selected --- a service group with no meeting types configured will not offer any time slots, even when its activation rules match. Locations are only required if the group should offer physical meetings; they can be left empty for purely remote groups (Online/Telephone).
 
 4. **Set Service Level by Location/Meeting Type:**
 
@@ -136,6 +137,31 @@ This will search for available advisors from configured Service Groups.
 7. **Set Service Group Email:**
 
     - Employees can book themselves using the service group email.
+
+---
+
+## Daily Meeting Time Limits
+
+Service groups can override the bank-wide daily meeting time limit for their members.
+
+### Configuration
+
+1. Navigate to **Service Groups** in the Management UI
+2. Select or create a service group
+3. Locate the "max meeting time per day" field
+
+### How It Works
+
+- **Override behavior**: When set, this limit applies to all advisors in the service group instead of the bank default
+- **Multiple groups**: If an advisor belongs to multiple service groups, the **highest** (most permissive) limit applies
+- **Advisor-specific overrides**: Individual advisors can have their own limits set in Advisor Schedules, which take precedence over service group limits
+
+### Impact on Availability
+
+When an advisor reaches their daily meeting time limit:
+- They are automatically excluded from available time slot searches
+- Customers won't see booking options for that advisor on that day
+- Limit resets at midnight
 
 ---
 

@@ -2,31 +2,31 @@
 layout: default
 title: Salesforce Setup
 nav_order: 1
-parent: Meet
+parent: Assist
 ---
 
-# Salesforce Setup for Meet
+# Salesforce Setup for Assist
 
-This guide covers configuring the Meet component in your Salesforce organization, including Trusted URL configuration and verification steps.
+This guide covers configuring the Assist component in your Salesforce organization, including Trusted URL configuration and verification steps.
 
 ## Prerequisites
 
 - Administrator access to your Salesforce organization
 - The &money Portal component deployed to Salesforce
-- Meet environment URL provided by &money
+- Assist environment URL provided by &money
 
 For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/).
 
 ## Environment URLs
 
-| Environment | Meet URL |
-|-------------|----------|
+| Environment | Assist URL |
+|-------------|------------|
 | Test | `https://app.meet.test-env.andmoney.dk` |
 | Production | `https://app.meet.andmoney.dk` |
 
 ## Portal Component Setup
 
-Meet is embedded using the same Portal component as other &money embeddable features (such as Referat). The setup follows the same pattern described in [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/).
+Assist is embedded using the same Portal component as other &money embeddable features (such as Referat). The setup follows the same pattern described in [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/).
 
 ### Adding the Portal Component to an Event Page
 
@@ -38,14 +38,14 @@ Meet is embedded using the same Portal component as other &money embeddable feat
 4. Locate **&money Portal** in the components panel
 5. Drag the component to your chosen location
 6. Configure the component:
-   - **Source URL**: Enter the Meet URL provided by &money
+   - **Source URL**: Enter the Assist URL provided by &money
 7. Click **Save** to apply changes
 
 The component uses the Event's `recordId` to establish context, which is passed automatically.
 
 ## Trusted URL Configuration
 
-Meet requires additional Content Security Policy (CSP) directives compared to other embeddable components, due to real-time transcription and microphone access requirements.
+Assist requires additional Content Security Policy (CSP) directives compared to other embeddable components, due to real-time transcription and microphone access requirements.
 
 ### Step 0: Enable Permissions-Policy HTTP Header
 
@@ -68,8 +68,8 @@ Meet requires additional Content Security Policy (CSP) directives compared to ot
 
 1. Click **New Trusted URL**
 2. Complete the configuration:
-   - **API Name**: Enter an identifier, e.g., `meet_iframe`
-   - **URL**: Enter the Meet URL provided by &money
+   - **API Name**: Enter an identifier, e.g., `assist_iframe`
+   - **URL**: Enter the Assist URL provided by &money
    - **CSP Context**: Select **Lightning Experience Pages**
 
 3. Under **CSP Directives**, enable the following:
@@ -94,29 +94,29 @@ Meet requires additional Content Security Policy (CSP) directives compared to ot
 
 ### Step 3: Validate Configuration
 
-1. Verify the Meet URL appears in the Trusted URLs list
+1. Verify the Assist URL appears in the Trusted URLs list
 2. Confirm CSP directives are enabled: `connect-src`, `media-src`, `style-src`
 3. Confirm Permissions Policy directive `microphone` is enabled
-4. Test the integration by loading Meet on an Event page
+4. Test the integration by loading Assist on an Event page
 
 > **Note**: This is a one-time configuration per Salesforce organization. Future updates will not require modifications to these Trusted URL settings.
 
 ## Verifying the Installation
 
-After completing the setup, verify that Meet is working correctly:
+After completing the setup, verify that Assist is working correctly:
 
-### Step 1: Open Meet from an Event Record
+### Step 1: Open Assist from an Event Record
 
 1. Navigate to an Event record in Salesforce
-2. Locate the Meet component on the page
-3. The Meet interface should load within the component
+2. Locate the Assist component on the page
+3. The Assist interface should load within the component
 
 ### Step 2: Verify Authentication
 
-1. Meet will initiate SSO login using your Salesforce user's federation ID (if configured) or email
+1. Assist will initiate SSO login using your Salesforce user's federation ID (if configured) or email
 2. You should be authenticated automatically via Azure AD
 3. If prompted, sign in with your organizational credentials
-4. Meet validates that your authenticated identity matches your Salesforce user context
+4. Assist validates that your authenticated identity matches your Salesforce user context
 
 ### Step 3: Test Microphone Access
 
@@ -124,6 +124,11 @@ After completing the setup, verify that Meet is working correctly:
 2. Your browser should prompt for microphone permission (if not already granted)
 3. Grant microphone access when prompted
 4. Verify that the microphone selector shows available devices
+
+{: .note}
+> **End-user microphone help**
+>
+> For step-by-step browser instructions (including fixing "Blocked"), see [Microphone Permissions]({{ site.baseurl }}/meet/microphone-permissions/).
 
 ### Step 4: Confirm Record Context
 
@@ -134,11 +139,11 @@ After completing the setup, verify that Meet is working correctly:
 
 | Issue | Solution |
 |-------|----------|
-| Meet not displaying | Verify Trusted URL configuration and CSP directives are enabled |
+| Assist not displaying | Verify Trusted URL configuration and CSP directives are enabled |
 | Microphone not detected | Check browser permissions, `media-src` CSP directive, `microphone` Permissions Policy, and Session Settings Permissions-Policy HTTP header |
-| WebSocket connection errors | Verify `connect-src` CSP directive is enabled for the Meet URL |
+| WebSocket connection errors | Verify `connect-src` CSP directive is enabled for the Assist URL |
 | Authentication failures | Ensure user has appropriate access and Azure AD SSO is configured |
-| Cross-origin errors | Confirm the Meet URL matches the Trusted URL exactly |
+| Cross-origin errors | Confirm the Assist URL matches the Trusted URL exactly |
 | Styling issues | Verify `style-src` CSP directive is enabled |
 
 ## Related Documentation

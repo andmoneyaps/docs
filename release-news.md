@@ -12,6 +12,23 @@ nav_order: 2
 - **Additive on V3**: New `localized*` sibling fields sit alongside the existing single-language fields — no breaking change, no version bump, and existing integrations are unaffected
 - See the [Multilingual Support (V3)]({{ site.baseurl }}/api/multilingual) guide
 
+### _Assist_
+
+- **Automatic summary recovery**: Meetings that end without the advisor pressing **End meeting** (laptop closed, browser tab shut) are now automatically detected and still get a summary written to Salesforce — no advisor action needed and no duplicate summary. See [Assist Release Notes]({{ site.baseurl }}/meet/release-notes/).
+
+## March 2026
+
+### _BookMe_
+
+- **Version 1.25 Release**: Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
+- **Version 1.24 Release**: Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
+
+## February 2026
+
+### _BookMe_
+
+- **Version 1.23 Release**: Fixed customer email not displaying when editing meetings in the advisor flow. The issue was specific to the managed package context where sObject field names include the namespace prefix.
+
 ## January 2026
 
 ### _Timezone configuration for organizations_
@@ -29,6 +46,19 @@ nav_order: 2
 ### _BookMe_
 
 - **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
+
+### _Management UI_
+
+- **Duration-Based Daily Meeting Time Limits**: Administrators can now configure maximum meeting time per advisor per day using duration-based limits instead of meeting counts. This feature provides:
+  - **Configuration levels** (most specific wins):
+    - **Organization-wide default**: Set in Management UI under BookMe/Meeting Setup tab (applies to all advisors)
+    - **Service Group override**: Configure on Service Groups under the BookMe/Service Groups tab (applies to group members)
+    - **Advisor-specific override**: Set on advisor availability under the BookMe/Availaibility (Employees) tab (applies to individual advisor)
+  - **How it works**: System tracks total booked meeting duration per advisor per day. When an advisor reaches their limit, they are automatically excluded from available time slot searches
+  - **Benefits**:
+    - More accurate capacity management (30-minute and 2-hour meetings now count differently)
+    - Flexible scheduling based on actual meeting duration
+  - **Migration**: Existing count-based limits of "Max meetings per day" are automatically converted to duration-based limits using 1:1 hour conversion (e.g., 2 meetings → 2 hours). *Important: This is a behavioral change and might cause your advisor availability to change.*
 
 ## September 2025
 

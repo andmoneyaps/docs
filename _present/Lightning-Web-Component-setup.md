@@ -24,8 +24,16 @@ In order to use the `fast-slides` LWC component it needs the following inputs:
 
 ### The config object
 
-Currently, the config object in Present contains the following properties:
-1. `agenda` - Used to pass in predefined (or autocompleted) agenda text. An example of this is the use of Quick Texts in Salesforce standard text areas.
+The config object in Present supports the following properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `agenda` | `string` | Predefined agenda text (e.g., from Quick Texts) |
+| `preselectedLabel` | `string` | Label to pre-filter templates on load |
+| `labelWhitelist` | `string[]` | Only show these labels in the filter dropdown |
+| `hideLabelFilter` | `boolean` | Hide the label filter completely |
+
+All properties are optional. See [Template Labels]({{ site.baseurl }}/present/template-labels/) for detailed documentation on label filtering configuration.
 
 An example implementation of a LWC wrapping the `fast-slides` component is shown below.
 ```html
@@ -59,9 +67,9 @@ This implementation is very simple and can be modified to match your styling etc
 > * `andmoney-fast-slides`: The fast-slides component with `customerType` and `recordId` input.
 > * Since we provide a Managed Salesforce package, all components and SObjects include an `andmoney` namespace. Either `andmoney-` instead of `c-` for LWC components or `andmoney__` for SObjects.
 
-![Present wrapper component](../../assets/images/present/present_wrapper.png){width="600"}
+![Present wrapper component]({{ site.baseurl }}/assets/images/present/present_wrapper.png){width="600"}
 
-In order to fetch the customer type passed to the `fast-slides` component we use the sample implementation found [here](../customergroup-mapping).
+In order to fetch the customer type passed to the `fast-slides` component we use the sample implementation found [here]({{ site.baseurl }}/present/customergroup-mapping/).
 
 The Javascript for the PresentWrapper component can be found below. Here we use a wired function:
 

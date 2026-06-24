@@ -7,6 +7,76 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.26.0 (28-04-2026)
+Here is what's new in release 1.26.0 of &bookme.
+
+> **Managed Package Version ID**: `04tP7000002qN7RIAU`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002qN7RIAU`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Customer email field is now read-only in the booking contact form**
+  - The email field in the booking contact form is now locked to prevent advisors from editing it.
+
+## Release 1.25.0 (25-03-2026)
+Here is what's new in release 1.25.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002giWXIAY`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002giWXIAY`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Meeting cancellation error when meeting no longer exists in Salesforce**
+  - Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
+
+## Release 1.24.0 (10-03-2026)
+Here is what's new in release 1.24.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002d6kLIAQ`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002d6kLIAQ`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **"Send meeting confirmation to customer participants" checkbox had no effect**
+  - Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
+
+## Release 1.23.0 (09-02-2026)
+Here is what's new in release 1.23.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002WqITIA0`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002WqITIA0`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Customer email field retained when editing meetings**
+  - Fixed an issue where the customer's email field was not displayed when an advisor opened an existing meeting to edit it.
+  - Root cause: In the managed package context, custom sObject field names include the package namespace prefix in the JSON response. The JavaScript code was accessing fields without the prefix, causing the contact and email data to be lost.
+  - This fix supersedes the incomplete fix in 1.21.0.
+
+## Release 1.21.0 (02-02-2026)
+Here is what's new in release 1.21.0 of &bookme.
+> **Managed Package Version ID**: `04tP7000002UiQfIAK`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000002UiQfIAK`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+### Fixed
+- **Timezone handling for date selection**
+  - Fixed an issue where selecting a date in negative UTC offset timezones (e.g., Greenland) would return timeslots for the previous day.
+  - The fix ensures that dates are correctly parsed using local timezone components rather than UTC, preventing date shifts when users select dates in the booking calendar.
+  - Affected flows: Advisor planner, Customer planner, and Rescheduling.
+
 ## Release 1.19.0 (14-01-2026)
 Here is what's new in release 1.19.0 of &bookme.
 > **Managed Package Version ID**: `04tP7000002Qwf7IAC`.

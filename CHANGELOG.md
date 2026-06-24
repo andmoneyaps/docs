@@ -9,6 +9,30 @@ permalink: /changelog/
 
 This changelog tracks significant updates and changes to the AndMoney documentation.
 
+## June 2026
+
+### Added
+- [Assist Release Notes]({{ site.baseurl }}/meet/release-notes/) — added **Automatic summary recovery**: meetings that end without pressing *End meeting* now still produce a summary in Salesforce
+
+## April 2026
+
+### Added
+- New [Managed Playbooks]({{ site.baseurl }}/bookme/playbooks/managed-playbooks/) page — explains the "Managed" badge you'll see on some playbooks, the fork workflow for customizing a managed playbook, and how update notifications work for forks
+- Smart Playbook Deployments feature is rolling out: &Money now centrally maintains and updates a curated catalog of playbooks across all customer banks, with a clear path to fork for bank-specific customization
+
+### Updated
+- [Playbooks User Guide]({{ site.baseurl }}/bookme/playbooks/playbooks-user-guide/) — Accessing Playbooks section now references the Managed badge and the Fork action for customizing managed playbooks
+
+## January 2026
+
+### Added
+- Comprehensive documentation for Duration-Based Daily Meeting Time Limits feature
+- Detailed configuration levels and migration information for advisor capacity management
+
+### Updated
+- Release news with expanded feature descriptions for January 2026
+- Management UI capacity management documentation
+
 ## August 2025
 
 ### Added

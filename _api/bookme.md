@@ -1083,6 +1083,39 @@ GET /bookme/config/timezones
 
 **Response:** Array of Timezone objects
 
+### Allowed Options API (V3)
+
+Returns, for a given meeting topic, which meeting formats and advisor-selection options are selectable — the same per-topic restrictions configured in the management portal (e.g. a "Telefonbooking" topic that only allows `Telephone`). Read-only.
+
+#### Get Allowed Options
+```http
+GET /bookme/config/allowed-options
+```
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `topicId` | uuid | Yes | The meeting topic to resolve options for |
+| `customerTypeId` | uuid | Yes | The customer type to resolve options for |
+| `location` | string | Yes | The meeting location to resolve options for |
+| `isCustomerInitiated` | boolean | No | Whether the booking is initiated by the customer (`true`, the default) or by an employee (`false`) |
+
+**Response:** AllowedOptions object
+```json
+{
+  "meetingTypes": [
+    { "name": "Telephone", "label": "Telefonmøde", "order": 0 }
+  ],
+  "advisorSelection": [
+    { "name": "PrimaryEmployee", "label": "Min rådgiver", "order": 0 },
+    { "name": "OtherEmployees", "label": "En anden rådgiver", "order": 1 }
+  ]
+}
+```
+
+A topic restricted to "Telephone only" returns exactly `Telephone` in `meetingTypes`.
+
 ## Data Models
 
 ### Meeting Object
@@ -1327,6 +1360,26 @@ Represents a service group membership for an employee.
   "requireAvailableRoom": false
 }
 ```
+
+### AllowedOptions Object (V3)
+```json
+{
+  "meetingTypes": [
+    { "name": "Telephone", "label": "Telefonmøde", "order": 0 }
+  ],
+  "advisorSelection": [
+    { "name": "PrimaryEmployee", "label": "Min rådgiver", "order": 0 }
+  ]
+}
+```
+
+Each entry in `meetingTypes` and `advisorSelection` is an option with the following fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Canonical option name — a meeting format (`Physical`, `Online`, `Telephone`, `Offsite`) or an advisor-selection key (`PrimaryEmployee`, `OtherEmployees`) |
+| `label` | string | Organization-configured, user-facing label |
+| `order` | integer | Display order |
 
 ## Code Examples
 

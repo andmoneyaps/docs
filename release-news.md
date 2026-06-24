@@ -8,7 +8,7 @@ nav_order: 2
 ### _Multilingual booking content (Public API V3)_
 
 - **Multilingual fields**: Meeting topic names, meeting type and employee labels, and iCal meeting title/description can now be configured in multiple languages (Danish, English, and Greenlandic at launch)
-- **`?lang=` query parameter**: API consumers can request a specific locale on read endpoints and receive single-language content, with automatic Danish fallback
+- **`?lang=` query parameter**: API consumers can request a specific locale on read endpoints and receive a single-locale map, with automatic Danish fallback
 - **Additive on V3**: New `localized*` sibling fields sit alongside the existing single-language fields — no breaking change, no version bump, and existing integrations are unaffected
 - See the [Multilingual Support (V3)]({{ site.baseurl }}/api/multilingual) guide
 

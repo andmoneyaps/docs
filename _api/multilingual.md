@@ -55,7 +55,7 @@ Every read endpoint that returns a translatable field accepts an optional `?lang
 | *(omitted)* | Full locale map — every **enabled** locale that has an authored translation |
 | `all` | Same as omitted — full locale map |
 | A specific tag (`da-DK`, `en-GB`, `kl-GL`, …) | Single-entry map keyed by the requested tag. If no translation is authored for that tag, the value is the **Danish fallback** |
-| An unknown tag (e.g. `fr-FR`) | Single-entry map keyed by the requested tag, value is the **Danish fallback** |
+| A tag not enabled for this bank (e.g. `fr-FR`) | Single-entry map keyed by the requested tag, value is the **Danish fallback** |
 
 {: .important }
 > A translatable field is **never** `null` or empty on read. If a requested locale has no authored translation, the Danish (`da-DK`) value is returned in its place — so your integration never needs its own fallback logic.
@@ -138,12 +138,12 @@ Either write shape is accepted.
 
 ```json
 {
-  "name": "Housing advisory",
+  "name": "Boligrådgivning",
   "uniqueTopicId": "housing-advisory"
 }
 ```
 
-The server mirrors `name` into `localizedName = { "da-DK": "Housing advisory" }` automatically.
+The server mirrors `name` into `localizedName = { "da-DK": "Boligrådgivning" }` automatically.
 
 **Shape B — locale map:**
 
@@ -175,7 +175,7 @@ This adds or updates the `en-GB` entry **without touching** authored `da-DK` or 
 
 ### Write validation
 
-- Every key in the submitted locale map must be in the bank's **enabled-locales** set. An unknown or disabled key returns `400`, e.g. `{"error": "Locale 'fr-FR' is not enabled for this bank"}`.
+- Every key in the submitted locale map must be in the bank's **enabled-locales** set. A key that is not enabled returns `400 Bad Request` (standard `{ code, message }` error envelope).
 - The Danish (`da-DK`) entry is required for the final stored state (either incoming, or merged from storage). Submitting only `en-GB` for a topic that has no stored `da-DK` fails validation.
 
 ## Opting in from an existing V3 integration

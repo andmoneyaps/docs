@@ -9,6 +9,8 @@ nav_order: 1
 
 The BookMe API provides comprehensive access to meeting booking and scheduling functionality. This documentation covers API Version 3.0.0 (latest) and includes V2 features. For migration from V2 to V3, see the [V2 to V3 Migration Guide]({{ site.baseurl }}/api/migration-guide-v3).
 
+Customer-facing fields (meeting topic names, labels, and iCal title/description) support multiple languages via the optional `?lang=` query parameter and `localized*` sibling fields. This is additive on V3 — see [Multilingual Support (V3)]({{ site.baseurl }}/api/multilingual).
+
 ## Base URL
 
 ```
@@ -391,8 +393,9 @@ GET /meeting-topics
 **Query Parameters:**
 - `customerTypeId` (uuid, optional): Filter by customer type
 - `isCustomer` (boolean, required): Flag indicating if the request is for a customer
+- `lang` (string, optional): Locale tag (e.g. `en-GB`) or `all`. Controls the shape of `localizedName` in the response — see [Multilingual Support (V3)]({{ site.baseurl }}/api/multilingual)
 
-**Response:** Array of Topic objects
+**Response:** Array of Topic objects. Each topic carries a `localizedName` map alongside the legacy `name` field.
 
 ### Configuration API
 

@@ -10,154 +10,182 @@ grand_parent: BookMe
 
 ## Overview
 
-This guide describes how to establish a secure connection between BookMe and your Salesforce organization through the Management UI. This automated setup process eliminates the need for manual configuration of authentication providers, named credentials, and remote site settings.
+This guide describes how to establish a secure connection between BookMe and your Salesforce organization through the Management UI. The automated provisioning process creates the authentication providers, named credentials, and remote site settings for you — no manual metadata editing required.
+
+## How the connection works
+
+BookMe authenticates to your Salesforce org as a dedicated **integration (run-as) user**, through the **BookMe External Client App** using OAuth 2.0 (Client Credentials flow).
+
+A one-time **Provision** step (run from the Management UI) creates the Salesforce-side authentication infrastructure so your org can call the BookMe backend:
+
+- an **Auth Provider** (`BookingAuthProvider`)
+- a **Named Credential** (`BookingEngine`)
+- **Remote Site Settings** (`BookingEngine`, `BookingMiddleware`)
+- a **Custom Metadata** record holding the connection settings
+
+Because provisioning *creates Salesforce setup records*, it runs with the **integration user's permissions** — so that user temporarily needs setup-level permissions during provisioning (see [The integration user and its permissions](#the-integration-user-and-its-permissions)).
 
 ## Prerequisites
 
-- BookMe package version 1.14 or above installed in your Salesforce org
-- Administrator access to both Salesforce and the BookMe Management UI
-- An integration user account in Salesforce with appropriate permissions
+- BookMe managed package installed in your Salesforce org (the External Client App connection flow requires a recent package version — check with &money if unsure).
+- Administrator access to **both** Salesforce and the BookMe Management UI.
+- An integration user account in Salesforce. A dedicated service account is recommended.
 
-## Connection Setup Process
+## The integration user and its permissions
 
-### Step 1: Configure External Client App in Salesforce
+The integration user has **two distinct permission needs**. They are easy to confuse — and getting them wrong is the most common cause of provisioning failures.
+
+### 1. Runtime permissions (ongoing) — keep these assigned
+
+For day-to-day operation (reading and writing meetings, contacts, etc.), assign the **`BookingPlatformIntegration`** permission set that ships with the BookMe package. It grants the object/field access BookMe needs plus **API Enabled**.
+
+> The `BookingPlatformIntegration` permission set is intentionally least-privilege: it grants **data access only**. It does **not** include the setup permissions required to provision the connection (see below). Assigning it alone is **not** enough to run the Provision step.
+
+### 2. Provisioning permissions (one-time) — needed only to connect
+
+The Provision and Verify steps create and read Salesforce **setup** objects, so the integration user must additionally have:
+
+- **Manage Auth. Providers**
+- **Manage Named Credentials**
+- **Manage Certificates**
+- **Modify Metadata Through Metadata API Functions**
+- **API Enabled**
+
+Because *Manage Auth. Providers* depends on a broad set of administrative permissions, the **simplest reliable option is to give the integration user a System Administrator profile** while you set up the connection.
+
+> **These permissions are needed only for provisioning and verification — not for runtime.** If your security policy prefers least privilege, you may **remove them again after the connection is established and verified**. Re-grant them only if you need to re-provision (for example, after a credential rotation).
+
+**Verify the integration user has the provisioning permissions** (run as that user, or have an admin run it in the user's context):
+
+```sql
+SELECT PermissionsManageAuthProviders, PermissionsManageNamedCredentials,
+       PermissionsManageCertificates, PermissionsModifyMetadata, PermissionsApiEnabled
+FROM UserPermissionAccess
+```
+
+All five must return `true`.
+
+## Connection setup process
+
+### Step 1: Configure the BookMe External Client App in Salesforce
 
 The BookMe package includes an External Client App that enables secure communication between BookMe and Salesforce.
 
-1. **Navigate to External Client App Manager** in Salesforce Setup
-2. **Find** `BookMe External Client App` in the list
-3. **Click Edit Policies** on the app
+1. In Salesforce Setup, open **External Client App Manager**.
+2. Find **`BookMe External Client App`** in the list.
+3. Click **Edit Policies**.
 4. In the **OAuth Policies** section:
-   - Enable **Client Credentials Flow**
-   - Add an integration user that will be used for the connection
-   - This user should have appropriate permissions to manage BookMe-related objects
+   - Enable **Client Credentials Flow**.
+   - Set the **Run As** user to your integration user.
 
 ![External Client App]({{ site.baseurl }}/assets/images/external-client-app.png)
 
 {: .warning }
-> **Integration User Requirements**
->
-> The selected integration user must have:
-> - Access to BookMe objects and fields
-> - API access permissions
-> - Appropriate profile or permission sets assigned
+> **Make sure the run-as user is correctly permissioned before continuing.** See [The integration user and its permissions](#the-integration-user-and-its-permissions) — it needs the runtime permission set **and** (for this setup) the provisioning permissions.
 
-### Step 2: Configure Salesforce Domain in Management UI
+### Step 2: Have your Salesforce domain configured by &money
 
-1. **Navigate** to **Admin → CRM → Configuration** in the BookMe Management UI
-2. **Enter your Salesforce domain** name in the Salesforce Configuration section
-   - Format: Enter only the subdomain (e.g., `yourcompany`)
-   - The system automatically formats it as `https://yourcompany.my.salesforce.com`
-3. **Click Save** to store the domain configuration
+Your Salesforce **domain** must be registered for your organization on the BookMe platform before the connection can be established. This is configured by **&money** — it is **not** something customer administrators set in the Management UI.
 
-![CRM Configuration]({{ site.baseurl }}/assets/images/mgmt-ui-crm-configuration.png)
+To request it, contact **&money** (the service desk) and provide your Salesforce **domain** — the subdomain only, for example `yourcompany` (your org is reached at `https://yourcompany.my.salesforce.com`).
 
-### Step 3: Test the Backend-to-Salesforce Connection
+Once &money confirms your domain has been configured, continue to the next step.
 
-Before provisioning, verify that BookMe can connect to your Salesforce org:
+### Step 3: Test the connection
 
-1. In the **Test CRM Connection** section
-2. Click the **Test** button
-3. Wait for the connection test to complete
-4. A successful test shows a green success message
-5. If the test fails, verify:
-   - The domain name is correct
-   - The External Client App is properly configured
-   - The integration user has appropriate permissions
+Before provisioning, confirm BookMe can reach your Salesforce org and obtain a token.
 
-### Step 4: Provision the BookMe Connection
+1. In the **Test CRM connection** section, click **Test**.
+2. A successful test shows a green success message.
+3. If the test fails, verify:
+   - your Salesforce domain has been configured by &money for your organization (contact &money if it may be missing or incorrect);
+   - the External Client App has Client Credentials Flow enabled with the integration user set as run-as;
+   - the integration user is **active** and has **API Enabled**.
 
-Once the backend connection is verified, provision the connection from Salesforce to BookMe:
+### Step 4: Provision the connection
 
-1. In the **BookMe Connection** section
-2. Click the **Provision BookMe Connection** button
-3. The provisioning process will automatically:
-   - Create Remote Site Settings in Salesforce
-   - Configure Auth Providers
-   - Set up Named Credentials
-   - Push necessary credentials to your Salesforce org
+Once the test succeeds, create the Salesforce-side authentication infrastructure.
+
+1. In the **Schedule connection** section, click **Provision**.
+2. Provisioning automatically creates, in your Salesforce org:
+   - Remote Site Settings (`BookingEngine`, `BookingMiddleware`)
+   - the Auth Provider (`BookingAuthProvider`)
+   - the Named Credential (`BookingEngine`)
+   - the Custom Metadata record holding the connection settings
+3. Watch the status indicator:
+   - ✅ **Success** — connection established.
+   - ⚠️ **Warning** — partial success or a configuration issue (often a missing permission — see [Troubleshooting](#troubleshooting)).
+   - ❌ **Error** — provisioning failed (read the message).
 
 {: .note }
-> If the provision button shows a warning about missing credentials, contact &money support for assistance.
+> If the Provision button shows a warning about missing **backend** credentials, contact &money support to provision backend credentials for your organization.
 
-### Step 5: Verify the Named Credential in Salesforce
+> Using **Present** as well? Provision the Present connection from its own section once the Schedule connection succeeds.
 
-After provisioning, verify the connection in Salesforce:
+### Step 5: Finish the Named Credential in Salesforce
 
-1. **Navigate** to **Setup → Named Credentials** in Salesforce
-2. **Find** the newly created BookMe named credential
-3. **Edit** the named credential
-4. **Check** the **Start Authentication Flow on Save** checkbox
-5. **Click Save**
-6. The authentication should complete successfully
+1. In Salesforce, go to **Setup → Named Credentials** and open **`BookingEngine`**.
+2. (Optional) Check **Start Authentication Flow on Save** and **Save** to force an immediate token, then confirm authentication completes.
 
-If authentication succeeds, your Salesforce org is now connected to the BookMe backend.
+When the Management UI status shows ✅ Success and authentication completes, your Salesforce org is connected to BookMe.
 
-## Connection Status Indicators
+### After setup
 
-The Management UI provides visual status indicators for the connection:
+If you tightened permissions for provisioning (for example, by temporarily using a System Administrator profile), you can now **remove the provisioning permissions** from the integration user and keep only the `BookingPlatformIntegration` permission set for runtime. See [The integration user and its permissions](#the-integration-user-and-its-permissions).
 
-- ✅ **Green checkmark**: Connection successful and active
-- ⚠️ **Yellow warning**: Connection pending or requires attention
-- ❌ **Red error**: Connection failed (check the error message for details)
+## Connection status indicators
+
+The Management UI shows visual status indicators for the connection:
+
+- ✅ **Green checkmark**: connection successful and active.
+- ⚠️ **Yellow warning**: connection pending or requires attention.
+- ❌ **Red error**: connection failed — check the error message for details.
 
 ## Troubleshooting
 
-### Common Issues
+### Provisioning fails with a "not supported" or "No such column" error
 
-#### "Missing Credentials" Warning
-- **Cause**: Backend credentials not configured for your organization
-- **Solution**: Contact &money support to provision backend credentials
+This is the most common — and most misleading — provisioning error. When the integration user lacks a setup permission, Salesforce reports it as a **schema error rather than a permission error** — for example `sObject type 'AuthProvider' is not supported`, or a "No such column" error on an Auth Provider or Named Credential field.
 
-#### Test Connection Fails
-- **Possible Causes**:
-  - Incorrect domain name
-  - External Client App not configured properly
-  - Integration user lacks permissions
-- **Solutions**:
-  1. Verify the domain name (should not include https:// or .my.salesforce.com)
-  2. Check External Client App configuration
-  3. Ensure integration user has API access and BookMe permissions
+These look like a missing object or field, but they actually mean the **integration (run-as) user can't see that setup object or field** — it is **missing a provisioning permission** (such as *Manage Auth. Providers*, *Manage Named Credentials*, or *Manage Certificates*).
 
-#### Provisioning Fails
-- **Possible Causes**:
-  - Network connectivity issues
-  - Insufficient permissions in Salesforce
-  - Existing conflicting configuration
-- **Solutions**:
-  1. Retry the provisioning process
-  2. Check Salesforce logs for detailed error messages
-  3. Verify no existing Auth Providers or Named Credentials conflict
+**Fix:** grant the [provisioning permissions](#2-provisioning-permissions-one-time--needed-only-to-connect) to the integration user (or temporarily give it a System Administrator profile), then re-run Provision. Confirm with the `UserPermissionAccess` query above.
 
-#### Named Credential Authentication Fails
-- **Cause**: OAuth flow cannot complete
-- **Solutions**:
-  1. Verify Remote Site Settings were created
-  2. Check Auth Provider configuration
-  3. Ensure the integration user is active
-  4. Try re-provisioning the connection
+### Test connection fails
 
-## Security Considerations
+- **Possible causes:** your Salesforce domain not yet configured by &money (or configured incorrectly); External Client App not configured (Client Credentials Flow / run-as user); integration user inactive or missing **API Enabled**.
+- **Fix:** confirm with &money that your domain is configured, check the External Client App configuration, and verify the integration user's status and API access.
 
-- All connections use OAuth 2.0 with Client Credentials flow
-- Credentials are encrypted in transit and at rest
-- No passwords are stored or transmitted
-- Integration user permissions limit the scope of access
-- All communication occurs over HTTPS
+### Named Credential authentication fails
 
-## Next Steps
+- **Cause:** the OAuth flow can't complete.
+- **Fix:** confirm the Remote Site Settings were created, check the Auth Provider configuration, ensure the integration user is active, and try re-provisioning.
 
-Once the connection is successfully established:
-1. [Deploy the iframe LWC component]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) to enable embedded booking
-2. [Configure the component]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) for your specific use cases
-3. Set up custom metadata for meeting configurations
+### "Missing Credentials" warning
+
+- **Cause:** backend credentials are not yet configured for your organization.
+- **Fix:** contact &money support to provision backend credentials.
+
+## Security considerations
+
+- All connections use OAuth 2.0 with the Client Credentials flow.
+- Credentials are encrypted in transit and at rest; no passwords are stored or transmitted.
+- Day-to-day access is governed by the integration user's runtime permission set (`BookingPlatformIntegration`).
+- The elevated **provisioning permissions are required only during setup and can be removed afterward**, keeping the standing integration user least-privileged.
+- All communication occurs over HTTPS.
+
+## Next steps
+
+Once the connection is established:
+
+1. [Deploy the iframe LWC component]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) to enable embedded booking.
+2. [Configure the component]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) for your use cases.
+3. Push your customer types and meeting topics to Salesforce from **Admin → CRM → Configuration**.
 
 ## Support
 
 If you encounter issues during setup:
-- Check the Salesforce Setup Audit Trail for detailed logs
-- Review the Management UI logs for connection errors
-- Contact &money support with:
-  - Your Salesforce org ID
-  - Error messages received
-  - Steps attempted
+
+- Check the Salesforce Setup Audit Trail for detailed logs.
+- Review the Management UI status messages for connection errors.
+- Contact &money support with your Salesforce org ID, the error message received, and the steps attempted.

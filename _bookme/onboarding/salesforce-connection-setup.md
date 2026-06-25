@@ -83,16 +83,13 @@ The BookMe package includes an External Client App that enables secure communica
 {: .warning }
 > **Make sure the run-as user is correctly permissioned before continuing.** See [The integration user and its permissions](#the-integration-user-and-its-permissions) — it needs the runtime permission set **and** (for this setup) the provisioning permissions.
 
-### Step 2: Configure your Salesforce domain in the Management UI
+### Step 2: Have your Salesforce domain configured by &money
 
-1. In the BookMe Management UI, go to **Admin → CRM → Configuration**.
-2. In the Salesforce section, enter your Salesforce **domain** (subdomain only, e.g. `yourcompany`). The system formats it as `https://yourcompany.my.salesforce.com`.
-3. **Save** the configuration.
+Your Salesforce **domain** must be registered for your organization on the BookMe platform before the connection can be established. This is configured by **&money** — it is **not** something customer administrators set in the Management UI.
 
-![CRM Configuration]({{ site.baseurl }}/assets/images/mgmt-ui-crm-configuration.png)
+To request it, contact **&money** (the service desk) and provide your Salesforce **domain** — the subdomain only, for example `yourcompany` (your org is reached at `https://yourcompany.my.salesforce.com`).
 
-{: .note }
-> Only users with the &money admin role can edit the domain name. If the field is read-only, contact the service desk for assistance.
+Once &money confirms your domain has been configured, continue to the next step.
 
 ### Step 3: Test the connection
 
@@ -101,7 +98,7 @@ Before provisioning, confirm BookMe can reach your Salesforce org and obtain a t
 1. In the **Test CRM connection** section, click **Test**.
 2. A successful test shows a green success message.
 3. If the test fails, verify:
-   - the domain name is correct (subdomain only — no `https://` or `.my.salesforce.com`);
+   - your Salesforce domain has been configured by &money for your organization (contact &money if it may be missing or incorrect);
    - the External Client App has Client Credentials Flow enabled with the integration user set as run-as;
    - the integration user is **active** and has **API Enabled**.
 
@@ -156,8 +153,8 @@ These look like a missing object or field, but they actually mean the **integrat
 
 ### Test connection fails
 
-- **Possible causes:** incorrect domain name; External Client App not configured (Client Credentials Flow / run-as user); integration user inactive or missing **API Enabled**.
-- **Fix:** verify the domain (subdomain only), the External Client App configuration, and the integration user's status and API access.
+- **Possible causes:** your Salesforce domain not yet configured by &money (or configured incorrectly); External Client App not configured (Client Credentials Flow / run-as user); integration user inactive or missing **API Enabled**.
+- **Fix:** confirm with &money that your domain is configured, check the External Client App configuration, and verify the integration user's status and API access.
 
 ### Named Credential authentication fails
 

@@ -20,6 +20,7 @@ The Engage platform owns the enterprise app registrations and publishes them as 
 | [Microsoft Entra Integration]({{ site.baseurl }}/foundation/identity/entra-integration/) | The integration architecture between your Entra tenant and the Engage platform — multi-tenant app model, admin consent flow, tenant lookup, user-to-role mapping |
 | [App Registration Installation]({{ site.baseurl }}/foundation/identity/app-registration-installation/) | Step-by-step installation of the Engage-owned app registrations into your Entra tenant via admin-consent links |
 | [Approving Engage in Your Microsoft Entra]({{ site.baseurl }}/foundation/identity/engage-admin-consent/) | Step-by-step walkthrough to approve the Engage app registration (one-time admin consent) |
+| [Engage Sign-In and Identity]({{ site.baseurl }}/foundation/identity/engage-sign-in/) | How sign-in works at engage.andmoney.dk — the three identity paths, which enterprise apps to approve, and the callback (redirect) URL patterns |
 
 ## Related
 

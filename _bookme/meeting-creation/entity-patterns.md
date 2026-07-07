@@ -98,8 +98,6 @@ Entity patterns work with **abstract field names** (like `Subject`, `StartDateTi
 3. Applies **default values** only where the booking supplies none.
 4. Wires up the relationships (which record links to which) from the pattern's configuration, in the correct order.
 
-This translation is what makes the approach **CRM-agnostic** — the same internal-meeting pattern works whether your CRM is Salesforce or Dynamics 365.
-
 ---
 
 ## How you configure it

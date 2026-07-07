@@ -110,7 +110,7 @@ You configure the **targets and values**, not code, through **Admin → Entities
 | **Entity Patterns** | Compose the parts (which records are created vs referenced), the relationships between them, whether a part is optional or allows multiple, and default values. |
 | **Pattern mapper** | Binds a specific pattern to the internal-meeting use case. |
 | Event record type | Whether the `Event` gets a specific record type, and which one. |
-| Meeting-format mapping *(optional)* | Translates the meeting type to your CRM's meeting-format value. |
+| Meeting-format mapping *(optional)* | If your CRM records the meeting format (physical, phone, video, …) in its own field with its own values, this maps BookMe's meeting type to that value so it can be written to the `Event`. Skipped if you don't use such a field. |
 | Account resolution | How the widget determines which Account the meeting belongs to. |
 
 Definitions and patterns are **portable across environments** via import/export.

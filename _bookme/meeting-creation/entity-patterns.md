@@ -121,7 +121,7 @@ Definitions and patterns are **portable across environments** via import/export.
 
 - **Internal meetings only.** A pattern mapper for the internal-meeting use case must exist; if none does, meeting creation fails. If more than one exists, the first is used (with a warning).
 - You can remap, omit, or default fields, but you **cannot add brand-new fields** the booking never provides.
-- **Portal bookings do not yet use Entity Patterns** for the CRM write — they still use [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) or [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/).
+- **This is the internal-meeting flow specifically.** Portal (customer self-service) bookings are not created by this flow — they go through either the legacy [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) approach or the [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) approach. Playbooks themselves write **through entity patterns**, so entity patterns still underpin any portal booking on the Playbook strategy; only the legacy CRM Configuration path does not use them.
 - Removing additional-advisor relations on cancellation is a known limitation.
 - Confirmation of the created meeting is **eventually consistent** — the widget retries briefly until the record is visible.
 

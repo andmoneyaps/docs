@@ -46,27 +46,69 @@ The package creates the following records, in this order:
 | 5 | `EventRelation` | Per additional advisor / invitee | Requires **Shared Activities** enabled in your org. |
 | — | Address (`AMB_Address__c`) | Optional | Created for start/end addresses when present. |
 
-{: .note }
-> **The meeting detail record is the anchor.** Its `BookingFlowId__c` field carries the booking id and is the key used for every later lookup and update. Setting its `SendMeetingInvite__c` field to `true` is what triggers the calendar invitation.
+### Fields written to the BookMe meeting detail (`AMB_Event_Detail__c`)
 
-### Where the `Event` field values come from
+These are populated by the package (fixed — not part of the configurable field mapping):
+
+| Field | Value |
+|---|---|
+| `BookingFlowId__c` | The booking's unique id (the key for every later lookup/update) |
+| `IsCustomerInitiated__c` | `true` for the customer flow, `false` for the employee flow |
+| `Comment__c` | The booking comment |
+| `MeetingTaxonomy__c` | The booking theme, translated to your CRM's taxonomy value |
+| `MeetingType__c` / `MeetingTypeLabel__c` | The selected meeting type |
+| `AdvisorEmail__c` / `AdvisorName__c` | The advisor |
+| `OwnerId` | The advisor (resolved to a Salesforce user) |
+| `Location__c` / `RoomId__c` / `RoomName__c` | The selected location / room |
+| `TeamsMeetingLink__c` | The online meeting link, when the meeting is online |
+| `SendMeetingInvite__c` | Whether to send the calendar invite (customer flow: always `true`; employee flow: advisor's choice) |
+| `StartAddress__c` / `EndAddress__c` | Links to address records, when addresses are provided |
+| `CancellationReason__c` / `CancelledBy__c` | Set **only** when the meeting is cancelled |
+
+{: .note }
+> **The meeting detail record is the anchor.** `BookingFlowId__c` is the key used for every later lookup and update, and `SendMeetingInvite__c = true` is what triggers the calendar invitation.
+
+### Fields written to the `Event`
 
 | Field | Value |
 |---|---|
 | `StartDateTime` / `EndDateTime` | The chosen time slot |
-| `Subject` | The meeting title |
+| `Subject` | The meeting title (any configured title override **is** applied here) |
 | `Description` | The booking comment |
-| `Location` | The selected location |
+| `Location` | The selected location (stored **as selected** — see note) |
 | `OwnerId` | The advisor |
-| `ShowAs` | Always `Busy` |
-| `IsAllDayEvent` | Always `false` |
-| `WhoId` / `WhatId` | Established through `EventRelation` (Shared Activities), not set directly |
+| `ShowAs` | Constant `Busy` (set to `Free` on cancellation) |
+| `IsAllDayEvent` | Constant `false` |
+| `AMB_Event_Detail__c` | Link to the meeting detail record |
+
+**Not set on the `Event` by default:**
+
+| Field | Why |
+|---|---|
+| `WhoId` / `WhatId` | Not written directly — the who/what link is established through `EventRelation` (requires **Shared Activities**) |
+| `RecordTypeId` | **No record type is assigned** out of the box; configure it explicitly if you need one |
+
+### Fields written to the default activity object (`Opportunity`)
+
+Created only when the booking isn't attached to an existing record. (If you configure a different activity object, its fields come from your field mapping instead.)
+
+| Field | Value |
+|---|---|
+| `Name` | The meeting title |
+| `AccountId` | The account the booking is for |
+| `OwnerId` | The advisor |
+| `Description` | The booking comment |
+| `CloseDate` | The meeting date, offset by your configured number of days |
+| `StageName` | Constant `Open` |
+
+### Other records
+
+- **Meeting contact (`AMB_Meeting_Contact__c`)** — one per participant, carrying the contact link, name, and email.
+- **`EventRelation`** — one per invitee/additional advisor; advisors are marked as invitees, and the related who/what record as the parent. Requires **Shared Activities**.
+- **Address (`AMB_Address__c`)** — created only when start/end addresses are supplied.
 
 {: .note }
-> **The stored location is the raw selected value.** Any "pretty" location formatting BookMe shows in its own screens is display-only and does **not** change the `Event.Location` / meeting-detail location stored in your CRM. The meeting **title**, by contrast, does apply any configured title override to `Event.Subject` and the activity object's name.
-
-{: .note }
-> **No record-type is set on the default path.** Out of the box, BookMe does not assign a record type to the created `Event`. If you need specific record types, that must be configured explicitly.
+> **The stored location is the raw selected value.** Any "pretty" location formatting BookMe shows in its own screens is display-only and does **not** change the `Event.Location` / meeting-detail location stored in your CRM. The meeting **title** override, by contrast, **does** apply to `Event.Subject` and the activity object's `Name`.
 
 ---
 

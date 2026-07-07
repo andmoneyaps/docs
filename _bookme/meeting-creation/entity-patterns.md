@@ -46,14 +46,46 @@ graph LR
 
 | Part | Role |
 |---|---|
-| `Event` | **Created** — the meeting (`Subject`, start/end times, meeting format, plus links) |
-| Meeting detail | **Created** — the BookMe detail record, including the booking id and room details |
+| `Event` | **Created** — the meeting |
+| Meeting detail | **Created** — the BookMe detail record |
 | Advisor relations | **Created only when additional advisors are chosen** |
 | Account | **Referenced** — the meeting is linked to an existing Account |
 | Owner, advisors | **Referenced** users, used to set ownership and relations |
 
 {: .important }
 > **No `Lead` and no `Opportunity`.** Internal meetings link to an **existing Account** and never create a person record. This is the sharpest contrast with the [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) path.
+
+### Fields written
+
+The field **names** shown are the abstract names; each is written to whatever your entity definition maps it to. A field is **silently skipped if your entity definition doesn't declare it** (or marks it read-only), and pattern defaults fill in only where the booking supplies no value.
+
+**`Event`:**
+
+| Field | Value |
+|---|---|
+| `Subject` | The meeting title |
+| `StartDateTime` / `EndDateTime` | The chosen time slot |
+| `MeetingFormat` | The meeting format — **only if** your `Event` definition declares this field |
+| `RecordTypeId` | **Only if** a record type is configured for your org |
+| Account link (`WhoId`/`AccountId`) | Set via the pattern relationship to the referenced Account |
+| Owner link (`OwnerId`) | Set via the pattern relationship to the referenced owner |
+
+**Meeting detail:**
+
+| Field | Value |
+|---|---|
+| `BookingId` (`BookingFlowId__c`) | The booking's unique id |
+| `Comment` | The booking description |
+| `MeetingTaxonomy` | The booking theme, translated to your CRM's taxonomy value |
+| `AdvisorEmail` / `AdvisorName` | The meeting owner |
+| `MeetingType` / `MeetingTypeLabel` | The meeting type |
+| `Location` / `RoomId` / `RoomName` | The selected room |
+| `SendMeetingInvite` | Constant `true` |
+
+**Advisor relations** (only when additional advisors are chosen): the advisor link, `IsInvitee = true`, `IsParent = false`.
+
+{: .note }
+> **Not set on create:** availability status (`ShowAs`) and cancellation fields are written only on the cancel path, not when the meeting is created.
 
 ---
 

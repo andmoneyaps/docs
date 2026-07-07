@@ -34,10 +34,17 @@ When a meeting is booked on a playbook-enabled portal, the portal's playbook run
 ## What gets created — defined by your pattern
 
 {: .important }
-> The objects and fields are **not fixed by the playbook** — they are defined by the **entity pattern** the create-meeting block references. For the standard BookMe meeting pattern, that is an `Event`, the BookMe meeting detail record, and advisor relations. A different pattern would create a different set.
+> The objects and fields are **not fixed by the playbook** — they are defined by the **entity pattern** the create-meeting block references, plus whatever field mappings you add in the editor. A different pattern creates a different set.
+
+For the **standard BookMe meeting pattern**, the records and fields are the same as for internal meetings — an `Event`, the BookMe meeting detail record (with `BookingFlowId__c`), and advisor relations. See the [Entity Patterns field tables]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/#fields-written) for the exact fields; the same "silently skipped if your definition doesn't declare it" rule applies.
+
+On top of the pattern, the create-meeting block lets you **map additional values** — including a portal's own custom fields — onto any field the pattern exposes.
 
 {: .warning }
 > **This approach creates no `Lead` and no meeting-contact record.** The `Lead`-based set belongs to the legacy [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) approach, and meeting-contact records are written by separate attendee-sync behaviour ([see Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/#updating-rescheduling-and-cancelling)) — not by the playbook.
+
+{: .note }
+> The precise CRM field names depend on **your** entity definitions and the mappings you configure, so exact field values are org-specific rather than fixed by BookMe.
 
 ---
 

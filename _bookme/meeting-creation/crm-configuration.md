@@ -29,14 +29,53 @@ CRM Configuration is used when a **legacy portal** books a meeting and the porta
 
 ## What gets created — a fixed Lead-based set
 
-This approach always creates the same set of records:
+This approach always creates the same set of records: a `Lead` (the attendee), the `Event`, the BookMe meeting detail record, and an `EventRelation` per additional advisor. The fields below are set by default; **your field map can override or add to them** (except where noted).
 
-| Record | Details |
+### `Lead` — the attendee
+
+| Field | Value |
 |---|---|
-| `Lead` | **Always created first**, as the meeting's attendee. Uses placeholder values (e.g. a placeholder last name and company) unless your field map overrides them; the meeting owner is set when the advisor's email resolves. |
-| `Event` | The meeting, with the newly-created `Lead` as its attendee (`WhoId`). |
-| BookMe meeting detail (`AMB_Event_Detail__c`) | Holds the BookMe information; the theme is translated to your CRM's meeting-taxonomy value. |
-| `EventRelation` | One per **additional advisor** (invitee, not the owner). |
+| `LastName` | Placeholder (e.g. `"LastName"`) unless your field map overrides it |
+| `Status` | Constant `Open` |
+| `Company` | Placeholder (e.g. `"Company"`) — only when your org marks `Company` required |
+| `OwnerId` | The meeting owner, when the advisor's email resolves to a user |
+| *any `Lead` field* | Whatever your field map targets on `Lead.*` |
+
+### `Event`
+
+| Field | Value |
+|---|---|
+| `Subject` | The meeting title |
+| `StartDateTime` / `EndDateTime` | The chosen time slot |
+| `WhoId` | **Hardwired** to the newly-created `Lead` — see below |
+| `OwnerId` | The meeting owner, when resolved |
+| meeting-detail link | Reference to the BookMe meeting detail record |
+| *any `Event` field* | Whatever your field map targets on `Event.*` |
+
+### BookMe meeting detail (`AMB_Event_Detail__c`)
+
+| Field | Value |
+|---|---|
+| `BookingFlowId__c` | The booking's unique id |
+| `Comment__c` | The booking description |
+| `MeetingTaxonomy__c` | The booking theme, translated to your CRM's taxonomy value |
+| `AdvisorEmail__c` / `AdvisorName__c` | The meeting owner |
+| `MeetingType__c` / `MeetingTypeLabel__c` | The meeting type |
+| `Location__c` / `RoomId__c` / `RoomName__c` | The selected room / location |
+| `SendMeetingInvite__c` | Constant `true` |
+| `CancellationReason__c` / `CancelledBy__c` | Written empty on create (used on cancel) |
+| *any detail field* | Whatever your field map targets on the meeting-detail object |
+
+### `EventRelation` — one per additional advisor
+
+| Field | Value |
+|---|---|
+| `RelationId` | The additional advisor (resolved to a Salesforce user) |
+| `IsInvitee` | Constant `true` |
+| `IsParent` | Constant `false` |
+
+{: .note }
+> **Not written by this approach:** no `Contact` records are created for external attendees, and no activity object such as an `Opportunity` is created — only the `Lead`-based set above.
 
 ---
 

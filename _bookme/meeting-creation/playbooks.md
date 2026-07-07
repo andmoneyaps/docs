@@ -1,15 +1,18 @@
 ---
 layout: default
-title: Playbooks (New Portals & UWC)
+title: Playbook Portals
 parent: Meeting Creation in Salesforce
 grand_parent: BookMe
-nav_order: 5
+nav_order: 2
 ---
 
-# Playbooks (New Portals & UWC)
+# Playbook Portals
 {: .no_toc }
 
-The newest approach. New **Portals** and the **Universal Web Client (UWC)** create meetings through **Playbooks** — a visual, forkable automation that writes through the same [Entity-Pattern mapping]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) used by internal meetings.
+{: .note }
+> **Current implementation.** This is the recommended approach for customer self-service booking on a portal.
+
+**Portals** create meetings through **Playbooks** — a visual, forkable automation that writes through the same [entity-pattern mapping]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) used by internal meetings.
 
 <details open markdown="block">
   <summary>On this page</summary>
@@ -80,10 +83,7 @@ Beneath the editor, the [entity pattern]({{ site.baseurl }}/bookme/meeting-creat
 
 ## Where it runs
 
-- **New Portals** — customer self-service bookings.
-- **The Universal Web Client (UWC)** — the visual playbook editor and employee contexts.
-
-Both create the meeting through the same playbook → entity-pattern path.
+Portals that use the **Playbook** strategy — customer self-service bookings. The playbook is authored in the visual editor and creates the meeting through the playbook → entity-pattern path.
 
 ---
 

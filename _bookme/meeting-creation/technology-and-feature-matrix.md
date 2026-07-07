@@ -24,13 +24,13 @@ The side-by-side reference for every meeting-creation implementation. Use it to 
 
 *How each implementation works and how you configure it.*
 
-| Implementation | Where booking runs | What creates the CRM records | How you configure fields | Extension mechanism |
-|---|---|---|---|---|
-| **[Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — customer flow** | Your Salesforce org | The package, inside your org | Custom-metadata field mappings | Apex hooks + swappable providers |
-| **[Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — employee flow** | Your Salesforce org | The package, inside your org | Custom-metadata field mappings | Apex hooks + swappable providers + advisor UI options |
-| **[CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) (legacy portals)** | &money platform | The platform, on your behalf | CRM Configuration field map (Management UI) | Standard / custom field mappings over a fixed Lead-based set |
-| **[Internal meetings]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) (embeddable)** | &money platform | The platform, on your behalf (Salesforce or Dynamics) | Entity Definitions + Entity Patterns (Admin → Entities) | Pattern parts, relationships, defaults, and per-org field mapping |
-| **[Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) (new portals & UWC)** | &money platform | The platform, on your behalf | Playbook editor + Entity Patterns | Visual field mappings & transformations + fork a managed playbook |
+| Implementation | Status | Where booking runs | What creates the CRM records | How you configure fields | Extension mechanism |
+|---|---|---|---|---|---|
+| **[Internal meetings]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) (embeddable)** | **Current** | &money platform | The platform, on your behalf (Salesforce or Dynamics) | Entity Definitions + Entity Patterns (Admin → Entities) | Pattern parts, relationships, defaults, and per-org field mapping |
+| **[Playbook portals]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)** | **Current** | &money platform | The platform, on your behalf | Playbook editor + Entity Patterns | Visual field mappings & transformations + fork a managed playbook |
+| **[Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — customer flow** | Legacy | Your Salesforce org | The package, inside your org | Custom-metadata field mappings | Apex hooks + swappable providers |
+| **[Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — employee flow** | Legacy | Your Salesforce org | The package, inside your org | Custom-metadata field mappings | Apex hooks + swappable providers + advisor UI options |
+| **[CRM Configuration portals]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/)** | Legacy | &money platform | The platform, on your behalf | CRM Configuration field map (Management UI) | Standard / custom field mappings over a fixed Lead-based set |
 
 ---
 
@@ -38,13 +38,13 @@ The side-by-side reference for every meeting-creation implementation. Use it to 
 
 *What each implementation supports.*
 
-| Implementation | Customer flow | Employee flow | Records created | Leads only | Field customization | Multi-advisor | Status / vintage |
+| Implementation | Status | Customer flow | Employee flow | Records created | Leads only | Field customization | Multi-advisor |
 |---|---|---|---|---|---|---|---|
-| **Salesforce package — customer flow** | ✅ Public / Experience Cloud | — (shares the logic) | Meeting detail, meeting contact, `Opportunity` (default), `Event`, `EventRelation` | ❌ Opportunity + Event by default | Field mappings + Apex hooks | Single advisor | Current |
-| **Salesforce package — employee flow** | Advisor can book as-customer | ✅ Advisor on a record page | Same set, or reuse an existing record | ❌ Any activity object/participant | Field mappings + Apex hooks; advisor UI options | ✅ Additional advisors + explicit owner | Current |
-| **CRM Configuration (legacy portals)** | ✅ Customer books on an old portal | ❌ No advisor booking UI | **`Lead` (always)**, meeting detail, `Event`, `EventRelation` | ✅ **Yes** — attendee is always a placeholder `Lead` | Field map only; record set is fixed | Additional advisors | **Legacy** — being superseded |
-| **Internal meetings (embeddable)** | ❌ Advisor-facing internal widget | ✅ Advisor books, links to an Account | `Event`, meeting detail, advisor relations; **no Lead / no Opportunity** | ❌ Links to an existing Account | Entity Definitions + Patterns (Admin → Entities) | ✅ Additional advisors | Current — Salesforce or Dynamics |
-| **Playbooks (new portals & UWC)** | ✅ New portal / UWC (Playbook strategy) | ✅ UWC also serves employee contexts | **Pattern-defined** (standard pattern → `Event`, meeting detail, relations); **no Lead** | ❌ Pattern-defined | Playbook editor + Entity Patterns | Pattern-defined | **Newest** |
+| **Internal meetings (embeddable)** | **Current** | ❌ Advisor-facing internal widget | ✅ Advisor books, links to an Account | `Event`, meeting detail, advisor relations; **no Lead / no Opportunity** | ❌ Links to an existing Account | Entity Definitions + Patterns (Admin → Entities) | ✅ Additional advisors |
+| **Playbook portals** | **Current** | ✅ Customer self-service on a portal | ❌ Customer-facing | **Pattern-defined** (standard pattern → `Event`, meeting detail, relations); **no Lead** | ❌ Pattern-defined | Playbook editor + Entity Patterns | Pattern-defined |
+| **Salesforce package — customer flow** | Legacy | ✅ Public / Experience Cloud | — (shares the logic) | Meeting detail, meeting contact, `Opportunity` (default), `Event`, `EventRelation` | ❌ Opportunity + Event by default | Field mappings + Apex hooks | Single advisor |
+| **Salesforce package — employee flow** | Legacy | Advisor can book as-customer | ✅ Advisor on a record page | Same set, or reuse an existing record | ❌ Any activity object/participant | Field mappings + Apex hooks; advisor UI options | ✅ Additional advisors + explicit owner |
+| **CRM Configuration portals** | Legacy | ✅ Customer books on an old portal | ❌ No advisor booking UI | **`Lead` (always)**, meeting detail, `Event`, `EventRelation` | ✅ **Yes** — attendee is always a placeholder `Lead` | Field map only; record set is fixed | Additional advisors |
 
 {: .note }
 > ✅ / ❌ describe the **default** behaviour. Because the package field mapping, Entity Patterns, and Playbooks are all customizable, a specific org may extend some of these.
@@ -82,8 +82,8 @@ Two records are written by **every** implementation: the `Event` and the BookMe 
 ## Related pages
 
 - [Meeting Creation overview]({{ site.baseurl }}/bookme/meeting-creation/)
-- [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/)
+- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) — current
+- [Playbook Portals]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) — current
 - [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/)
-- [CRM Configuration (Legacy Portals)]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/)
-- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/)
-- [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)
+- [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — legacy
+- [CRM Configuration Portals]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) — legacy

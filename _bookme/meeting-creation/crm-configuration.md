@@ -1,12 +1,12 @@
 ---
 layout: default
-title: CRM Configuration (Legacy Portals)
+title: CRM Configuration Portals
 parent: Meeting Creation in Salesforce
 grand_parent: BookMe
-nav_order: 3
+nav_order: 4
 ---
 
-# CRM Configuration (Legacy Portals)
+# CRM Configuration Portals
 {: .no_toc }
 
 <details open markdown="block">
@@ -17,7 +17,7 @@ nav_order: 3
 </details>
 
 {: .warning }
-> **This is the oldest platform-hosted approach and is being superseded** by [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) and [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/). It applies only to portals that are **not** using the Playbook strategy. New portals should use the Playbook approach.
+> **Legacy implementation.** This is the oldest portal approach, superseded by [Playbook Portals]({{ site.baseurl }}/bookme/meeting-creation/playbooks/). It applies only to portals that are **not** using the Playbook strategy. New portals should use the Playbook approach.
 
 ---
 

@@ -3,11 +3,14 @@ layout: default
 title: Internal Meetings (Embeddable)
 parent: Meeting Creation in Salesforce
 grand_parent: BookMe
-nav_order: 4
+nav_order: 1
 ---
 
 # Internal Meetings (Embeddable)
 {: .no_toc }
+
+{: .note }
+> **Current implementation.** This is the recommended approach for advisor-to-advisor internal meetings.
 
 **Internal meetings** are advisor-to-advisor meetings booked from the embeddable widget on a Salesforce record. They are created through the &money platform, which writes the records to your CRM using **entity patterns** — a mapping from abstract fields to your CRM's real objects and fields.
 

@@ -3,11 +3,14 @@ layout: default
 title: Salesforce Package (AppExchange)
 parent: Meeting Creation in Salesforce
 grand_parent: BookMe
-nav_order: 1
+nav_order: 3
 ---
 
 # Salesforce Package (AppExchange)
 {: .no_toc }
+
+{: .warning }
+> **Legacy implementation.** Still fully supported, but superseded for new work by the current, entity-pattern-based approaches ([Internal Meetings]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) and [Playbook Portals]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)).
 
 The **BookMe managed package** is installed in your Salesforce org and creates meetings **inside your org**. This page covers the two booking experiences it offers — the customer flow and the employee flow — and the options you have for controlling the field values.
 

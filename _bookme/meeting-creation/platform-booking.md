@@ -3,13 +3,16 @@ layout: default
 title: Platform-Hosted Booking
 parent: Meeting Creation in Salesforce
 grand_parent: BookMe
-nav_order: 2
+nav_order: 5
 ---
 
 # Platform-Hosted Booking
 {: .no_toc }
 
-The portals, the embeddable internal-meeting widget, and the UWC all book through the **&money platform**, which then creates the meeting in your CRM. This page describes the behaviour those implementations **share** — the records they create and the rules around updating them. The three differ only in how you configure the field values ([CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/), [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/), or [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)).
+The embeddable internal-meeting widget and the portals all book through the **&money platform**, which then creates the meeting in your CRM. This page describes the behaviour those implementations **share** — the records they create and the rules around updating them. They differ only in how you configure the field values: the current [Internal Meetings]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) and [Playbook Portals]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) paths, and the legacy [CRM Configuration Portals]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) path.
+
+{: .note }
+> The **legacy** [Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) is the one implementation that does **not** work this way — it creates records in your org directly, not through the platform.
 
 <details open markdown="block">
   <summary>On this page</summary>
@@ -66,9 +69,9 @@ All platform-hosted implementations produce the same core records; they only dif
 
 ```mermaid
 graph TD
-    OP["Legacy portals"] --> C1["CRM Configuration<br/><small>simple field map</small>"]
-    EMB["Internal meetings"] --> C2["Entity Patterns<br/><small>CRM-agnostic mapping</small>"]
-    NP["New portals & UWC"] --> C3["Playbooks<br/><small>visual automation over Entity Patterns</small>"]
+    EMB["Internal meetings<br/><small>current</small>"] --> C2["Entity Patterns<br/><small>CRM-agnostic mapping</small>"]
+    NP["Playbook portals<br/><small>current</small>"] --> C3["Playbooks<br/><small>visual automation over Entity Patterns</small>"]
+    OP["CRM Configuration portals<br/><small>legacy</small>"] --> C1["CRM Configuration<br/><small>simple field map</small>"]
     C1 --> REC["Meeting records created in your CRM"]
     C2 --> REC
     C3 --> REC
@@ -81,7 +84,7 @@ graph TD
 
 ## Related pages
 
-- [CRM Configuration (Legacy Portals)]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/)
-- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/)
-- [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)
+- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) — current
+- [Playbook Portals]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) — current
+- [CRM Configuration Portals]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) — legacy
 - [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — the abstraction model

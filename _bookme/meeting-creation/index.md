@@ -10,7 +10,7 @@ permalink: /bookme/meeting-creation/
 # Meeting Creation in Salesforce
 {: .no_toc }
 
-This section is the authoritative reference for **how every &money scheduling implementation creates a meeting in Salesforce** — which objects and fields each one writes, and how you (as a customer) can influence those values.
+This section is the authoritative reference for **how each BookMe implementation creates a meeting in your CRM** — which records and fields it writes, and what options you have for configuring those values.
 
 <details open markdown="block">
   <summary>On this page</summary>
@@ -23,98 +23,90 @@ This section is the authoritative reference for **how every &money scheduling im
 
 ## Why this section exists
 
-There is **no single way** &money creates a meeting in Salesforce. The product has evolved through several generations, and different front-ends (the Salesforce package, the old portals, the embeddable widget, the new portals, and the Universal Web Client) each reach Salesforce differently. This makes it hard to answer a seemingly simple question — *"when a meeting is booked, what happens in my org, and where do the field values come from?"*
+BookMe has grown to support several ways of booking a meeting — the Salesforce package, the older portals, internal meetings in the embeddable widget, the newer portals, and the Universal Web Client (UWC). Each one creates a meeting in your CRM slightly differently and gives you a different way to control the field values.
 
-This section answers that question for each mechanism, and the [Technology & Feature Matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/) puts them side by side.
+This section explains, for each implementation, **what gets created in your CRM and how you customize it**, and the [Technology & Feature Matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/) puts them side by side.
 
 {: .note }
-> **Terminology.** This product is called **BookMe** in the documentation and was historically referred to as *scheduler*, *&bookMe*, or *bookme* in the code. "Schedule", "BookMe", and "scheduler" all refer to the same product family.
+> **Terminology.** This product is called **BookMe** in the documentation and was historically referred to as *scheduler*, *&bookMe*, or *bookme*. "Schedule", "BookMe", and "scheduler" all refer to the same product family.
 
 ---
 
-## The two write architectures
+## Two families of implementation
 
-Every mechanism falls into one of two fundamentally different architectures. Getting this distinction right is the key to the whole picture.
+Every implementation falls into one of two families. The difference is **where the booking runs and what creates the records in your CRM**.
 
-### Architecture A — Salesforce-native, in-org Apex
+### Family 1 — The Salesforce package (runs in your org)
 
-The **BookMe AppExchange managed package** (namespace `andmoney`) writes Salesforce records **inside the org, in Apex**. The customer-facing and employee-facing flows are Lightning Web Components that call one shared Apex entry point (`AMBBookingController.bookMeeting`), which reserves the slot in the &money booking engine and then performs Salesforce DML directly. Nothing in the &money .NET backend writes these records.
+The **BookMe managed package** is installed directly in your Salesforce org. When someone books, the meeting is created **inside your org**. Because it runs in your org, it is configured with **Salesforce-native tools**: custom-metadata field mappings and optional Apex hooks.
 
-Configuration lives entirely in Salesforce: a **Custom Metadata field-mapping engine** plus an **Apex dependency-injection layer** of swappable providers.
+It offers two booking experiences that share the same record-creation logic:
+
+- a **customer flow** — a public, self-service booking component; and
+- an **employee flow** — an advisor booking on a Salesforce record page.
 
 → [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/)
 
-### Architecture B — .NET backend via the Salesforce Composite Graph API
+### Family 2 — Platform-hosted booking (the &money platform writes to your CRM)
 
-Every **non-package** front-end (old portals, embeddable internal meetings, new portals, and the UWC) does **not** write Salesforce itself. It creates a **Calendar-service Meeting**; the Calendar service publishes a single `CreateCrmMeetingEvent` message, and downstream consumers converge on **one sink** — CRM-Integration's `SalesforceAdapter`, which turns a logical graph into a `POST composite/graph` request.
+The portals, the embeddable internal-meeting widget, and the UWC do **not** run inside your org. Booking happens in the **&money platform**, which then creates the records in your CRM on your behalf (Salesforce **or** Dynamics 365). These implementations share the same underlying record-creation behaviour and differ only in **how you configure the field values**:
 
-Within Architecture B there are **three generations** of configuration layered over that one backend sink:
-
-| Generation | Config surface | Page |
+| Generation | Configuration approach | Page |
 |---|---|---|
-| Oldest | **CRM Configuration** — a flat per-portal field map over a hardcoded Lead graph | [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) |
-| Middle | **Entity Patterns** — a CRM-agnostic blueprint mapping abstract parts to real objects/fields | [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) |
-| Newest | **Playbooks** — a forkable visual automation that writes *through* the Entity-Pattern engine | [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) |
+| Oldest | **CRM Configuration** — a simple per-portal field map | [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) |
+| Middle | **Entity Patterns** — a CRM-agnostic mapping of abstract fields to your CRM's objects and fields | [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) |
+| Newest | **Playbooks** — a visual, forkable automation that writes through the Entity-Pattern mapping | [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) |
 
-→ [Backend Meeting Core]({{ site.baseurl }}/bookme/meeting-creation/backend-core/) explains the shared sink that all three feed.
+→ [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/) explains the behaviour all three share.
 
 ---
 
-## Which front-end uses which write path
+## Which implementation uses which approach
 
-| Front-end | Architecture | Write path | Config surface |
+| Implementation | Family | Where booking runs | How you configure fields |
 |---|---|---|---|
-| Salesforce package — customer flow (Experience Cloud) | **A** | In-org Apex DML | Custom Metadata + Apex Callables |
-| Salesforce package — employee flow (Lightning record page) | **A** | In-org Apex DML | Custom Metadata + Apex Callables |
-| Old portals | **B** (gen 1) | `composite/graph`, hardcoded Lead graph | CRM Configuration field map |
-| Embeddable — internal meetings | **B** (gen 2) | `composite/graph`, Entity-Pattern graph | Entity Patterns |
-| New portals & UWC | **B** (gen 3) | `composite/graph`, Entity-Pattern graph | Playbook editor + Entity Patterns |
+| Salesforce package — customer flow | 1 | Your Salesforce org | Custom-metadata field mappings + Apex hooks |
+| Salesforce package — employee flow | 1 | Your Salesforce org | Custom-metadata field mappings + Apex hooks |
+| Legacy portals | 2 | &money platform | CRM Configuration field map |
+| Internal meetings (embeddable) | 2 | &money platform | Entity Patterns |
+| New portals & UWC | 2 | &money platform | Playbook editor + Entity Patterns |
 
 ---
 
-## How the paths converge
+## How the families relate
 
 ```mermaid
 graph TD
-    subgraph A["Architecture A — in-org Apex"]
-        CF["Customer flow<br/><small>LWC / Experience Cloud</small>"]
-        EF["Employee flow<br/><small>LWC / record page</small>"]
-        CF --> APEX["AMBBookingController.bookMeeting<br/>→ AMBMeetingController.createSFMeeting"]
-        EF --> APEX
-        APEX --> DML["Direct Apex DML<br/><small>AMBCRUDProvider</small>"]
+    subgraph F1["Family 1 — Salesforce package (in your org)"]
+        CF["Customer flow"]
+        EF["Employee flow"]
     end
-
-    subgraph B["Architecture B — .NET backend"]
-        OP["Old portals"]
-        EMB["Embeddable<br/>internal meetings"]
+    subgraph F2["Family 2 — Platform-hosted booking"]
+        OP["Legacy portals"]
+        EMB["Internal meetings<br/>(embeddable)"]
         NP["New portals & UWC"]
-        OP --> CAL["Calendar service<br/><small>publishes CreateCrmMeetingEvent</small>"]
-        EMB --> CAL
-        NP --> CAL
-        CAL -->|"IsPortalMeeting=false"| EP["Entity-Pattern write"]
-        CAL -->|"IsPortalMeeting=true, no playbook"| CRM["CRM-Mapping write<br/><small>hardcoded Lead graph</small>"]
-        CAL -->|"CreateUsingPlaybooks=true"| PB["Playbook engine"]
-        PB --> EP
-        EP --> SINK["SalesforceAdapter<br/>→ POST composite/graph"]
-        CRM --> SINK
     end
-
-    DML --> SF["Salesforce org"]
-    SINK --> SF
+    CF --> ORG["Records created<br/>inside your Salesforce org"]
+    EF --> ORG
+    OP --> PLAT["&money platform<br/>creates the records in your CRM"]
+    EMB --> PLAT
+    NP --> PLAT
+    ORG --> CRM["Your CRM"]
+    PLAT --> CRM
 ```
 
 ---
 
-## Two invariants that hold across every path
+## Two things that are always true
 
-No matter which mechanism writes the meeting, two things are always true:
+No matter which implementation books the meeting, two things hold:
 
-1. **Every path leaves behind an `Event` and a namespaced `AMB_Event_Detail__c`.** The custom `AMB_Event_Detail__c` companion record carries all the &money meeting metadata, and its `BookingFlowId__c` field is always set to the backend/Calendar meeting id. This is the **correlation key** used for every later lookup, update, and cancellation.
+1. **Every meeting leaves an `Event` and a BookMe meeting detail record (`AMB_Event_Detail__c`) in your CRM.** The meeting detail record holds all the BookMe-specific information, and its `BookingFlowId__c` field always carries the booking's unique id. That id is the key BookMe uses to find, update, and cancel the meeting later.
 
-2. **`AMB_Event_Detail__c.SendMeetingInvite__c = true` fires the managed package's own in-org Apex** to send the calendar invite. This side effect runs **inside the org regardless of which architecture wrote the record** — so even a meeting created by the .NET backend hands off to the managed package to actually dispatch the invite.
+2. **The calendar invitation is sent when the meeting detail record is flagged to send one** (`SendMeetingInvite__c = true`). This happens through the package installed in your org, so the invite is dispatched the same way regardless of which implementation created the meeting.
 
 {: .important }
-> Because these two records are the common denominator, tooling that reconciles or reports on meetings keys off `AMB_Event_Detail__c.BookingFlowId__c` rather than the `Event` id.
+> Because these two records are common to every implementation, reporting and reconciliation key off the meeting detail record's `BookingFlowId__c` rather than the `Event` id.
 
 ---
 
@@ -122,9 +114,9 @@ No matter which mechanism writes the meeting, two things are always true:
 
 | You want to understand… | Read |
 |---|---|
-| The AppExchange package (customer + employee flows, config/DI engine) | [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) |
-| The shared .NET write sink all portals feed | [Backend Meeting Core]({{ site.baseurl }}/bookme/meeting-creation/backend-core/) |
+| The Salesforce package (customer + employee flows, field-mapping options) | [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) |
+| What all platform-hosted implementations have in common | [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/) |
 | The legacy Leads-only portal path | [CRM Configuration (Legacy Portals)]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) |
-| The CRM-agnostic Entity Pattern path | [Entity Patterns (Internal Meetings)]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) |
-| The newest Playbook path | [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) |
-| A side-by-side comparison and field-value sources | [Technology & Feature Matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/) |
+| The CRM-agnostic Entity Pattern approach | [Entity Patterns (Internal Meetings)]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) |
+| The newest Playbook approach | [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) |
+| A side-by-side comparison and where each field value comes from | [Technology & Feature Matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/) |

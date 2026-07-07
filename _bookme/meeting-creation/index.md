@@ -54,7 +54,7 @@ The portals, the embeddable internal-meeting widget, and the UWC do **not** run 
 | Generation | Configuration approach | Page |
 |---|---|---|
 | Oldest | **CRM Configuration** — a simple per-portal field map | [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) |
-| Middle | **Entity Patterns** — a CRM-agnostic mapping of abstract fields to your CRM's objects and fields | [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) |
+| Middle | **Entity Patterns** — a CRM-agnostic mapping of abstract fields to your CRM's objects and fields | [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) |
 | Newest | **Playbooks** — a visual, forkable automation that writes through the Entity-Pattern mapping | [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) |
 
 → [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/) explains the behaviour all three share.
@@ -117,6 +117,6 @@ No matter which implementation books the meeting, two things hold:
 | The Salesforce package (customer + employee flows, field-mapping options) | [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) |
 | What all platform-hosted implementations have in common | [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/) |
 | The legacy Leads-only portal path | [CRM Configuration (Legacy Portals)]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) |
-| The CRM-agnostic Entity Pattern approach | [Entity Patterns (Internal Meetings)]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) |
+| The CRM-agnostic Entity Pattern approach | [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) |
 | The newest Playbook approach | [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) |
 | A side-by-side comparison and where each field value comes from | [Technology & Feature Matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/) |

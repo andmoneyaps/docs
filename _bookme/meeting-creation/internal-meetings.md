@@ -1,15 +1,17 @@
 ---
 layout: default
-title: Entity Patterns (Internal Meetings)
+title: Internal Meetings (Embeddable)
 parent: Meeting Creation in Salesforce
 grand_parent: BookMe
 nav_order: 4
 ---
 
-# Entity Patterns (Internal Meetings)
+# Internal Meetings (Embeddable)
 {: .no_toc }
 
-The embeddable widget's **internal meetings** (an advisor booking a meeting from a Salesforce record) create the meeting through **Entity Patterns** — a CRM-agnostic mapping from abstract fields to your CRM's real objects and fields.
+**Internal meetings** are advisor-to-advisor meetings booked from the embeddable widget on a Salesforce record. They are created through the &money platform, which writes the records to your CRM using **entity patterns** — a mapping from abstract fields to your CRM's real objects and fields.
+
+This page describes **how an internal meeting is created**: what records it writes, which fields, and how you configure them. Entity patterns are the underlying mechanism; the same mechanism also backs the [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) path.
 
 <details open markdown="block">
   <summary>On this page</summary>
@@ -19,7 +21,7 @@ The embeddable widget's **internal meetings** (an advisor booking a meeting from
 </details>
 
 {: .note }
-> This page focuses on **how a meeting is created** via Entity Patterns. For the concepts of entities, definitions, patterns, and mappers, see [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/). For step-by-step setup, see the [Internal Meetings Deployment Guide]({{ site.baseurl }}/bookme/internal-meetings-deployment-guide/).
+> **Related reading.** For the **concept** of entities, definitions, patterns, and mappers, see [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/). For **step-by-step setup** of an org, see the [Internal Meetings Deployment Guide]({{ site.baseurl }}/bookme/internal-meetings-deployment-guide/). This page is the middle piece: how the internal-meeting booking turns into CRM records.
 
 ---
 

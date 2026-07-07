@@ -9,7 +9,7 @@ nav_order: 2
 # Platform-Hosted Booking
 {: .no_toc }
 
-The portals, the embeddable internal-meeting widget, and the UWC all book through the **&money platform**, which then creates the meeting in your CRM. This page describes the behaviour those implementations **share** — the records they create and the rules around updating them. The three differ only in how you configure the field values ([CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/), [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/), or [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)).
+The portals, the embeddable internal-meeting widget, and the UWC all book through the **&money platform**, which then creates the meeting in your CRM. This page describes the behaviour those implementations **share** — the records they create and the rules around updating them. The three differ only in how you configure the field values ([CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/), [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/), or [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)).
 
 <details open markdown="block">
   <summary>On this page</summary>
@@ -39,7 +39,7 @@ Because the write is done by the platform on your behalf, you don't install anyt
 | Account / owner / advisors | **Referenced, not created** — existing records are linked to the meeting |
 
 {: .important }
-> A **`Lead` is created only on the legacy [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) path.** The [Entity Pattern]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) and [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) paths do **not** create a `Lead`; they link the meeting to an **existing Account**.
+> A **`Lead` is created only on the legacy [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) path.** The [Entity Pattern]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) and [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) paths do **not** create a `Lead`; they link the meeting to an **existing Account**.
 
 ---
 
@@ -82,6 +82,6 @@ graph TD
 ## Related pages
 
 - [CRM Configuration (Legacy Portals)]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/)
-- [Entity Patterns (Internal Meetings)]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/)
+- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/)
 - [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)
 - [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — the abstraction model

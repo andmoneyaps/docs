@@ -17,7 +17,7 @@ nav_order: 3
 </details>
 
 {: .warning }
-> **This is the oldest platform-hosted approach and is being superseded** by [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) and [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/). It applies only to portals that are **not** using the Playbook strategy. New portals should use the Playbook approach.
+> **This is the oldest platform-hosted approach and is being superseded** by [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) and [Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/). It applies only to portals that are **not** using the Playbook strategy. New portals should use the Playbook approach.
 
 ---
 
@@ -91,7 +91,7 @@ As a result:
 - **External attendees are not written** as separate contact records.
 - A field map that targeted a different object would create it as a **stray extra record** — it could never become the meeting's attendee.
 
-If you need meetings on Contacts, Accounts, or existing records, use the [Entity Pattern]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) or [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) approaches instead.
+If you need meetings on Contacts, Accounts, or existing records, use the [Entity Pattern]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) or [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) approaches instead.
 
 ---
 

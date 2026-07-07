@@ -29,7 +29,7 @@ The side-by-side reference for every meeting-creation implementation. Use it to 
 | **[Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — customer flow** | Your Salesforce org | The package, inside your org | Custom-metadata field mappings | Apex hooks + swappable providers |
 | **[Salesforce package]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/) — employee flow** | Your Salesforce org | The package, inside your org | Custom-metadata field mappings | Apex hooks + swappable providers + advisor UI options |
 | **[CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) (legacy portals)** | &money platform | The platform, on your behalf | CRM Configuration field map (Management UI) | Standard / custom field mappings over a fixed Lead-based set |
-| **[Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) (embeddable internal)** | &money platform | The platform, on your behalf (Salesforce or Dynamics) | Entity Definitions + Entity Patterns (Admin → Entities) | Pattern parts, relationships, defaults, and per-org field mapping |
+| **[Internal meetings]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) (embeddable)** | &money platform | The platform, on your behalf (Salesforce or Dynamics) | Entity Definitions + Entity Patterns (Admin → Entities) | Pattern parts, relationships, defaults, and per-org field mapping |
 | **[Playbooks]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) (new portals & UWC)** | &money platform | The platform, on your behalf | Playbook editor + Entity Patterns | Visual field mappings & transformations + fork a managed playbook |
 
 ---
@@ -43,7 +43,7 @@ The side-by-side reference for every meeting-creation implementation. Use it to 
 | **Salesforce package — customer flow** | ✅ Public / Experience Cloud | — (shares the logic) | Meeting detail, meeting contact, `Opportunity` (default), `Event`, `EventRelation` | ❌ Opportunity + Event by default | Field mappings + Apex hooks | Single advisor | Current |
 | **Salesforce package — employee flow** | Advisor can book as-customer | ✅ Advisor on a record page | Same set, or reuse an existing record | ❌ Any activity object/participant | Field mappings + Apex hooks; advisor UI options | ✅ Additional advisors + explicit owner | Current |
 | **CRM Configuration (legacy portals)** | ✅ Customer books on an old portal | ❌ No advisor booking UI | **`Lead` (always)**, meeting detail, `Event`, `EventRelation` | ✅ **Yes** — attendee is always a placeholder `Lead` | Field map only; record set is fixed | Additional advisors | **Legacy** — being superseded |
-| **Entity Patterns (embeddable internal)** | ❌ Advisor-facing internal widget | ✅ Advisor books, links to an Account | `Event`, meeting detail, advisor relations; **no Lead / no Opportunity** | ❌ Links to an existing Account | Entity Definitions + Patterns (Admin → Entities) | ✅ Additional advisors | Current — Salesforce or Dynamics |
+| **Internal meetings (embeddable)** | ❌ Advisor-facing internal widget | ✅ Advisor books, links to an Account | `Event`, meeting detail, advisor relations; **no Lead / no Opportunity** | ❌ Links to an existing Account | Entity Definitions + Patterns (Admin → Entities) | ✅ Additional advisors | Current — Salesforce or Dynamics |
 | **Playbooks (new portals & UWC)** | ✅ New portal / UWC (Playbook strategy) | ✅ UWC also serves employee contexts | **Pattern-defined** (standard pattern → `Event`, meeting detail, relations); **no Lead** | ❌ Pattern-defined | Playbook editor + Entity Patterns | Pattern-defined | **Newest** |
 
 {: .note }
@@ -85,5 +85,5 @@ Two records are written by **every** implementation: the `Event` and the BookMe 
 - [Salesforce Package (AppExchange)]({{ site.baseurl }}/bookme/meeting-creation/salesforce-package/)
 - [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/)
 - [CRM Configuration (Legacy Portals)]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/)
-- [Entity Patterns (Internal Meetings)]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/)
+- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/)
 - [Playbooks (New Portals & UWC)]({{ site.baseurl }}/bookme/meeting-creation/playbooks/)

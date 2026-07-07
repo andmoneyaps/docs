@@ -9,7 +9,7 @@ nav_order: 5
 # Playbooks (New Portals & UWC)
 {: .no_toc }
 
-The newest approach. New **Portals** and the **Universal Web Client (UWC)** create meetings through **Playbooks** — a visual, forkable automation that writes through the same [Entity-Pattern mapping]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) used by internal meetings.
+The newest approach. New **Portals** and the **Universal Web Client (UWC)** create meetings through **Playbooks** — a visual, forkable automation that writes through the same [Entity-Pattern mapping]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) used by internal meetings.
 
 <details open markdown="block">
   <summary>On this page</summary>
@@ -27,7 +27,7 @@ The newest approach. New **Portals** and the **Universal Web Client (UWC)** crea
 
 The playbook approach runs for **portal bookings** whose portal uses the **Playbook** strategy. Otherwise the legacy [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) approach handles the booking.
 
-When a meeting is booked on a playbook-enabled portal, the portal's playbook runs and its **create-meeting block** writes the records to your CRM — through the same entity-pattern mapping described in [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/).
+When a meeting is booked on a playbook-enabled portal, the portal's playbook runs and its **create-meeting block** writes the records to your CRM — through the same entity-pattern mapping described in [Entity Patterns]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/).
 
 ---
 
@@ -36,7 +36,7 @@ When a meeting is booked on a playbook-enabled portal, the portal's playbook run
 {: .important }
 > The objects and fields are **not fixed by the playbook** — they are defined by the **entity pattern** the create-meeting block references, plus whatever field mappings you add in the editor. A different pattern creates a different set.
 
-For the **standard BookMe meeting pattern**, the records and fields are the same as for internal meetings — an `Event`, the BookMe meeting detail record (with `BookingFlowId__c`), and advisor relations. See the [Entity Patterns field tables]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/#fields-written) for the exact fields; the same "silently skipped if your definition doesn't declare it" rule applies.
+For the **standard BookMe meeting pattern**, the records and fields are the same as for internal meetings — an `Event`, the BookMe meeting detail record (with `BookingFlowId__c`), and advisor relations. See the [Entity Patterns field tables]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/#fields-written) for the exact fields; the same "silently skipped if your definition doesn't declare it" rule applies.
 
 On top of the pattern, the create-meeting block lets you **map additional values** — including a portal's own custom fields — onto any field the pattern exposes.
 
@@ -61,7 +61,7 @@ In the visual editor, the **create-meeting block** maps a **source value → a d
 
 ### 2. The entity pattern
 
-Beneath the editor, the [entity pattern]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) determines which objects/parts exist and how abstract field names map to your CRM's real fields. Playbooks and internal meetings **share this mapping**.
+Beneath the editor, the [entity pattern]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) determines which objects/parts exist and how abstract field names map to your CRM's real fields. Playbooks and internal meetings **share this mapping**.
 
 ### Turning it on and making it your own
 
@@ -90,6 +90,6 @@ Both create the meeting through the same playbook → entity-pattern path.
 ## Related pages
 
 - [Playbooks (authoring)]({{ site.baseurl }}/bookme/playbooks/)
-- [Entity Patterns (Internal Meetings)]({{ site.baseurl }}/bookme/meeting-creation/entity-patterns/) — the shared mapping
+- [Internal Meetings (Embeddable)]({{ site.baseurl }}/bookme/meeting-creation/internal-meetings/) — the shared mapping
 - [Platform-Hosted Booking]({{ site.baseurl }}/bookme/meeting-creation/platform-booking/)
 - [Technology & Feature Matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/)

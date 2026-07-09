@@ -63,7 +63,7 @@ _Hvorfor: Filtrene øverst styrer, hvilke møder rapporten viser._
 - Vælg evt. **Kundetype** (**Alle** som standard). Hele rapporten opdateres automatisk.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-rapportering/sched_rapport_oversigt.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-rapportering/sched_rapport_oversigt.png)
 
 *Skærmbillede 1 (Management UI) — Schedule → Rapportering — filtre (**Periode**, **Kundetype**) + **Booket møder** og fordelings-tabel*
 
@@ -97,7 +97,7 @@ _Hvorfor: De øvrige grafer viser, hvordan møderne fordeler sig._
 - Meget små andele (under ~1 %) vises ikke i type-/emne-graferne.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-rapportering/sched_rapport_fordeling_typer.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-rapportering/sched_rapport_fordeling_typer.png)
 
 *Skærmbillede 2 (Management UI) — **Fordeling af mødetype** + **Fordeling af mødeemner***
 

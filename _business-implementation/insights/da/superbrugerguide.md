@@ -62,7 +62,7 @@ _Hvorfor: Opsætningen bestemmer, hvilket scenarie analysen simulerer._
 - Bemærk tooltippen: i datasættet medregnes medarbejdernes **kompetencegruppe-tilhør** ikke i tilgængelighedsberegningen, hvis du vælger at ignorere kompetencegrupper.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/insights/superbrugerguide/insights_opret.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/insights/da/superbrugerguide/insights_opret.png)
 
 *Skærmbillede 1 (Management UI) — Insights → Opsætning → **Opret Insight opsætning** — Navn, Kundetype, Tidszone, Brugsscenarie og Mødekonfiguration*
 
@@ -95,7 +95,7 @@ _Hvorfor: Opsætningen gemmes og kører automatisk._
 - Data genereres natligt — en opsætning oprettet i dag leverer først data efter **næste** natkørsel (typisk i morgen).
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/insights/superbrugerguide/insights_opsaetning.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/insights/da/superbrugerguide/insights_opsaetning.png)
 
 *Skærmbillede 2 (Management UI) — Insights → Opsætning — listen med **Navn**, **Kundetype** og **Seneste datakørsel***
 

@@ -72,7 +72,7 @@ _Hvorfor: Present arbejder ud fra mødet og kunden, så data flettes korrekt ind
 - Klik fanen **Present** — Present-komponenten (Mødepræsentation) åbner.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/present/medarbejderguide/sf_present_komponent.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/present/da/medarbejderguide/sf_present_komponent.png)
 
 *Skærmbillede 1 (Present-komponent i Salesforce) — Mødet (Event) i Salesforce med fanen **Present** åben — Present-komponenten*
 
@@ -100,7 +100,7 @@ _Hvorfor: Kundetypen styrer, hvilke skabeloner der passer til netop denne kunde.
 - Er **Filtre** tilgængelig, kan du indsnævre yderligere ved at vælge et mærkat (label).
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/present/medarbejderguide/present_wrapper.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/present/da/medarbejderguide/present_wrapper.png)
 
 *Skærmbillede 2 (Present-komponent i Salesforce) — Present-komponenten: Dagsorden, kundetype-faner og sektions-knapper*
 
@@ -119,7 +119,7 @@ _Hvorfor: Du sammensætter præsentationen af præcis de slides, mødet har brug
 - I listen over valgte slides kan du trække for at **ændre rækkefølgen** og bruge papirkurven for at fjerne et slide.
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/present/medarbejderguide/sf_slide_vindue.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/present/da/medarbejderguide/sf_slide_vindue.png)
 
 *Skærmbillede 3 (Present-komponent i Salesforce) — Slide-vinduet med **Vælg alle**/**Fravælg alle** og slides i et gitter*
 
@@ -138,7 +138,7 @@ _Hvorfor: Her sikrer du, at alt indhold er korrekt, før præsentationen dannes.
 - **Vent et øjeblik**, mens filen dannes (typisk få sekunder til ca. 1 minut) — klik ikke flere gange.
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/present/medarbejderguide/sf_felt_vindue.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/present/da/medarbejderguide/sf_felt_vindue.png)
 
 *Skærmbillede 4 (Present-komponent i Salesforce) — Felt-vinduet “Tekst der indsættes”: forudfyldte felter (fra Salesforce, fx dato/kunde) + tomme felter, du selv udfylder*
 

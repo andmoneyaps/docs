@@ -77,7 +77,7 @@ _Hvorfor: Fremadrettet bruger portaler en ⟦Playbook⟧ til at sende booking-da
 - **Gammel model (udfases):** kører I stadig på **CRM-konfiguration (standard)**, opretter du i stedet en CRM Konfiguration under **Schedule → CRM Konfigurationer** → **Opret ny**: udfyld **Navn**, og map portal-felter (**Nøgle**) og **Standard felter** til CRM-felter via **Objekt** (fx Contact.Email).
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-portaler/sched_crm_konfiguration.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-portaler/sched_crm_konfiguration.png)
 
 *Skærmbillede 1 (Management UI) — Schedule → CRM Konfigurationer (gammel model) — felt-mapning til CRM*
 
@@ -99,7 +99,7 @@ _Hvorfor: Selve portalen — navn, login og hvordan data lander i CRM._
 - Sæt evt. **iCal** (kalenderfil til kunden).
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-portaler/sched_portal_information.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-portaler/sched_portal_information.png)
 
 *Skærmbillede 2 (Management UI) — **Portal information** — CRM oprettelsestrategi = **Playbook** (standard) + Login type, iCal m.m.*
 
@@ -117,7 +117,7 @@ _Hvorfor: Kundedata bestemmer, hvilke kunder portalen er til — og dermed hvilk
 - Læs den viste note om, hvilke **servicegrupper** der kan påvirke de udstillede tider.
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-portaler/sched_portal_kundedata.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-portaler/sched_portal_kundedata.png)
 
 *Skærmbillede 3 (Management UI) — Portal → **Kundedata** — **Kundetype**, **Mødeemne**, **Lokation** + servicegruppe-note*
 
@@ -133,7 +133,7 @@ _Hvorfor: Giv portalen jeres udseende, og organisér den med labels._
 - Tilføj evt. **Labels** til at organisere og filtrere portaler.
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-portaler/sched_portal_styling.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-portaler/sched_portal_styling.png)
 
 *Skærmbillede 4 (Management UI) — Portal → **Portal styling** (Logo, Logo højde, styling) + **Labels***
 
@@ -152,7 +152,7 @@ _Hvorfor: Felterne er det, kunden udfylder for at booke — fx navn, e-mail, for
 - Knyt evt. feltet til en **Nøgle**, så det mappes til CRM via CRM Konfigurationen.
 
 
-![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-portaler/sched_portal_felter.png)
+![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-portaler/sched_portal_felter.png)
 
 *Skærmbillede 5 (Management UI) — Portal → **Felter** — felt-opsætning (navn, type, rækkefølge, påkrævet/skjult) + **Valideringer***
 

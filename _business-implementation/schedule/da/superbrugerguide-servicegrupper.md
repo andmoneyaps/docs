@@ -78,7 +78,7 @@ _Hvorfor: Kompetencegrupper gør det nemt at styre, hvad medarbejderne kan — o
 - Under **Medlemskaber**: tilføj **Medarbejdere** (og evt. **Undergrupper** — deres medarbejdere arver gruppens kompetencer).
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-servicegrupper/sched_kompetencegruppe.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-servicegrupper/sched_kompetencegruppe.png)
 
 *Skærmbillede 1 (Management UI) — Schedule → Kompetencegrupper — opret/redigér med **Kompetencer** (mødeemner + kundetyper) og **Medarbejdere***
 
@@ -98,7 +98,7 @@ _Hvorfor: Selve servicegruppen — navn, medlemmer og evt. en daglig tidsgrænse
 - Gem servicegruppen.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-servicegrupper/sched_servicegruppe_opret.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-servicegrupper/sched_servicegruppe_opret.png)
 
 *Skærmbillede 2 (Management UI) — Dialogen **Opret servicegruppe** — **Generel**, **Labels**, **Medarbejdere** + **Kompetencegrupper** og **Max. timer pr. dag***
 
@@ -116,7 +116,7 @@ _Hvorfor: Aktiveringsreglerne bestemmer, hvilke bookinger servicegruppen kommer 
 - Gem.
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-servicegrupper/sched_servicegruppe_aktivering.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-servicegrupper/sched_servicegruppe_aktivering.png)
 
 *Skærmbillede 3 (Management UI) — Servicegruppe → **Aktiveringsregler** — **Steder**, **Kundetyper** og **Mødeemner***
 
@@ -133,7 +133,7 @@ _Hvorfor: Serviceniveauet styrer, hvilke mødetyper og lokationer der vises tid 
 - Gem.
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-servicegrupper/sched_servicegruppe_serviceniveau.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-servicegrupper/sched_servicegruppe_serviceniveau.png)
 
 *Skærmbillede 4 (Management UI) — Servicegruppe → **Serviceniveau** — **Mødetyper** og **Lokationer***
 
@@ -154,7 +154,7 @@ _Hvorfor: Betjeningsniveauet bestemmer rækkefølgen, kunden tilbydes medarbejde
 - Gem.
 
 
-![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-servicegrupper/sched_betjeningsniveau.png)
+![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-servicegrupper/sched_betjeningsniveau.png)
 
 *Skærmbillede 5 (Management UI) — **Betjeningsniveau** — prioritetsniveauer med **Type**, **Beskrivelse** og **Label** + pile til rækkefølge*
 

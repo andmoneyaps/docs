@@ -75,7 +75,7 @@ _Hvorfor: Find den medarbejder, du vil opsætte tilgængelighed for._
 - Medarbejderens opsætning vises herunder. Siden har to faner: **Tilgængelighed** (indstillinger) og **Grupper** (read-only medlemskaber).
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-medarbejdere/sched_medarb_vaelg.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-medarbejdere/sched_medarb_vaelg.png)
 
 *Skærmbillede 1 (Management UI) — Schedule → Medarbejdere — **Vælg medarbejder** + medarbejderens tilgængelighed*
 
@@ -92,7 +92,7 @@ _Hvorfor: Hovedkontakten for, om medarbejderen indgår i booking — og om de ku
 - Sæt evt. **Kan medarbejderen tage opkald fra udlandet** (global tilgængelighed) efter behov.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-medarbejdere/sched_medarb_kundemoeder.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-medarbejdere/sched_medarb_kundemoeder.png)
 
 *Skærmbillede 2 (Management UI) — **Kundemøder** (Kan bookes) + **Specifikke tilgængeligheder** (kun specifik medarbejder)*
 
@@ -109,7 +109,7 @@ _Hvorfor: Hvilke dage og inden for hvilket tidsrum medarbejderen kan bookes._
 - Vil du have forskellige tider pr. dag: sæt **Opsæt særlige regler**, så kan hver dag have sit eget tidsrum.
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-medarbejdere/sched_medarb_arbejdstid.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-medarbejdere/sched_medarb_arbejdstid.png)
 
 *Skærmbillede 3 (Management UI) — **Arbejdsdage** + **Arbejdstid** (Fra/Til klokken) med **Opsæt særlige regler***
 
@@ -126,7 +126,7 @@ _Hvorfor: Hvad medarbejderen kan bookes til — og hvor._
 - Begge kan sættes ens for alle dage eller pr. dag via **Opsæt særlige regler**.
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-medarbejdere/sched_medarb_modetyper_lokation.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-medarbejdere/sched_medarb_modetyper_lokation.png)
 
 *Skærmbillede 4 (Management UI) — **Mødetyper** (Fysisk/Online/Telefon/Offsite) + **Lokation***
 
@@ -154,7 +154,7 @@ _Hvorfor: Gem opsætningen, og aflæs medarbejderens grupper._
 - Mangler en kompetence/servicegruppe, tilføjes medarbejderen på selve gruppen (ikke her).
 
 
-![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-medarbejdere/sched_medarb_grupper.png)
+![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-medarbejdere/sched_medarb_grupper.png)
 
 *Skærmbillede 5 (Management UI) — **Grupper** — read-only oversigt over Kompetencegrupper (direkte/arvet) og Servicegrupper*
 

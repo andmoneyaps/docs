@@ -91,12 +91,12 @@ _Hvorfor: Skabelonens opbygning bestemmer, hvilke slides medarbejderen kan vælg
 - Hold den samlede filstørrelse så lav som muligt, så skabelonen uploader og genererer hurtigt.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/slide_name.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/slide_name.png)
 
 *Skærmbillede 1 (PowerPoint) — Eksempel fra PowerPoint: [slide:agenda] i note-feltet og [tag:agenda] på slidet*
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/section_names.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/section_names.png)
 
 *Skærmbillede 2 (PowerPoint) — Sektioner i PowerPoint, inkl. en undersektion (Sektionsnavn -- undersektion)*
 
@@ -177,12 +177,12 @@ _Hvorfor: Når skabelonen er uploadet, kan medarbejderne vælge den, når de gen
 - Klik **Upload** igen for at gemme (knappen i dialogen; tager typisk 10–60 sekunder).
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/present_templates_oversigt.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/present_templates_oversigt.png)
 
 *Skærmbillede 3 (Management UI) — Present → Præsentationer — oversigten med knappen **Upload** og statusfilteret*
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/present_upload_dialog.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/present_upload_dialog.png)
 
 *Skærmbillede 4 (Management UI) — Dialogen **Upload præsentation** — **Upload fil**, **Validering** og **Vælg kundetype***
 
@@ -214,12 +214,12 @@ _Hvorfor: Mapningen bestemmer, hvilket CRM-felt hvert tag i skabelonen henter da
 > **Husk:** På samme måde kan **bydeformer** (tiltaleformer) mappes mod **Objekttype = Specifik** — så I kan bruge bydeformer i jeres slides, og medarbejderne får dem flettet ind automatisk i stedet for selv at skrive dem.
 
 
-![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/present_tags_oversigt.png)
+![Skærmbillede 5]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/present_tags_oversigt.png)
 
 *Skærmbillede 5 (Management UI) — Present → CRM Konfiguration — tabellen (**Tag-navn**, **CRM Objektfelt**, **Præsentationer**) og knappen **Opret***
 
 
-![Skærmbillede 6]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/present_tag_dialog.png)
+![Skærmbillede 6]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/present_tag_dialog.png)
 
 *Skærmbillede 6 (Management UI) — Dialogen **Opret tag konfiguration** — **Vælg et tag** og **Objekttype***
 
@@ -290,12 +290,12 @@ _Hvorfor: Hold skabelonerne opdaterede og ryd op i gamle versioner, så medarbej
 - Følg brugen: gå til **Present** → **Rapportering**.
 
 
-![Skærmbillede 7]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/present_templates_inaktive.png)
+![Skærmbillede 7]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/present_templates_inaktive.png)
 
 *Skærmbillede 7 (Management UI) — Present → Præsentationer med statusfilteret sat til **Inaktive***
 
 
-![Skærmbillede 8]({{ site.baseurl }}/assets/images/business-implementation/present/superbrugerguide/present_rapportering.png)
+![Skærmbillede 8]({{ site.baseurl }}/assets/images/business-implementation/present/da/superbrugerguide/present_rapportering.png)
 
 *Skærmbillede 8 (Management UI) — Present → Rapportering — møder med kundepræsentation*
 

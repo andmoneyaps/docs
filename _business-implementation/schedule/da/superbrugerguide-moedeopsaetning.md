@@ -110,7 +110,7 @@ Organisationens grund-indstillinger, alt andet arver fra.
 | iCal (mødetitel/beskrivelse) | Tekst i den .ics-kalenderfil, kunden kan hente. |
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-moedeopsaetning/msetup_standardvaerdier.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/msetup_standardvaerdier.png)
 
 *Skærmbillede 1 (Management UI) — Mødeopsætning → **Standardværdier** — åbningstider, max. timer/dag, lukkedage og navngivning*
 
@@ -125,7 +125,7 @@ De kundekategorier (fx Privat, Erhverv), du senere kan sætte **særlige regler*
 Møde-temaerne, bookinger kan handle om. Opret et **mødeemne** (Navn) og tilføj evt. **underemner** (Tilføj underemne). Emnerne bruges som akse i Mødekonfiguration og på portaler/servicegrupper.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-moedeopsaetning/msetup_modeemner.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/msetup_modeemner.png)
 
 *Skærmbillede 2 (Management UI) — Mødeopsætning → **Mødeemner** — emner og underemner*
 
@@ -144,7 +144,7 @@ Fysiske steder og deres lokaler.
 | Lokaler på lokationen | Read-only — synkroniseres fra SCIM/M365. |
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-moedeopsaetning/msetup_lokationer.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/msetup_lokationer.png)
 
 *Skærmbillede 3 (Management UI) — Mødeopsætning → **Lokationer** — Navn/Visningsnavn + krav om ledigt lokale*
 
@@ -171,7 +171,7 @@ Her sætter du reglerne — generelt eller pr. **kundetype** og pr. **mødeemne*
 > **Husk:** **Forberedelses-** og **Efterbehandlingstid** er en **varighed** (fx 15 min), ikke et klokkeslæt — en klassisk faldgrube.
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-moedeopsaetning/msetup_modekonfiguration.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/msetup_modekonfiguration.png)
 
 *Skærmbillede 4 (Management UI) — Mødeopsætning → **Mødekonfiguration** — Hvem kan booke, mødevarighed, mødetyper og buffere*
 

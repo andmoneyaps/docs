@@ -89,7 +89,7 @@ _Hvorfor: Assist findes på selve mødet (Event) i Salesforce._
 - Klik fanen **Assist**. Fanen kan hedde noget andet hos jer — fx **Assist Lite**, **Transskriber** eller et navn, jeres organisation selv har valgt.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/assist/medarbejderguide/assist_sf_fane.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/assist/da/medarbejderguide/assist_sf_fane.png)
 
 *Skærmbillede 1 (Salesforce · Assist) — Mødet (Event) med Assist-fanen åben (her “Assist Lite”) — klargøringsskærmen*
 
@@ -128,7 +128,7 @@ _Hvorfor: Assist hjælper dig i realtid, så du kan være nærværende._
 - **Taletidsfordeling**: hvor meget taler hhv. du og kunden.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/assist/medarbejderguide/assist_sf_live.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/assist/da/medarbejderguide/assist_sf_live.png)
 
 *Skærmbillede 2 (Salesforce · Assist) — Live, kort efter start — knappen **Afslut & dan referat** og kortene **Opmærksomhedspunkter**/**Aftaler** (endnu tomme). Transskription og taletid ses ved at scrolle i panelet.*
 
@@ -159,7 +159,7 @@ _Hvorfor: Du har det sidste ord — gennemse og ret, før du gemmer og deler._
 - Del med kunden efter jeres retningslinjer.
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/assist/medarbejderguide/assist_sf_referat.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/assist/da/medarbejderguide/assist_sf_referat.png)
 
 *Skærmbillede 3 (Salesforce · Assist) — Referat-visning: kundereferatet klar til gennemsyn og gem*
 

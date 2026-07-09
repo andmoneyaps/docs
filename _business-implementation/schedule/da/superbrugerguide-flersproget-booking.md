@@ -85,7 +85,7 @@ _Hvorfor: Sprogfelterne i Mødeopsætning vises ud fra de sprog, banken har akti
 > **Husk:** Fjerner du et sprog (papirkurv-ikonet), skjules det for kunderne, men **de oversættelser, I allerede har lavet, bevares** og vises igen, hvis sproget aktiveres på ny.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-flersproget-booking/sprog_admin.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-flersproget-booking/sprog_admin.png)
 
 *Skærmbillede 1 (Admin → Sprogstyring) — Admin → Sprogstyring — bankens aktiverede sprog med “Primær”-markering på dansk og knappen “Tilføj sprog”.*
 
@@ -106,7 +106,7 @@ _Hvorfor: De tre feltgrupper sætter I ét sted — under Generelt (Standardvær
 - Klik **Gem** nederst til højre for at gemme ændringerne.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-flersproget-booking/sprog_generelt.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-flersproget-booking/sprog_generelt.png)
 
 *Skærmbillede 2 (Schedule → Mødeopsætning → Generelt) — Generelt (Standardværdier) — flersprogede felter med det danske felt og statuslinjen “Ingen oversættelser endnu — falder tilbage til dansk” (mødetype- og medarbejdertype-navngivning).*
 
@@ -124,7 +124,7 @@ _Hvorfor: Emnerne er det, kunden vælger imellem, når de booker — derfor er d
 - Klik **Opret** (eller **Gem**) i dialogen for at gemme.
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-flersproget-booking/sprog_moedeemner.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-flersproget-booking/sprog_moedeemner.png)
 
 *Skærmbillede 3 (Schedule → Mødeopsætning → Mødeemner) — Mødeemner — “Opret mødeemne”-dialogen med flersproget Navn (emne) og Underemne.*
 

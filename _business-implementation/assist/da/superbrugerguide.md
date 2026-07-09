@@ -75,7 +75,7 @@ _Hvorfor: Rapporteringen viser, hvor meget Assist bruges på tværs af organisat
 - Brug graferne (**Fuldført** / **Berørt** / **Ikke påbegyndt**) til at se resultater over tid, pr. mødemål og pr. emne.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/assist/superbrugerguide/assist_rapportering.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/assist/da/superbrugerguide/assist_rapportering.png)
 
 *Skærmbillede 1 (Management UI) — Assist → Rapportering — nøgletal og mødemål-resultater (Fuldført / Berørt / Ikke påbegyndt)*
 
@@ -99,7 +99,7 @@ Resultaterne vises i tre kategorier: **Fuldført** (målet er nået), **Berørt*
 Når mødemål åbnes, kan du under **Assist → Mødemål** definere standard-mål pr. mødeemne, som Assist følger og vurderer på møderne. Hvert mål har et **Navn**, en **Beskrivelse** og en **AI-instruktion** (det, Assist vurderer målet ud fra), og grupperes pr. mødeemne (fx Bank, Wealth Management, Insurance).
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/assist/superbrugerguide/assist_modemaal.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/assist/da/superbrugerguide/assist_modemaal.png)
 
 *Skærmbillede 2 (Management UI) — Forhåndsvisning — Assist → Mødemål (kommer snart): mål pr. mødeemne med **Navn**, **Beskrivelse** og **AI-instruktion***
 

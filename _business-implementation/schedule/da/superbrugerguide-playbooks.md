@@ -72,7 +72,7 @@ _Hvorfor: Start flowet ved at give det et navn og vælge, hvad der skal udløse 
 - Playbooken åbnes i den visuelle editor med **Starter**-blokken øverst.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-playbooks/sched_playbook_opret.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-playbooks/sched_playbook_opret.png)
 
 *Skærmbillede 1 (Management UI) — Admin → Playbooks → **Opret** — navn + trigger (fx PortalMeetings)*
 
@@ -89,7 +89,7 @@ _Hvorfor: Blokkene er de trin, flowet udfører — fx at hente CRM-data og opret
 - Tilføj de blokke, flowet har brug for. Du kan **Flyt op**/**Flyt ned**, **Rediger blok** og **Fjern blok**.
 
 
-![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-playbooks/sched_playbook_editor.png)
+![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-playbooks/sched_playbook_editor.png)
 
 *Skærmbillede 2 (Management UI) — Playbook-editor — blokke på lærredet (Starter → datablokke → CRM)*
 
@@ -106,7 +106,7 @@ _Hvorfor: Relationerne fører data fra én blok til den næste — og kan juster
 - Tilføj evt. en **Transformation**, hvis data skal justeres (se tabellen ‘Transformationer’).
 
 
-![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-playbooks/sched_playbook_blok.png)
+![Skærmbillede 3]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-playbooks/sched_playbook_blok.png)
 
 *Skærmbillede 3 (Management UI) — Blok-konfiguration — **Blok type**, **Værdi** og felt-mapning (Kildefelt → Destinationsfelt)*
 
@@ -143,7 +143,7 @@ _Hvorfor: Til sidst skal portalen bruge playbooken til at sende data til CRM._
 På playbook-listen ser du, om en playbook er **Aktiv** eller **Deaktiveret** (**Status**), og hvornår den sidst kørte (**Sidst brugt**). Til at teste et flow har editoren **Tør-kørsel**. Ved mistanke om en fejlet kørsel kan du se **Admin → Logs** — eller kontakte &money.
 
 
-![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/superbrugerguide-playbooks/sched_playbooks_liste.png)
+![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-playbooks/sched_playbooks_liste.png)
 
 *Skærmbillede 4 (Management UI) — Admin → Playbooks — listen med **Status** (Aktiv/Deaktiveret) og **Sidst brugt***
 

@@ -22,7 +22,7 @@ _Overblik, bookingflows og opsætnings-rejsen · start her · v1.0 · 12.06.2026
 > **Bemærk:** Hvor Schedule sidder: Schedule er **booking-delen**. Bookingens data gemmes i jeres **CRM** (via Playbook). **Insights** er et separat produkt (prognose for tilgængelighed), og **Present/Assist** er andre &money Engage-produkter.
 
 
-![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/kom-godt-i-gang/schedule_oversigt.png)
+![Skærmbillede 1]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/kom-godt-i-gang/schedule_oversigt.png)
 
 *Skærmbillede 1 (Management UI) — Schedule i Management UI — menuen med Mødeopsætning, Medarbejdere, Servicegrupper, Kompetencegrupper, Portaler og Rapportering*
 

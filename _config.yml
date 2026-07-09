@@ -30,6 +30,9 @@ collections:
   embeddable-ui:
     permalink: "/:collection/:path/"
     output: true
+  business-implementation:
+    permalink: "/:collection/:path/"
+    output: true
 
 # Just the Docs theme settings
 color_scheme: light
@@ -99,6 +102,9 @@ just_the_docs:
       # name: "Embeddable UI"
       # nav_exclude: false
       # nav_fold: true
+    business-implementation:
+      name: "Business implementation"
+      nav_fold: true
 
 # Exclude files from processing
 exclude:

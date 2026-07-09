@@ -124,13 +124,13 @@ _Hvorfor: Tjek flowet for fejl, før du gemmer._
 > ✓ **Sådan ved du, det lykkedes:** Playbooken er valideret og gemt — klar til at kobles på en portal.
 
 
-### Trin 5 · Kobl portalen til playbooken
+### Trin 5 · Håndtér portal/playbook-koblingen sammen med &money
 
 _Hvorfor: Til sidst skal portalen bruge playbooken til at sende data til CRM._
 
 - Åbn portalen (**Schedule → Portaler**).
 - Sæt **CRM oprettelsesstrategi** = **Playbook**.
-- Selve valget af den konkrete playbook sker pt. i samarbejde med &money — portalens Playbook-vælger viser stadig ‘Ingen playbooks tilgængelige’ og åbnes snart.
+- Den konkrete playbook kobles fortsat på sammen med &money, indtil Playbook-vælgeren er tilgængelig i UI'et.
 
 {: .hint }
 > ✓ **Sådan ved du, det lykkedes:** Portalen sender nu booking-data til CRM via playbooken.

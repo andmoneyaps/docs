@@ -55,7 +55,8 @@ Under your agreed division of responsibility (RACI), **your operating partner** 
 
 ## Error catalogue — look up by the message (or the code)
 
-Look up the **message** you see in the log. Most calendar errors begin with 'Kunne ikke synkronisere kalender for rådgiver: …' ("Could not sync calendar for advisor: …") — the table shows the **distinctive part** after the colon. Behind each entry also sits a technical **status code** (CAL-ERR-xx), which you can quote to your operating partner/&money.
+Look up the **message** you see in the log. Most calendar errors begin with 'Kunne ikke synkronisere kalender for rådgiver: …' ("Could not sync calendar for advisor: …") — focus on the **distinctive part** after the colon (see the recognisable examples below). Behind each entry also sits a technical **status code** (CAL-ERR-xx), which you can quote to your operating partner/&money.
+
 
 {: .note }
 > **Note:** **Not all codes are errors** — the code families: **CAL-FS** (01–03) = full synchronisation running/completed; **CAL-DS** (01–02) = delta synchronisation; **CAL-TS** (22–25) = time slots created/updated/deleted; **CAL-INFO-17** = time slots deleted during full sync; **CAL-INFO-18** = 'Synkroniseringsfejl ryddet for rådgiver' ("Sync error cleared for advisor") (the error is gone); **CAL-INFO-19/20** = new/all employees queued. Only **CAL-INFO-21** ('Fejl ved hentning af synkroniseringsindstillinger for bank' — "Error while getting sync settings for bank") is genuinely an error — owned by &money.

@@ -56,6 +56,7 @@ _Hvad hver fane gør · hvad du reelt ser · konsekvensen af ændringer · v1.0 
 
 **Hvad du reelt ser:** **Salesforce** (Domænenavn) eller **Dynamics 365** (Miljø-URL); **Test forbindelse**; **Opret** (provisionér integration); **Grænser** (status Sund/Advarsel/**Kritisk**); **Licenser** og **Permission set**; **Validér brugere**. **Konsekvens:** forkert domæne/URL eller manglende provisionering = **ingen booking-data i CRM**; rammer du en **Kritisk** grænse, kan CRM-skrivninger stoppe. **Opret** (provisionér) kan trygt gentages (idempotent) — det er **Skub/deploy** af komponenter, der overskriver. **Gør:** test forbindelsen efter ændring; hold øje med grænser. Se **Admin – CRM Opsætning (deep-dive)**.
 
+
 **Microsoft (Graph API + Teams)**
 
 **Hvad du reelt ser:** **Proxy URL** til Microsoft Graph + **Test forbindelse**; **Teams - mødeindstillinger** (tillad optagelse/transskription, auto-optagelse, mødeskabelon-ID). **Konsekvens:** en forkert eller utilgængelig **Proxy URL** betyder, at **kalender-sync ikke kan oprette forbindelse** (giver fejl CAL-ERR-14 for alle medarbejdere). **Gør:** rør kun proxy-URL’en efter aftale med jeres IT/jeres driftspartner; **Test forbindelse** bagefter. Se **Admin – Microsoft (deep-dive)**.

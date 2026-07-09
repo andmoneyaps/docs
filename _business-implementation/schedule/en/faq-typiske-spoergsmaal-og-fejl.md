@@ -67,7 +67,7 @@ Changes apply from the next booking search. Refresh the page and try a new searc
 
 **Can I deactivate or delete a service group?**
 
-If you want to take the group temporarily out of play, you can remove its activation rules or members. For permanent deletion, contact your administrator/support — be aware of the effect on existing bookings.
+If you want to take the group temporarily out of play, remove its members or use the explicit deactivate/disable action, if one exists. For permanent deletion, contact your administrator/support — be aware of the effect on existing bookings.
 
 
 **Is it called Schedule or BookMe?**

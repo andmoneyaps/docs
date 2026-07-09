@@ -13,7 +13,7 @@ _Typiske spørgsmål, fejl og svar · v1.0 · 11.06.2026_
 {: .hint }
 > 📄 **Hent denne guide:** [DOCX]({{ site.baseurl }}/files/business-implementation/present/da/faq-typiske-spoergsmaal-og-fejl.docx) · [PDF]({{ site.baseurl }}/files/business-implementation/present/da/faq-typiske-spoergsmaal-og-fejl.pdf)
 
-Hurtige svar på de mest almindelige spørgsmål og fejl ved Present. Find dit spørgsmål nedenfor. Uddybende trin findes i [Present – medarbejderguide](medarbejderguide) og [Present – superbrugerguide](superbrugerguide).
+Hurtige svar på de mest almindelige spørgsmål og fejl ved Present. Find dit spørgsmål nedenfor. Uddybende trin findes i [Present – medarbejderguide]({{ site.baseurl }}/business-implementation/present/da/medarbejderguide/) og [Present – superbrugerguide]({{ site.baseurl }}/business-implementation/present/da/superbrugerguide/).
 
 
 ## For medarbejdere (generér præsentation i Salesforce)

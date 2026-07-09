@@ -326,8 +326,8 @@ _Hvorfor: Hold skabelonerne opdaterede og ryd op i gamle versioner, så medarbej
 - Tryk på pilen for at vælge **Brugerdefineret**, og afslut med **OK**.
 
 ### Se også / forudsætninger
-[Forbered din master-skabelon (PowerPoint)](`#forbered-din-master-skabelon-powerpoint`) — afsnittet ovenfor i denne guide (forudsætning for Trin 1).
-[Present – FAQ](faq-typiske-spoergsmaal-og-fejl) (typiske spørgsmål, fejl og svar).
+[Forbered din master-skabelon (PowerPoint)](#forbered-din-master-skabelon-powerpoint) — afsnittet ovenfor i denne guide (forudsætning for Trin 1).
+[Present – FAQ]({{ site.baseurl }}/business-implementation/present/da/faq-typiske-spoergsmaal-og-fejl/) (typiske spørgsmål, fejl og svar).
 - **Opsætning og ibrugtagning af Present i CRM-komponenten** (Salesforce-pakke / Present-komponent) — ledsagende guide (bruges i Trin 3 til at generere en præsentation).
 - **Valideringsværktøj til master-skabeloner** — ledsagende guide (hjælper med at finde fejl før upload).
 - **Tag-mapping i detaljer**, herunder modifikatorer (uppercase, capitalize, trim) — ledsagende guide.

@@ -201,9 +201,9 @@ Her er, hvad de enkelte valg styrer — så du ved, hvad du vælger:
 - Links/interaktive elementer virker ikke: du er i forhåndsvisningen — brug den downloadede PowerPoint-fil (ikke PDF).
 
 ### Se også
-- [**Present – superbrugerguide (opsætning i Management UI)**](superbrugerguide) — hvis skabeloner, kundetyper eller felter mangler (superbruger/admin).
-- [**Opsætning af master-slides (PowerPoint)**](superbrugerguide) — hvordan skabelonerne bygges (i superbrugerguiden).
-- [**Present – FAQ**](faq-typiske-spoergsmaal-og-fejl) (typiske spørgsmål, fejl og svar).
+- [**Present – superbrugerguide (opsætning i Management UI)**]({{ site.baseurl }}/business-implementation/present/da/superbrugerguide/) — hvis skabeloner, kundetyper eller felter mangler (superbruger/admin).
+- [**Opsætning af master-slides (PowerPoint)**]({{ site.baseurl }}/business-implementation/present/da/superbrugerguide/) — hvordan skabelonerne bygges (i superbrugerguiden).
+- [**Present – FAQ**]({{ site.baseurl }}/business-implementation/present/da/faq-typiske-spoergsmaal-og-fejl/) (typiske spørgsmål, fejl og svar).
 
 
 ## Seneste opdatering

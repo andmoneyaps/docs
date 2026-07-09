@@ -72,7 +72,7 @@ Assist optager og transskriberer samtalen. Inden du starter:
 ## Tjekliste før mødet
 
 - ☐ Event åbnet, og **Assist**-fanen er åben.
-- ☐ **Mikrofon** valgt og testet — vælg din eksterne mik/headset (ikke kun “Systemstandard”).
+- ☐ **Mikrofon** valgt og testet — vælg den primære mikrofon i mødelokalet, idet lydoptagelsen bliver bedst her. Findes en sådan ikke, vælg da din laptops “Systemstandard” mikrofon.
 - ☐ **Deltagere** er indlæst med korrekt rolle (kunde/medarbejder).
 - ☐ **Laptoppen** er åben — og bliver stående åben under hele mødet.
 - ☐ Kunden er **informeret**, og samtykke er på plads.
@@ -174,8 +174,8 @@ _Hvorfor: Du har det sidste ord — gennemse og ret, før du gemmer og deler._
 
 Assist transskriberer ud fra mikrofonen. På et fysisk møde får du den bedste optagelse — og bedst adskillelse af jeres stemmer — sådan her:
 
-- Brug helst en **ekstern mikrofon** eller et **headset** frem for den indbyggede laptop-mikrofon — vælg den eksplicit under **Mikrofonindstillinger**.
-- Placér laptoppen/mikrofonen **midt på bordet** mellem dig og kunden, så begge stemmer fanges lige godt.
+- Brug helst en **ekstern mikrofon** frem for den indbyggede laptop-mikrofon — vælg den eksplicit under **Mikrofonindstillinger**.
+- Placér laptoppen **midt på bordet** mellem dig og kunden, så begge stemmer fanges lige godt, hvis du bruger mikrofon på din laptop.
 - Hold mikrofonen **fri** — undgå at dække den med papir, mapper eller hænder.
 - Vælg et **roligt lokale** uden baggrundsstøj (ventilation, gang, andre samtaler) — det forbedrer både transskription og adskillelse af talere.
 - Undgå **dublerede lydenheder** (fx Bluetooth-headset + dock + laptop-mikrofon på én gang) — vælg én enhed.

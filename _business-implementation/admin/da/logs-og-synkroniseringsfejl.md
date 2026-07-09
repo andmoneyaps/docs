@@ -59,7 +59,7 @@ Ifølge jeres aftalte ansvarsfordeling (RACI) ejer **jeres driftspartner** opsæ
 
 ## Fejl-katalog — slå op på beskeden (eller koden)
 
-Slå op på den **besked**, du ser i loggen. Alle kalender-fejl starter med ‘**Kunne ikke synkronisere kalender for rådgiver:** …’ — tabellen viser den **distinktive del** efter kolon. Bag hver post ligger også en teknisk **statuskode** (CAL-ERR-xx), som du kan oplyse til jeres driftspartner/&money.
+Slå op på den **besked**, du ser i loggen. De fleste kalender-fejl starter med ‘**Kunne ikke synkronisere kalender for rådgiver:** …’ — tabellen viser den **distinktive del** efter kolon; CAL-ERR-16 er undtagelsen. Bag hver post ligger også en teknisk **statuskode** (CAL-ERR-xx), som du kan oplyse til jeres driftspartner/&money.
 
 
 | Besked i loggen (efter ‘… rådgiver:’) | Kode | Betydning, konsekvens & hvad du gør | Ejer |

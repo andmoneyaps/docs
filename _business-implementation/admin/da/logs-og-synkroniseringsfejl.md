@@ -152,7 +152,7 @@ Baseret på jeres aftalte RACI (&money ↔ jeres driftspartner, v2). **Grundprin
 
 ## Seneste opdatering
 
-- 12.06.2026 (v1.2) — Fejl-katalog vendt om: den VERBATIM danske log-besked er nu primær opslagsnøgle, statuskoden (CAL-ERR-xx, fra backendens statusCode) er sekundær reference. Strenge verificeret mod koden (translateSyncMessage.ts). ⟦⟧-tegn ryddet i tabelceller.
+- 12.06.2026 (v1.2) — Fejl-katalog vendt om: den danske log-besked er nu primær opslagsnøgle, statuskoden (CAL-ERR-xx) er sekundær reference. Tabelceller ryddet.
 - 12.06.2026 (v1.1) — Persona-løft: ‘Din rolle som admin’ (DU vs. fixer) + handoff-skabelon, kontakt/setup-boks, A6-default (jeres driftspartner 1st→&money 2nd), close-the-loop, dobbeltbooking-række.
 - 12.06.2026 (v1.0) — Første version: fejl-katalog + ansvarsfordeling (jeres RACI, &money↔jeres driftspartner v2) + hyppigste support-tickets (anonymiseret fra jeres Atlassian/AMFM).
 

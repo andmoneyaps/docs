@@ -82,7 +82,7 @@ _Why: Going forward, portals use a ⟦Playbook⟧ to send booking data to the CR
 *Screenshot 1 (Management UI) — Schedule → CRM Configurations (old model) — field mapping to the CRM*
 
 {: .hint }
-> ✓ **How you know it worked:** The desired Playbook (or — on the old model — CRM Configuration) exists and can be selected on the portal.
+> ✓ **How you know it worked:** The desired Playbook (or — on the old model — CRM Configuration) exists. When the selector is available in your tenant, it can be chosen on the portal.
 
 **Example:** the portal field **Email** → **Key** "email" → CRM **Object** Contact.Email. You choose the same **Key** on the portal field in Step 5, so the field is linked to the mapping.
 

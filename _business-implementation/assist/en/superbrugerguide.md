@@ -12,8 +12,7 @@ _Reporting in the Management UI · v1.1 · 10.06.2026_
 
 ## Purpose and value
 
-Assist is &money's AI meeting assistant. It transcribes the customer meeting, tracks your meeting goals and automatically produces a summary. &money sets up the Assist version and the template for you — as a super-user you follow usage via reporting in the Management UI (and will soon also be able to define your meeting goals).
-
+Assist is &money's AI meeting assistant. It transcribes the customer meeting and automatically produces a summary; once meeting goals are enabled, it can also track them. &money sets up the Assist version and the template for you — as a super-user you follow usage via reporting in the Management UI (and will soon also be able to define your meeting goals).
 ### Glossary
 - **Assist**: &money's AI meeting assistant in Salesforce — transcription, meeting goals and automatic summary.
 - **Management UI**: &money's administration site, where you as super-user set up the products.

@@ -180,8 +180,8 @@ _Hvorfor: Emnerne er det, kunden vælger imellem, når de booker — derfor er d
 
 ## Seneste opdatering
 
-- 02.07.2026 (v1.1) — Opdateret mod den faktiske funktion i Demo-miljøet: sprog aktiveres under **Admin → Sprogstyring** (da-DK primær, kan ikke fjernes); oversættelser indtastes **to steder** — Generelt (Standardværdier) og Mødeemner. Rettet mekanik (klik på sprogkode under det danske felt) og fallback; eksakte UI-labels bekræftet mod koden.
-- 17.06.2026 (v1.0) — Første version bygget på feature-specen (Roadmap #306).
+- 02.07.2026 (v1.1) — Opdateret til den nuværende funktion: sprog aktiveres under **Admin → Sprogstyring** (da-DK primær, kan ikke fjernes); oversættelser indtastes **to steder** — Generelt (Standardværdier) og Mødeemner. Rettet mekanik og fallback.
+- 17.06.2026 (v1.0) — Første version bygget på feature-specen (Roadmap `#306`).
 
 
 {: .warning }

@@ -3,8 +3,8 @@ layout: "default"
 title: "English"
 parent: "Assist"
 nav_order: 2
+has_children: true
 ---
 # Assist – English guides
 
-> English versions (with English Management-UI screenshots) are being produced and will appear here.
-{: .note }
+Choose a guide in the menu.

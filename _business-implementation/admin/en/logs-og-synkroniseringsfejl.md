@@ -55,22 +55,7 @@ Under your agreed division of responsibility (RACI), **your operating partner** 
 
 ## Error catalogue — look up by the message (or the code)
 
-Look up the **message** you see in the log. All calendar errors begin with 'Kunne ikke synkronisere kalender for rådgiver: …' ("Could not sync calendar for advisor: …") — the table shows the **distinctive part** after the colon. Behind each entry also sits a technical **status code** (CAL-ERR-xx), which you can quote to your operating partner/&money.
-
-
-| Message in the log (after '… rådgiver:') | Code | Meaning, consequence & what you do | Owner |
-|---|---|---|---|
-| Adgang nægtet for bruger. Kunne være en manglende tilladelse ("Access denied for user. Could be a missing permission") | CAL-ERR-06 | The calendar does not synchronise → missing/wrong times. Check that the app registration has Calendars.ReadWrite + a calendar licence. | Entra (you/your operating partner) |
-| For mange forsøg ("Too many retries") | CAL-ERR-07 | Sync abandoned after repeated errors. Find the FIRST underlying 06/14 in the log, and route by that. | Follow 06/14 |
-| Kunne ikke læse begivenhed. Kunne være en manglende tilladelse. ("Could not read event. Could be a missing permission.") | CAL-ERR-08 | Event could not be read. Check the permission on the calendar; run a full synchronisation. | Entra (you/your operating partner) |
-| Ugyldig bruger ("Invalid user") | CAL-ERR-09 | The account does not exist / is disabled. Check that the user is active and that the UPN matches what Schedule knows. | Your Entra |
-| Delegeret kalenderadgang nægtet. ("Delegated calendar access denied.") | CAL-ERR-10 | Check the app permission + admin consent; check the mailbox's delegation rules. | Entra (you/your operating partner) |
-| Postkassen er ikke aktiveret til REST API ("The mailbox has not been enabled for REST API") | CAL-ERR-11 | Older mailbox setup. Enable REST API on the user's Exchange mailbox. | Your Entra |
-| Adgangstoken er ugyldig. Prøv igen med en ny ("The access token is invalid. Retry to use a new one") | CAL-ERR-12 | Token expired/invalid. Run a new synchronisation (the token is renewed). Persists? Check the app credentials. | &money |
-| Synkroniseringen fik timeout. Kunne være relateret til netværksproblemer eller gamle tilbagevendende begivenheder ("The sync timed out. Could be related to network issues or old recurring events") | CAL-ERR-13 | Check network/M365 status; use 'Remove synchronisation timeout'; possibly a calendar clean-up. | your operating partner |
-| Kunne ikke oprette forbindelse til Graph API ("Could not connect to the Graph API") | CAL-ERR-14 | Typically hits ALL employees. Check that the Graph proxy is running + that the Proxy URL is correct (Admin → Microsoft); check the firewall. | your operating partner |
-| Ukendt fejl ("Unknown Error") | CAL-ERR-15 | Unexpected error from Graph. Contact &money with the code and the time. | &money |
-| (no 'rådgiver:' prefix) Kunne ikke opdatere delta link for rådgiveren ("Could not update the delta link for the advisor") | CAL-ERR-16 | Internal sync state. Run a full synchronisation. Persists? &money investigates. | &money |
+Look up the **message** you see in the log. Most calendar errors begin with 'Kunne ikke synkronisere kalender for rådgiver: …' ("Could not sync calendar for advisor: …") — the table shows the **distinctive part** after the colon. Behind each entry also sits a technical **status code** (CAL-ERR-xx), which you can quote to your operating partner/&money.
 
 {: .note }
 > **Note:** **Not all codes are errors** — the code families: **CAL-FS** (01–03) = full synchronisation running/completed; **CAL-DS** (01–02) = delta synchronisation; **CAL-TS** (22–25) = time slots created/updated/deleted; **CAL-INFO-17** = time slots deleted during full sync; **CAL-INFO-18** = 'Synkroniseringsfejl ryddet for rådgiver' ("Sync error cleared for advisor") (the error is gone); **CAL-INFO-19/20** = new/all employees queued. Only **CAL-INFO-21** ('Fejl ved hentning af synkroniseringsindstillinger for bank' — "Error while getting sync settings for bank") is genuinely an error — owned by &money.

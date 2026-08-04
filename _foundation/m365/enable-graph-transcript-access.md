@@ -12,7 +12,7 @@ Microsoft Graph API access to Teams meeting transcripts is governed by a tenant-
 
 Two settings are required. `EnableGraphTranscriptAccess` lifts the block. `EnableAttributedTranscripts` permits the speaker-attributed transcript format, which Engage requests; without it transcript content requests fail with `SpeakerAttributionNotAllowed` even once access is enabled.
 
-The setting is tenant-wide. It does not widen which users an application may read — the Teams application access policy and its security group continue to govern that.
+The setting is tenant-wide, and worth reviewing with your security team before enabling. It admits **every application and agent that already holds the relevant Graph permissions** — not only Engage — so permissions granted previously but never effective become effective. Each caller remains bounded by its own Graph permissions and its Teams application access policy, and the setting does not widen which *users* any application may read; per-application control remains in the Microsoft Entra admin center.
 
 Teams administrators can apply the same change without PowerShell in the Teams admin center under **Meetings → Meeting settings → Transcript API access**.
 
@@ -26,12 +26,14 @@ Background: [MC1393806](https://mc.merill.net/message/MC1393806) and [Manage tra
 # regardless of the app registration's Graph permissions or its application access policy.
 # Both settings are needed: the M365 service requests transcript content as "text/vtt", the
 # speaker-attributed format, so attribution must be on too or the content fetch still 403s.
-# Tenant-wide (Global is the only valid identity); it does not change which users an app may read.
+# Tenant-wide (Global is the only valid identity). It admits every app and agent already holding the
+# relevant Graph permissions, not only Engage, so previously inert permissions become effective; each
+# caller is still bounded by its own permissions and application access policy.
 # Background: https://mc.merill.net/message/MC1393806
 
 param (
   [string] $ExpectedTenantId, # Abort unless the signed-in tenant matches.
-  [switch] $DryRun, # Report current values and exit.
+  [switch] $DryRun, # Report current values and exit without changing tenant settings. Prerequisites are still installed.
   [switch] $Force, # Skip the confirmation prompt.
   [switch] $UseDeviceAuthentication # Default on non-Windows hosts.
 )
@@ -57,7 +59,8 @@ if (-not $module -or $module.Version -lt $MinimumModuleVersion)
 
   if (-not $module -or $module.Version -lt $MinimumModuleVersion)
   {
-    throw "MicrosoftTeams is still $($module.Version) after install; $MinimumModuleVersion or later is required."
+    $installed = if ($module) { $module.Version } else { "still not installed" }
+    throw "MicrosoftTeams is $installed after install; $MinimumModuleVersion or later is required."
   }
 }
 
@@ -95,23 +98,32 @@ $before = Get-CsTeamsMeetingConfiguration -Identity Global
 Write-Host "EnableGraphTranscriptAccess : $($before.EnableGraphTranscriptAccess)"
 Write-Host "EnableAttributedTranscripts : $($before.EnableAttributedTranscripts)"
 
-if ($before.EnableGraphTranscriptAccess -and $before.EnableAttributedTranscripts)
+$alreadyEnabled = $before.EnableGraphTranscriptAccess -and $before.EnableAttributedTranscripts
+
+# Checked before the already-enabled return so -DryRun always reports its own outcome.
+if ($DryRun)
+{
+  $wouldDo = if ($alreadyEnabled) { "both settings are already enabled - nothing would change" } else { "would set both settings to True" }
+  Write-Host -ForegroundColor Yellow "DryRun: $wouldDo on '$tenantName'. No tenant setting changed."
+  return
+}
+
+if ($alreadyEnabled)
 {
   Write-Host -ForegroundColor Yellow "Both settings are already enabled - nothing to change"
   return
 }
 
-if ($DryRun)
-{
-  Write-Host -ForegroundColor Yellow "DryRun: would set both settings to True on '$tenantName'. No change made."
-  return
-}
-
-Write-Host -ForegroundColor Yellow "This is a TENANT-WIDE change to '$tenantName'"
+Write-Host -ForegroundColor Yellow "TENANT-WIDE change to '$tenantName':"
+Write-Host -ForegroundColor Yellow "  EnableGraphTranscriptAccess : $($before.EnableGraphTranscriptAccess) -> True"
+Write-Host -ForegroundColor Yellow "  EnableAttributedTranscripts : $($before.EnableAttributedTranscripts) -> True"
+Write-Host -ForegroundColor Yellow "This admits every app and agent already holding the relevant Graph permissions - not only"
+Write-Host -ForegroundColor Yellow "Engage - and lets them read speaker identities. Each caller remains bounded by its own"
+Write-Host -ForegroundColor Yellow "permissions and application access policy."
 
 if (-not $Force)
 {
-  # Fails safe: a non-interactive host yields an empty answer and aborts.
+  # No change is applied without a literal "yes"; a non-interactive host errors out here instead.
   if ((Read-Host "Type 'yes' to apply") -ne "yes")
   {
     Write-Host -ForegroundColor Yellow "Aborted - no changes made"

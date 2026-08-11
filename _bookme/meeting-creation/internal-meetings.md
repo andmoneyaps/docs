@@ -10,9 +10,9 @@ nav_order: 1
 {: .no_toc }
 
 {: .note }
-> **Current implementation.** This is the recommended approach for advisor-to-advisor internal meetings.
+> **Next platform.** This is the recommended approach for advisor-to-advisor internal meetings.
 
-**Internal meetings** are advisor-to-advisor meetings booked from the embeddable widget on a Salesforce record. They are created through the &money platform, which writes the records to your CRM using **entity patterns** — a mapping from abstract fields to your CRM's real objects and fields.
+**Internal meetings** are advisor-to-advisor meetings booked from the embeddable widget on a Salesforce record. They are created through the &money platform, which writes the records to your CRM using **entity patterns**, a mapping from abstract fields to your CRM's real objects and fields.
 
 This page describes **how an internal meeting is created**: what records it writes, which fields, and how you configure them. Entity patterns are the underlying mechanism; the same mechanism also backs the [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) path.
 
@@ -51,10 +51,10 @@ graph LR
 
 | Part | Role |
 |---|---|
-| `Event` | **Created** — the meeting |
-| Meeting detail | **Created** — the BookMe detail record |
+| `Event` | **Created**: the meeting |
+| Meeting detail | **Created**: the Schedule detail record |
 | Advisor relations | **Created only when additional advisors are chosen** |
-| Account | **Referenced** — the meeting is linked to an existing Account |
+| Account | **Referenced**: the meeting is linked to an existing Account |
 | Owner, advisors | **Referenced** users, used to set ownership and relations |
 
 {: .important }
@@ -70,7 +70,7 @@ The field **names** shown are the abstract names; each is written to whatever yo
 |---|---|
 | `Subject` | The meeting title |
 | `StartDateTime` / `EndDateTime` | The chosen time slot |
-| `MeetingFormat` | The meeting format — **only if** your `Event` definition declares this field |
+| `MeetingFormat` | The meeting format, **only if** your `Event` definition declares this field |
 | `RecordTypeId` | **Only if** a record type is configured for your org |
 | Account link (`WhoId`/`AccountId`) | Set via the pattern relationship to the referenced Account |
 | Owner link (`OwnerId`) | Set via the pattern relationship to the referenced owner |
@@ -85,7 +85,7 @@ The field **names** shown are the abstract names; each is written to whatever yo
 | `AdvisorEmail` / `AdvisorName` | The meeting owner |
 | `MeetingType` / `MeetingTypeLabel` | The meeting type |
 | `Location` / `RoomId` / `RoomName` | The selected room |
-| `SendMeetingInvite` | Constant `true` |
+| `SendMeetingInvite` | Constant `true`, a passive notification-intent flag; Schedule sends no invite off it |
 
 **Advisor relations** (only when additional advisors are chosen): the advisor link, `IsInvitee = true`, `IsParent = false`.
 
@@ -115,7 +115,7 @@ You configure the **targets and values**, not code, through **Admin → Entities
 | **Entity Patterns** | Compose the parts (which records are created vs referenced), the relationships between them, whether a part is optional or allows multiple, and default values. |
 | **Pattern mapper** | Binds a specific pattern to the internal-meeting use case. |
 | Event record type | Whether the `Event` gets a specific record type, and which one. |
-| Meeting-format mapping *(optional)* | If your CRM records the meeting format (physical, phone, video, …) in its own field with its own values, this maps BookMe's meeting type to that value so it can be written to the `Event`. Skipped if you don't use such a field. |
+| Meeting-format mapping *(optional)* | If your CRM records the meeting format (physical, phone, video, …) in its own field with its own values, this maps Schedule's meeting type to that value so it can be written to the `Event`. Skipped if you don't use such a field. |
 | Account resolution | How the widget determines which Account the meeting belongs to. |
 
 Definitions and patterns are **portable across environments** via import/export.
@@ -126,9 +126,9 @@ Definitions and patterns are **portable across environments** via import/export.
 
 - **Internal meetings only.** A pattern mapper for the internal-meeting use case must exist; if none does, meeting creation fails. If more than one exists, the first is used (with a warning).
 - You can remap, omit, or default fields, but you **cannot add brand-new fields** the booking never provides.
-- **This is the internal-meeting flow specifically.** Portal (customer self-service) bookings are not created by this flow — they go through either the legacy [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) approach or the [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) approach. Playbooks themselves write **through entity patterns**, so entity patterns still underpin any portal booking on the Playbook strategy; only the legacy CRM Configuration path does not use them.
+- **This is the internal-meeting flow specifically.** Portal (customer self-service) bookings are not created by this flow: they go through either the [CRM Configuration]({{ site.baseurl }}/bookme/meeting-creation/crm-configuration/) approach or the [Playbook]({{ site.baseurl }}/bookme/meeting-creation/playbooks/) approach. Playbooks themselves write **through entity patterns**, so entity patterns still underpin any portal booking on the Playbook strategy; only the CRM Configuration path does not use them.
 - Removing additional-advisor relations on cancellation is a known limitation.
-- Confirmation of the created meeting is **eventually consistent** — the widget retries briefly until the record is visible.
+- Confirmation of the created meeting is **eventually consistent**: the widget retries briefly until the record is visible.
 
 ---
 

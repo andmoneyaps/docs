@@ -36,18 +36,9 @@ We recommend that you start by creating your Competence Groups (Groups).
 
 **Note:** Competencies apply to all subgroups within the Competence Group.
 
-### Using Service Groups via API
+### Service Groups in the availability search
 
-When using the Public API to find available time slots, Service Groups are accessed via the `employeeTypes` parameter:
-
-```javascript
-GET /bookme/time-slots/available?
-  employeeTypes=ServiceGroup&
-  requireEmployeeParticipation=true&
-  ...
-```
-
-This will search for available advisors from configured Service Groups.
+Service Groups take effect when a customer searches for a time: the availability search can draw an available advisor from a configured Service Group rather than a named individual: this is how "any available advisor from this group" booking works. For how to request this through the Public API (the availability search's employee-type parameter), see the [Schedule (BookMe) Public API]({{ site.baseurl }}/api/bookme/).
 
 ---
 

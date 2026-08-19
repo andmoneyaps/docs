@@ -17,6 +17,7 @@ BookMe is our booking and scheduling solution designed for the financial sector.
 
 | If you are… | Read |
 |---|---|
+| Trying to understand **how a meeting is created in Salesforce** (and which options you have) | [Meeting Creation in Salesforce]({{ site.baseurl }}/bookme/meeting-creation/) — authoritative reference for every scheduling implementation, with a [comparison matrix]({{ site.baseurl }}/bookme/meeting-creation/technology-and-feature-matrix/) |
 | Onboarding a new customer tenant to BookMe | [BookMe Onboarding]({{ site.baseurl }}/bookme/onboarding/) — Salesforce setup, implementation phases, BookMe-CRM security |
 | Onboarding a new tenant to the platform (cross-cutting) | [Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/) — covers Foundation surfaces + product-specific surfaces in one reference |
 | Configuring BookMe portals or customer-facing flows | [Portals]({{ site.baseurl }}/bookme/portals/), [Customer Meeting Booking]({{ site.baseurl }}/bookme/customer-meeting-booking/) |

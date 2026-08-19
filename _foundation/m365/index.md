@@ -33,6 +33,7 @@ The Engage runtime behaviour is identical in either mode; the choice is driven b
 | [Graph Proxy]({{ site.baseurl }}/foundation/m365/graph-proxy/) | The Graph-Proxy container's role, the components it ships with (Container App, Key Vault, Managed Identity), and how it forwards Graph traffic |
 | [Graph Proxy Tenant Migration]({{ site.baseurl }}/foundation/m365/graph-proxy-tenant-migration/) | Reference for moving an existing Graph-Proxy deployment to a different tenant (rare; usually an operational concern, not a first-time onboarding step) |
 | [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/) | PowerShell script reference used by the multi-tenant deployment to create and grant the Teams access policy against the chosen security group |
+| [Enable-Graph-Transcript-Access.ps1]({{ site.baseurl }}/foundation/m365/enable-graph-transcript-access/) | Read if meeting transcripts or summaries stop arriving — enables the tenant-level setting that governs Graph API access to Teams transcripts, which is off by default |
 
 ## Related
 

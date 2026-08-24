@@ -172,7 +172,7 @@ Here you set the rules — generally or per **customer type** and per **meeting 
 > **Remember:** **Preparation** and **Post-processing time** are a **duration** (e.g. 15 min), not a time of day — a classic pitfall.
 
 {: .note }
-> **Show as:** Choose **free** when the employee should see the time in their calendar but the buffer should not block. **Free** removes only that buffer's blocking effect — the other rules (time between meetings, max. hours per day, closing days and so on) still apply. **Tentative** looks softer in the calendar but blocks exactly like **busy**. Buffers with no setting of their own count as **busy**.
+> **Show as:** Choose **free** when the employee should see the time in their calendar but the buffer should not block. **Free** removes only that buffer's blocking effect — the other **customer-facing** rules (time between meetings, max. hours per day and so on) still apply, and **closing days** apply to all flows. **Tentative** looks softer in the calendar but blocks exactly like **busy**. Buffers with no setting of their own count as **busy**.
 
 
 ![Screenshot 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/msetup_modekonfiguration.png)

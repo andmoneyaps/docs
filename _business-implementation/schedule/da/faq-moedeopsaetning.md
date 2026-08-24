@@ -54,7 +54,7 @@ Begge er et **mindste varsel** før et møde kan bookes. **Kalendertid** tæller
 
 **‘Forberedelsestid’ — er det et klokkeslæt?**
 
-Nej, det er en **varighed** (fx 15 min), medarbejderen blokeres før (forberedelse) og efter (efterbehandling) mødet. Er bufferens **Vis som** sat til **ledig**, blokerer bufferen ikke — de øvrige regler gælder stadig.
+Nej, det er en **varighed** (fx 15 min), medarbejderen blokeres før (forberedelse) og efter (efterbehandling) mødet. Er bufferens **Vis som** sat til **ledig**, blokerer bufferen ikke — de øvrige kundevendte regler gælder stadig, og lukkedage gælder alle flows.
 
 
 **Hvad gør ‘Tilbyd fast medarbejder’?**

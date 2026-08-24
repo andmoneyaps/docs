@@ -173,7 +173,7 @@ BookMe adds a configurable **buffer** before and after each booked or reserved m
      09:45             10:00-10:30           10:45
 ```
 
-Each buffer also has a **Show as** setting, which controls both how the buffer looks in the advisor's calendar and whether it blocks bookings:
+The **preparation**, **post-processing** and **travel-time** buffers each have a **Show as** setting, which controls both how the buffer looks in the advisor's calendar and whether it blocks bookings. (*Time between meetings* is a separate setting and has no Show as option.)
 
 | Show as | Advisor's calendar | Blocks new bookings |
 |---|---|---|
@@ -181,7 +181,7 @@ Each buffer also has a **Show as** setting, which controls both how the buffer l
 | Tentative | Shown as tentative | Yes |
 | Free | Shown as free | **No** |
 
-Set a buffer to **Free** when the advisor should see the time reserved but customers should still be able to book it. Tentative looks softer in the calendar but blocks exactly like Busy. Buffers with no setting of their own count as Busy.
+Set a buffer to **Free** when the advisor should see the time reserved but the buffer itself should not block bookings. Free removes only that buffer's blocking effect --- every other condition on this page still applies. Tentative looks softer in the calendar but blocks exactly like Busy. Buffers with no setting of their own count as Busy.
 
 ### Bank Closing Days
 
@@ -329,7 +329,7 @@ A timeslot is shown to the customer when **all** of the following are true:
 4. The timeslot is **not on a bank closing day**
 5. Enough **working time buffer** has passed since now
 6. The advisor has **no conflicting meetings or calendar events** at that time
-7. The **buffer between meetings** does not overlap with the timeslot (buffers set to "Free" do not block)
+7. The **buffer between meetings** does not overlap with the timeslot (preparation, post-processing and travel-time buffers set to "Free" do not block)
 8. The advisor is **not working from a different location** (for physical meetings)
 9. The advisor has **not exceeded their daily meeting time limit**
 10. A **meeting room is available** (if required for physical meetings)

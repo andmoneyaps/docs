@@ -172,7 +172,7 @@ Her sætter du reglerne — generelt eller pr. **kundetype** og pr. **mødeemne*
 > **Husk:** **Forberedelses-** og **Efterbehandlingstid** er en **varighed** (fx 15 min), ikke et klokkeslæt — en klassisk faldgrube.
 
 {: .note }
-> **Vis som:** Vælg **ledig**, når medarbejderen skal kunne se tiden i sin kalender, men kunder stadig skal kunne booke den. **Foreløbig** ser blødere ud i kalenderen, men blokerer præcis som **optaget**. Buffere uden egen indstilling tæller som **optaget**.
+> **Vis som:** Vælg **ledig**, når medarbejderen skal kunne se tiden i sin kalender, men bufferen ikke skal blokere. **Ledig** fjerner kun den pågældende buffers blokering — de øvrige regler (tid mellem møder, max. timer pr. dag, lukkedage m.m.) gælder stadig. **Foreløbig** ser blødere ud i kalenderen, men blokerer præcis som **optaget**. Buffere uden egen indstilling tæller som **optaget**.
 
 
 ![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/msetup_modekonfiguration.png)

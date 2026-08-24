@@ -50,7 +50,7 @@ Both are a **minimum notice** before a meeting can be booked. **Calendar time** 
 
 **‘Preparation time’ — is that a time of day?**
 
-No, it is a **duration** (e.g. 15 min); the employee is blocked before (preparation) and after (follow-up) the meeting. If the buffer's **Show as** is set to **free**, customers can still book the time.
+No, it is a **duration** (e.g. 15 min); the employee is blocked before (preparation) and after (follow-up) the meeting. If the buffer's **Show as** is set to **free**, the buffer does not block — the other rules still apply.
 
 
 **What does ‘Offer fixed employee’ do?**

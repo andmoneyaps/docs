@@ -164,11 +164,15 @@ Here you set the rules — generally or per **customer type** and per **meeting 
 | Working time from booking to meeting | Minimum notice in ⟦working hours⟧ (crosses days). | Customer-facing |
 | Time between meetings | Required break between two meetings. | Customer-facing |
 | Travel-time buffer | Extra time on top of the calculated travel time (multiple locations). | Customer-facing |
-| Preparation / Post-processing time | ⟦Duration⟧ (not a time of day!) the employee is blocked before/after the meeting. | Customer-facing |
+| Preparation / Post-processing time | ⟦Duration⟧ (not a time of day!) the employee is blocked before/after the meeting — unless **Show as** is set to **free**. | Customer-facing |
+| Show as (per buffer: preparation, post-processing, travel time) | How the buffer appears in the employee's calendar — and whether it blocks. **Busy** and **tentative** block; **free** does not. | Customer-facing |
 | Set up special rules / specific per meeting topic | Override the above per customer type and per meeting topic. | — |
 
 {: .important }
 > **Remember:** **Preparation** and **Post-processing time** are a **duration** (e.g. 15 min), not a time of day — a classic pitfall.
+
+{: .note }
+> **Show as:** Choose **free** when the employee should see the time in their calendar but customers should still be able to book it. **Tentative** looks softer in the calendar but blocks exactly like **busy**. Buffers with no setting of their own count as **busy**.
 
 
 ![Screenshot 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/msetup_modekonfiguration.png)

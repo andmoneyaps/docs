@@ -164,11 +164,15 @@ Her sætter du reglerne — generelt eller pr. **kundetype** og pr. **mødeemne*
 | Arbejdstid fra booking til møde | Mindste varsel i ⟦arbejdstimer⟧ (krydser dage). | Kundevendt |
 | Tid mellem møder | Påkrævet pause mellem to møder. | Kundevendt |
 | Rejsetidsbuffer | Ekstra tid oven i beregnet rejsetid (flere lokationer). | Kundevendt |
-| Forberedelses- / Efterbehandlingstid | ⟦Varighed⟧ (ikke klokkeslæt!), medarbejderen blokeres før/efter mødet. | Kundevendt |
+| Forberedelses- / Efterbehandlingstid | ⟦Varighed⟧ (ikke klokkeslæt!), medarbejderen blokeres før/efter mødet — medmindre **Vis som** er sat til **ledig**. | Kundevendt |
+| Vis som (pr. buffer: forberedelse, efterbehandling, rejsetid) | Hvordan bufferen ser ud i medarbejderens kalender — og om den blokerer. **Optaget** og **foreløbig** blokerer; **ledig** blokerer ikke. | Kundevendt |
 | Opsæt særlige regler / specifikke pr. mødeemne | Overstyr ovenstående pr. kundetype og pr. mødeemne. | — |
 
 {: .important }
 > **Husk:** **Forberedelses-** og **Efterbehandlingstid** er en **varighed** (fx 15 min), ikke et klokkeslæt — en klassisk faldgrube.
+
+{: .note }
+> **Vis som:** Vælg **ledig**, når medarbejderen skal kunne se tiden i sin kalender, men kunder stadig skal kunne booke den. **Foreløbig** ser blødere ud i kalenderen, men blokerer præcis som **optaget**. Buffere uden egen indstilling tæller som **optaget**.
 
 
 ![Skærmbillede 4]({{ site.baseurl }}/assets/images/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/msetup_modekonfiguration.png)

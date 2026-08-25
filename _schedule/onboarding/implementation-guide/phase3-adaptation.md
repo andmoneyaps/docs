@@ -87,13 +87,13 @@ This phase covers the technical implementation and customization of &schedule Sc
 
 ## Component Configuration
 
-### ScheduleCustomerFlow
+### BookmeCustomerFlow
 - Experience site integration
 - Parameter configuration
 - Event handling setup
 - Validation implementation
 
-### ScheduleEmployeeFlow
+### BookmeEmployeeFlow
 - Record page integration
 - Configuration options setup
 - Event handling
@@ -166,7 +166,7 @@ Recommendation - We currently recommend leaving sharing disabled as customers wi
 *Figure 1- Data model for sObject data access through configuration*
 
 #### **Using amb_config__mdt**
-AMB_Config__mdt defines an Id for a given configuration consisting of 2 AMB_SObject_Config__mdt records. This Id can be specified as configId when using the ScheduleCustomerFlow and ScheduleEmployeeFlow LWC components
+AMB_Config__mdt defines an Id for a given configuration consisting of 2 AMB_SObject_Config__mdt records. This Id can be specified as configId when using the BookmeCustomerFlow and BookmeEmployeeFlow LWC components
 
 #### **Amb_sobject_config__mdt**
 AMB_SObject_Config__mdt defines which fields should be read, written and updated on a given Event, Activity Participant or Activity Object record.
@@ -176,7 +176,7 @@ It is also possible to define whether CRUD operations on the given sObject type 
 AMB_Config_Relation__mdt makes it possible to define a many-to-many relationship between an AMB_Config__mdt and an AMB_SObject_Config__mdt record. This makes it possible to create few AMB_SObject_Config__mdt records (e.g. one per record type) and reuse these across multiple configurations. An example here could be to create one record for CRUD operations on an Event and reuse this in configurations on Opportunity and Lead respectively.
 
 #### **Creating amb_config_field_mapping__mdt**
-AMB_Config_field_mapping__mdt contains a source to target field mapping between an AMBScheduleetingDTO object and a field on the given AMB_SObject_Config__mdt record. Each mapping can be done directly if the type of source and target respectively is compatible, or via a converter function that can map from Source to Target. The Apex function can also be used to aggregate data. Util_Class_Name__c must implement Salesforce's Callable interface, which allows dynamic field access on Records. Util_Method_Name__c is a function that takes two inputs, a callable dto (AMBScheduleetingDTO) and a sourceName (string).
+AMB_Config_field_mapping__mdt contains a source to target field mapping between an AMBBookMeetingDTO object and a field on the given AMB_SObject_Config__mdt record. Each mapping can be done directly if the type of source and target respectively is compatible, or via a converter function that can map from Source to Target. The Apex function can also be used to aggregate data. Util_Class_Name__c must implement Salesforce's Callable interface, which allows dynamic field access on Records. Util_Method_Name__c is a function that takes two inputs, a callable dto (AMBBookMeetingDTO) and a sourceName (string).
 
 
 ### Deployment of the solution
@@ -241,13 +241,13 @@ A less aggressive version would be, for example, to calculate the right customer
 ## Exhibition of booking flows
 The booking solution consists of 3 LWC components for customer-facing booking and advisor-facing booking and advisor-facing opportunity management, respectively.
 
-| ScheduleCustomerFlow  |  ScheduleEmployeeFlow | AMBMoveMeetingEventAction |
+| BookmeCustomerFlow  |  BookmeEmployeeFlow | AMBMoveMeetingEventAction |
 |------------|------------|------------|
 |LWC component that can be embedded in an experience site for customer-facing booking. This component is exposed in the Experience builder | LWC-komponent der kan indlejres i Account, Case og Opportunity record pages til rådgivervendt booking. Denne komponent er exposed i Page builderen. |Salesforce Flow Enabled LWC-komponent til brug i quick actions til at flytte events mellem account og opportunities |
 
-### Advanced configuration of ScheduleCustomerFlow
+### Advanced configuration of BookmeCustomerFlow
 
-Configurations on ScheduleCustomerFlow are done via the public attribute Config, which allows you to provide a complex configuration object to the solution. Below are the options in the object
+Configurations on BookmeCustomerFlow are done via the public attribute Config, which allows you to provide a complex configuration object to the solution. Below are the options in the object
 
 | Mutual | Configuration           | Description |
 |--------|------------------------|-------------|
@@ -262,13 +262,13 @@ Configurations on ScheduleCustomerFlow are done via the public attribute Config,
 | No | contactId | Required: contactId of the customer initiating the meeting booking |
 | Yes | accountId | Required: AccountId for the account the customer is associated with |
 
-### Advanced configuration on ScheduleEmployeeFlow
+### Advanced configuration on BookmeEmployeeFlow
 
 | Mutual | Configuration           | Description |
 |--------|------------------------|-------------|
 | No | disableheaders | Hides header and back button in the flow |
 | No | disablecustommeetingtitle | Removes the feature to manually set/edit meeting title. |
-| No | meetingtitle | Start ScheduleEmployeeFlow with a predefined meeting title |
+| No | meetingtitle | Start BookmeEmployeeFlow with a predefined meeting title |
 | No | disableadditionalcontacts | Hides the ability to add meeting contacts |
 | Yes | customflow | Property is used to control which custom flow is desired.This can have these valid values: <br> - **withtheme**: Used to start the booking flow with a pre-selected theme. <br>- **update**: Used to go directly to the “reschedule” page in the experience flow for an existing meeting, or start an “edit” flow in the record-page flow for an existing meeting <br>- **cancel**: Used to go directly to the “cancel meeting” page for an existing meeting |
 | Yes | meetingid |  The ID of the meeting in &schedule - Scheduler with which you want to start an "update" or "cancel" flow |
@@ -326,8 +326,8 @@ This signals to &schedule - Scheduler that the advisor is available outside of n
 ### Offer of advisor for given configuration
 This section provides an overview of when appointments are scheduled for an advisor in different scenarios.
 
-#### **ScheduleCustomerFlow**
-In ScheduleCustomerFlow you can choose between ‘My Advisor’ and ‘Other Advisors’. The location sent when asking about available appointments is the one configured on the Account.
+#### **BookmeCustomerFlow**
+In BookmeCustomerFlow you can choose between ‘My Advisor’ and ‘Other Advisors’. The location sent when asking about available appointments is the one configured on the Account.
 
 *Offer as primary advisor*
 
@@ -365,8 +365,8 @@ A local advisor will be an advisor who is NOT the Account Owner, but has the sam
 
 A global advisor is an advisor who is configured as Global in the Booking Management UI. Appointments are displayed for these advisors even if their SCIM/Schedule location is different from the Account location.
 
-### ScheduleEmployeeFlow 
-In ScheduleEmployeeFlow you can search for times for either specific advisors, local advisors or all available advisors (Local and Global).
+### BookmeEmployeeFlow 
+In BookmeEmployeeFlow you can search for times for either specific advisors, local advisors or all available advisors (Local and Global).
 
 The tables below show when times are posted for the different scenarios.
 

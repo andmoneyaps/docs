@@ -40,7 +40,7 @@ We recommend that you start by creating your Competence Groups (Groups).
 
 ### Service Groups in the availability search
 
-Service Groups take effect when a customer searches for a time: the availability search can draw an available advisor from a configured Service Group rather than a named individual: this is how "any available advisor from this group" booking works. For how to request this through the Public API (the availability search's employee-type parameter), see the [Schedule (Schedule) Public API]({{ site.baseurl }}/api/schedule/).
+Service Groups take effect when a customer searches for a time: the availability search can draw an available advisor from a configured Service Group rather than a named individual: this is how "any available advisor from this group" booking works. For how to request this through the Public API (the availability search's employee-type parameter), see the [Schedule Public API]({{ site.baseurl }}/api/schedule/).
 
 ---
 

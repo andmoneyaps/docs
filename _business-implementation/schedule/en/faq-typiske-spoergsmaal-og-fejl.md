@@ -70,9 +70,9 @@ Changes apply from the next booking search. Refresh the page and try a new searc
 If you want to take the group temporarily out of play, remove its members or use the explicit deactivate/disable action, if one exists. For permanent deletion, contact your administrator/support — be aware of the effect on existing bookings.
 
 
-**Is it called Schedule or Schedule?**
+**Is it called Schedule or BookMe?**
 
-It is the same product. The brand name is Schedule; in the system/menu you may still encounter the former name Schedule.
+It is the same product. The brand name is Schedule; in the system/menu you may still encounter the former name BookMe.
 
 
 ## Competence groups

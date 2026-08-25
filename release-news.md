@@ -65,7 +65,7 @@ nav_order: 2
   - **Configuration levels** (most specific wins):
     - **Organization-wide default**: Set in Management UI under Schedule/Meeting Setup tab (applies to all advisors)
     - **Service Group override**: Configure on Service Groups under the Schedule/Service Groups tab (applies to group members)
-    - **Advisor-specific override**: Set on advisor availability under the Schedule/Availaibility (Employees) tab (applies to individual advisor)
+    - **Advisor-specific override**: Set on advisor availability under the Schedule/Availability (Employees) tab (applies to individual advisor)
   - **How it works**: System tracks total booked meeting duration per advisor per day. When an advisor reaches their limit, they are automatically excluded from available time slot searches
   - **Benefits**:
     - More accurate capacity management (30-minute and 2-hour meetings now count differently)

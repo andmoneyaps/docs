@@ -8,7 +8,7 @@ collection: insights
 
 # Schedule Insights
 
-Schedule Insights is an advanced analytics platform that provides comprehensive visibility into advisor availability and scheduling patterns. It enables data-driven decision making for optimizing resource allocation and improving customer service.
+Schedule Insights is an advanced analytics platform that provides comprehensive visibility into advisor availability and scheduling patterns. It enables data-driven decision-making for optimizing resource allocation and improving customer service.
 
 ## Documentation Structure
 

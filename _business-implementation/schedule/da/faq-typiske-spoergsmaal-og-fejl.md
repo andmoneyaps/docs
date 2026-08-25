@@ -74,9 +74,9 @@ Aktivering betyder ikke automatisk, at der vises tider. Tjek serviceniveauet: er
 Vil du midlertidigt tage gruppen ud af spil, kan du fjerne dens aktiveringsregler eller medlemmer. For permanent sletning, kontakt din administrator/support — vær opmærksom på effekten på eksisterende bookinger.
 
 
-**Hedder det Schedule eller schedule?**
+**Hedder det Schedule eller bookme?**
 
-Det er samme produkt. Brand-navnet er Schedule; i systemet/menuen kan du stadig møde det tidligere navn schedule.
+Det er samme produkt. Brand-navnet er Schedule; i systemet/menuen kan du stadig møde det tidligere navn bookme.
 
 
 ## Kompetencegrupper

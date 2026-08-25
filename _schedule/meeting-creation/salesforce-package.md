@@ -14,7 +14,7 @@ redirect_from:
 {: .warning }
 > **Stable implementation.** Mature and fully supported. New implementations typically use the Next platform (the entity-pattern-based [Internal Meetings]({{ site.baseurl }}/schedule/meeting-creation/internal-meetings/) and [Playbook Portals]({{ site.baseurl }}/schedule/meeting-creation/playbooks/)), but this remains a supported option.
 
-The **Schedule managed package** (the AppExchange package, historically *&schedule – Scheduler*) is installed in your Salesforce org and creates meetings **inside your org**. This page covers the two booking experiences it offers, the customer flow and the employee flow, and the options you have for controlling the field values.
+The **Schedule managed package** (the AppExchange package, historically *&bookme – Scheduler*) is installed in your Salesforce org and creates meetings **inside your org**. This page covers the two booking experiences it offers, the customer flow and the employee flow, and the options you have for controlling the field values.
 
 <details open markdown="block">
   <summary>On this page</summary>

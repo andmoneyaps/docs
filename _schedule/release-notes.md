@@ -217,7 +217,7 @@ No breaking changes in this release.
     - `getCloseContacts` is called when default contacts are added to a meeting, during the schedule flow.
     - To configure this, go to the `AMB_Booking_Platform_DI_Implementations__mdt` custom metadata object and create a record with `DeveloperName` set to `Search_Provider_Implementation` and `Apex_Class_Name__c` set to `{YOUR_CLASS_NAME}`.
 - New configuration based override function of meeting title, location pretty is now available
-    - New way to configure custom meeting titles and pretty printed location for schedule.
+    - A new configuration-based override for meeting titles and pretty-printed locations is now available.
     - Can be done by creating a class the implements the Callable interface.
     - Go to the custom metadata object `AMB_Meeting_Configuration__mdt` and create a record with the `Callable_Class_Name__c` set to your class name, and the `Callable_Action_Name__c` set to the correct action name in the `call` method.
     - The `Map<String,Object>` arg of the `call` method will contain a dto that can be cast to a `Callable` object.

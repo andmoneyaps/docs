@@ -28,7 +28,7 @@ This section is the authoritative reference for **how each Schedule implementati
 Schedule has grown to support several ways of booking a meeting, built up over time. Some belong to our **Next** platform, where new work should start; others are **Stable**, mature and fully supported. This section explains, for each one, **what gets created in your CRM and how you configure it**, and the [Comparison Matrix]({{ site.baseurl }}/schedule/meeting-creation/technology-and-feature-matrix/) puts them side by side.
 
 {: .note }
-> **Terminology.** This product is now called **Schedule**, part of the &money suite alongside **Present**. It was previously called **Schedule** (and earlier *&schedule – Scheduler* or *scheduler*). Some documentation, URLs (`/schedule/…`), and in-product identifiers still use *Schedule*; all of these names refer to the same product.
+> **Terminology.** This product is now called **Schedule**, part of the &money suite alongside **Present**. It was previously called **BookMe** (and earlier *&bookme – Scheduler* or *scheduler*). Some documentation, URLs (`/schedule/…`), and in-product identifiers still use *BookMe*; all of these names refer to the same product.
 
 ---
 

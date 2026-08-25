@@ -27,7 +27,7 @@ If you are onboarding a brand-new tenant, the [Integration Onboarding Guide]({{ 
 
 | Page | When to read |
 |---|---|
-| [Salesforce Schedule Integration Setup]({{ site.baseurl }}/schedule/onboarding/salesforce-setup/) | First page for the Salesforce CRM integration. Covers the metadata model, Schedule-Salesforce repository setup, and field-mapping concepts |
+| [Salesforce Schedule Integration Setup]({{ site.baseurl }}/schedule/onboarding/salesforce-setup/) | First page for the Salesforce CRM integration. Covers the metadata model, `bookme-salesforce` repository setup, and field-mapping concepts |
 | [Salesforce Connection Setup]({{ site.baseurl }}/schedule/onboarding/salesforce-connection-setup/) | Walk-through for establishing the OAuth2 client-credentials connection between Schedule and your Salesforce org via the Management UI |
 | [CRM Integration Security]({{ site.baseurl }}/schedule/onboarding/crm-integration-security/) | Security model for Schedule-CRM data access — authentication, authorisation, and scoping |
 | [Implementation Guide]({{ site.baseurl }}/schedule/onboarding/implementation-guide/) | The full Schedule implementation lifecycle in five phases — pre-analysis, clarifications, adaptation, deployment, operations |

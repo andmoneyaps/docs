@@ -38,4 +38,4 @@ The customer is never asked for a title or description; the file uses the bank-c
 
 ## Generating an iCal from an integration
 
-If you need to produce the same `.ics` from your own integration rather than the portal UI, use the **Public API** (see [Schedule (Schedule) API → Generate iCal]({{ site.baseurl }}/api/schedule/#generate-ical-v2-only)). The endpoint reference (route, request, response) lives with the rest of the API there; this product page intentionally does not restate it.
+If you need to produce the same `.ics` from your own integration rather than the portal UI, use the **Public API** (see [Schedule API → Generate iCal]({{ site.baseurl }}/api/schedule/#generate-ical-v2-only)). The endpoint reference (route, request, response) lives with the rest of the API there; this product page intentionally does not restate it.

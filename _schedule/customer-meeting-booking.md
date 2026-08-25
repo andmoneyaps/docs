@@ -11,7 +11,7 @@ redirect_from:
 # Customer Meeting Booking
 {: .no_toc }
 
-How a customer books a meeting on a Schedule portal: they choose what the meeting is about, find a time, briefly hold a slot, and confirm it. This page describes that flow as a **feature**. For the API that drives it (endpoints, parameters, request/response shapes, authentication, and error codes), see the [Schedule (Schedule) Public API]({{ site.baseurl }}/api/schedule/).
+How a customer books a meeting on a Schedule portal: they choose what the meeting is about, find a time, briefly hold a slot, and confirm it. This page describes that flow as a **feature**. For the API that drives it (endpoints, parameters, request/response shapes, authentication, and error codes), see the [Schedule Public API]({{ site.baseurl }}/api/schedule/).
 
 ![Customer Meeting Booking Sequence Diagram]({{ site.baseurl }}/assets/images/schedule_customer_meeting_sequence_diagram.png)
 
@@ -35,7 +35,7 @@ Reserving a slot is a **temporary hold**, not the booking itself. It gives the c
 
 ## Booking via the Public API
 
-The whole flow above is available through the Public API, for integrators who build their own booking front end. The endpoints (fetch configuration, search availability, reserve a slot, create a meeting, generate an iCal), their parameters, request/response bodies, authentication, and error codes are documented in the **[Schedule (Schedule) Public API]({{ site.baseurl }}/api/schedule/)**, along with a shared Postman collection.
+The whole flow above is available through the Public API, for integrators who build their own booking front end. The endpoints (fetch configuration, search availability, reserve a slot, create a meeting, generate an iCal), their parameters, request/response bodies, authentication, and error codes are documented in the **[Schedule Public API]({{ site.baseurl }}/api/schedule/)**, along with a shared Postman collection.
 
 {: .note }
 > This page describes the *feature*; the [Public API reference]({{ site.baseurl }}/api/schedule/) is the source of truth for endpoints and payloads. Where the two disagree, the API reference wins.

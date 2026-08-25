@@ -7,7 +7,7 @@ nav_order: 2
 
 ### _Show as — choose how buffers appear in Outlook_
 
-- **Per-buffer setting**: Preparation, post-processing and travel-time buffers can each be shown as **Busy** or **Tentative** in the employee's Outlook calendar, set per meeting configuration in Management UI. Both still block customer bookings. See the [Meeting setup superuser guide]({{ site.baseurl }}/business-implementation/schedule/da/superbrugerguide-moedeopsaetning/).
+- **Per-buffer setting**: Preparation, post-processing and travel-time buffers can each be shown as **Busy** or **Tentative** in the employee's Outlook calendar, set per meeting configuration in Management UI. Both still block customer bookings. See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
 
 ## July 2026
 

@@ -3,6 +3,18 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## August 2026
+
+### _Show as for meeting buffers_
+
+- Preparation, post-processing and travel-time buffers can each be shown as **Busy**, **Tentative** or **Free** in Outlook. Only Free leaves the time bookable. See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
+
+## July 2026
+
+### _Internal meetings show their true availability_
+
+- Internal meetings that do not block the employee now show as free in Outlook, instead of busy.
+
 ## June 2026
 
 ### _Multilingual booking content (Public API V3)_

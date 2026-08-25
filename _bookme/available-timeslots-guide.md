@@ -2,21 +2,21 @@
 layout: default
 title: Understanding Available Timeslots
 nav_order: 15
-parent: BookMe
-collection: bookme
+parent: Schedule
+collection: Schedule
 ---
 
 # Understanding Available Timeslots
 
 ## What Are Available Timeslots?
 
-BookMe calculates which timeslots to show as available for a meeting based on a combination of factors: **who** is qualified to take the meeting, **when** they are free, **where** the meeting can happen, and **how** the meeting will be conducted. This guide explains each factor and how they interact.
+Schedule calculates which timeslots to show as available for a meeting based on a combination of factors: **who** is qualified to take the meeting, **when** they are free, **where** the meeting can happen, and **how** the meeting will be conducted. This guide explains each factor and how they interact.
 
 ---
 
 ## Meeting Types
 
-BookMe supports four meeting types. Each timeslot is tied to a specific type:
+Schedule supports four meeting types. Each timeslot is tied to a specific type:
 
 | Meeting Type | Description |
 |---|---|
@@ -34,7 +34,7 @@ Which meeting types are available in the booking flow depends on the **meeting c
 
 ## How Advisors Are Matched to a Booking Request
 
-Not every advisor in the organization will appear as available for every booking request. BookMe narrows down the pool using several criteria.
+Not every advisor in the organization will appear as available for every booking request. Schedule narrows down the pool using several criteria.
 
 ### 1. Skills
 
@@ -68,7 +68,7 @@ An advisor is considered **qualified** if they have either a direct skill match 
 
 ### 3. Location
 
-For bookings at a specific branch, BookMe looks for advisors who are **registered at that location** (via the organizational directory) or who have **workdays configured at that location**. Only advisors at the relevant branch are considered as local advisors.
+For bookings at a specific branch, Schedule looks for advisors who are **registered at that location** (via the organizational directory) or who have **workdays configured at that location**. Only advisors at the relevant branch are considered as local advisors.
 
 ### 4. Bookability Settings
 
@@ -81,7 +81,7 @@ Each advisor has schedule settings that control their availability:
 
 ## Local Advisors vs. Service Group Advisors
 
-BookMe draws from two pools of advisors when calculating available timeslots:
+Schedule draws from two pools of advisors when calculating available timeslots:
 
 ### Local Advisors
 
@@ -118,7 +118,7 @@ Service groups have a **service level** that defines:
 
 ### How They Work Together
 
-When both local and service group advisors are available for the same timeslot, BookMe uses a **priority system** to select the best advisor:
+When both local and service group advisors are available for the same timeslot, Schedule uses a **priority system** to select the best advisor:
 
 | Priority | Advisor Type | Description |
 |---|---|---|
@@ -159,12 +159,12 @@ Even when an advisor is qualified and has working hours configured, several fact
 
 - **Booked meetings** --- Confirmed BookMe meetings block the advisor for their duration.
 - **Reserved timeslots** --- Temporary holds (e.g., while a customer is completing a booking) also block availability.
-- **External calendar events** --- Busy events from the advisor's Outlook/Microsoft 365 calendar are respected. If an advisor has a "Busy" event from 10:00 to 11:00, no BookMe timeslots will be offered during that time.
+- **External calendar events** --- Busy events from the advisor's Outlook/Microsoft 365 calendar are respected. If an advisor has a "Busy" event from 10:00 to 11:00, no Schedule timeslots will be offered during that time.
 - **Non-blocking internal meetings** --- Some internal meetings are marked as non-blocking and do *not* prevent the advisor from being booked.
 
 ### Buffer Between Meetings
 
-BookMe adds a configurable **buffer** before and after each booked or reserved meeting. This gives advisors preparation and wrap-up time.
+Schedule adds a configurable **buffer** before and after each booked or reserved meeting. This gives advisors preparation and wrap-up time.
 
 **Example**: With a 15-minute buffer and a meeting booked at 10:00--10:30, the advisor is blocked from 09:45 to 10:45:
 
@@ -172,6 +172,16 @@ BookMe adds a configurable **buffer** before and after each booked or reserved m
 [15 min buffer] [-- 30 min meeting --] [15 min buffer]
      09:45             10:00-10:30           10:45
 ```
+
+The **preparation**, **post-processing** and **travel-time** buffers each have a **Show as** setting, which controls both how the buffer looks in the advisor's calendar and whether it blocks bookings. (*Time between meetings* is a separate setting and has no Show as option.)
+
+| Show as | Advisor's calendar | Blocks new bookings |
+|---|---|---|
+| Busy | Shown as busy | Yes |
+| Tentative | Shown as tentative | Yes |
+| Free | Shown as free | **No** |
+
+Set a buffer to **Free** when the advisor should see the time reserved but the buffer itself should not block bookings. Free removes only that buffer's blocking effect --- every other condition on this page still applies. Tentative looks softer in the calendar but blocks exactly like Busy. Buffers with no setting of their own count as Busy.
 
 ### Bank Closing Days
 
@@ -189,7 +199,7 @@ If an advisor is marked as **working from a different location** on a given day,
 
 ### Maximum Meeting Time Per Day
 
-BookMe can enforce a **daily cap** on how much meeting time an advisor handles. If an advisor's existing bookings for a day plus the requested meeting duration would exceed this limit, the entire day is blocked.
+Schedule can enforce a **daily cap** on how much meeting time an advisor handles. If an advisor's existing bookings for a day plus the requested meeting duration would exceed this limit, the entire day is blocked.
 
 The limit is resolved in order of specificity:
 1. **Advisor-level setting** --- Takes precedence if configured
@@ -211,7 +221,7 @@ This behavior is controlled by the location's configuration and can be overridde
 
 ## How Timeslots Are Generated
 
-Once BookMe determines each advisor's available windows (after applying all the factors above), it generates bookable timeslots.
+Once Schedule determines each advisor's available windows (after applying all the factors above), it generates bookable timeslots.
 
 ### 30-Minute Intervals
 
@@ -234,7 +244,7 @@ The customer selects one of these options.
 
 ### Best Advisor Selection
 
-By default, when multiple advisors are available at the same time for the same meeting type, BookMe selects **one advisor** per timeslot based on the priority system (Explicitly selected > Local > Service Group). If multiple advisors share the same priority level, one is chosen at random to distribute workload evenly.
+By default, when multiple advisors are available at the same time for the same meeting type, Schedule selects **one advisor** per timeslot based on the priority system (Explicitly selected > Local > Service Group). If multiple advisors share the same priority level, one is chosen at random to distribute workload evenly.
 
 This means the booking page shows clean, non-duplicated timeslots --- one option per time and meeting type --- rather than listing every available advisor.
 
@@ -242,7 +252,7 @@ This means the booking page shows clean, non-duplicated timeslots --- one option
 
 ## Multi-Advisor Meetings
 
-When a meeting requires **multiple specific advisors** to attend, BookMe finds timeslots where **all** of them are simultaneously free.
+When a meeting requires **multiple specific advisors** to attend, Schedule finds timeslots where **all** of them are simultaneously free.
 
 Each advisor's availability is calculated independently (using all the same rules described above), and then the results are **intersected** --- only the overlapping windows where every advisor is available are returned as bookable timeslots.
 
@@ -270,7 +280,7 @@ This is useful for scenarios like call centers or shared advisory pools where st
 
 ## Advisor Priority Rules
 
-When multiple advisors are available at the same time, BookMe uses a **priority rule configuration** to decide which advisor is assigned to the timeslot. Each organization has one active priority configuration with numbered levels (lower number = higher priority).
+When multiple advisors are available at the same time, Schedule uses a **priority rule configuration** to decide which advisor is assigned to the timeslot. Each organization has one active priority configuration with numbered levels (lower number = higher priority).
 
 ### Default Priority
 
@@ -319,7 +329,7 @@ A timeslot is shown to the customer when **all** of the following are true:
 4. The timeslot is **not on a bank closing day**
 5. Enough **working time buffer** has passed since now
 6. The advisor has **no conflicting meetings or calendar events** at that time
-7. The **buffer between meetings** does not overlap with the timeslot
+7. The **buffer between meetings** does not overlap with the timeslot (preparation, post-processing and travel-time buffers set to "Free" do not block)
 8. The advisor is **not working from a different location** (for physical meetings)
 9. The advisor has **not exceeded their daily meeting time limit**
 10. A **meeting room is available** (if required for physical meetings)

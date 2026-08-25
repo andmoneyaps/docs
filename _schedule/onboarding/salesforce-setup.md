@@ -16,27 +16,27 @@ Schedule-Salesforce integration enables seamless booking capabilities within you
 - Salesforce Developer/Admin account with appropriate permissions
 - [Salesforce CLI](https://developer.salesforce.com/tools/salesforcecli) installed
 - Git installed on your local machine
-- Access to the Schedule-Salesforce repository
+- Access to the BookMe-Salesforce repository
 
 ## Repository Setup
-You can clone the [Schedule-Salesforce repository](https://github.com/andmoneyaps/schedule-salesforce#) using any of the following methods:
+You can clone the [BookMe-Salesforce repository](https://github.com/andmoneyaps/bookme-salesforce#) using any of the following methods:
 
 ### Via GitHub Desktop
 ![Cloning using github desktop]({{ site.baseurl }}/assets/images/gh-desktop-clone.png)
 1. Open GitHub Desktop
 2. Go to File > Clone Repository
-3. Select the schedule-salesforce repository
+3. Select the bookme-salesforce repository
 4. Choose your local path
 5. Click Clone
 
 ### Via HTTPS
 ```bash
-git clone https://github.com/andmoneyaps/schedule-salesforce.git
+git clone https://github.com/andmoneyaps/bookme-salesforce.git
 ```
 
 ### Via SSH
 ```bash
-git clone git@github.com:andmoneyaps/schedule-salesforce.git
+git clone git@github.com:andmoneyaps/bookme-salesforce.git
 ```
 Note: Ensure you have configured your SSH keys in GitHub before using this method.
 

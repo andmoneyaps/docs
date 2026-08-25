@@ -133,7 +133,7 @@ parent: Implementation Guide
 # Detailed task description for Phase 2 – Clarifications & staging (technical clarifications)
 
 ## Salesforce Package Installation
-&schedule – Scheduler is a solution that is delivered via Salesforce AppExchange packages and can be easily installed.
+&bookme – Scheduler is a solution that is delivered via Salesforce AppExchange packages and can be easily installed.
 The &schedule - Scheduler package consists of a project package and a dependency on an internal &money package. Dependencies must currently be installed before the primary project package, according to AppExchange guidelines.
 Deployment is thus divided into 2 steps:
 1. Installation of the &money Component package
@@ -148,7 +148,7 @@ The creation of the integration user has the following requirements:
 
 Depending on the security setup in the environment, it may be required that &money's backend IP is whitelisted in the integration user's profile (See provided data sheet).
 ### Create auth. Provider
-Create an auth. provider for outgoing calls to &schedule – Scheduler backend.
+Create an auth. provider for outgoing calls to &bookme – Scheduler backend.
 
 | Field | Value |
 |------------------------|----------------------------|

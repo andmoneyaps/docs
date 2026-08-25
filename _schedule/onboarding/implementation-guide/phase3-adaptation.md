@@ -153,11 +153,11 @@ This phase covers the technical implementation and customization of &schedule Sc
 You will also find guidelines for data quality and data relationships that must be met to get the most out of the solution.
 
 ### &schedule Salesforce - Create your own configuration for sObject field mapping
-It is possible to override &schedule – Scheduler’s access to standard objects via a no-code solution that can be extended with custom apex for transformations.
+It is possible to override &bookme – Scheduler’s access to standard objects via a no-code solution that can be extended with custom apex for transformations.
 
 The no-code configuration is based on custom metadata types, so it can be easily migrated between systems and allows the creation of a configuration containing an activity object or an activity participant, as well as an Event. Each configuration of an sObject type is done by creating an AMB_SObject_Config_mdt record with the associated AMB_Config_field_Mapping__mdt.
 
-This defines where &schedule – Scheduler can read and write from, and whether the individual field should be read with or without field level security. Each AMB_SObject_config__mdt can be created with or without sharing enabled.
+This defines where &bookme – Scheduler can read and write from, and whether the individual field should be read with or without field level security. Each AMB_SObject_config__mdt can be created with or without sharing enabled.
 
 Recommendation - We currently recommend leaving sharing disabled as customers will not normally have CRUD access to the sales pipeline.
 
@@ -191,7 +191,7 @@ In order for the solution to be deployed, certain data requirements must be met.
 
 #### **User data requirements**
 - Advisor Email
-   The advisor's email field must match their AD email exposed via Azure SCIM to the &schedule – Scheduler backend
+   The advisor's email field must match their AD email exposed via Azure SCIM to the &bookme – Scheduler backend
 
 #### **Competence data requirements**
 - AMBAdvisorCompetence__c must contain a many-to-many mapping between AMB_Taxonomy__c objects and advisor User Id
@@ -231,7 +231,7 @@ You should not go in and change the default values ​​for booking custom labe
 
 ## Documentation for naive competency management
 
-As a starting point, &schedule – Scheduler uses the Andmoney__AMBAdvisorCompetence__c object to manage competencies for all employees in the solution.
+As a starting point, &bookme – Scheduler uses the Andmoney__AMBAdvisorCompetence__c object to manage competencies for all employees in the solution.
 However, the management can also be implemented programmatically by implementing a Competence provider, so that the solution no longer looks up the individual advisor's competencies in an object, but instead calculates them on-the-fly.
 Some customers today have a solution where, via the user's job title, they have a standard group of meeting topics and customer groups that they return instead of looking them up in our object.
 

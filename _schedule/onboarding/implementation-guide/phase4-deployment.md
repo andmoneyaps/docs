@@ -185,11 +185,11 @@ This phase covers the systematic deployment of &schedule Scheduler across the or
 
 # Deployment Guide
 
-In phase 4, the focus is on tasks that involve setting up and implementing Pilot Tests, as well as the final rollout of &schedule – Scheduler in the company.
+In phase 4, the focus is on tasks that involve setting up and implementing Pilot Tests, as well as the final rollout of &bookme – Scheduler in the company.
 
 ## Pilot
 
-You probably already have established pilot strategies in the area, which is why these should be used, as &schedule – Scheduler should be considered another new feature.
+You probably already have established pilot strategies in the area, which is why these should be used, as &bookme – Scheduler should be considered another new feature.
 
 However, for the Pilot test itself, we recommend that you select (as a minimum):
 - 2-3 departments (with premises) with good geographical spread

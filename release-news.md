@@ -5,17 +5,15 @@ nav_order: 2
 ---
 ## August 2026
 
-### _Show as — choose how buffers appear in Outlook_
+### _Show as for meeting buffers_
 
-- **Per-buffer setting**: Preparation, post-processing and travel-time buffers can each be shown as **Busy**, **Tentative** or **Free** in the employee's Outlook calendar, set per meeting configuration in Management UI.
-- **Free also frees the time**: Busy and Tentative buffers block customer bookings, as before. A buffer shown as Free does not block — the employee keeps the time visible in their own calendar while customers can still book it. The other availability rules still apply.
-- See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
+- Preparation, post-processing and travel-time buffers can each be shown as **Busy**, **Tentative** or **Free** in Outlook. Only Free leaves the time bookable. See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
 
 ## July 2026
 
-### _Meetings show their true availability in Outlook_
+### _Internal meetings show their true availability_
 
-- **Non-blocking internal meetings appear as Free**: internal meetings that do not prevent the employee from being booked now show as free in their Outlook calendar, instead of busy. Blocking internal meetings stay busy, and auto-created buffers show as tentative.
+- Internal meetings that do not block the employee now show as free in Outlook, instead of busy.
 
 ## June 2026
 

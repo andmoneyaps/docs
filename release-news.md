@@ -30,14 +30,14 @@ nav_order: 2
 
 ## March 2026
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.25 Release**: Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
 - **Version 1.24 Release**: Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
 
 ## February 2026
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.23 Release**: Fixed customer email not displaying when editing meetings in the advisor flow. The issue was specific to the managed package context where sObject field names include the namespace prefix.
 
@@ -55,7 +55,7 @@ nav_order: 2
 - **navigatetorecord event**: Emits Salesforce Event ID when a user clicks the "Åbn" button on a meeting card
 - **close event**: Notifies parent view when user returns to meeting overview, clearing session data
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
 
@@ -63,9 +63,9 @@ nav_order: 2
 
 - **Duration-Based Daily Meeting Time Limits**: Administrators can now configure maximum meeting time per advisor per day using duration-based limits instead of meeting counts. This feature provides:
   - **Configuration levels** (most specific wins):
-    - **Organization-wide default**: Set in Management UI under BookMe/Meeting Setup tab (applies to all advisors)
-    - **Service Group override**: Configure on Service Groups under the BookMe/Service Groups tab (applies to group members)
-    - **Advisor-specific override**: Set on advisor availability under the BookMe/Availaibility (Employees) tab (applies to individual advisor)
+    - **Organization-wide default**: Set in Management UI under Schedule/Meeting Setup tab (applies to all advisors)
+    - **Service Group override**: Configure on Service Groups under the Schedule/Service Groups tab (applies to group members)
+    - **Advisor-specific override**: Set on advisor availability under the Schedule/Availability (Employees) tab (applies to individual advisor)
   - **How it works**: System tracks total booked meeting duration per advisor per day. When an advisor reaches their limit, they are automatically excluded from available time slot searches
   - **Benefits**:
     - More accurate capacity management (30-minute and 2-hour meetings now count differently)
@@ -81,7 +81,7 @@ nav_order: 2
 
 ## August 2025
 
-### _BookMe Insights_
+### _Schedule Insights_
 
 - Enhanced meeting analytics documentation with comprehensive data analysis capabilities
 - Historic meetings integration for CRM analytics reporting
@@ -127,7 +127,7 @@ nav_order: 2
 
 ## June 2025
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.16 Release**: Fixed advisor search functionality in advisor flow
 - Enhanced advisor as meeting owner search capabilities
@@ -141,7 +141,7 @@ nav_order: 2
 - Removed validation rule restrictions allowing inactive templates to be reactivated
 - Improved template management flexibility
 
-### _BookMe Insights_
+### _Schedule Insights_
 
 - New technical flow documentation for insights generation
 - Enhanced meeting analytics with constraint pattern identification
@@ -183,7 +183,7 @@ nav_order: 2
 
 ## February 2025
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.15 Release**: Advisor flow redesigned with Salesforce standard components
 - External Client App integration for improved OAuth management

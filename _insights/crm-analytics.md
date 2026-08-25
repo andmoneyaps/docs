@@ -10,7 +10,7 @@ collection: insights
 
 ## Overview
 
-BookMe Insights integrates seamlessly with Salesforce CRM Analytics through an automated data pipeline. This integration enables real-time analytics, custom reporting, and comprehensive business intelligence capabilities.
+Schedule Insights integrates seamlessly with Salesforce CRM Analytics through an automated data pipeline. This integration enables real-time analytics, custom reporting, and comprehensive business intelligence capabilities.
 The CRM analytics integration is done using the External Data API from salesforce to push data to the organization.
 
 ## Integration Architecture
@@ -55,7 +55,7 @@ For detailed field descriptions and data structure information, see [Technical D
 #### Data Processing and Upload
 
 **Data Collection Process**
-- Historic meeting data is automatically ingested from your BookMe system on a nightly basis
+- Historic meeting data is automatically ingested from your Schedule system on a nightly basis
 - The system processes all completed meetings and updates existing records when modifications occur
 - Data is collected for organizations with the Insights feature enabled
 
@@ -66,7 +66,7 @@ For detailed field descriptions and data structure information, see [Technical D
 - Upload process includes automatic retry mechanisms for reliability
 
 **Data Scope and Retention**
-- Includes all completed meetings from your BookMe system
+- Includes all completed meetings from your Schedule system
 - Historical data is preserved and continuously updated
 - New meetings are added during each nightly processing cycle
 - Modified meetings are updated to reflect the latest information

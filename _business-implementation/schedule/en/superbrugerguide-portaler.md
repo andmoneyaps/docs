@@ -34,10 +34,10 @@ A **portal** is the page where your customers book meetings themselves. As a sup
 - Audience: super-user/administrator (role **Configurator** or **Admin**).
 - The following have been created in advance: **customer types**, **meeting topics**, **locations**, **meeting configuration**, **employees** (with availability) and possibly **service groups** — together they determine which times the portal can show.
 - If you use **CRM configuration (standard)**, a **CRM Configuration** must have been created (Step 1).
-- The managed BookMe package is installed. If a prerequisite is missing, it is created elsewhere in Schedule — contact your administrator if you do not have access.
+- The managed Schedule package is installed. If a prerequisite is missing, it is created elsewhere in Schedule — contact your administrator if you do not have access.
 
 {: .note }
-> **Note:** The brand name is **Schedule**; in the system/menu you may still encounter the earlier name (bookme). It is the same product.
+> **Note:** The brand name is **Schedule**; in the system/menu you may still encounter the earlier name (schedule). It is the same product.
 
 {: .note }
 > **Note:** Going forward, portals send booking data to the CRM via a **Playbook**. The old model **CRM configuration (standard)** is being phased out and is used by only a few customers during a transition period.

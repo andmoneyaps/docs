@@ -33,10 +33,10 @@ A **service group** is a pool of employees who can serve customers across branch
 - Audience: super-user/administrator who sets up Schedule.
 - Roles: **Service groups** require the **Manager** or **Admin** role; **competence groups** and **operating level** can be accessed by **Configurator** or **Admin**.
 - The following have been created in advance: **customer types**, **locations**, **meeting topics** and **employees** (with availability). **Competence groups** are recommended. If any of these are missing, they are created elsewhere in Schedule — contact your administrator if you don't have access.
-- The Managed BookMe package is installed (full functionality).
+- The Managed Schedule package is installed (full functionality).
 
 {: .note }
-> **Note:** The brand name is **Schedule**; within the system/menu itself you may still encounter the former name (bookme). It is the same product.
+> **Note:** The brand name is **Schedule**; within the system/menu itself you may still encounter the former name (schedule). It is the same product.
 
 
 ## What you get out of it

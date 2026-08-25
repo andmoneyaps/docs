@@ -8,7 +8,7 @@ grand_parent: Foundation
 # Enable-SCIM-Provisioning.ps1
 ```PowerShell
 param (
-  [string] $ApplicationName, # The name of the application to create. Choose a name that are easily distinguishable from other applications (Default: BookMe - SCIM integration)
+  [string] $ApplicationName = "Schedule - SCIM integration", # The name of the application to create. Choose a name that are easily distinguishable from other applications (Default: Schedule - SCIM integration)
   [string] $TenantId, # The tenant ID to use - this should be the bank's tenant ID (required)
   [string] $Environment, # The environment to use (dev, test, prod, Default: Test)
   [string] $ScimToken # The SCIM token from &money. This is a secret token that is used to authenticate the SCIM requests and is specific to the TenantId (required)
@@ -160,7 +160,7 @@ function Add-ScimServicePrincipal {
 
 function Enable-SCIM-Provisioning {
   param (
-    [string] $ApplicationName = "BookMe - SCIM integration",
+    [string] $ApplicationName = "Schedule - SCIM integration",
     [string] $Environment = "Test",
     [string] $TenantId,
     [string] $ScimToken

@@ -37,7 +37,7 @@ On **Employees** you manage the individual employee's **availability**: whether 
 - If an employee is missing from the list, it is typically a sync issue — contact your administrator.
 
 {: .note }
-> **Note:** The brand name is **Schedule**; in the system/menu you may still encounter the earlier name (bookme). It is the same product.
+> **Note:** The brand name is **Schedule**; in the system/menu you may still encounter the earlier name (schedule). It is the same product.
 
 
 ## What you get out of it

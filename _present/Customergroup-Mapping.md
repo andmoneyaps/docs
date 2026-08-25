@@ -12,10 +12,10 @@ permalink: /present/customergroup-mapping/
 Present can work with different types of customer types, and it is possible to create a custom mapping for customer types.
 The Present LWC lives on an Event record page, and the Event record ID can then be used to query the related Account.
 
-This is mostly useful if the &bookme Scheduler package is also installed in the org,
+This is mostly useful if the &schedule Scheduler package is also installed in the org,
 as this package introduces a customer-type concept and adds a customer category field to each account.
 
-> Present will make use of the customer types defined in the &bookme Scheduler package for master template uploads,
+> Present will make use of the customer types defined in the &schedule Scheduler package for master template uploads,
 so the customer type mapping should look up the user's customer category and pass that to the present LWC.
 
 Below is an example of how an implementation could look for custom customer types.
@@ -148,7 +148,7 @@ public with sharing class PresentCustomerTypeController {
 }
 ```
 This implementation of `getCustomerTypeFromEvent` takes an `eventId` and looks up the related account.
-If this account has the &bookme Scheduler customer category field, the value of that field is returned as the customer's type.
+If this account has the &schedule Scheduler customer category field, the value of that field is returned as the customer's type.
 
 If the field doesn't exist, the default `PRIVATE` customer type is returned.
 

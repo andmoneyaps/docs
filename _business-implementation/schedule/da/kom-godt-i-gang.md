@@ -79,7 +79,7 @@ Sæt tingene op i denne rækkefølge — hver del bygger på den forrige:
 
 ## Forudsætninger (teknik)
 
-- Managed **BookMe**-pakke installeret.
+- Managed **Schedule**-pakke installeret.
 - **Entra**-roller tildelt; medarbejdere synkroniseret (Entra), lokationer/lokaler (SCIM/M365).
 - **M365-kalender** forbundet (optagede tider blokerer).
 - **CRM-forbindelse** (til portaler/Playbooks).
@@ -88,7 +88,7 @@ Sæt tingene op i denne rækkefølge — hver del bygger på den forrige:
 ## Kort om de tekniske ord
 
 ### Ordliste
-- **BookMe**: Det tekniske navn for Schedule (i koden/menuer kan du møde ‘bookme’).
+- **Schedule**: Det tekniske navn for Schedule (i koden/menuer kan du møde ‘schedule’).
 - **Entra**: Microsoft Entra (tidl. Azure AD) — hvorfra medarbejdere og roller synkroniseres.
 - **SCIM / M365**: Synkronisering af lokationer/lokaler og medarbejder-kalendere fra Microsoft 365.
 - **Playbook**: Et automatisk flow, der sender en portal-bookings data til CRM.

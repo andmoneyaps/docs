@@ -44,7 +44,7 @@ Assist follows a simple three-phase workflow:
 Before configuring Assist in your CRM (Salesforce or Microsoft), ensure you have:
 
 - Administrator access to your Salesforce and Microsoft organizations
-- The &money Portal component deployed to Salesforce (see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/))
+- The &money Portal component deployed to Salesforce (see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/schedule/salesforce-iframe-lwc-deployment/))
 - Access to the Assist environment URLs (provided by &money)
 
 ## Browser Requirements

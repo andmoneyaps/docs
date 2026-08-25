@@ -10,8 +10,8 @@ Welcome to the official AndMoney documentation portal. This comprehensive resour
 
 ## Our Products
 
-### BookMe
-BookMe is our industry-leading booking and scheduling solution specifically designed for the financial sector. It provides:
+### Schedule
+Schedule is our industry-leading booking and scheduling solution specifically designed for the financial sector. It provides:
 - Seamless Microsoft 365 calendar integration
 - Advanced CRM system connectivity
 - Automated scheduling and booking management

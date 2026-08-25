@@ -29,7 +29,7 @@ _Forbindelsen til jeres CRM · hvad du reelt ser · konsekvensen af ændringer �
 |---|---|---|
 | Domænenavn / Miljø-URL | &money / servicedesk | Høj — forkert = ingen CRM-data. |
 | Test forbindelse / Test CRM | Du | Ingen — read-only test. |
-| Opret (provisionér BookMe) | Du / jeres driftspartner | Lav — idempotent, kan trygt gentages. |
+| Opret (provisionér Schedule) | Du / jeres driftspartner | Lav — idempotent, kan trygt gentages. |
 | Skub (kundetyper/mødeemner) | Du / jeres driftspartner | Lav–middel — synkroniserer konfiguration. |
 | Skub EngageMe-komponenter (deploy) | jeres driftspartner / &money | Høj — OVERSKRIVER Salesforce-komponenten. |
 | Grænser | Du (overvåg) | — læs/overvåg forbrug. |
@@ -41,7 +41,7 @@ _Forbindelsen til jeres CRM · hvad du reelt ser · konsekvensen af ændringer �
 
 **CRM Konfiguration**
 
-**Hvad du reelt ser:** feltet **Domænenavn** (Salesforce: **https://___.my.salesforce.com**) eller **Miljø-URL** (Dynamics); **Test forbindelse**; **Opret** (provisionér BookMe-forbindelsen); evt. **Test Present forbindelse**; **&money EngageMe-komponenter** med knappen **Skub** (+ en note: ‘Skubning overskriver den samme Salesforce-komponent’); **Skub** af kundetyper/mødeemner; og **Test CRM**.
+**Hvad du reelt ser:** feltet **Domænenavn** (Salesforce: **https://___.my.salesforce.com**) eller **Miljø-URL** (Dynamics); **Test forbindelse**; **Opret** (provisionér Schedule-forbindelsen); evt. **Test Present forbindelse**; **&money EngageMe-komponenter** med knappen **Skub** (+ en note: ‘Skubning overskriver den samme Salesforce-komponent’); **Skub** af kundetyper/mødeemner; og **Test CRM**.
 
 - **Opret** er **idempotent** (en ‘upsert’) — den kan trygt køres igen uden at ødelægge noget; den opretter/opdaterer blot forbindelsen.
 - **Skub EngageMe-komponenter** (deploy) er derimod **indgribende**: den **overskriver** den eksisterende komponent i Salesforce. Bekræft **komponenttype** (Standard vs. Selvstændig) før du skubber.

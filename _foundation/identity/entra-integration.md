@@ -10,11 +10,11 @@ grand_parent: Foundation
 
 ## Overview
 
-BookMe integrates with Microsoft Entra ID (formerly Azure AD) to provide secure authentication and authorization. This document outlines the key components and configurations of this integration.
+Schedule integrates with Microsoft Entra ID (formerly Azure AD) to provide secure authentication and authorization. This document outlines the key components and configurations of this integration.
 
 ## App Registrations
 
-BookMe uses multiple app registrations to handle different aspects of the platform:
+Schedule uses multiple app registrations to handle different aspects of the platform:
 
 ### Multi-Tenant App Registrations
 
@@ -37,9 +37,9 @@ These app registrations are designed to work across different customer tenants:
 
 ### Single-Tenant App Registrations
 
-These app registrations exist within the BookMe tenant:
+These app registrations exist within the Schedule tenant:
 
-#### BookMe API System Integration
+#### Schedule API System Integration
 - Exposes API permission scopes
 - Includes System app role
 - Used for system-level integrations
@@ -55,7 +55,7 @@ For each bank customer:
 
 ### Multi-Tenant Applications
 - Tokens include the customer's Entra Tenant as issuer (iss claim)
-- Requires mapping between Entra Tenant ID and BookMe BankId in the organization database
+- Requires mapping between Entra Tenant ID and Schedule BankId in the organization database
 - Supports multiple BankId mappings per tenant
   - Users can select their active bank context in the Management UI
 

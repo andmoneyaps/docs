@@ -14,7 +14,7 @@ collection: general
 |---|---|
 | Document name | M365 Integration Audit Guide |
 | Audience | Customer IT administrators, security assessors, compliance officers |
-| Scope | Microsoft Graph API access by &money products (BookMe, Meet) |
+| Scope | Microsoft Graph API access by &money products (Schedule, Meet) |
 | Last updated | 2026-04-15 |
 | Owner | &money |
 

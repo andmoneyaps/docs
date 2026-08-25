@@ -73,7 +73,7 @@ Oversigt over, hvornår de vigtigste indstillinger er i spil (Ja = gælder, Nej 
 
 - Målgruppe: superbruger/administrator (rolle **Configurator** eller **Admin**; **Manager** kan nogle dele).
 - Lokationer/lokaler synkroniseres fra **SCIM**/M365; medarbejdere fra Entra.
-- Managed BookMe-pakke er installeret.
+- Managed Schedule-pakke er installeret.
 
 
 ## Opsætningsrækkefølge (og hvad der arver fra hvad)

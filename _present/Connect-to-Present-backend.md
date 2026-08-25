@@ -34,7 +34,7 @@ Setting up authentication to the Backend:
 
 4. Go to Named Credentials in Setup
 5. Create a new (Legacy) Named Credential
-6. Name it `bookme_present`
+6. Name it `schedule_present`
 7. Set the URL to the URL received from us.
 8. Set `Identity Type` as `Named Principal`
 9. Set `Authentication Protocol` as `OAuth 2.0`
@@ -76,14 +76,14 @@ To allow the Backend to upload the created slide decks etc. The backend needs ac
 A new simplified setup for present has been implemented, making it possible to set up automatic connection between a Salesforce org through the Management UI.
 
 First, connection from our backend to Salesforce must be configured, as that allows automated provisioning of connection from the org to the backend.
-If the respective bank that is being configured is on BookMe package version 1.14 or above, a new External Client App is included, which replaces the Connect App setup.
+If the respective bank that is being configured is on Schedule package version 1.14 or above, a new External Client App is included, which replaces the Connect App setup.
 
 Navigate to the External Client App Manager in the salesforce setup menu.
-Find the App named `BookMe External Client App`, click edit policies, find the OAuth Policies section, Click `Enable Client Credentials Flow` and add a user that can be used for integration.
+Find the App named `Schedule External Client App`, click edit policies, find the OAuth Policies section, Click `Enable Client Credentials Flow` and add a user that can be used for integration.
 
 ![External Client App]({{ site.baseurl }}/assets/images/external-client-app.png)
 
-When this is done, go to the BookMe Management UI, and navigate to the **Admin --> CRM --> CRM Configuration tab within the Management UI**.
+When this is done, go to the Schedule Management UI, and navigate to the **Admin --> CRM --> CRM Configuration tab within the Management UI**.
 Here, the domain name of the salesforce org must be entered. Click save, and then test the connection, by clicking the `Test` button on the **Test CRM Connection** card.
 
 ![CRM Configuration]({{ site.baseurl }}/assets/images/mgmt-ui-crm-configuration.png)

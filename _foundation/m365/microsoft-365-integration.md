@@ -8,7 +8,7 @@ grand_parent: Foundation
 
 # Setting up the integration between &money and Microsoft 365
 
-BookMe integrates natively with your Organizations Microsoft 365 account. This ensures that your BookMe users, resources and calendars are always in sync with your Microsoft 365 account.
+Schedule integrates natively with your Organizations Microsoft 365 account. This ensures that your Schedule users, resources and calendars are always in sync with your Microsoft 365 account.
 
 ## Introduction
 

@@ -147,7 +147,7 @@ Deleting a goal removes it from all meetings going forward and clears any exclus
 
 ## Orphaned Goals
 
-A Meeting Goal becomes orphaned when its owning topic is deleted from the [Meeting Taxonomy]({{ site.baseurl }}/bookme/). Orphaned goals are not surfaced to advisors and are not evaluated by the AI.
+A Meeting Goal becomes orphaned when its owning topic is deleted from the [Meeting Taxonomy]({{ site.baseurl }}/schedule/). Orphaned goals are not surfaced to advisors and are not evaluated by the AI.
 
 To resolve orphaned goals:
 

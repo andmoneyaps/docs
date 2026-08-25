@@ -58,7 +58,7 @@ graph LR
 
 ### Integration points
 
-Each surface is labelled **Foundation** if it is platform-wide (configured once per tenant, reused across all Engage products), or **BookMe / Meet / Present** if it is product-specific.
+Each surface is labelled **Foundation** if it is platform-wide (configured once per tenant, reused across all Engage products), or **Schedule / Meet / Present** if it is product-specific.
 
 | # | Scope | Surface | Direction | Customer-side responsibility | Purpose | Section |
 |---|---|---|---|---|---|---|
@@ -68,7 +68,7 @@ Each surface is labelled **Foundation** if it is platform-wide (configured once 
 | 2c | **Foundation** (Identity) | **MitID — Customer Portal** | Inbound — your MitID broker → Engage Public API (Engage consumes the broker's OpenID Connect configuration) | MitID / customer portal | Authenticate individual Danish citizens signing into the Customer Portal. Engage does not participate in your MitID broker contract; it consumes the discovery and authorization-code flow only. (Danish-market customers only.) | 2c |
 | 3 | **Foundation** (SCIM) | **Directory data — SCIM provisioning** | Inbound — your Entra tenant → Engage Public API, on a ~40-minute cycle | Azure / Entra admin | Continuously synchronise employee and meeting-room records from your directory into Engage. Engage always reflects the current state of your directory — joiners, movers, leavers, room additions — without manual reconciliation. | 3 |
 | 4 | **Foundation** (Public API) | **Engage Public API** | Inbound — your bespoke systems → Engage Public API, over REST. Two OAuth2 flows supported: client credentials (token issued by Engage's external Entra tenant — the System Integration app registration lives there, not in your tenant) and authorization code (user-delegated via your Entra tenant against the Mgmt API app's `access_as_user` scope). | Public API consumer | Programmatic access for any system on your side that needs to read or write Engage-managed records — custom dashboards, integrations with your internal business or CRM systems, data extracts, and bespoke automation. | 4 |
-| 5 | **BookMe** (CRM) | **Dynamics 365 (Dataverse Web API)** | Outbound — Engage Integration layer → your Dataverse environment. OAuth tokens acquired from your Entra tenant (client credentials for system flows; OBO for user-attributed flows). | Dynamics 365 admin | Read your customer, contact, and employee records as the system of record, and (where in scope) create/update appointment and annotation records reflecting meeting activity. Operated through your declared Entity Patterns, so the platform reads/writes only the Dataverse columns you have mapped. | 5 |
+| 5 | **Schedule** (CRM) | **Dynamics 365 (Dataverse Web API)** | Outbound — Engage Integration layer → your Dataverse environment. OAuth tokens acquired from your Entra tenant (client credentials for system flows; OBO for user-attributed flows). | Dynamics 365 admin | Read your customer, contact, and employee records as the system of record, and (where in scope) create/update appointment and annotation records reflecting meeting activity. Operated through your declared Entity Patterns, so the platform reads/writes only the Dataverse columns you have mapped. | 5 |
 
 ## Roles and responsibilities
 
@@ -85,7 +85,7 @@ If your CRM is Salesforce rather than Dynamics 365, refer to the existing Engage
 
 ## Conventions
 
-- "The Engage platform" refers to the &Money customer-engagement platform suite (BookMe scheduling, Present, Insights, and supporting services).
+- "The Engage platform" refers to the &Money customer-engagement platform suite (Schedule scheduling, Present, Insights, and supporting services).
 - "Engage platform team" refers to the &Money-side technical contacts who deliver and operate the platform on your behalf.
 - "You" / "your tenant" / "the customer" refers to the integrating entity being onboarded to the Engage platform. Where the Entra or Azure technical concept of a tenant is meant, it is explicitly called an "Entra tenant" or "Azure tenant".
 - "Employee" refers to a user from the integrating tenant's directory (typically what other systems may call an advisor, agent, or staff user).
@@ -517,7 +517,7 @@ See [SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioni
 
 ### Architecture overview and reasoning
 
-The Engage Public API is a RESTful API exposing scheduling (BookMe), presentation generation (Present), and organisation configuration endpoints. It is suitable for any system on your side that needs to read or write Engage-managed records programmatically — custom dashboards, integrations with your internal business or CRM systems, data extracts, and bespoke automation.
+The Engage Public API is a RESTful API exposing scheduling (Schedule), presentation generation (Present), and organisation configuration endpoints. It is suitable for any system on your side that needs to read or write Engage-managed records programmatically — custom dashboards, integrations with your internal business or CRM systems, data extracts, and bespoke automation.
 
 Calls are authenticated using **OAuth2 bearer tokens issued by Microsoft Entra ID**. Tokens are validated by Engage at the API layer; tenant scoping is enforced from the token's claims (issuer for user-delegated flow, authorised party for client-credentials flow).
 
@@ -548,9 +548,9 @@ Versions are pinned in the base URL. When Engage publishes a future major versio
 
 | API area | Examples |
 |---|---|
-| BookMe — meetings | `GET/POST/PATCH/DELETE /bookme/meetings`, `POST /bookme/meetings/{id}/ical` |
-| BookMe — time slots | `GET /bookme/time-slots`, `GET /bookme/time-slots/available`, `POST /bookme/time-slots/reserve` |
-| BookMe — supporting data | `GET /bookme/meeting-topics`, `GET /bookme/room-vacancies` |
+| Schedule — meetings | `GET/POST/PATCH/DELETE /bookme/meetings`, `POST /bookme/meetings/{id}/ical` |
+| Schedule — time slots | `GET /bookme/time-slots`, `GET /bookme/time-slots/available`, `POST /bookme/time-slots/reserve` |
+| Schedule — supporting data | `GET /bookme/meeting-topics`, `GET /bookme/room-vacancies` |
 | Organisation configuration | `GET/POST/PUT/DELETE /config/customer-types`, `GET /config/employees`, `GET /config/rooms` |
 | Labels | Label Registry: `GET/POST/PUT/DELETE /labels`; label filtering on Employees, Rooms, Templates |
 | Competence Groups, Service Groups, Portals | CRUD endpoints under `/config` |
@@ -631,7 +631,7 @@ For a user-facing application calling the Public API on behalf of a signed-in us
 
 ## 5. Dynamics 365 CRM Integration
 
-**Scope:** BookMe (CRM integration) · **Customer-side responsibility:** Dynamics 365 administration
+**Scope:** Schedule (CRM integration) · **Customer-side responsibility:** Dynamics 365 administration
 
 > If your CRM is Salesforce rather than Dynamics 365, refer to the existing Engage platform customer-facing Salesforce setup documentation instead of this section.
 
@@ -652,7 +652,7 @@ The reasoning for this architecture:
 
 Together they replace what other CRM integrations would solve with a vendor-shipped managed solution. The same model already powers the Salesforce integration; the abstraction is what makes Dynamics integration possible without schema impositions.
 
-> For the full conceptual model, see [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/).
+> For the full conceptual model, see [Entities and Entity Patterns]({{ site.baseurl }}/schedule/entities-and-entity-patterns/).
 
 **Playbooks** are the workflow layer on top. Each platform scenario — booking a meeting, recording attendance, syncing employee data — is implemented as a playbook composed of blocks that read, create, and update through Entity Patterns. By the time your tenant onboards, every CRM-touching scenario on the Engage platform runs through this configurable layer; there is no hand-coded Dynamics path in the adapter.
 
@@ -700,7 +700,7 @@ The Engage platform's backend runs in Engage-controlled Azure regions. The Datav
 
 #### Authoring playbooks vs. maintaining mappings
 
-Authoring playbooks is typically not part of your Dynamics administration scope — they are built and maintained by the Engage platform team. The responsibility on your side is to keep the Entity Definitions accurate as the Dataverse schema evolves: if a Dataverse column is renamed or deprecated, you update the Entity Definition and the playbooks that reference it continue to work without change. For background on the playbook model, see [Introduction to Playbooks]({{ site.baseurl }}/bookme/playbooks/introduction-to-playbooks/).
+Authoring playbooks is typically not part of your Dynamics administration scope — they are built and maintained by the Engage platform team. The responsibility on your side is to keep the Entity Definitions accurate as the Dataverse schema evolves: if a Dataverse column is renamed or deprecated, you update the Entity Definition and the playbooks that reference it continue to work without change. For background on the playbook model, see [Introduction to Playbooks]({{ site.baseurl }}/schedule/playbooks/introduction-to-playbooks/).
 
 ### Deployment prerequisites
 

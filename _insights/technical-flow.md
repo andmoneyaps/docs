@@ -6,7 +6,7 @@ parent: Insights
 collection: insights
 ---
 
-# BookMe Insights Technical Documentation
+# Schedule Insights Technical Documentation
 
 ## Process Overview
 

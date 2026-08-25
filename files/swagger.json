@@ -1,16 +1,205 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
-    "title": "&bookme present API - Production endpoints",
-    "description": "SalesForce API endpoints for creating powerpoints from templates",
+    "title": "&bookme present API",
+    "description": "API endpoints for creating PowerPoint decks from templates, and for configuring tag mappings.",
     "version": "v1"
   },
   "paths": {
-    "/Slides/Generate": {
+    "/Content/{contentRef}": {
+      "get": {
+        "tags": [
+          "Content"
+        ],
+        "summary": "Downloads the content behind contentRef as a .pptx attachment. Auth-gated\n(TenancyMiddleware rejects unauthenticated callers → 401) and org-scoped: a contentRef belonging\nto another organization is denied by contentStore isolation and surfaced as 404 (no existence\nleak).",
+        "operationId": "GetContent",
+        "parameters": [
+          {
+            "name": "contentRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Content"
+        ],
+        "summary": "Deletes a standalone (CRM-free) saved deck: crypto-erases the durable\ncontentStore object behind contentRef AND removes its\nBookmePresent.Database.Models.SavedPresentation row. Org-scoped: the erase and the row lookup both\nuse the caller's `GetBlobTenantId()` — the SAME org the deck was saved under — so a\ncontentRef owned by another bank is neither erased nor removed and surfaces as 404 (no existence\nleak). Idempotent at the contentStore layer. Only the standalone deck store is touched; the frozen\nCRM ContentVersion delete path is untouched.",
+        "operationId": "DeleteContent",
+        "parameters": [
+          {
+            "name": "contentRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Slides": {
       "post": {
         "tags": [
           "Slides"
         ],
+        "operationId": "CreatePowerpoint",
         "requestBody": {
           "content": {
             "application/json": {
@@ -32,7 +221,139 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Slides/Generate": {
+      "post": {
+        "tags": [
+          "Slides"
+        ],
+        "operationId": "GeneratePowerpoint",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Powerpoint"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Powerpoint"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Powerpoint"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
@@ -112,7 +433,177 @@
             }
           },
           "500": {
-            "description": "Server Error",
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Slides/Save": {
+      "post": {
+        "tags": [
+          "Slides"
+        ],
+        "summary": "Standalone (CRM-free) analogue of `Slides/Generate`. Renders the deck with\nthe SAME render core, stages it into contentStore with Durable retention under the SAME org the\nrender/download legs use for this tenant (blobTenantId), persists a bank-scoped\nBookmePresent.Database.Models.SavedPresentation row, and returns the stable `contentRef`. Reopen the deck via\n`GET /content/{contentRef}`. The frozen Slides/Generate path is left untouched.",
+        "operationId": "SavePowerpoint",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Powerpoint"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Powerpoint"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Powerpoint"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePowerpointResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePowerpointResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePowerpointResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
             "content": {
               "text/plain": {
                 "schema": {
@@ -139,6 +630,7 @@
         "tags": [
           "Slides"
         ],
+        "operationId": "ConvertToPdf",
         "requestBody": {
           "content": {
             "application/json": {
@@ -160,7 +652,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
@@ -240,7 +732,1399 @@
             }
           },
           "500": {
-            "description": "Server Error",
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Slides/FileConvertToPdf": {
+      "post": {
+        "tags": [
+          "Slides"
+        ],
+        "operationId": "FileConvertToPdf",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Tags": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Get every tag mapping for the current bank, one entry per mapping.",
+        "operationId": "GetTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresentTagDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresentTagDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresentTagDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "x-policy": [
+          "Configurator"
+        ]
+      },
+      "post": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Create a tag mapping. An empty field is valid and means the tag is not mapped yet.",
+        "operationId": "CreateTag",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagMappingDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagMappingDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagMappingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "x-policy": [
+          "Configurator"
+        ]
+      }
+    },
+    "/Tags/all": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Get every tag available for mapping, for the tag picker.",
+        "operationId": "GetAllTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetAllTagsResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetAllTagsResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetAllTagsResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "x-policy": [
+          "Configurator"
+        ]
+      }
+    },
+    "/Tags/{id}": {
+      "put": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Update the tag mapping identified by id — the mapping id, not the tag id.",
+        "operationId": "UpdateTag",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagMappingDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagMappingDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagMappingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "x-policy": [
+          "Configurator"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Delete the tag mapping identified by id. Leaves the tag itself alone.",
+        "operationId": "DeleteTag",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "x-policy": [
+          "Configurator"
+        ]
+      }
+    },
+    "/Tags/recompile": {
+      "post": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "Rebuilds this bank's Present entity pattern from its stored mappings, and reports what the\ncompile produced.\n            \nSet dropUndescribable only when an object the pattern reads is known to be\ngone from the CRM. A compile otherwise refuses in that case, because the CRM answers the same\nway when it is merely unwell, and dropping the tags of a live object blanks them on every\ndeck. The response names every tag that was dropped.",
+        "operationId": "Recompile",
+        "parameters": [
+          {
+            "name": "dropUndescribable",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentCompileSummary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentCompileSummary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentCompileSummary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "x-policy": [
+          "Configurator"
+        ]
+      }
+    },
+    "/TemplateManagement": {
+      "get": {
+        "tags": [
+          "TemplateManagement"
+        ],
+        "summary": "Get all templates for the current bank, optionally filtered by labels.",
+        "operationId": "GetAllTemplates",
+        "parameters": [
+          {
+            "name": "labels",
+            "in": "query",
+            "description": "Optional list of label names to filter by. Only templates that have all specified labels will be returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresentTemplateDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresentTemplateDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresentTemplateDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/TemplateManagement/{id}": {
+      "get": {
+        "tags": [
+          "TemplateManagement"
+        ],
+        "summary": "Get a single template by ID with full details including sections and slides.",
+        "operationId": "GetTemplate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentTemplateDetailsDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentTemplateDetailsDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentTemplateDetailsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/TemplateManagement/{id}/labels": {
+      "patch": {
+        "tags": [
+          "TemplateManagement"
+        ],
+        "summary": "Update the labels on a template.",
+        "operationId": "UpdateTemplateLabels",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The template ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The labels to set on the template",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTemplateLabelsInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTemplateLabelsInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTemplateLabelsInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentTemplateDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentTemplateDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentTemplateDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Templates": {
+      "get": {
+        "tags": [
+          "Templates"
+        ],
+        "summary": "Get all available templates.\nWhen labels are provided, only templates matching ALL specified labels are returned.\nTemplates are enriched with their labels when organizationId is available.",
+        "operationId": "GetAvailableTemplates",
+        "parameters": [
+          {
+            "name": "labels",
+            "in": "query",
+            "description": "Optional list of label names to filter by. Only templates that have all specified labels will be returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SlideTemplate"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SlideTemplate"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SlideTemplate"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "DeleteTemplate",
+        "parameters": [
+          {
+            "name": "templateId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Templates/{templateId}": {
+      "get": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "GetTemplate",
+        "parameters": [
+          {
+            "name": "templateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SlideTemplateDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SlideTemplateDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SlideTemplateDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {
               "text/plain": {
                 "schema": {
@@ -267,6 +2151,8 @@
         "tags": [
           "Templates"
         ],
+        "summary": "Creates a template in blob storage from a file input.\nThis assumes that the files Isn't already created in CRM, so this will also upload and create entities in CRM.\nThis endpoint is the entry point used by the MGMT UI to upload templates",
+        "operationId": "UploadTemplate",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -301,7 +2187,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
@@ -316,6 +2202,26 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SlideTemplateDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -361,7 +2267,7 @@
             }
           },
           "500": {
-            "description": "Server Error",
+            "description": "Internal Server Error",
             "content": {
               "text/plain": {
                 "schema": {
@@ -388,7 +2294,10 @@
         "tags": [
           "Templates"
         ],
+        "summary": "Uploads a template to blob storage, where the content already exists in CRM\nThis endpoint is the entry point used by the salesforce package",
+        "operationId": "UploadTemplateFromContentId",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -409,7 +2318,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
@@ -469,7 +2378,388 @@
             }
           },
           "500": {
-            "description": "Server Error",
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Templates/Validate": {
+      "post": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "ValidateTemplate",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Category": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Category": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationResult"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationResult"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationResult"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Templates/ValidateTranslatable": {
+      "post": {
+        "tags": [
+          "Templates"
+        ],
+        "summary": "Validates a template and returns translatable results with status codes and interpolation parameters.\nUse this endpoint when you need to display validation messages in the user's language.",
+        "operationId": "ValidateTemplateTranslatable",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Category": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Category": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TranslatableValidationResult"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TranslatableValidationResult"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TranslatableValidationResult"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Templates/ValidateFromUrl": {
+      "post": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "ValidateTemplateFromUrl",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTemplateFromContentId"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTemplateFromContentId"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTemplateFromContentId"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationResult"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationResult"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationResult"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {
               "text/plain": {
                 "schema": {
@@ -496,12 +2786,12 @@
         "tags": [
           "Templates"
         ],
+        "operationId": "GetSlideImageUri",
         "parameters": [
           {
             "name": "templateId",
             "in": "path",
             "required": true,
-            "style": "simple",
             "schema": {
               "type": "string"
             }
@@ -510,7 +2800,6 @@
             "name": "slideName",
             "in": "path",
             "required": true,
-            "style": "simple",
             "schema": {
               "type": "string"
             }
@@ -518,7 +2807,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
@@ -561,7 +2850,7 @@
             }
           },
           "500": {
-            "description": "Server Error",
+            "description": "Internal Server Error",
             "content": {
               "text/plain": {
                 "schema": {
@@ -588,12 +2877,12 @@
         "tags": [
           "Templates"
         ],
+        "operationId": "GetAllSlideImageUris",
         "parameters": [
           {
             "name": "templateId",
             "in": "path",
             "required": true,
-            "style": "simple",
             "schema": {
               "type": "string"
             }
@@ -601,7 +2890,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
@@ -641,89 +2930,7 @@
             }
           },
           "500": {
-            "description": "Server Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/Templates": {
-      "delete": {
-        "tags": [
-          "Templates"
-        ],
-        "parameters": [
-          {
-            "name": "templateId",
-            "in": "query",
-            "style": "form",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
+            "description": "Internal Server Error",
             "content": {
               "text/plain": {
                 "schema": {
@@ -749,29 +2956,33 @@
   "components": {
     "schemas": {
       "ConvertToPdfRequest": {
+        "required": [
+          "contentId",
+          "contentUrl",
+          "ownerId"
+        ],
         "type": "object",
         "properties": {
           "contentId": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "contentUrl": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "ownerId": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "CreatePdfResponse": {
+        "required": [
+          "contentId"
+        ],
         "type": "object",
         "properties": {
           "contentId": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -781,59 +2992,112 @@
         "properties": {
           "contentId": {
             "type": "string",
+            "description": "CRM ContentVersion id. Populated by the Slides/Generate CRM path; null for the standalone\nSlides/Save response, which carries BookmePresent.Api.Models.CreatePowerpointResponse.ContentRef instead.",
+            "nullable": true
+          },
+          "contentRef": {
+            "type": "string",
+            "description": "Standalone-mode (CRM-free) contentStore reference for the saved deck — the stable fileRef.\nPopulated by the standalone Slides/Save path; null for the frozen CRM\nSlides/Generate response. Additive and nullable.",
+            "format": "uuid",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "CreateTemplateFromContentId": {
+        "required": [
+          "category",
+          "contentId",
+          "name"
+        ],
         "type": "object",
         "properties": {
           "contentId": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "category": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "Error": {
+        "required": [
+          "details",
+          "errorMessage",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "errorMessage": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "details": {
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "nullable": true
+            }
           }
         },
         "additionalProperties": false
       },
+      "GetAllTagsResponse": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "An available tag, for the tag picker. Mirrors the crm-integration shape."
+      },
+      "IActionResult": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ITagModifier": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the modifier as used in tag syntax (e.g., \"capitalize\", \"uppercase\")",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Interface for tag modifiers that can transform tag values during processing.\nModifiers are applied in sequence and can be chained together."
+      },
       "Powerpoint": {
+        "required": [
+          "metadata",
+          "ownerId",
+          "scalarMetadata",
+          "slideConfiguration"
+        ],
         "type": "object",
         "properties": {
           "metadata": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            },
-            "nullable": true
+            }
           },
           "scalarMetadata": {
             "type": "object",
@@ -842,59 +3106,226 @@
               "items": {
                 "type": "string"
               }
-            },
-            "nullable": true
+            }
           },
           "slideConfiguration": {
             "$ref": "#/components/schemas/SlideConfiguration"
           },
           "ownerId": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
-      "Section": {
+      "PresentCompileSummary": {
+        "required": [
+          "parts",
+          "skipped",
+          "tags"
+        ],
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
+          "parts": {
+            "type": "integer",
+            "format": "int32"
           },
-          "uri": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
+          "tags": {
+            "type": "integer",
+            "format": "int32"
           },
-          "slides": {
+          "skipped": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Slide"
+              "$ref": "#/components/schemas/PresentSkippedMapping"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "What a compile produced, for logging and for telling a configurator what was dropped."
+      },
+      "PresentSkipKind": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "An BookmePresent.Api.Models.PresentConfig.PresentSkipKind.AliasCollision is filed under one tag but caused by a pair.",
+        "format": "int32"
+      },
+      "PresentSkippedMapping": {
+        "required": [
+          "field",
+          "kind",
+          "reason",
+          "tagName"
+        ],
+        "type": "object",
+        "properties": {
+          "tagName": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/PresentSkipKind"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A mapping the compiler could not use. The tag is left out rather than failing the compile."
+      },
+      "PresentTagDto": {
+        "required": [
+          "field",
+          "id",
+          "name",
+          "tagMappingId",
+          "templates"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tagMappingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dateModified": {
+            "type": "string",
+            "description": "Present-only; the crm-integration mirror has no equivalent.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A tag together with one of its mappings. Mirrors the crm-integration Tags response so the\nmanagement UI has one model for both storage modes: one entry per mapping, so a tag with two\nmappings appears twice and a tag with none does not appear at all."
+      },
+      "PresentTemplateDetailsDto": {
+        "required": [
+          "bankId",
+          "customerType",
+          "id",
+          "isActive",
+          "name",
+          "sections"
+        ],
+        "type": "object",
+        "properties": {
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplateSectionDto"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "bankId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customerType": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contentRef": {
+            "type": "string",
+            "description": "Standalone-mode (CRM-free) contentStore reference for the template payload — the stable fileRef.\nNull for CRM-mode templates. Additive and nullable.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Detailed DTO for Template entity (includes sections/slides)."
       },
-      "SelectedSlide": {
+      "PresentTemplateDto": {
+        "required": [
+          "bankId",
+          "customerType",
+          "id",
+          "isActive",
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "templateName": {
+          "id": {
             "type": "string",
+            "format": "uuid"
+          },
+          "bankId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customerType": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
-          "slideName": {
+          "contentRef": {
             "type": "string",
+            "description": "Standalone-mode (CRM-free) contentStore reference for the template payload — the stable fileRef.\nNull for CRM-mode templates. Additive and nullable.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "DTO for Template (excludes sections/slides for lightweight responses)."
       },
-      "Slide": {
+      "ProblemDetails": {
         "type": "object",
         "properties": {
-          "subSectionName": {
+          "type": {
             "type": "string",
             "nullable": true
           },
@@ -902,79 +3333,169 @@
             "type": "string",
             "nullable": true
           },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "ResultType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Section": {
+        "required": [
+          "name",
+          "slides",
+          "uri"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "slides": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Slide"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "SelectedSlide": {
+        "required": [
+          "slideName",
+          "templateName"
+        ],
+        "type": "object",
+        "properties": {
+          "templateName": {
+            "type": "string"
+          },
+          "slideName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Slide": {
+        "required": [
+          "slideImage",
+          "subSectionName",
+          "tags",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "subSectionName": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
           "slideImage": {
             "type": "string",
-            "format": "uri",
-            "nullable": true
+            "format": "uri"
           },
           "tags": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
-            },
-            "nullable": true
+            }
           }
         },
         "additionalProperties": false
       },
       "SlideConfiguration": {
+        "required": [
+          "selectedSlides"
+        ],
         "type": "object",
         "properties": {
           "selectedSlides": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SelectedSlide"
-            },
-            "nullable": true
+            }
           }
         },
         "additionalProperties": false
       },
       "SlideImage": {
+        "required": [
+          "imageUri",
+          "slideName"
+        ],
         "type": "object",
         "properties": {
           "imageUri": {
             "type": "string",
-            "format": "uri",
-            "nullable": true
+            "format": "uri"
           },
           "slideName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "SlideImageResponse": {
+        "required": [
+          "slideImages",
+          "templateName"
+        ],
         "type": "object",
         "properties": {
           "slideImages": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SlideImage"
-            },
-            "nullable": true
+            }
           },
           "templateName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
-      "SlideTemplateDetails": {
+      "SlideTemplate": {
+        "required": [
+          "customerType",
+          "name",
+          "uri"
+        ],
         "type": "object",
         "properties": {
           "uri": {
             "type": "string",
-            "format": "uri",
-            "nullable": true
+            "format": "uri"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "customerType": {
+            "type": "string"
+          },
+          "tenantId": {
             "type": "string",
             "nullable": true
           },
@@ -982,29 +3503,248 @@
             "type": "string",
             "nullable": true
           },
-          "tags": {
+          "labels": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Tag"
-            },
-            "nullable": true
-          },
-          "sections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Section"
+              "type": "string"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
+      "SlideTemplateDetails": {
+        "required": [
+          "customerType",
+          "name",
+          "sections",
+          "tags",
+          "uri"
+        ],
+        "type": "object",
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customerType": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "contentRef": {
+            "type": "string",
+            "description": "Standalone-mode (CRM-free) contentStore reference for the uploaded template payload — the stable\nfileRef. Null for CRM-mode banks, which continue to resolve content through the\nfrozen Salesforce/CRM path. Additive and nullable so existing CRM responses are unchanged.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
       "Tag": {
+        "required": [
+          "modifiers",
+          "name",
+          "rawModifiers"
+        ],
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "description": "The name of the tag, e.g., \"title\", \"author\", \"date\""
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ITagModifier"
+            },
+            "description": "List of modifiers to be applied to this tag during processing.\nModifiers are applied in the order they appear in this list."
+          },
+          "rawModifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Raw modifier strings from the original tag syntax.\nUsed for validation and debugging purposes."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Base class for all tags"
+      },
+      "TagMappingDto": {
+        "required": [
+          "tagId"
+        ],
+        "type": "object",
+        "properties": {
+          "tagId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "field": {
+            "maxLength": 1024,
+            "type": "string",
+            "description": "`Entity[field]` segments joined by `.`. Empty or null is valid and means the tag is not\nmapped yet; null is accepted because the crm-integration payload allows it.",
             "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Create/update payload for a tag mapping. Mirrors the crm-integration shape."
+      },
+      "TemplateSectionDto": {
+        "required": [
+          "id",
+          "name",
+          "slides"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slides": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplateSlideDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "TemplateSlideDto": {
+        "required": [
+          "id",
+          "name",
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "subsectionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of the tags (placeholders) scoped to this slide, projected from the Slide entity's\nTags navigation. Lets the composer scope which placeholders belong to which slide. Additive\nand defaults to empty; serialized as camelCase 'tags'."
+          }
+        },
+        "additionalProperties": false
+      },
+      "TranslatableValidationResult": {
+        "required": [
+          "message",
+          "params",
+          "slideName",
+          "slideNumber",
+          "statusCode",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "slideNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "slideName": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ResultType"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateTemplateLabelsInput": {
+        "type": "object",
+        "properties": {
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Input model for updating template labels."
+      },
+      "ValidationResult": {
+        "required": [
+          "message",
+          "slideName",
+          "slideNumber",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "slideNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "slideName": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ResultType"
           }
         },
         "additionalProperties": false
@@ -1021,7 +3761,24 @@
   },
   "security": [
     {
-      "Bearer": [ ]
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Content"
+    },
+    {
+      "name": "Slides"
+    },
+    {
+      "name": "Tags"
+    },
+    {
+      "name": "TemplateManagement"
+    },
+    {
+      "name": "Templates"
     }
   ]
 }

@@ -34,7 +34,7 @@ _Booking statistics and distributions in the Management UI · v1.0 · 11.06.2026
 - The report is **read-only**: no editing, and there is no export or custom date range.
 
 {: .note }
-> **Note:** The brand name is **Schedule**; in the system/menu you may still come across the previous name (bookme). It is the same product.
+> **Note:** The brand name is **Schedule**; in the system/menu you may still come across the previous name (schedule). It is the same product.
 
 
 ## What you get out of it

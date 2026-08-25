@@ -73,7 +73,7 @@ An overview of when the most important settings are in play (Yes = applies, No =
 
 - Audience: super-user/administrator (role **Configurator** or **Admin**; **Manager** can do some parts).
 - Locations/rooms are synchronised from **SCIM**/M365; employees from Entra.
-- The Managed BookMe package is installed.
+- The Managed Schedule package is installed.
 
 
 ## Setup order (and what inherits from what)

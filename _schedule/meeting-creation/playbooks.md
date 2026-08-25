@@ -1,0 +1,97 @@
+---
+layout: default
+title: Playbook Portals
+parent: Meeting Creation in Salesforce
+grand_parent: Schedule
+nav_order: 2
+redirect_from:
+  - /bookme/meeting-creation/playbooks/
+---
+
+# Playbook Portals
+{: .no_toc }
+
+{: .note }
+> **Next platform.** This is the recommended approach for customer self-service booking on a portal.
+
+**Portals** create meetings through **Playbooks**, a visual, forkable automation that writes through the same [entity-pattern mapping]({{ site.baseurl }}/schedule/meeting-creation/internal-meetings/) used by internal meetings.
+
+<details open markdown="block">
+  <summary>On this page</summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+{: .note }
+> This page focuses on **how a meeting is created** by a playbook. For authoring playbooks, blocks, and the visual editor, see the [Playbooks]({{ site.baseurl }}/schedule/playbooks/) subsection.
+
+---
+
+## When it applies
+
+The playbook approach runs for **portal bookings** whose portal uses the **Playbook** strategy. Otherwise the [CRM Configuration]({{ site.baseurl }}/schedule/meeting-creation/crm-configuration/) approach handles the booking.
+
+When a meeting is booked on a playbook-enabled portal, the portal's playbook runs and its **create-meeting block** writes the records to your CRM, through the same entity-pattern mapping described in [Entity Patterns]({{ site.baseurl }}/schedule/meeting-creation/internal-meetings/).
+
+---
+
+## What gets created: defined by your pattern
+
+{: .important }
+> The objects and fields are **not fixed by the playbook**: they are defined by the **entity pattern** the create-meeting block references, plus whatever field mappings you add in the editor. A different pattern creates a different set.
+
+For the **standard Schedule meeting pattern**, the records and fields are the same as for internal meetings: an `Event`, the Schedule meeting detail record (with `BookingFlowId__c`), and advisor relations. See the [Entity Patterns field tables]({{ site.baseurl }}/schedule/meeting-creation/internal-meetings/#fields-written) for the exact fields; the same "silently skipped if your definition doesn't declare it" rule applies.
+
+On top of the pattern, the create-meeting block lets you **map additional values**, including a portal's own custom fields, onto any field the pattern exposes.
+
+{: .note }
+> **This approach is fully configurable, not restricted to a fixed set.** Because it writes through entity patterns, a playbook creates whatever records your pattern defines. The standard pattern creates no `Lead` by default (the [CRM Configuration]({{ site.baseurl }}/schedule/meeting-creation/crm-configuration/) path is the one that always creates a `Lead`), but you can configure a playbook to create a `Lead`, or any other records your CRM needs. Meeting-contact records, where used, come from separate attendee-sync behaviour ([see Platform-Hosted Booking]({{ site.baseurl }}/schedule/meeting-creation/platform-booking/#updating-rescheduling-and-cancelling)), not from the playbook itself.
+
+{: .note }
+> The precise CRM field names depend on **your** entity definitions and the mappings you configure, so exact field values are org-specific rather than fixed by Schedule.
+
+---
+
+## How you configure field values
+
+Two layers work together:
+
+### 1. The playbook editor
+
+In the visual editor, the **create-meeting block** maps a **source value → a destination field**, with optional transformations, so you decide which fields are written and from what value. **Template blocks** let you format text (for example, a description) to feed into those fields. The editor validates your field mappings against the pattern before anything is written.
+
+{: .note }
+> The editor supports a **dry-run mode** that runs the full mapping and shows you the resulting values **without** writing to your CRM, the way to verify your mappings before going live.
+
+### 2. The entity pattern
+
+Beneath the editor, the [entity pattern]({{ site.baseurl }}/schedule/meeting-creation/internal-meetings/) determines which objects/parts exist and how abstract field names map to your CRM's real fields. Playbooks and internal meetings **share this mapping**.
+
+### Turning it on and making it your own
+
+| Option | Effect |
+|---|---|
+| Portal **Playbook** strategy | Whether the playbook approach runs for a portal at all |
+| Portal scoping | Which portals activate the playbook; a portal's custom fields become available in the editor |
+| Create-meeting block mappings | Which fields are written and their values |
+| Entity pattern | Which objects are created and how fields map to your CRM |
+| **Fork a managed playbook** | Create an editable copy so you can change any of the above |
+
+{: .note }
+> A &money-managed playbook can be **forked** into an editable copy that belongs to you. Choosing the Playbook strategy gives you more flexibility than CRM Configuration: playbooks can also run AI processing, read additional CRM data, and apply business logic when a meeting is booked.
+
+---
+
+## Where it runs
+
+Portals that use the **Playbook** strategy, customer self-service bookings. The playbook is authored in the visual editor and creates the meeting through the playbook → entity-pattern path.
+
+---
+
+## Related pages
+
+- [Playbooks (authoring)]({{ site.baseurl }}/schedule/playbooks/)
+- [Internal Meetings (Embeddable)]({{ site.baseurl }}/schedule/meeting-creation/internal-meetings/) (the shared mapping)
+- [Platform-Hosted Booking]({{ site.baseurl }}/schedule/meeting-creation/platform-booking/)
+- [Comparison Matrix]({{ site.baseurl }}/schedule/meeting-creation/technology-and-feature-matrix/)

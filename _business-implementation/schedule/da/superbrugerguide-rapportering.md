@@ -38,7 +38,7 @@ _Booking-statistik og fordelinger i Management UI · v1.0 · 11.06.2026_
 - Rapporten er **read-only**: ingen redigering, og der er ikke eksport eller frit datointerval.
 
 {: .note }
-> **Bemærk:** Brand-navnet er **Schedule**; i systemet/menuen kan du stadig møde det tidligere navn (bookme). Det er det samme produkt.
+> **Bemærk:** Brand-navnet er **Schedule**; i systemet/menuen kan du stadig møde det tidligere navn (schedule). Det er det samme produkt.
 
 
 ## Dit udbytte

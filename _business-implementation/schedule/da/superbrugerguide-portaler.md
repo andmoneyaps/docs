@@ -34,10 +34,10 @@ En **portal** er den side, hvor jeres kunder selv booker møder. Som superbruger
 - Målgruppe: superbruger/administrator (rolle **Configurator** eller **Admin**).
 - Følgende er oprettet på forhånd: **kundetyper**, **mødeemner**, **lokationer**, **mødekonfiguration**, **medarbejdere** (med tilgængelighed) og evt. **servicegrupper** — de bestemmer sammen, hvilke tider portalen kan vise.
 - Bruger du **CRM-konfiguration (standard)**, skal en **CRM Konfiguration** være oprettet (Trin 1).
-- Managed BookMe-pakke er installeret. Mangler en forudsætning, oprettes den andetsteds i Schedule — kontakt din administrator, hvis du ikke har adgang.
+- Managed Schedule-pakke er installeret. Mangler en forudsætning, oprettes den andetsteds i Schedule — kontakt din administrator, hvis du ikke har adgang.
 
 {: .note }
-> **Bemærk:** Brand-navnet er **Schedule**; i systemet/menuen kan du stadig møde det tidligere navn (bookme). Det er det samme produkt.
+> **Bemærk:** Brand-navnet er **Schedule**; i systemet/menuen kan du stadig møde det tidligere navn (schedule). Det er det samme produkt.
 
 {: .note }
 > **Bemærk:** Fremadrettet sender portaler booking-data til CRM via en **Playbook**. Den gamle model **CRM-konfiguration (standard)** udfases og bruges kun af enkelte kunder i en overgangsperiode.

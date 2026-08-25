@@ -37,7 +37,7 @@ På **Medarbejdere** styrer du den enkelte medarbejders **tilgængelighed**: om 
 - Mangler en medarbejder i listen, er det typisk en synk-sag — kontakt din administrator.
 
 {: .note }
-> **Bemærk:** Brand-navnet er **Schedule**; i systemet/menuen kan du stadig møde det tidligere navn (bookme). Det er det samme produkt.
+> **Bemærk:** Brand-navnet er **Schedule**; i systemet/menuen kan du stadig møde det tidligere navn (schedule). Det er det samme produkt.
 
 
 ## Dit udbytte

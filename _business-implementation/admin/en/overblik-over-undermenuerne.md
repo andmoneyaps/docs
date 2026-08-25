@@ -50,7 +50,7 @@ The **Admin** menu holds the technical and organisational settings that make Eng
 
 **CRM Settings**
 
-**What you actually see:** **Salesforce** (Domain name) or **Dynamics 365** (Environment URL); **Test connection**/**Test BookMe integration**; **Create** (provision the integration); **Limits** (status Healthy/Warning/**Critical**); **Licences** and **Permission set**; **Validate users**. **Consequence:** a wrong domain/URL or missing provisioning = **no booking data in the CRM**; if you hit a **Critical** limit, CRM writes can stop. **Create** (provision) can safely be repeated (idempotent) — it is **Push/deploy** of components that overwrites. **Do:** test the connection after a change; keep an eye on the limits. See **Admin – CRM Settings (deep-dive)**.
+**What you actually see:** **Salesforce** (Domain name) or **Dynamics 365** (Environment URL); **Test connection**/**Test Schedule integration**; **Create** (provision the integration); **Limits** (status Healthy/Warning/**Critical**); **Licences** and **Permission set**; **Validate users**. **Consequence:** a wrong domain/URL or missing provisioning = **no booking data in the CRM**; if you hit a **Critical** limit, CRM writes can stop. **Create** (provision) can safely be repeated (idempotent) — it is **Push/deploy** of components that overwrites. **Do:** test the connection after a change; keep an eye on the limits. See **Admin – CRM Settings (deep-dive)**.
 
 
 **Microsoft (Graph API + Teams)**

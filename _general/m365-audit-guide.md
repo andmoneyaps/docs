@@ -14,7 +14,7 @@ collection: general
 |---|---|
 | Document name | M365 Integration Audit Guide |
 | Audience | Customer IT administrators, security assessors, compliance officers |
-| Scope | Microsoft Graph API access by &money products (BookMe, Meet) |
+| Scope | Microsoft Graph API access by &money products (Schedule, Meet) |
 | Last updated | 2026-04-15 |
 | Owner | &money |
 
@@ -57,8 +57,8 @@ Connect-MicrosoftTeams
 Get-CsApplicationAccessPolicy
 
 # Check which users/groups have the policy assigned
-# (Policy name follows the pattern: Bookme-OnlineMeetingAccess-Policy-{Environment})
-Get-CsOnlineUser -Filter "ApplicationAccessPolicy -eq 'Bookme-OnlineMeetingAccess-Policy-Production'" | Select DisplayName, UserPrincipalName
+# (Policy name follows the pattern: Schedule-OnlineMeetingAccess-Policy-{Environment})
+Get-CsOnlineUser -Filter "ApplicationAccessPolicy -eq 'Schedule-OnlineMeetingAccess-Policy-Production'" | Select DisplayName, UserPrincipalName
 ```
 
 **How to modify scope:** Add or remove users from the policy to control which advisors' meetings are accessible. See [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/) for the setup script used during onboarding.

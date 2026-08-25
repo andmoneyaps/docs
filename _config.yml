@@ -7,6 +7,9 @@ permalink: pretty
 url: "https://andmoneyaps.github.io"
 repository: andmoneyaps/docs
 
+plugins:
+  - jekyll-redirect-from
+
 # Collections configuration
 collections:
   general:
@@ -15,7 +18,7 @@ collections:
   foundation:
     permalink: "/:collection/:path/"
     output: true
-  bookme:
+  schedule:
     permalink: "/:collection/:path/"
     output: true
   present:
@@ -85,8 +88,8 @@ just_the_docs:
       # name: "Foundation"
       # nav_exclude: false
       # nav_fold: true
-    bookme:
-      # name: "BookMe"
+    schedule:
+      # name: "Schedule"
       # nav_exclude: false
       # nav_fold: true
     present:

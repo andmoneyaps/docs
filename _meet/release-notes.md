@@ -41,5 +41,5 @@ Assist is continuously improved and deployed. This page highlights notable updat
 ### Embedding in Salesforce
 
 - **Portal component + Quick Action setup** — Reference implementation guide for embedding &money apps in Salesforce. See [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/).
-- **Deploying the Portal/Iframe LWC** — Deploy the &money Portal component to Salesforce. See [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/).
-- **Advanced LWC configuration** — Portal component configuration details. See [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/).
+- **Deploying the Portal/Iframe LWC** — Deploy the &money Portal component to Salesforce. See [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/schedule/salesforce-iframe-lwc-deployment/).
+- **Advanced LWC configuration** — Portal component configuration details. See [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/schedule/salesforce-iframe-lwc/).

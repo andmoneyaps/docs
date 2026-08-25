@@ -41,9 +41,9 @@ Access: [https://management.andmoney.dk](https://management.andmoney.dk)
 
 #### 2. Configure Customer Types
 
-- In the left menu, go to `BookMe > Meeting Setup > Customer Types`
+- In the left menu, go to `Schedule > Meeting Setup > Customer Types`
 - Create or add customer types.
-- Customer types used specifically for Present can be configured under `BookMe > Meeting Setup > Meeting configuration` and set as unavailable for regular meeting bookings.
+- Customer types used specifically for Present can be configured under `Schedule > Meeting Setup > Meeting configuration` and set as unavailable for regular meeting bookings.
 
 #### 3. Go to Present Setup
 

@@ -8,12 +8,12 @@ permalink: /api/
 
 # &money Public API Documentation
 
-Welcome to the &money Public API documentation. Our APIs provide programmatic access to the BookMe booking platform and Present presentation services.
+Welcome to the &money Public API documentation. Our APIs provide programmatic access to the Schedule booking platform and Present presentation services.
 
 ## Available APIs
 
-### BookMe API
-The BookMe API enables integration with our enterprise booking and scheduling platform. Key features include:
+### Schedule API
+The Schedule API enables integration with our enterprise booking and scheduling platform. Key features include:
 - Meeting management and scheduling
 - Time slot reservations
 - Room and resource booking
@@ -21,7 +21,7 @@ The BookMe API enables integration with our enterprise booking and scheduling pl
 - Customer type management
 - Topic categorization
 
-[View BookMe API Documentation]({{ site.baseurl }}/api/bookme)
+[View Schedule API Documentation]({{ site.baseurl }}/api/schedule)
 
 ### Present API  
 The Present API provides access to our presentation generation services. Capabilities include:

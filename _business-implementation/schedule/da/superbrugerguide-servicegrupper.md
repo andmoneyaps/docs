@@ -33,10 +33,10 @@ En **servicegruppe** er en pulje af medarbejdere, der kan betjene kunder på tv�
 - Målgruppe: superbruger/administrator, der opsætter Schedule.
 - Roller: **Servicegrupper** kræver rollen **Manager** eller **Admin**; **kompetencegrupper** og **betjeningsniveau** kan tilgås af **Configurator** eller **Admin**.
 - Følgende er oprettet på forhånd: **kundetyper**, **lokationer**, **mødeemner** og **medarbejdere** (med tilgængelighed). **Kompetencegrupper** anbefales. Mangler noget af det, oprettes det andetsteds i Schedule — kontakt din administrator, hvis du ikke har adgang.
-- Managed BookMe-pakke er installeret (fuld funktion).
+- Managed Schedule-pakke er installeret (fuld funktion).
 
 {: .note }
-> **Bemærk:** Brand-navnet er **Schedule**; i selve systemet/menuen kan du stadig møde det tidligere navn (bookme). Det er det samme produkt.
+> **Bemærk:** Brand-navnet er **Schedule**; i selve systemet/menuen kan du stadig møde det tidligere navn (schedule). Det er det samme produkt.
 
 
 ## Dit udbytte

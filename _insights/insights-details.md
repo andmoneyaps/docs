@@ -6,7 +6,7 @@ parent: Insights
 collection: insights
 ---
 
-# BookMe Insights Technical Details
+# Schedule Insights Technical Details
 
 ## Data Generation Process
 
@@ -82,13 +82,13 @@ Both the time range and the historic meetings contain time ranges reasons explai
 - **ServiceGroupAvailable**: Available through service group membership
 
 #### Calendar-Related
-- **ReservedOrBooked**: Existing BookMe meeting
+- **ReservedOrBooked**: Existing Schedule meeting
 - **BusyAppointmentInstance**: Single private appointment
 - **BusyAppointmentOccurence**: Recurring private appointment
 - **BusyEventInstance**: Single shared event
 - **BusyEventOccurence**: Recurring shared event
 - **BookedInternalBusy**: A booked internal meeting where the advisor is marked as busy and unavailable for customer bookings
-- **BookedInternalFree**: A booked BookMe internal meeting where the advisor remains available for customer bookings during the meeting time
+- **BookedInternalFree**: A booked Schedule internal meeting where the advisor remains available for customer bookings during the meeting time
 
 #### Schedule Constraints
 - **BankClosingDay**: Official bank holiday/closure

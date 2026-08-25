@@ -15,7 +15,7 @@ This guide covers configuring the Assist component in your Salesforce organizati
 - The &money Portal component deployed to Salesforce
 - Assist environment URL provided by &money
 
-For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/).
+For Portal component deployment, see [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/schedule/salesforce-iframe-lwc-deployment/).
 
 ## Environment URLs
 
@@ -148,6 +148,6 @@ After completing the setup, verify that Assist is working correctly:
 
 ## Related Documentation
 
-- [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/bookme/salesforce-iframe-lwc-deployment/) — Portal component deployment
+- [Deploying Iframe LWC to Salesforce]({{ site.baseurl }}/schedule/salesforce-iframe-lwc-deployment/) — Portal component deployment
 - [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/) — General Portal and Quick Action configuration
-- [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) — Advanced configuration options
+- [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/schedule/salesforce-iframe-lwc/) — Advanced configuration options

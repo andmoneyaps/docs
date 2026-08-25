@@ -19,7 +19,7 @@ This guide walks through setting up entity pattern mappers for a new bank.
 Before creating the mappers, four entity patterns need to be imported into the target bank.
 
 1. In the **source** bank, navigate to **Admin** > **Entities** > **Entity patterns**
-2. Find **Internal BookMe Meeting** and click the export icon (first icon in the list)
+2. Find **Internal Schedule Meeting** and click the export icon (first icon in the list)
 3. In the modal that opens, click **Copy**, then close the modal
 4. Switch to the **target** bank and navigate to **Admin** > **Entities** > **Entity patterns**
 5. Click **Import** in the top right corner of the page
@@ -28,7 +28,7 @@ Before creating the mappers, four entity patterns need to be imported into the t
 Repeat this process for the remaining three entity patterns:
 
 - **AccountId Resolver**
-- **Bookme meeting**
+- **Schedule meeting**
 - **Salesforce meeting id resolver**
 
 ## Step 2: Create entity pattern mappers
@@ -37,19 +37,19 @@ Once all four entity patterns have been imported, navigate to **Entity pattern m
 
 Add the following four mappers:
 
-### 1. BookMeMeeting
+### 1. ScheduleMeeting
 
 | Field          | Value              |
 | -------------- | ------------------ |
-| Use case       | BookMeMeeting      |
-| Entity pattern | Bookme meeting     |
+| Use case       | ScheduleMeeting      |
+| Entity pattern | Schedule meeting     |
 
-### 2. InternalBookMeMeeting
+### 2. InternalScheduleMeeting
 
 | Field          | Value                    |
 | -------------- | ------------------------ |
-| Use case       | InternalBookMeMeeting    |
-| Entity pattern | Internal BookMe Meeting  |
+| Use case       | InternalScheduleMeeting    |
+| Entity pattern | Internal Schedule Meeting  |
 
 ### 3. CustomerOverviewAccountIdResolver
 
@@ -74,5 +74,5 @@ This mapper also requires a field mapping:
 This mapper also requires a field mapping:
 
 1. Click **Add Field mapping**
-2. Set **Pattern part** to `bookme-event-detail`
+2. Set **Pattern part** to `schedule-event-detail`
 3. Set **Entity field** to `BookingFlowId`

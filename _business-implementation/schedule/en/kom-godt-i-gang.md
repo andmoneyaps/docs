@@ -74,7 +74,7 @@ Set things up in this order — each part builds on the previous one:
 
 ## Prerequisites (technical)
 
-- A managed **BookMe** package installed.
+- A managed **Schedule** package installed.
 - **Entra** roles assigned; employees synchronised (Entra), locations/rooms (SCIM/M365).
 - An **M365 calendar** connected (busy times block availability).
 - A **CRM connection** (for portals/Playbooks).
@@ -83,7 +83,7 @@ Set things up in this order — each part builds on the previous one:
 ## A quick word on the technical terms
 
 ### Glossary
-- **BookMe**: The technical name for Schedule (in the code/menus you may come across 'bookme').
+- **Schedule**: The technical name for Schedule (in the code/menus you may come across 'schedule').
 - **Entra**: Microsoft Entra (formerly Azure AD) — where employees and roles are synchronised from.
 - **SCIM / M365**: Synchronisation of locations/rooms and employee calendars from Microsoft 365.
 - **Playbook**: An automatic flow that sends a portal booking's data to the CRM.

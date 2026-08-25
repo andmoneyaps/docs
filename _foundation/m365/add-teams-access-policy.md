@@ -40,9 +40,9 @@ if ($ConnectionType -eq "ManagedIdentity") {
   Connect-MicrosoftTeams -TenantId $TenantId
 }
 
-New-CsApplicationAccessPolicy -Identity "Bookme-OnlineMeetingAccess-Policy-$Environment" -AppIds "$AppRegistrationId" -Description "&Money Bookme Online Meeting Policy"
+New-CsApplicationAccessPolicy -Identity "Schedule-OnlineMeetingAccess-Policy-$Environment" -AppIds "$AppRegistrationId" -Description "&Money Schedule Online Meeting Policy"
 
-Grant-CsApplicationAccessPolicy -PolicyName "Bookme-OnlineMeetingAccess-Policy-$Environment" -Group "$SecurityGroupId" 
+Grant-CsApplicationAccessPolicy -PolicyName "Schedule-OnlineMeetingAccess-Policy-$Environment" -Group "$SecurityGroupId" 
 
 Write-Host -ForegroundColor Cyan "Applied policy for application '$AppRegistrationId' on group '$SecurityGroupId'"
 ```

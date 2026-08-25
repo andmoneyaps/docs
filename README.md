@@ -34,7 +34,7 @@ The site will be available at [http://localhost:4000/docs/](http://localhost:400
 ```
 docs/
 ├── index.md                 # Home page
-├── _bookme/                # BookMe documentation
+├── _schedule/                # Schedule documentation
 ├── _present/               # Present documentation
 └── _insights/             # Insights documentation
 ```

@@ -20,6 +20,11 @@ when your bank runs Present **on the Engage platform** rather than through the S
 > If they create decks in Engage, this page applies as well. Ask your &money contact if you are
 > not sure which setup your bank has.
 
+{: .important }
+> **This is being rolled out.** Mappings you save are checked and stored today, but until &money has
+> finished moving your bank onto the platform, the values on a generated deck may still come from
+> your previous setup. Ask your &money contact where your bank stands.
+
 You still map tags in the same place: **Management UI → Present → Tags**. Each row shows the tag,
 the CRM path its value is read from, and the templates the tag appears in.
 

@@ -39,7 +39,7 @@ BookMe is our booking and scheduling solution designed for the financial sector.
 
 - **[Onboarding]({{ site.baseurl }}/bookme/onboarding/)** — Salesforce setup, implementation phases, CRM integration security
 - **[Playbooks]({{ site.baseurl }}/bookme/playbooks/)** — Automation workflows, the visual editor, managed playbooks
-- **Booking configuration** — portals, employee schedules, service competence groups, advisor priority rules, customer meeting booking
+- **Booking configuration** — portals, employee schedules, service competence groups, advisor priority rules, customer meeting booking, [address lookup for offsite meetings]({{ site.baseurl }}/bookme/address-lookup/)
 - **CRM integration** — entities and entity patterns, entity configuration management
 - **Operational features** — reporting, labels, templates, iCal generation, internal meetings
 

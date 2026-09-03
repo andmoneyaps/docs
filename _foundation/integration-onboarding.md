@@ -678,7 +678,7 @@ The integration uses a **dual-flow** approach against Dynamics. **On-Behalf-Of (
 
 A single flow could not serve both correctly: OBO alone cannot reach data outside the employee's role, and client-credentials alone cannot attribute actions to the acting employee for audit and downstream automation.
 
-The exact number and tenancy of Entra enterprise apps that back these flows — for example, whether a single multi-tenant Engage app is consented into your tenant, or whether a separate app registration is created in your tenant dedicated to OBO — is confirmed during the implementation design phase. The user-visible Dynamics behaviour is identical regardless of topology.
+Both flows are backed by Engage-owned multi-tenant applications that you consent into your tenant; you create no app registration of your own, and no credential is exchanged in either direction. The applications and the consents they require are listed in [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#application-ids-you-will-need).
 
 #### Entity surface — typical baseline
 
@@ -761,7 +761,7 @@ Full detail, including what the script's own sign-in leaves behind in your tenan
 
 #### Validation
 
-- [ ] Client-credentials token acquisition succeeds against `https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/token` with scope `{EnvironmentUrl}/.default`.
+- [ ] The Engage platform team confirms that client-credentials token acquisition against your tenant succeeds — run on the Engage side, since the credential never leaves Engage.
 - [ ] The Application User can call `WhoAmI` against `{EnvironmentUrl}/api/data/v9.2/WhoAmI` and receives a 200 with a `UserId` matching the Application User.
 - [ ] OBO token exchange succeeds for a representative employee account, after the delegated grant in Step 3.
 - [ ] At least one Entity Definition per exposed Dataverse entity is configured in the Management UI, with every abstract-field-to-Dataverse-column mapping reviewed against the local schema.
@@ -773,7 +773,7 @@ Full detail, including what the script's own sign-in leaves behind in your tenan
 | Artifact | From | To | Channel |
 |---|---|---|---|
 | Entra tenant ID | Customer | Engage platform team | Email |
-| Dataverse environment URL (production + sandbox) | Customer | Engage platform team | Email |
+| Dataverse environment URL | Not exchanged — the customer selects the environment themselves in the Management Portal | — | — |
 | System-integration app: Client ID (identifier only — no secret is exchanged) | Engage platform team | Customer | Provided early |
 | Dataverse Application User created + security role assigned | Customer | Engage platform team | Email |
 | Admin consent confirmation | Customer | Engage platform team | Email |

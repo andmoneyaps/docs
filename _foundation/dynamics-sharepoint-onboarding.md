@@ -138,9 +138,14 @@ Review the summary Microsoft shows, then **Accept**.
 > four applications appear under **Enterprise applications**.
 
 {: .warning }
-> **Do not delete and re-add these enterprise applications later.** Permissions bind to the service
-> principal object, so reinstalling one silently discards every grant made against it, including
-> Steps 3 and 5b.
+> **Do not delete and re-add these enterprise applications later.** The delegated permissions in Step 3
+> bind to the service principal object, so reinstalling an application silently discards them and they
+> have to be recorded again.
+>
+> The SharePoint permission in Step 5b behaves the *opposite* way: it identifies the application by
+> client ID, so it survives — a recreated service principal inherits the site access. **Deleting the
+> application is therefore not a way to revoke SharePoint access.** Remove the site permission itself,
+> as in [Step 5b](#4-to-revoke-later).
 
 ## Step 2 — Assign people to roles
 
@@ -160,7 +165,7 @@ groups or users to the roles they need:
 > Steps 6 and 7 both require it, and Step 6 lists only the environments that person can reach in
 > Dynamics. A `Configurator` cannot complete either step.
 
-The highest assigned role applies; changes take effect at next sign-in. Repeat for every environment you
+Engage applies the highest assigned role, so assigning several to one person adds nothing. Changes take effect at next sign-in. Repeat for every environment you
 are onboarded to — the test and production applications are separate.
 
 ## Step 3 — Authorise Engage to act as your advisors
@@ -340,9 +345,10 @@ revoke it. It is not the application ID.
 GET https://graph.microsoft.com/v1.0/sites/{siteId}/permissions
 ```
 
-Confirm that **exactly one** application is listed, that it is `{AndMoneyApiAppClientId}`, and that its
-role is `write`. This listing is the complete statement of what Engage can reach in your SharePoint —
-keep it for your audit record.
+Confirm that `{AndMoneyApiAppClientId}` is listed with the `write` role. The response is a collection
+and may legitimately contain permissions for other applications of your own — those are not a problem,
+and the check is that ours is present and correct, not that it is alone. Keep the listing for your audit
+record: it is the complete statement of what Engage can reach in your SharePoint.
 
 #### 4. To revoke, later
 

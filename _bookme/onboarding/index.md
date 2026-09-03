@@ -34,4 +34,4 @@ If you are onboarding a brand-new tenant, the [Integration Onboarding Guide]({{ 
 
 - [Foundation: Integration Onboarding]({{ site.baseurl }}/foundation/integration-onboarding/) — cross-cutting onboarding reference covering Foundation surfaces and product-specific integration points.
 - [BookMe]({{ site.baseurl }}/bookme/) — top-level BookMe documentation. Once onboarding is complete, the rest of the BookMe collection covers day-to-day feature configuration (portals, employee schedules, playbooks, etc.).
-- If your CRM is Dynamics 365 rather than Salesforce, see [section 5 of the Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration).
+- If your CRM is Dynamics 365 rather than Salesforce, see [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/) for the step-by-step configuration, and [section 5 of the Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration) for the architecture behind it.

@@ -674,7 +674,7 @@ The integration uses a **dual-flow** approach against Dynamics. **On-Behalf-Of (
 | Flow | Used for | Caller identity in Dynamics |
 |---|---|---|
 | OAuth 2.0 On-Behalf-Of (OBO) — **default** | The default for all employee-initiated operations. The acting employee's Dataverse permissions govern what is readable and writable; actions appear in Dynamics audit and downstream automation as that employee. | The acting employee's Dynamics user, via token exchange |
-| OAuth 2.0 client credentials — **escalation** | The rare operations where the platform needs to create or read data the individual employee does not have access to — for example, cross-employee background sync, or system-wide metadata reads | A Dataverse **Application User** bound to the app registration, governed by its security role |
+| OAuth 2.0 client credentials — **escalation** | The rare operations where the platform needs to create or read data the individual employee does not have access to — for example, cross-employee background sync, or system-wide metadata reads | A Dataverse **Application User** bound to the Engage-owned app registration, governed by the security role you assign it |
 
 A single flow could not serve both correctly: OBO alone cannot reach data outside the employee's role, and client-credentials alone cannot attribute actions to the acting employee for audit and downstream automation.
 
@@ -709,12 +709,12 @@ Authoring playbooks is typically not part of your Dynamics administration scope 
 | Dynamics 365 / Dataverse environment (production + at least one sandbox), on Dataverse Web API v9.2 | Customer |
 | Power Platform admin centre access | Customer |
 | An Entra tenant (same as section 1) | Customer |
-| Permission to create app registrations and grant tenant admin consent | Customer |
+| Permission to grant tenant admin consent and to record a delegated permission on a service principal (Application Administrator or equivalent) | Customer |
 | Permission to create Application Users and assign security roles in Dataverse | Customer |
 | Knowledge of the local Dataverse schema (entity names, column logical names) — required for Entity Definition mappings | Customer |
 | Engage Management UI access for configuring Entity Definitions, Entity Patterns, and Playbooks | Engage platform team — provided early |
 | Starter Entity Definition exports | Engage platform team — provided early |
-| Engage API audience / scope (for OBO flow) | Engage platform team — at OBO design lock |
+| Engage API audience / scope (for OBO flow) | Engage platform team — provided early |
 
 ### Concrete implementation steps
 
@@ -724,11 +724,16 @@ The system-integration app registration backs the client-credentials escalation 
 
 For Dataverse, the authorization boundary on this flow is **the Application User and its security role**, not an Entra API permission — `Dynamics CRM` / `user_impersonation` is a Delegated permission used by the OBO flow (Step 3), not by client credentials.
 
-1. Create an **Entra app registration** named e.g. `Engage-Dynamics-System-Integration`, in your Entra tenant.
-2. Create a **client secret** with an expiration policy compatible with your rotation cadence. Recommended: 12 or 24 months, with a rotation process agreed with the Engage platform team in advance.
-3. Create a **Dataverse Application User** in your target Dynamics environment, bound to this app registration's Application ID.
+The app registration itself is **Engage-owned and multi-tenant** — you do not create one, and no credential is exchanged in either direction. Engage holds the application's credential in its own tenant; your directory holds only the service principal that your §2a admin consent created. The application then authenticates against *your* tenant authority using its own credential, which is why consent is what makes this flow work rather than a shared secret.
+
+What you create is the Dataverse identity it maps to, and the role that bounds it.
+
+1. Take the application's **client ID** from the Engage platform team. This is an identifier, not a secret, and needs no secure channel.
+2. Create a **Dataverse Application User** in your target Dynamics environment, bound to that client ID.
    - Power Platform admin centre → Environments → {your env} → Settings → Users + permissions → Application users → New app user.
-4. Assign a **security role** to the Application User. The role is your enforcement point for what the escalation flow can read or write. Recommended approach: start from a copy of a built-in role and narrow it down to exactly the entities and columns the escalation scenarios in scope require — not the full set of entities the integration touches, since the per-employee OBO flow handles those under each employee's own role. The role is reviewed and tightened further during implementation.
+3. Assign a **security role** to the Application User. The role is your enforcement point for what this flow can read or write. Start from a copy of a built-in role and narrow it to what the escalation scenarios in scope actually require — not the full set of entities the integration touches, since the per-employee OBO flow handles those under each employee's own role.
+
+For the concrete starting role and a walk-through of the whole sequence, see [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/).
 
 #### Step 2 — Configure Entity Definitions and Entity Patterns
 
@@ -736,15 +741,29 @@ In the Engage Management UI, import the starter Entity Definition exports the En
 
 #### Step 3 — User-context (OBO) app registration — default flow
 
-OBO is the **default** authorization path the platform uses against Dynamics; it carries every operation that can be attributed to an acting employee. The registration topology — whether OBO runs through a multi-tenant Engage app consented into your tenant or through a separate app registration created in your tenant dedicated to OBO — is locked during the implementation design phase. The choice does not affect what entities the platform accesses or how you operate the integration; it only affects how the OAuth token exchange is wired.
+OBO is the **default** authorization path the platform uses against Dynamics; it carries every operation that can be attributed to an acting employee. **You create no app registration for it.** The Engage API exchanges the employee's own token for a Dataverse token directly, and the only thing your tenant provides is the permission that allows the exchange.
 
-Once the topology is confirmed, the registration to create (in your Entra tenant or via consent to a multi-tenant Engage app), the `Dynamics CRM` / `user_impersonation` Delegated permission, admin consent steps, whether a client secret is required on your side, and the audience and scope values will be communicated. The handover artifacts table is amended at that point.
+That permission is recorded against the Engage service principal already present in your tenant from §2a — a delegated `Dynamics CRM` / `user_impersonation` grant. It cannot be granted through an admin-consent link: Microsoft's consent endpoint only grants permissions an application advertises in its manifest, and Engage deliberately does not advertise this one, so that customers who do not use Dynamics are never asked to approve a Dynamics permission.
+
+Engage therefore provides a script your Entra administrator runs in your tenant:
+
+```powershell
+./add-delegated-grant-to-service-principal.ps1 `
+  -tenantId    {YourTenantId} `
+  -clientAppId {EngageApiClientId}
+```
+
+The Dataverse resource and the `user_impersonation` permission are the script's defaults. **Application Administrator** is sufficient — Global Administrator is not required. The script is idempotent, takes effect within seconds, and prints an Undo command specific to what it found; keep that command, because removing the permission by hand can revoke unrelated grants.
+
+Because the grant lives on the service principal rather than in the application manifest, it is scoped to your tenant alone and is revocable independently of your §2a consent.
+
+Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Dynamics 365 and SharePoint Onboarding]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#step-3--authorise-engage-to-act-as-your-advisors-in-dataverse).
 
 #### Validation
 
 - [ ] Client-credentials token acquisition succeeds against `https://login.microsoftonline.com/{TenantId}/oauth2/v2.0/token` with scope `{EnvironmentUrl}/.default`.
 - [ ] The Application User can call `WhoAmI` against `{EnvironmentUrl}/api/data/v9.2/WhoAmI` and receives a 200 with a `UserId` matching the Application User.
-- [ ] OBO token exchange succeeds for a representative employee account (once the OBO topology is locked).
+- [ ] OBO token exchange succeeds for a representative employee account, after the delegated grant in Step 3.
 - [ ] At least one Entity Definition per exposed Dataverse entity is configured in the Management UI, with every abstract-field-to-Dataverse-column mapping reviewed against the local schema.
 - [ ] At least one Entity Pattern referencing those definitions executes end-to-end against the Dataverse environment (read and, where in scope, create).
 - [ ] The Application User's security role grants exactly the column-level access the Entity Definitions declare — no more, no less.
@@ -755,12 +774,14 @@ Once the topology is confirmed, the registration to create (in your Entra tenant
 |---|---|---|---|
 | Entra tenant ID | Customer | Engage platform team | Email |
 | Dataverse environment URL (production + sandbox) | Customer | Engage platform team | Email |
-| System-integration app: Client ID + Client Secret | Customer | Engage platform team | Secure secret channel |
+| System-integration app: Client ID (identifier only — no secret is exchanged) | Engage platform team | Customer | Provided early |
+| Dataverse Application User created + security role assigned | Customer | Engage platform team | Email |
 | Admin consent confirmation | Customer | Engage platform team | Email |
 | Entity Definition decisions (entity choice + column mappings) | Customer | Engage platform team | Captured directly in the Management UI |
-| OBO-flow app identifiers | Customer | Engage platform team | After OBO topology is confirmed |
+| Confirmation that the Dataverse authorisation script has been run | Customer | Engage platform team | Email |
+| The authorisation script and its exact parameters | Engage platform team | Customer | Provided early |
 | Starter Entity Definition exports | Engage platform team | Customer | Provided early |
-| Engage API audience / scope (for OBO) | Engage platform team | Customer | At OBO design lock |
+| Engage API audience / scope (for OBO) | Engage platform team | Customer | Provided early |
 
 ---
 ---

@@ -7,18 +7,14 @@ parent: Foundation
 
 # Present on Dynamics 365 and SharePoint
 
-The step-by-step configuration for using **Present** where your CRM is **Microsoft Dynamics 365** and
-generated presentations are stored in **SharePoint**. It expands on
-[section 5 of the Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration),
-which covers the architecture and the reasoning behind it.
+Configuring **Present** where your CRM is **Microsoft Dynamics 365** and generated presentations are
+stored in **SharePoint**. The architecture behind it is in
+[section 5 of the Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration).
 
 {: .important }
-> **This guide is specific to Present on Dynamics 365 with SharePoint storage.** It is not a general
-> Dynamics 365 setup guide, and it does not cover the other Engage products. If you are also adopting
-> BookMe, Meet or Insights, those bring their own configuration and your &money contact will sequence
-> them with this work.
->
-> If your CRM is Salesforce, see [BookMe onboarding]({{ site.baseurl }}/bookme/onboarding/) instead.
+> This guide covers Present on Dynamics 365 with SharePoint storage, and nothing else. Other Engage
+> products bring their own configuration. If your CRM is Salesforce, see
+> [BookMe onboarding]({{ site.baseurl }}/bookme/onboarding/) instead.
 
 ## What this is
 
@@ -28,32 +24,29 @@ PowerPoint on the web.
 
 {: .note }
 > **Nothing is deployed in your Azure subscription, and no solution is installed in your Dataverse
-> environment.** Engage is hosted by &money and talks to your Microsoft 365 and Dynamics estates through
-> Microsoft's own APIs. What you provide is authorisation and configuration.
+> environment.** Engage is hosted by &money and reaches your estate through Microsoft's own APIs. What
+> you provide is authorisation and configuration.
 
 ## How access works, and why
 
-Two distinct identities reach your environment, and the difference matters to a security review:
+Two identities reach your environment:
 
 | Identity | Used for | Bounded by |
 |---|---|---|
-| **Your advisor** | Everything that reads or writes customer records, and every write to SharePoint | Their own Dynamics security roles, and their own SharePoint access |
-| **An application identity** | Reading Dataverse schema and metadata, testing the connection, resolving which Dynamics user an advisor corresponds to | A Dataverse security role you create and control |
+| **Your advisor** | Every read and write of customer records, and every write to SharePoint | Their own Dynamics security roles and SharePoint access |
+| **An application identity** | Dataverse schema and metadata, and connection tests | A Dataverse security role you create and control |
 
-Record work runs as the signed-in advisor through a standard OAuth token exchange, so their own roles
-decide what they can see and actions appear in your Dynamics audit trail under their name. **An advisor
-can never retrieve through Engage a record they could not open in Dynamics themselves.** There is no
-fallback from the user to a service account — if the exchange fails, the operation fails.
-
-The application identity reads no customer records on an advisor's behalf.
+Record work runs as the signed-in advisor, so their own roles decide what they can see and actions
+appear in your Dynamics audit trail under their name. **An advisor can never retrieve through Engage a
+record they could not open in Dynamics themselves.** There is no fallback from the user to a service
+account — if the exchange fails, the operation fails.
 
 {: .note }
 > **No credentials are exchanged in either direction.** The application registrations are owned by
-> &money and their credentials never leave &money. Your tenant is not asked to hold, store or rotate a
-> secret for this integration, and &money is not given one of yours. Your approvals in Step 1 create
-> service principals in your directory; the applications then authenticate against *your* tenant using
-> their own credentials, and reach only as far as the permissions in Steps 3 to 5 allow. The
-> application ID you need in Step 4 is an identifier, not a secret.
+> &money and their credentials never leave &money. You are never asked to hold or rotate a secret for
+> this integration. Your approvals in Step 1 create service principals in your directory; the
+> applications then authenticate against *your* tenant using their own credentials, and reach only as
+> far as Steps 3 to 5 allow.
 
 ## Who needs to be involved
 
@@ -61,26 +54,22 @@ The application identity reads no customer records on an advisor's behalf.
 |---|---|---|
 | Microsoft Entra administrator | 1, 2, 3 | *Application Administrator* or *Cloud Application Administrator*. Global Administrator is **not** required |
 | Dynamics 365 / Power Platform administrator | 4 | Create application users and assign security roles |
-| SharePoint administrator | 5 | Create a site, manage its membership, and record a per-site application permission |
-| An Engage `Admin` from your organisation | 6, 7 | The `Admin` app role assigned in Step 2, and access to the Dynamics environment |
-| Dynamics customisation | 8 | Edit the appointment form |
+| SharePoint administrator | 5 | Create a site, manage its membership, record a per-site application permission |
+| An Engage `Admin` from your organisation | 6, 7 | The `Admin` app role from Step 2, and access to the Dynamics environment |
+| Dynamics customisation | 8 | Add a web resource or PCF component to the appointment form |
 
 ## Before you start
 
-- A Microsoft Entra tenant, and your **tenant ID** (Directory ID).
+- A Microsoft Entra tenant, and your **tenant ID** (Directory ID). **Send this to your &money contact
+  before Step 1** — nothing can be prepared on our side until we have it.
 - A Dynamics 365 environment on Dataverse Web API v9.2 — a sandbox for the integration phase, plus
   production.
-- Someone who knows your Dataverse schema. You choose which tables and columns Engage sees, so the
-  field mapping is a conversation rather than a default.
-- From &money, provided before you begin: the client IDs for your environment (see
-  [Application IDs](#application-ids-you-will-need)), the authorisation commands for Step 3, the starter
-  field mappings, and your Management Portal URL.
+- Someone who knows your Dataverse schema.
 
 ## The order things happen in
 
-Steps 1 to 5 are yours and can largely run in parallel. **Steps 6 and 7 are also yours, but they happen
-in the Engage Management Portal and only work once &money has registered your organisation** — so there
-is a handover in the middle:
+Steps 1 to 5 are yours and can largely run in parallel. Steps 6 and 7 are also yours, but happen in the
+Engage Management Portal and only work once &money has registered your organisation:
 
 ```text
 You:      Steps 1-5   Entra, Dataverse, SharePoint
@@ -89,25 +78,21 @@ You:      Steps 1-5   Entra, Dataverse, SharePoint
               |
 You:      Steps 6-7   Management Portal: choose environment, set SharePoint destination
               |
-You:      Step 8      the launch point on the appointment form
+You:      Step 8      embed Present in the Dynamics form
               |
 Together: verification
 ```
 
-Tell your &money contact when Steps 1 to 5 are done; they will confirm when the Management Portal is
-ready for you.
+You are not expected to report each step as you finish it. Tell us when Steps 1 to 5 are done so we can
+open the Management Portal to you, and raise anything that does not behave as described here.
 
 ---
 
 ## Application IDs you will need
 
-Four &money applications are involved, and their client IDs appear repeatedly in the steps below —
-in the consent links in Step 1, in the authorisation commands in Step 3, in the Dataverse application
-user in Step 4, and in the SharePoint permission in Step 5b. They are collected here so you can fill
-them in once and refer back.
+Four &money applications are involved. Their client IDs appear throughout the steps below.
 
-**These are identifiers, not secrets.** They are safe to paste into scripts, tickets and change
-records.
+**These are identifiers, not secrets** — safe to paste into scripts, tickets and change records.
 
 | Application | Written in this guide as | Test | Production |
 |---|---|---|---|
@@ -116,48 +101,27 @@ records.
 | AndMoney API | `{AndMoneyApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
 | AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | *to be provided* | *to be provided* |
 
-Where each one is used:
-
-| Application | Used in |
-|---|---|
-| **AndMoney Present UI** | Step 1 only — but it is the one your **advisors** sign in through to use Present. Without it they cannot open Present at all |
-| **AndMoney Management UI** | Step 1 only — the sign-in surface for the **Management Portal**, which your administrators need for Steps 6 and 7 |
-| **AndMoney API** | Step 1 (consent), Step 2 (the enterprise application you assign roles in), Step 3 (**both** authorisation commands are recorded against this one), Step 5b (the application named in the SharePoint permission) |
-| **Dynamics Access** | Step 1 (consent), Step 4 (the application your Dataverse application user is bound to) |
+| Application | What it is | Used in |
+|---|---|---|
+| **AndMoney Present UI** | The sign-in surface your **advisors** use to reach Present | Step 1 |
+| **AndMoney Management UI** | The sign-in surface your **administrators** use to reach the Management Portal | Step 1 |
+| **AndMoney API** | The API behind both, carrying the app roles | Steps 1, 2, 3, 5b |
+| **AndMoney Dynamics Access** | The application identity that reads your Dataverse schema | Steps 1, 4 |
 
 {: .note }
-> **AndMoney Present UI and AndMoney Management UI are two different sign-in surfaces, and both are
-> needed.**
-> Advisors sign in to *AndMoney Present UI* to use Present; administrators sign in to the *Management Portal* to complete Steps
-> 6 and 7. They are separate applications with separate consents. Approving only one leaves either your
-> advisors or your administrators locked out, and the symptom appears late — at first use, not at consent.
+> **The two sign-in surfaces are separate applications and both are required.** Approving only one
+> leaves either your advisors or your administrators locked out, and it shows at first use rather than
+> at consent.
 
-{: .note }
-> **Confirm the values with your &money contact before you start**, and make sure you are working from
-> the column for the environment you are onboarding. Running a step against the wrong environment's
-> application succeeds without any warning — it simply grants access that the environment in question
-> never uses, and leaves the one you meant to configure still broken.
-
-You will also need **your own Entra tenant ID** (Directory ID) throughout, written here as
-`{YourTenantId}`.
-
+Your own tenant ID is written below as `{YourTenantId}`.
 
 ## Step 1 — Approve the Engage applications
 
-Engage publishes its applications from its own Entra tenant as multi-tenant apps. You approve them; you
-do not create app registrations for this. Approving creates a **service principal** for each in your
-directory — that is what lets the applications authenticate against your tenant at all.
+Engage publishes its applications as multi-tenant apps; you approve them rather than creating any.
+Approving creates a **service principal** in your directory, which is what lets each application
+authenticate against your tenant.
 
-There are **four**, and all four are required:
-
-| Application | Why it is needed |
-|---|---|
-| **AndMoney Present UI** | The sign-in surface your **advisors** use to reach Present |
-| **AndMoney Management UI** | The sign-in surface your **administrators** use to reach the Management Portal in Steps 6 and 7 |
-| **AndMoney API** | The API behind both, carrying the app roles from Step 2. It is also the application that performs the token exchange authorised in Step 3 |
-| **AndMoney Dynamics Access** | The application identity that reads your Dataverse schema. Step 4 binds a Dataverse application user to this one |
-
-Open each link as an administrator, replacing `{YourTenantId}`:
+All four are required. Open each link as an administrator:
 
 ```text
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={PresentUiAppClientId}
@@ -166,35 +130,26 @@ https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={AndMone
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={DynamicsAccessAppClientId}
 ```
 
-Take the client IDs from the [table above](#application-ids-you-will-need). The Management Portal pair
-is also listed in
-[App Registration Installation]({{ site.baseurl }}/foundation/identity/app-registration-installation/), and
-the Present UI consent has its own walkthrough in
-[Approving Engage in Your Microsoft Entra]({{ site.baseurl }}/foundation/identity/engage-admin-consent/).
-
 Review the summary Microsoft shows, then **Accept**.
 
-{: .warning }
-> **You may see "Sorry, but we're having trouble signing you in" afterwards.** That is expected and
-> harmless — the consent link is not a sign-in page, and the approval has still been recorded. Confirm
-> by checking that all four applications appear under **Enterprise applications**.
+{: .note }
+> **You may see "Sorry, but we're having trouble signing you in" afterwards.** That is expected — the
+> consent link is not a sign-in page, and the approval has been recorded. Confirm by checking that all
+> four applications appear under **Enterprise applications**.
 
 {: .warning }
 > **Do not delete and re-add these enterprise applications later.** Permissions bind to the service
-> principal object, so removing and reinstalling an application silently discards every grant made
-> against it, including those in Step 3 and Step 5b. If one has to be reinstalled, treat Steps 3 and 5b
-> as needing to be redone.
-
-No passwords or secrets are shared with &money by this step.
+> principal object, so reinstalling one silently discards every grant made against it, including
+> Steps 3 and 5b.
 
 ## Step 2 — Assign people to roles
 
-Open the **AndMoney API** enterprise application, go to **Users and groups**, and assign
-your security groups (or individual users) to the roles they need:
+Open the **AndMoney API** enterprise application → **Users and groups**, and assign your security
+groups or users to the roles they need:
 
 | Role | What it grants |
 |---|---|
-| `Admin` | Everything a Configurator can do, plus access to logs — **and the Management Portal screens in Steps 6 and 7** |
+| `Admin` | Everything a Configurator can do, plus logs — **and the Management Portal screens in Steps 6 and 7** |
 | `Configurator` | Meeting and portal configuration, field mappings, presentation templates |
 | `Manager` | Service and competence group configuration |
 | `Employee` | Standard advisor access — the role most of your users need |
@@ -202,18 +157,16 @@ your security groups (or individual users) to the roles they need:
 
 {: .important }
 > **At least one person needs `Admin`, and that person also needs access to the Dynamics environment.**
-> Steps 6 and 7 both require the `Admin` role, and Step 6 additionally lists only the environments the
-> signed-in person can reach in Dynamics. A `Configurator` cannot complete either step.
+> Steps 6 and 7 both require it, and Step 6 lists only the environments that person can reach in
+> Dynamics. A `Configurator` cannot complete either step.
 
-Assigning several roles to one person has no additive effect — the highest applies. Changes take effect
-at next sign-in, and groups are easier to live with than individual assignments.
-
-Repeat for every environment you are onboarded to; the test and production applications are separate.
+The highest assigned role applies; changes take effect at next sign-in. Repeat for every environment you
+are onboarded to — the test and production applications are separate.
 
 ## Step 3 — Authorise Engage to act as your advisors
 
-Two permissions are recorded here, both against the **AndMoney API** service principal in
-your tenant, and both delegated — they let Engage act *as the signed-in advisor*, never beyond them:
+Two delegated permissions, both recorded against the **AndMoney API** service principal in your tenant.
+They let Engage act *as the signed-in advisor*, never beyond:
 
 | Permission | Resource | Enables |
 |---|---|---|
@@ -222,15 +175,13 @@ your tenant, and both delegated — they let Engage act *as the signed-in adviso
 
 {: .note }
 > `Sites.Selected` grants access to **no SharePoint site at all** by itself. It becomes usable for one
-> specific site only once that site is named in Step 5b. Granting it here is not granting access to your
-> SharePoint.
+> site only once that site is named in Step 5b.
 
-Neither can be done through a consent link. They are recorded directly against the service principal,
-which Microsoft's consent endpoint cannot do — that endpoint only grants permissions an application
-advertises in its manifest. Engage deliberately advertises neither, so that customers who use neither
-Dynamics nor SharePoint are never asked to approve a permission for them.
+Neither can be granted through a consent link: Microsoft's consent endpoint only grants permissions an
+application advertises in its manifest, and Engage advertises neither — so customers using neither
+Dynamics nor SharePoint are never asked to approve them.
 
-&money provides `add-delegated-grant-to-service-principal.ps1`, which your administrator runs **twice**:
+Use [`add-delegated-grant-to-service-principal.ps1`](#add-delegated-grant-to-service-principalps1), run **twice**:
 
 ```powershell
 # Dataverse - the script's defaults
@@ -246,82 +197,60 @@ Dynamics nor SharePoint are never asked to approve a permission for them.
   -scope         Sites.Selected
 ```
 
-**Application Administrator** is sufficient (Cloud Application Administrator, Directory Writers,
-Privileged Role Administrator and User Administrator also work). Global Administrator is not needed.
+**Application Administrator** is sufficient; Global Administrator is not needed. Both take effect within
+seconds.
 
-What to know about it:
-
-- **It is idempotent.** Re-running appends the permission or does nothing. Allow a few seconds between
-  the two runs — Microsoft's read of the permission list lags writes, and an immediate second run can
-  attempt a duplicate.
-- **It prints an Undo command each time. Keep both.** The command differs depending on what the script
-  found: a permission it created is deleted outright, while one appended to a pre-existing record is
-  removed by restoring the original list. Deleting the whole record by hand would revoke every other
-  delegated permission that application holds in your tenant.
-- **Signing in leaves a trace.** The script authenticates through Microsoft's own *Microsoft Graph
-  Command Line Tools* application, which leaves a consent for that Microsoft application in your tenant.
-  If your policy does not allow standing admin-tooling consent, revoke it afterwards under **Enterprise
-  applications → Microsoft Graph Command Line Tools → Permissions**.
-
-Both take effect within seconds.
+- **It is idempotent**, but allow a few seconds between the two runs — Microsoft's read of the
+  permission list lags writes, and an immediate second run can attempt a duplicate.
+- **It prints an Undo command each time. Keep both.** Deleting the permission record by hand would
+  revoke every other delegated permission that application holds in your tenant.
 
 ## Step 4 — Create the application user in Dataverse
 
 The application identity needs a Dataverse user in your environment, bound to the **AndMoney Dynamics
-Access** client ID from Step 1.
+Access** client ID.
 
 1. **Power Platform admin centre → Environments → {your environment} → Settings → Users + permissions
    → Application users → New app user.**
-2. Select the application by its client ID — `{DynamicsAccessAppClientId}` from the table above — and choose a business unit.
+2. Select the application by its client ID — `{DynamicsAccessAppClientId}` — and choose a business unit.
 3. Create a **custom security role** and assign it — then trim it. Dataverse has no empty role: a new
    custom role arrives carrying around 80 privileges, and *Copy role* clones an equally large one.
-   See [Trimming the new role](#trimming-the-new-role) below, which is not an optional tidy-up.
+   See [Trimming the new role](#trimming-the-new-role), which is not an optional tidy-up.
 
 ### The exact privileges
 
-Five, all at **Organization** level, and nothing else:
+Four, and nothing else:
 
 | Group in the role editor | Privilege | Level |
 |---|---|---|
-| Business Management | **User** | Read — Organization |
 | Business Management | **Organization** | Read — Organization |
 | Customization | **Entity** | Read |
 | Customization | **Attribute** | Read |
 | Customization | **Relationship** | Read |
 
-What each is for:
+- **Organization** — the Dataverse client's connection handshake. Without it the integration fails when
+  it connects, before it reads anything.
+- **Entity, Attribute, Relationship** — reading your schema. These are metadata reads: they expose the
+  *shape* of your data, not its contents.
 
-- **User (Read, Organization)** — resolving which Dynamics user a signed-in advisor corresponds to.
-  Organization level because any advisor in your directory may sign in, not only those in one business
-  unit.
-- **Organization (Read)** — the Dataverse client's own connection handshake. Without it the
-  integration fails when it connects, before it reads anything.
-- **Entity, Attribute, Relationship (Read)** — reading your schema so the field mapping can offer your
-  real tables and columns. These are metadata reads: they expose the *shape* of your data, not its
-  contents.
-
-Privileges that look like they belong here and do **not**: *Option Set* (Engage reads an attribute's
-type but never its option values), *Business Unit* and *User Settings*. All three are in the default
-set and all three can go.
+Privileges that look like they belong here and do **not**: *User*, *Option Set* (Engage reads an
+attribute's type but never its option values), *Business Unit* and *User Settings*. All are in the
+default set and all can go.
 
 {: .important }
 > **No access to customer records is required, and none should be granted.** No `account`, `contact`,
 > `appointment` or `annotation` privileges belong on this role. All record work runs as the advisor
-> under their own role, so anything added here would widen the integration's reach without enabling any
-> feature. If Engage ever appears to need record privileges on this role, ask &money before granting
-> them.
+> under their own role. If Engage ever appears to need record privileges here, ask &money before
+> granting them.
 
 ### Trimming the new role
 
-The privileges your new role starts with are not a safe default. They include, at organization level,
-the ability to **create and activate workflows**, **create, change and delete business process flows**,
-and **write SharePoint document data** — none of which this integration uses. Reading down the tabs
-they look like harmless reference entries; it is the privilege names that give it away.
+The privileges a new role starts with are not a safe default. They include, at organization level, the
+ability to **create and activate workflows**, **create, change and delete business process flows**, and
+**write SharePoint document data** — none of which this integration uses.
 
-So the role has to be reduced to the five above. In the role editor that means setting every other
-privilege back to none, which is roughly eighty toggles with no way to confirm the result. If you would
-rather do it precisely, two Dataverse Web API calls against your own environment do the same thing and
-can be verified:
+Reducing it in the role editor means setting roughly eighty privileges back to none with no way to
+confirm the result. Two Dataverse Web API calls do the same thing and can be verified:
 
 ```
 POST {EnvironmentUrl}/api/data/v9.2/roles({roleid})/Microsoft.Dynamics.CRM.ReplacePrivilegesRole
@@ -331,50 +260,43 @@ GET  {EnvironmentUrl}/api/data/v9.2/RetrieveRolePrivilegesRole(RoleId={roleid})
 ```
 
 Resolve each privilege id by name first — `GET /api/data/v9.2/privileges?$filter=name eq 'prvReadEntity'`
-— for `prvReadEntity`, `prvReadAttribute`, `prvReadRelationship`, `prvReadUser` and
-`prvReadOrganization`. The second call reads the role back so you can see exactly what it carries.
-Capture the original set before you replace it; restoring is the same call with the captured list.
+— for `prvReadEntity`, `prvReadAttribute`, `prvReadRelationship` and `prvReadOrganization`. The second call reads the role back. Capture the original set before you replace
+it; restoring is the same call with the captured list.
 
 {: .note }
 > **Four SharePoint privileges will reappear and that is expected.** Because your environment has
 > server-based SharePoint document management enabled, Dataverse attaches `prvReadSharePointDocument`,
-> `prvReadSharePointData`, `prvCreateSharePointData` and `prvWriteSharePointData` to the role. You can
-> delete them, but the next time the role is saved in the editor they come back. They are imposed by
-> the platform, not requested by Engage, and they govern Dataverse's own document-location records
-> rather than the contents of your SharePoint sites — access to those is granted separately, per site,
-> in Step 5. So a correctly trimmed role shows **nine** privileges: the five above plus those four.
+> `prvReadSharePointData`, `prvCreateSharePointData` and `prvWriteSharePointData` to the role. Deleting
+> them only lasts until the role is next saved in the editor. They are imposed by the platform, not
+> requested by Engage, and govern Dataverse's own document-location records rather than the contents of
+> your SharePoint sites. A correctly trimmed role therefore shows **eight** privileges: the four above
+> plus those four.
 
 If a step fails with a privilege error, send the error to &money rather than broadening the role.
 
 **Verify:** the application user can call `{EnvironmentUrl}/api/data/v9.2/WhoAmI` and receives a
-`UserId` in response. Confirm the user shows as **Enabled**.
+`UserId`. Confirm the user shows as **Enabled**.
 
 ## Step 5 — Prepare the SharePoint site and grant access to it
 
-One SharePoint site is the destination for generated decks.
-
 ### 5a — Create or nominate the site
 
-Create or nominate a site, and add the advisors who will use Present as members. Note the **host name**,
+Create or nominate a site and add the advisors who will use Present as members. Note the **host name**,
 the **server-relative site path**, and the **document library** if it should not be the site's default —
-for example `bank.sharepoint.com`, `/sites/decks`, default library. You will enter these yourself in
-Step 7.
+for example `bank.sharepoint.com`, `/sites/decks`, default library. You enter these yourself in Step 7.
 
 Site paths containing `:`, `#`, `%`, `?` or `;` cannot be used; they collide with the way Microsoft
 Graph addresses sites.
 
 ### 5b — Grant the AndMoney API application access to that one site
 
-The `Sites.Selected` permission from Step 3 reaches no site until that site is named explicitly. This is
-why Engage cannot reach any other SharePoint site in your tenant, and it is worth recording in your
-security review alongside Step 1.
+`Sites.Selected` from Step 3 reaches no site until that site is named explicitly — which is why Engage
+cannot reach any other SharePoint site in your tenant. The permission goes to the same application you
+granted `Sites.Selected` to: **AndMoney API** (`{AndMoneyApiAppClientId}`), not the Dynamics one.
 
-The permission is granted to the **same application you granted `Sites.Selected` to in Step 3** — the
-AndMoney API application (`{AndMoneyApiAppClientId}`), not the Dynamics one.
-
-Running these calls requires `Sites.FullControl.All`, which is why this is yours to do and not ours. The
-easiest place to run them is [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer),
-signed in as a SharePoint or Global administrator; any Graph client works equally well.
+These calls require `Sites.FullControl.All`, which is why they are yours to run.
+[Graph Explorer](https://developer.microsoft.com/graph/graph-explorer) is the easiest place; any Graph
+client works.
 
 #### 1. Find the site ID
 
@@ -382,10 +304,10 @@ signed in as a SharePoint or Global administrator; any Graph client works equall
 GET https://graph.microsoft.com/v1.0/sites/{hostname}:{site-path}
 ```
 
-For the example in 5a that is `.../sites/bank.sharepoint.com:/sites/decks`.
+For the 5a example: `.../sites/bank.sharepoint.com:/sites/decks`.
 
-The response's `id` is a composite of three comma-separated parts, something like
-`bank.sharepoint.com,8f9c…,3a21…`. Use the whole string, commas included, as `{siteId}` below.
+The response's `id` is a composite of three comma-separated parts — `bank.sharepoint.com,8f9c…,3a21…`.
+Use the whole string, commas included, as `{siteId}`.
 
 #### 2. Record the permission
 
@@ -406,11 +328,11 @@ Content-Type: application/json
 }
 ```
 
-**`write`, not `fullcontrol`.** Engage writes and reads deck files; it has no reason to manage the site
-itself, and `fullcontrol` would let it change permissions — including its own.
+**`write`, not `fullcontrol`.** Engage writes and reads deck files; `fullcontrol` would let it change
+permissions, including its own.
 
-**Record the `id` returned in the response.** It identifies this specific permission and is what you
-need in order to revoke it later. It is not the same as the application ID.
+**Record the `id` returned in the response** — it identifies this permission and is what you need to
+revoke it. It is not the application ID.
 
 #### 3. Verify
 
@@ -418,9 +340,9 @@ need in order to revoke it later. It is not the same as the application ID.
 GET https://graph.microsoft.com/v1.0/sites/{siteId}/permissions
 ```
 
-Confirm that **exactly one** application is listed, that it is `{AndMoneyApiAppClientId}`, and that its role
-is `write`. This listing is the complete statement of what Engage can reach in your
-SharePoint — keep it for your audit record.
+Confirm that **exactly one** application is listed, that it is `{AndMoneyApiAppClientId}`, and that its
+role is `write`. This listing is the complete statement of what Engage can reach in your SharePoint —
+keep it for your audit record.
 
 #### 4. To revoke, later
 
@@ -428,53 +350,46 @@ SharePoint — keep it for your audit record.
 DELETE https://graph.microsoft.com/v1.0/sites/{siteId}/permissions/{permissionId}
 ```
 
-Access stops immediately, and nothing else in the integration is affected. Present will fail to save
-decks; everything else continues working.
+Access stops immediately. Present will fail to save decks; nothing else is affected.
 
 {: .note }
-> If your team prefers PnP PowerShell, it offers equivalent cmdlets for granting and listing site
-> permissions. The Graph calls above are the underlying operation either way, and are what the
-> verification in step 3 should be read against.
+> PnP PowerShell offers equivalent cmdlets. The Graph calls above are the underlying operation either
+> way, and are what the verification should be read against.
 
 ### 5c — Housekeeping
 
-Housekeeping of old decks is yours to run on whatever schedule suits you. Engage does not archive or
-prune, and tolerates files being removed.
+Pruning old decks is yours to run on whatever schedule suits you. Engage does not archive or prune, and
+tolerates files being removed.
 
 ---
 
 {: .important }
 > **Steps 6 and 7 need &money to have registered your organisation first.** Confirm with your &money
-> contact that the Management Portal is ready for you before starting them. Both require the `Admin`
-> role from Step 2.
+> contact before starting them. Both require the `Admin` role from Step 2.
 
 ## Step 6 — Select your Dynamics environment
 
-Engage does not hardcode your environment URL, and &money does not enter it on your behalf. You choose
-it yourself, and Engage discovers the options by asking Microsoft which Dataverse environments **you**
-can see — so sign in as someone with access to the intended environment.
+Engage does not hardcode your environment URL. You choose it, and Engage lists the options by asking
+Microsoft which Dataverse environments **you** can see — so sign in as someone with access to the
+intended environment.
 
 1. Sign in to the Management Portal with an account holding the `Admin` role.
 2. Go to **Admin → CRM**.
-3. The environment list is populated live from Microsoft's Global Discovery Service. Choose the intended
-   environment — the sandbox during the integration phase, production at go-live.
+3. Choose the environment — the sandbox during the integration phase, production at go-live.
 4. Save.
 
 {: .note }
 > *Screenshots pending: the Admin → CRM screen, the environment list, and the saved state.*
 
-Two things worth knowing:
-
-- **The list shows only environments your signed-in account can reach.** An empty or short list is a
-  statement about your own access, not a fault in Engage. If the intended environment is missing, check
-  that your account has access to it in Dynamics.
+- **The list shows only environments your signed-in account can reach.** A short or empty list is a
+  statement about your own access, not a fault in Engage.
 - **Changing the environment later is possible but not free.** Configured CRM users and field mappings
-  do not follow the move, and the Portal warns you when you attempt it. Plan the sandbox-to-production
-  switch with your &money contact rather than treating it as a toggle.
+  do not follow the move, and the Portal warns you. Plan the sandbox-to-production switch with your
+  &money contact.
 
 ## Step 7 — Configure your SharePoint destination
 
-The destination is also yours to enter, using the values from Step 5a.
+Using the values from Step 5a:
 
 1. In the Management Portal, go to **Admin → Microsoft → SharePoint**.
 2. Add a destination with:
@@ -487,13 +402,9 @@ The destination is also yours to enter, using the values from Step 5a.
 | Document library | *(leave empty)* | Empty selects the site's default document library |
 
 {: .warning }
-> **The key must be exactly `present`** — lower-case, no spaces. It is not a label you choose. The
-> Present workflow &money deploys to your organisation selects its destination *by this key*, and the
-> key travels verbatim with the workflow. A destination saved under any other name leaves the workflow
-> pointing at a site that does not exist, and deck generation fails at the upload step with a
-> destination-not-found error rather than anything that mentions naming.
-
-The remaining fields are the values you noted in Step 5a.
+> **The key must be exactly `present`** — lower-case, no spaces. It is not a label you choose. Present
+> selects its destination by this key. A destination saved under any other name fails at the upload step
+> with a destination-not-found error rather than anything that mentions naming.
 
 {: .note }
 > *Screenshots pending: the Microsoft → SharePoint screen, the add-destination dialog, and a saved
@@ -501,52 +412,72 @@ The remaining fields are the values you noted in Step 5a.
 
 {: .warning }
 > **There is no default destination.** Until one exists here, Present cannot write to SharePoint at all.
-> Saving a destination does not by itself grant access — the per-site permission from Step 5b is what
-> does that, and the two are checked at different moments. If a deck fails to save, confirm both.
+> Saving a destination does not grant access — the per-site permission from Step 5b does that, and the
+> two are checked at different moments. If a deck fails to save, confirm both.
 
-Your &money contact is happy to do Steps 6 and 7 with you on a call the first time.
+## Step 8 — Embed Present in Dynamics
 
-## Step 8 — Add the launch point to the appointment form
+Present opens from a **Dynamics appointment record**, so one must exist before Present is opened.
 
-Engage Present opens from a **Dynamics appointment record** — the deck is generated for a specific
-appointment, so one must exist before Present is opened.
+You build the embedding as a **web resource or PCF component** on the appointment form.
 
-You add the button or IFRAME control to the appointment form in your own environment. &money owns and
-documents the URL and parameter contract; the form customisation is yours. The contract uses the
-standard Dynamics IFRAME parameters, and the signed-in advisor is resolved from their Entra token rather
-than passed in the URL.
+{: .warning }
+> **A standard IFRAME control is not sufficient.** Its URL is fixed when the form is designed, so it
+> cannot carry the login hint, which is per-advisor and only known at runtime. Without the hint the
+> embedding still works, but every advisor gets a sign-in pop-up each time they open Present.
 
-&money provides a small validation page you can point the control at first. It echoes back the
-parameters it received and reports whether sign-in resolved correctly, so you can get the launch point
-right before the full integration is live.
+### The data contract
 
----
+| Parameter | Value | Purpose |
+|---|---|---|
+| `id` | The appointment record GUID | Which appointment the deck is for |
+| `typename` | `appointment` | The table the record belongs to |
+| `user_email` | The signed-in advisor's email | **The login hint** |
+| `type`, `orgname`, `userlcid`, `orglcid` | Standard Dynamics values | Context; optional |
 
-## What to send back
+These are values a Dynamics form already has to hand — the component reads them at runtime and passes
+them on, which is what a static control cannot do. `federation_id` is also accepted where your setup
+uses one.
 
-**One thing: your Entra tenant ID.** Send it before Step 1, by email.
+{: .important }
+> **The login hint is what makes sign-in invisible.** With it, Present completes SSO silently against
+> the advisor's existing session.
+>
+> It is **not** how Present identifies the advisor. Identity always comes from the SSO token; the hint
+> only tells Microsoft which account to resolve silently, and Present cross-checks the two and reports a
+> mismatch. Sending a hint grants nothing, and spoofing it achieves nothing.
 
-Everything else is a confirmation that a step is done — no artefacts, no identifiers, and nothing
-sensitive. Your Dataverse environment URL and SharePoint destination are **not** on this list: you enter
-those yourself in Steps 6 and 7, and &money never needs to be told them.
+### Validate the embedding first
 
-Tell your &money contact when you have completed:
+Point your component at the **identity endpoint** before pointing it at Present:
 
-- [ ] Steps 1 to 5 — including all four consents — so they can register your organisation and open the Management Portal to you
-- [ ] Steps 6 and 7 — so they can finish the field mapping and deploy the Present workflow
+| Environment | URL |
+|---|---|
+| Test | `https://engage.test-env.andmoney.dk/identity` |
+| Production | `https://engage.andmoney.dk/identity` |
 
-Also useful, whenever you know it: a named contact for schema and field-mapping questions.
+It states the expected contract and reports what your embedding actually sent — each parameter with a
+pass or fail, the SSO result, and whether the login hint matches the signed-in user. It is the same
+handshake and identity resolution the live integration uses, so a green result means the embedding is
+correct.
 
-{: .note }
-> This integration involves **no credential handover in either direction**. If you are ever asked to
-> email a client secret, certificate or password for it, treat that as a red flag and contact your
-> &money representative.
+Missing parameters report as *not provided* rather than failures, so a partial embedding is still worth
+testing.
+
+### Then switch to Present
+
+| Environment | URL |
+|---|---|
+| Test | `https://engage.test-env.andmoney.dk/present` |
+| Production | `https://engage.andmoney.dk/present` |
+
+Nothing else changes — same component, same parameters, same login hint.
 
 ## What &money does
 
-Between your Step 5 and your Step 6: registers your organisation, links your Entra tenant to it, enables
-Present, and prepares the starter field mappings. After Step 7: works through the mapping with you,
-deploys the presentation workflows, and runs the verification below.
+Before your Step 6: registers your organisation, links your Entra tenant to it and enables Present.
+
+Throughout the onboarding, your &money contact is available to help with any step here.
 
 ## Verifying it works
 
@@ -558,21 +489,185 @@ Together, at the end:
 - A generated deck lands in the SharePoint site and opens in PowerPoint on the web.
 - An advisor without access to the SharePoint site fails visibly rather than silently.
 
-## Still being confirmed
+## Scripts
 
-Listed so that nothing is promised before it is real.
+### add-delegated-grant-to-service-principal.ps1
 
-| Item | Status |
-|---|---|
-| The security role in Step 4 | Derived from the operations Engage performs; being validated against a live environment before we ask you to finalise it |
-| The exact commands for the per-site grant in Step 5b | The model is settled — a `write` permission for the Engage application on your nominated site, recorded and revocable by you. The precise administrator commands are being confirmed against a real tenant before they are handed over, rather than published from a generic example |
-| Screenshots for Steps 6 and 7 | Being produced |
-| Starter field mappings and the tag baseline | Being prepared; both are needed before the mapping session |
-| The validation page in Step 8 | Being built |
-| Directory synchronisation (SCIM) | Not currently proposed. Advisors are created directly, which suits a pilot-sized group. Whether that remains right at your scale is under review, and [SCIM provisioning]({{ site.baseurl }}/foundation/scim/) is available if not |
+Used in [Step 3](#step-3--authorise-engage-to-act-as-your-advisors). Records a delegated permission
+directly on a service principal in your tenant — the one thing an admin-consent link cannot do.
+
+Requires the `Microsoft.Graph` PowerShell module:
+
+```powershell
+Install-Module Microsoft.Graph -Scope CurrentUser -Repository PSGallery
+```
+
+Save the following as `add-delegated-grant-to-service-principal.ps1`:
+
+```powershell
+param (
+    [Parameter(Mandatory = $true, HelpMessage = "Entra tenant id in which to create the grant (the consuming/bank tenant).")]
+    [guid]$tenantId,
+
+    [Parameter(Mandatory = $true, HelpMessage = "AppId (client id) of the client application whose service principal receives the grant.")]
+    [guid]$clientAppId,
+
+    [Parameter(HelpMessage = "AppId of the resource API. Default: Dataverse (Dynamics CRM).")]
+    [guid]$resourceAppId = '00000007-0000-0000-c000-000000000000',
+
+    [Parameter(HelpMessage = "Delegated permission (scope) value to grant. Default: user_impersonation.")]
+    [string]$scope = 'user_impersonation'
+)
+
+# Grants a delegated permission directly on the client app's SERVICE PRINCIPAL in
+# the given tenant (an oauth2PermissionGrant), without touching the app
+# registration's manifest. Use when a permission applies only to some consuming
+# tenants - e.g. Dataverse user_impersonation for Dynamics banks - and must not
+# appear in every tenant's consent prompt. The /adminconsent endpoint cannot do
+# this (it only grants manifest-advertised permissions), hence this Graph write.
+#
+# Idempotent upsert: a client/resource pair holds at most one AllPrincipals grant,
+# whose Scope is a space-separated list; re-running appends the scope or no-ops.
+# Graph's grant list reads lag writes by seconds, so allow a moment between runs
+# against the same pair - an immediate re-run can miss the new row and attempt a
+# duplicate create, which Graph rejects with a key conflict.
+#
+# To undo, use the command printed under "Undo:" at the end of the run. It differs
+# per path: a grant this script created is deleted outright, whereas a scope
+# appended to a pre-existing grant is removed by writing the original Scope list
+# back. Deleting a pre-existing grant would revoke every other delegated
+# permission the client app holds tenant-wide.
+#
+# Run by an admin of the target tenant. Application Administrator is sufficient;
+# so are Cloud Application
+# Administrator, Directory Writers, Privileged Role Administrator and User
+# Administrator. Global Administrator is not required.
+#
+# Signing in consents the Microsoft first-party app "Microsoft Graph Command Line
+# Tools" to the scopes below, which leaves a tenant-wide grant for that app behind
+# after this script exits. Revoke it under Enterprise applications > Microsoft
+# Graph Command Line Tools > Permissions if tenant policy disallows standing
+# admin-tooling consent.
+
+#Requires -Modules Microsoft.Graph.Authentication, Microsoft.Graph.Applications, Microsoft.Graph.Identity.SignIns
+
+## To run the cmdlets in this script, you need the Microsoft Graph module installed.
+# Command to run in Powershell shell: Install-Module Microsoft.Graph -Scope CurrentUser -Repository PSGallery -Force
+# Check if installed: Get-InstalledModule -Name Microsoft.Graph
+
+Import-Module Microsoft.Graph.Authentication
+Import-Module Microsoft.Graph.Applications
+Import-Module Microsoft.Graph.Identity.SignIns
+
+# ContextScope Process keeps the token cache in memory, so no bank-tenant Graph
+# context outlives the run on the operator's machine. The resulting context is
+# then asserted against $tenantId: a cancelled or expired sign-in can otherwise
+# leave an earlier tenant's context live, and the grant written below is
+# tenant-wide. Get-MgContext rather than Get-MgOrganization, so the assert needs
+# no user-read scope on the bank's consent prompt.
+Connect-MgGraph -TenantId $tenantId -Scopes "Application.Read.All", "DelegatedPermissionGrant.ReadWrite.All" -ContextScope Process -NoWelcome -ErrorAction Stop
+
+$context = Get-MgContext
+if ($null -eq $context -or [guid]$context.TenantId -ne $tenantId) {
+    Write-Host -ForegroundColor Red "Signed in to tenant '$($context.TenantId)', expected '$tenantId'."
+    Write-Host -ForegroundColor Red "Sign in as an admin of the target tenant and re-run."
+    exit 1
+}
+
+#################################################################################################################
+# Resolve the two service principals in the target tenant
+#################################################################################################################
+$clientSp = Get-MgServicePrincipal -Filter "appId eq '$clientAppId'" -ErrorAction Stop
+if ($null -eq $clientSp) {
+    Write-Host -ForegroundColor Red "No service principal for appId $clientAppId in tenant $tenantId."
+    Write-Host -ForegroundColor Red "The application must be installed (admin-consented) in this tenant first."
+    exit 1
+}
+
+$resourceSp = Get-MgServicePrincipal -Filter "appId eq '$resourceAppId'" -ErrorAction Stop
+if ($null -eq $resourceSp) {
+    Write-Host -ForegroundColor Red "No service principal for resource appId $resourceAppId in tenant $tenantId."
+    Write-Host -ForegroundColor Red "For Dataverse this means the tenant has no Dynamics/Power Platform footprint."
+    exit 1
+}
+
+# Entra accepts grants for scope values the resource never published; guard against
+# typos. Disabled scopes are excluded - a grant naming one is silently ignored at
+# token time. Matching is case-sensitive because Entra's scope matching is too.
+$publishedScopes = @($resourceSp.Oauth2PermissionScopes | Where-Object { $_.IsEnabled } | ForEach-Object { $_.Value })
+if ($publishedScopes -cnotcontains $scope) {
+    Write-Host -ForegroundColor Red "Resource '$($resourceSp.DisplayName)' does not publish an enabled delegated permission named '$scope'."
+    Write-Host -ForegroundColor Red "Published scopes: $($publishedScopes -join ', ')"
+    Write-Host -ForegroundColor Red "If the scope was published on the app registration only recently, this tenant's copy of the"
+    Write-Host -ForegroundColor Red "service principal may be stale: run Update-MgServicePrincipalByAppId -AppId $resourceAppId here first."
+    exit 1
+}
+
+#################################################################################################################
+# Show what is about to be consented, while it is still avoidable
+#################################################################################################################
+Write-Host
+Write-Host -ForegroundColor Cyan -NoNewline "Tenant:   "
+Write-Host -ForegroundColor Yellow "$tenantId"
+Write-Host -ForegroundColor Cyan -NoNewline "Client:   "
+Write-Host -ForegroundColor Yellow "$($clientSp.DisplayName) ($clientAppId, SP $($clientSp.Id))"
+Write-Host -ForegroundColor Cyan -NoNewline "Resource: "
+Write-Host -ForegroundColor Yellow "$($resourceSp.DisplayName) ($resourceAppId)"
+Write-Host
+
+#################################################################################################################
+# Upsert the AllPrincipals grant
+#################################################################################################################
+$grant = Get-MgOauth2PermissionGrant -Filter "clientId eq '$($clientSp.Id)' and consentType eq 'AllPrincipals'" -All -ErrorAction Stop |
+    Where-Object { $_.ResourceId -eq $resourceSp.Id }
+
+if ($null -ne $grant) {
+    $grantId = $grant.Id
+    $scopes = @($grant.Scope -split '\s+' | Where-Object { $_ })
+    # Case-sensitive: a row differing only by casing is a different scope to Entra,
+    # so treating it as a match would report success on a grant that never applies.
+    if ($scopes -ccontains $scope) {
+        Write-Host -ForegroundColor Green "Already granted - nothing to do."
+        $finalScopes = $scopes
+        $undo = $null
+    } else {
+        $finalScopes = $scopes + $scope
+        Update-MgOauth2PermissionGrant -OAuth2PermissionGrantId $grantId -Scope ($finalScopes -join ' ') -ErrorAction Stop
+        Write-Host -ForegroundColor Green "SUCCESS >>> Appended '$scope' to the existing grant."
+        # The grant pre-dates this run and carries scopes this run did not add, so
+        # undo restores the captured list instead of deleting the grant.
+        $undo = "Update-MgOauth2PermissionGrant -OAuth2PermissionGrantId $grantId -Scope '$($scopes -join ' ')'"
+    }
+} else {
+    $newGrant = New-MgOauth2PermissionGrant -ClientId $clientSp.Id -ConsentType 'AllPrincipals' -ResourceId $resourceSp.Id -Scope $scope -ErrorAction Stop
+    if ($null -eq $newGrant -or [string]::IsNullOrWhiteSpace($newGrant.Id)) {
+        Write-Host -ForegroundColor Red "The create call returned no grant id, so no grant was written."
+        Write-Host -ForegroundColor Red "Check the state with Get-MgOauth2PermissionGrant before re-running."
+        exit 1
+    }
+    $grantId = $newGrant.Id
+    $finalScopes = @($scope)
+    Write-Host -ForegroundColor Green "SUCCESS >>> Grant created."
+    $undo = "Remove-MgOauth2PermissionGrant -OAuth2PermissionGrantId $grantId"
+}
+
+Write-Host
+Write-Host -ForegroundColor Cyan -NoNewline "Scopes:   "
+Write-Host -ForegroundColor Yellow ($finalScopes -join ' ')
+Write-Host -ForegroundColor Cyan -NoNewline "Consent:  "
+Write-Host -ForegroundColor Yellow "AllPrincipals (tenant-wide)"
+Write-Host -ForegroundColor Cyan -NoNewline "Grant id: "
+Write-Host -ForegroundColor Yellow "$grantId"
+if ($null -ne $undo) {
+    Write-Host -ForegroundColor Cyan -NoNewline "Undo:     "
+    Write-Host -ForegroundColor Yellow $undo
+}
+
+Disconnect-MgGraph | Out-Null
+```
 
 ## Related
 
-- [Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration) — the architecture and reasoning behind this configuration
+- [Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration) — the architecture behind this configuration
 - [Identity]({{ site.baseurl }}/foundation/identity/) — the app registration and admin consent model in full
-- [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — the field-mapping model you will work through with &money
+- [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — how tables and columns are mapped

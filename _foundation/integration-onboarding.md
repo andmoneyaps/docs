@@ -757,7 +757,7 @@ The Dataverse resource and the `user_impersonation` permission are the script's 
 
 Because the grant lives on the service principal rather than in the application manifest, it is scoped to your tenant alone and is revocable independently of your §2a consent.
 
-Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Dynamics 365 and SharePoint Onboarding]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#step-3--authorise-engage-to-act-as-your-advisors-in-dataverse).
+Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Dynamics 365 and SharePoint Onboarding]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#step-3--authorise-engage-to-act-as-your-advisors).
 
 #### Validation
 

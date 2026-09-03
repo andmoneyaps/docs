@@ -64,7 +64,6 @@ account — if the exchange fails, the operation fails.
   before Step 1** — nothing can be prepared on our side until we have it.
 - A Dynamics 365 environment on Dataverse Web API v9.2 — a sandbox for the integration phase, plus
   production.
-- Someone who knows your Dataverse schema.
 
 ## The order things happen in
 
@@ -94,18 +93,23 @@ Four &money applications are involved. Their client IDs appear throughout the st
 
 **These are identifiers, not secrets** — safe to paste into scripts, tickets and change records.
 
+**Every step is performed once per environment.** If you are onboarding both test and production, Steps 1
+to 8 run twice, each time using that environment's column below. The two are independent: consent, app
+roles, grants, the Dataverse application user, the SharePoint permission and the Management Portal
+configuration are all per-environment. Nothing carries across.
+
 | Application | Written in this guide as | Test | Production |
 |---|---|---|---|
-| AndMoney Present UI | `{PresentUiAppClientId}` | `ea486ddc-1a1e-4837-967b-f975fdcf1ed7` | `cbac67da-6529-4411-821c-746888abee84` |
-| AndMoney Management UI | `{ManagementUiAppClientId}` | `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` | `261ae34b-4de9-4c4a-9d70-1df1c024c91e` |
-| AndMoney API | `{AndMoneyApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
-| AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | *to be provided* | *to be provided* |
+| AndMoney UWC | `{UwcAppClientId}` | `ea486ddc-1a1e-4837-967b-f975fdcf1ed7` | `cbac67da-6529-4411-821c-746888abee84` |
+| BookingPlatform Mgmt UI | `{MgmtUiAppClientId}` | `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` | `261ae34b-4de9-4c4a-9d70-1df1c024c91e` |
+| BookingPlatform Mgmt API | `{MgmtApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
+| AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | `de5dd77b-f082-4895-abe5-3f5f6020cba8` | *to be provided* |
 
 | Application | What it is | Used in |
 |---|---|---|
-| **AndMoney Present UI** | The sign-in surface your **advisors** use to reach Present | Step 1 |
-| **AndMoney Management UI** | The sign-in surface your **administrators** use to reach the Management Portal | Step 1 |
-| **AndMoney API** | The API behind both, carrying the app roles | Steps 1, 2, 3, 5b |
+| **AndMoney UWC** | The sign-in surface your **advisors** use to reach Present | Step 1 |
+| **BookingPlatform Mgmt UI** | The sign-in surface your **administrators** use to reach the Management Portal | Step 1 |
+| **BookingPlatform Mgmt API** | The API behind both, carrying the app roles | Steps 1, 2, 3, 5b |
 | **AndMoney Dynamics Access** | The application identity that reads your Dataverse schema | Steps 1, 4 |
 
 {: .note }
@@ -114,6 +118,13 @@ Four &money applications are involved. Their client IDs appear throughout the st
 > at consent.
 
 Your own tenant ID is written below as `{YourTenantId}`.
+
+The Management Portal, used in Steps 6 and 7:
+
+| Environment | URL |
+|---|---|
+| Test | `https://management.test-env.andmoney.dk` |
+| Production | `https://management.andmoney.dk` |
 
 ## Step 1 — Approve the Engage applications
 
@@ -124,9 +135,9 @@ authenticate against your tenant.
 All four are required. Open each link as an administrator:
 
 ```text
-https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={PresentUiAppClientId}
-https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={ManagementUiAppClientId}
-https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={AndMoneyApiAppClientId}
+https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={UwcAppClientId}
+https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtUiAppClientId}
+https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtApiAppClientId}
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={DynamicsAccessAppClientId}
 ```
 
@@ -149,13 +160,13 @@ Review the summary Microsoft shows, then **Accept**.
 
 ## Step 2 — Assign people to roles
 
-Open the **AndMoney API** enterprise application → **Users and groups**, and assign your security
+Open the **BookingPlatform Mgmt API** enterprise application → **Users and groups**, and assign your security
 groups or users to the roles they need:
 
 | Role | What it grants |
 |---|---|
 | `Admin` | Everything a Configurator can do, plus logs — **and the Management Portal screens in Steps 6 and 7** |
-| `Configurator` | Meeting and portal configuration, field mappings, presentation templates |
+| `Configurator` | Meeting and portal configuration, and presentation templates |
 | `Manager` | Service and competence group configuration |
 | `Employee` | Standard advisor access — the role most of your users need |
 | `Customer` | Reserved for end-customer scenarios; not used for staff |
@@ -170,7 +181,7 @@ are onboarded to — the test and production applications are separate.
 
 ## Step 3 — Authorise Engage to act as your advisors
 
-Two delegated permissions, both recorded against the **AndMoney API** service principal in your tenant.
+Two delegated permissions, both recorded against the **BookingPlatform Mgmt API** service principal in your tenant.
 They let Engage act *as the signed-in advisor*, never beyond:
 
 | Permission | Resource | Enables |
@@ -192,18 +203,29 @@ Use [`add-delegated-grant-to-service-principal.ps1`](#add-delegated-grant-to-ser
 # Dataverse - the script's defaults
 ./add-delegated-grant-to-service-principal.ps1 `
   -tenantId    {YourTenantId} `
-  -clientAppId {AndMoneyApiAppClientId}
+  -clientAppId {MgmtApiAppClientId}
 
 # Microsoft Graph - for SharePoint
 ./add-delegated-grant-to-service-principal.ps1 `
   -tenantId      {YourTenantId} `
-  -clientAppId   {AndMoneyApiAppClientId} `
+  -clientAppId   {MgmtApiAppClientId} `
   -resourceAppId 00000003-0000-0000-c000-000000000000 `
   -scope         Sites.Selected
 ```
 
 **Application Administrator** is sufficient; Global Administrator is not needed. Both take effect within
 seconds.
+
+{: .important }
+> **Both grants are tenant-wide (`AllPrincipals`).** They apply to every user in your directory rather
+> than to a named set. They do not by themselves give anyone access to anything: each still runs as the
+> signed-in advisor and is bounded by that person's own Dynamics and SharePoint permissions. But the
+> grant itself is not scoped to a group, and your security review should record it that way.
+>
+> Signing the script in also leaves a standing consent for Microsoft's own *Microsoft Graph Command Line
+> Tools* application, which requests `Application.Read.All` and `DelegatedPermissionGrant.ReadWrite.All`.
+> Revoke it afterwards under **Enterprise applications → Microsoft Graph Command Line Tools →
+> Permissions** if your policy does not allow standing admin-tooling consent.
 
 - **It is idempotent**, but allow a few seconds between the two runs — Microsoft's read of the
   permission list lags writes, and an immediate second run can attempt a duplicate.
@@ -255,32 +277,82 @@ ability to **create and activate workflows**, **create, change and delete busine
 **write SharePoint document data** — none of which this integration uses.
 
 Reducing it in the role editor means setting roughly eighty privileges back to none with no way to
-confirm the result. Two Dataverse Web API calls do the same thing and can be verified:
+confirm the result. Two Dataverse Web API calls do it precisely and can be verified. Run them **as a
+System Administrator of the environment** — the application user cannot modify its own role.
 
+**1. Find the role.** Roles are per business unit, so match on the business unit you chose above:
+
+```http
+GET {EnvironmentUrl}/api/data/v9.2/roles?$select=roleid,name&$filter=name eq 'YOUR ROLE NAME'
 ```
+
+**2. Capture what it currently has, before changing anything.** This is your rollback:
+
+```http
+GET {EnvironmentUrl}/api/data/v9.2/RetrieveRolePrivilegesRole(RoleId={roleid})
+```
+
+Save the response. Restoring is the same replace call in step 4, passing back this list.
+
+**3. Resolve the four privilege ids by name:**
+
+```http
+GET {EnvironmentUrl}/api/data/v9.2/privileges?$select=privilegeid,name&$filter=name eq 'prvReadEntity'
+```
+
+Repeat for `prvReadAttribute`, `prvReadRelationship` and `prvReadOrganization`.
+
+**4. Replace the role's privileges with exactly those four.** `Depth` is `Global` for all four — that is
+the API's name for the **Organization** level shown in the role editor:
+
+```http
 POST {EnvironmentUrl}/api/data/v9.2/roles({roleid})/Microsoft.Dynamics.CRM.ReplacePrivilegesRole
-{"Privileges": [{"PrivilegeId": "...", "Depth": "Global"}, ...]}
+Content-Type: application/json
 
-GET  {EnvironmentUrl}/api/data/v9.2/RetrieveRolePrivilegesRole(RoleId={roleid})
+{
+  "Privileges": [
+    { "PrivilegeId": "<prvReadEntity id>",       "Depth": "Global" },
+    { "PrivilegeId": "<prvReadAttribute id>",    "Depth": "Global" },
+    { "PrivilegeId": "<prvReadRelationship id>", "Depth": "Global" },
+    { "PrivilegeId": "<prvReadOrganization id>", "Depth": "Global" }
+  ]
+}
 ```
 
-Resolve each privilege id by name first — `GET /api/data/v9.2/privileges?$filter=name eq 'prvReadEntity'`
-— for `prvReadEntity`, `prvReadAttribute`, `prvReadRelationship` and `prvReadOrganization`. The second call reads the role back. Capture the original set before you replace
-it; restoring is the same call with the captured list.
+{: .warning }
+> **`ReplacePrivilegesRole` discards everything not listed.** It is not additive, and there is no undo
+> beyond the list you captured in step 2. Capture first.
+
+**5. Read the role back** with the same call as step 2 and confirm it carries the four privileges you
+listed — and, if your environment has server-based SharePoint document management enabled, four
+SharePoint privileges alongside them. See the note below.
 
 {: .note }
-> **Four SharePoint privileges will reappear and that is expected.** Because your environment has
-> server-based SharePoint document management enabled, Dataverse attaches `prvReadSharePointDocument`,
-> `prvReadSharePointData`, `prvCreateSharePointData` and `prvWriteSharePointData` to the role. Deleting
-> them only lasts until the role is next saved in the editor. They are imposed by the platform, not
-> requested by Engage, and govern Dataverse's own document-location records rather than the contents of
-> your SharePoint sites. A correctly trimmed role therefore shows **eight** privileges: the four above
-> plus those four.
+> **If your environment uses server-based SharePoint document management, four privileges reappear and
+> that is expected.** Dataverse attaches `prvReadSharePointDocument`, `prvReadSharePointData`,
+> `prvCreateSharePointData` and `prvWriteSharePointData` to the role, and deleting them only lasts until
+> the role is next saved in the editor. They are imposed by the platform, not requested by Engage, and
+> govern Dataverse's own document-location records rather than the contents of your SharePoint sites.
+>
+> So a correctly trimmed role shows **four** privileges without that feature, or **eight** with it.
+> Either is correct; anything more is not. If you are unsure which applies, read the role back and tell
+> your &money contact what you see.
+
+{: .warning }
+> **Re-saving the role in the editor can reintroduce privileges.** If anyone opens this role in the
+> Power Platform UI and saves it, read it back with step 5 afterwards and re-run the replace if needed.
 
 If a step fails with a privilege error, send the error to &money rather than broadening the role.
 
-**Verify:** the application user can call `{EnvironmentUrl}/api/data/v9.2/WhoAmI` and receives a
-`UserId`. Confirm the user shows as **Enabled**.
+### Verifying the application user
+
+The check that matters — acquiring a token as the application and calling `WhoAmI` against your
+environment — **is run by &money, not by you**, because the application's credential never leaves
+&money. Tell your contact when the application user and its role are in place and they will confirm it
+from their side.
+
+What you can confirm yourself: the application user exists in **Users + permissions → Application
+users**, shows as **Enabled**, and has the custom role assigned.
 
 ## Step 5 — Prepare the SharePoint site and grant access to it
 
@@ -293,15 +365,24 @@ for example `bank.sharepoint.com`, `/sites/decks`, default library. You enter th
 Site paths containing `:`, `#`, `%`, `?` or `;` cannot be used; they collide with the way Microsoft
 Graph addresses sites.
 
-### 5b — Grant the AndMoney API application access to that one site
+### 5b — Grant the BookingPlatform Mgmt API application access to that one site
 
 `Sites.Selected` from Step 3 reaches no site until that site is named explicitly — which is why Engage
 cannot reach any other SharePoint site in your tenant. The permission goes to the same application you
-granted `Sites.Selected` to: **AndMoney API** (`{AndMoneyApiAppClientId}`), not the Dynamics one.
+granted `Sites.Selected` to: **BookingPlatform Mgmt API** (`{MgmtApiAppClientId}`), not the Dynamics one.
 
-These calls require `Sites.FullControl.All`, which is why they are yours to run.
-[Graph Explorer](https://developer.microsoft.com/graph/graph-explorer) is the easiest place; any Graph
-client works.
+These calls require `Sites.FullControl.All`, which is why they are yours to run rather than ours.
+
+{: .warning }
+> **Mind how you grant yourself that permission.** Consenting `Sites.FullControl.All` to
+> [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer) gives that Microsoft tool full
+> control of **every** SharePoint site in your tenant, standing, until revoked — a far wider grant than
+> the one you are trying to make. It is convenient for a one-off, but if you use it, revoke it afterwards
+> under **Enterprise applications → Graph Explorer → Permissions**.
+>
+> If you would rather not, PnP PowerShell performs the same operation through your own app registration.
+> Your &money contact can talk it through, and the Graph calls below are what it does underneath either
+> way.
 
 #### 1. Find the site ID
 
@@ -325,8 +406,8 @@ Content-Type: application/json
   "grantedToIdentities": [
     {
       "application": {
-        "id": "{AndMoneyApiAppClientId}",
-        "displayName": "AndMoney API"
+        "id": "{MgmtApiAppClientId}",
+        "displayName": "BookingPlatform Mgmt API"
       }
     }
   ]
@@ -345,7 +426,7 @@ revoke it. It is not the application ID.
 GET https://graph.microsoft.com/v1.0/sites/{siteId}/permissions
 ```
 
-Confirm that `{AndMoneyApiAppClientId}` is listed with the `write` role. The response is a collection
+Confirm that `{MgmtApiAppClientId}` is listed with the `write` role. The response is a collection
 and may legitimately contain permissions for other applications of your own — those are not a problem,
 and the check is that ours is present and correct, not that it is alone. Keep the listing for your audit
 record: it is the complete statement of what Engage can reach in your SharePoint.
@@ -389,9 +470,9 @@ intended environment.
 
 - **The list shows only environments your signed-in account can reach.** A short or empty list is a
   statement about your own access, not a fault in Engage.
-- **Changing the environment later is possible but not free.** Configured CRM users and field mappings
-  do not follow the move, and the Portal warns you. Plan the sandbox-to-production switch with your
-  &money contact.
+- **Changing the environment later is possible but not free.** The Portal warns you when you try, and
+  configuration already made against the old environment does not follow. Plan the sandbox-to-production
+  switch with your &money contact rather than treating it as a toggle.
 
 ## Step 7 — Configure your SharePoint destination
 
@@ -444,6 +525,12 @@ You build the embedding as a **web resource or PCF component** on the appointmen
 These are values a Dynamics form already has to hand — the component reads them at runtime and passes
 them on, which is what a static control cannot do. `federation_id` is also accepted where your setup
 uses one.
+
+{: .note }
+> **&money does not currently supply a reference web resource or PCF component**, so the implementation
+> is yours to write and to estimate. What we provide is the contract above and the identity endpoint
+> below to test it against. If that is a problem for your timeline, raise it early with your &money
+> contact rather than at build time.
 
 {: .important }
 > **The login hint is what makes sign-in invisible.** With it, Present completes SSO silently against
@@ -676,4 +763,3 @@ Disconnect-MgGraph | Out-Null
 
 - [Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration) — the architecture behind this configuration
 - [Identity]({{ site.baseurl }}/foundation/identity/) — the app registration and admin consent model in full
-- [Entities and Entity Patterns]({{ site.baseurl }}/bookme/entities-and-entity-patterns/) — how tables and columns are mapped

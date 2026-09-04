@@ -469,6 +469,21 @@ Press **Create**, and fill in the values from Step 5a:
 
 Present opens from a **Dynamics appointment record**, so one must exist before Present is opened.
 
+{: .important }
+> **Your Dynamics environment needs SharePoint document management enabled, on the Appointment table.**
+> Two settings, both in Dynamics rather than in Engage:
+>
+> - **Server-based SharePoint integration** configured for the environment, pointed at your SharePoint.
+> - **Document management enabled for the Appointment table**, so `sharepointdocumentlocation` records
+>   can be created against an appointment.
+>
+> Without them the deck still reaches SharePoint — that path is Steps 5 and 7 and does not depend on
+> this — but nothing links it back to the appointment, so the advisor never sees it on the record.
+>
+> You may already know the answer: if the security role in [Step 4b](#4b--create-and-assign-the-security-role)
+> read back with **eight** privileges rather than four, server-based SharePoint integration is on. Four
+> means it is not, and this needs setting up before the flow completes end to end.
+
 You build the embedding as a **web resource or PCF component** on the appointment form.
 
 {: .warning }

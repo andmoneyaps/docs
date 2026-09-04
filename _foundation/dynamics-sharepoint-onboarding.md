@@ -201,7 +201,8 @@ Neither can be granted through a consent link: Microsoft's consent endpoint only
 application advertises in its manifest, and Engage advertises neither — so customers using neither
 Dynamics nor SharePoint are never asked to approve them.
 
-Use [`add-delegated-grant-to-service-principal.ps1`](#add-delegated-grant-to-service-principalps1), run **twice**:
+Use [`add-delegated-grant-to-service-principal.ps1`](#add-delegated-grant-to-service-principalps1), run
+**twice**. Install [its modules](#before-you-run-any-of-them) first, or it stops at startup:
 
 ```powershell
 # Dataverse - the script's defaults
@@ -251,8 +252,9 @@ Leave it without a role for now; Step 4b creates and assigns one.
 
 ### 4b — Create and assign the security role
 
-Use [`new-dataverse-role-for-app-user.ps1`](#new-dataverse-role-for-app-userps1). Run it as a **System
-Administrator** of the environment — the application user cannot modify its own role.
+Use [`new-dataverse-role-for-app-user.ps1`](#new-dataverse-role-for-app-userps1). It needs the
+[Azure CLI](#before-you-run-any-of-them), and must run as a **System Administrator** of the environment
+— the application user cannot modify its own role.
 
 ```powershell
 az login --tenant {YourTenantId}
@@ -339,7 +341,8 @@ Graph addresses sites.
 cannot reach any other SharePoint site in your tenant. The permission goes to the same application you
 granted `Sites.Selected` to: **BookingPlatform Mgmt API** (`{MgmtApiAppClientId}`), not the Dynamics one.
 
-Use [`add-site-permission-for-app.ps1`](#add-site-permission-for-appps1):
+Use [`add-site-permission-for-app.ps1`](#add-site-permission-for-appps1). Install
+[its modules](#before-you-run-any-of-them) first, or it stops at startup:
 
 ```powershell
 ./add-site-permission-for-app.ps1 `
@@ -544,16 +547,34 @@ Together, at the end:
 
 ## Scripts
 
+### Before you run any of them
+
+The two Graph scripts need specific Microsoft Graph PowerShell modules, published by Microsoft on the
+PowerShell Gallery. Install them however your organisation sources PowerShell modules:
+
+```powershell
+# add-delegated-grant-to-service-principal.ps1  (Step 3)
+Install-Module Microsoft.Graph.Authentication, Microsoft.Graph.Applications, Microsoft.Graph.Identity.SignIns
+
+# add-site-permission-for-app.ps1  (Step 5b)
+Install-Module Microsoft.Graph.Authentication, Microsoft.Graph.Sites
+```
+
+Installing only some of them is a common trap: the script stops at startup with *"the following modules
+that are specified by the `#requires` statements of the script are missing"* rather than part-way
+through.
+
+`Install-Module Microsoft.Graph` covers all of these and more; it works, but it is a much larger
+download than these scripts need.
+
+`new-dataverse-role-for-app-user.ps1` (Step 4b) uses no Graph modules — it needs the
+[Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) for the sign-in, or a token passed
+with `-accessToken`.
+
 ### add-delegated-grant-to-service-principal.ps1
 
 Used in [Step 3](#step-3--authorise-engage-to-act-as-your-advisors). Records a delegated permission
 directly on a service principal in your tenant — the one thing an admin-consent link cannot do.
-
-Requires the `Microsoft.Graph` PowerShell module:
-
-```powershell
-Install-Module Microsoft.Graph -Scope CurrentUser -Repository PSGallery
-```
 
 Save the following as `add-delegated-grant-to-service-principal.ps1`:
 
@@ -605,7 +626,7 @@ param (
 #Requires -Modules Microsoft.Graph.Authentication, Microsoft.Graph.Applications, Microsoft.Graph.Identity.SignIns
 
 ## To run the cmdlets in this script, you need the Microsoft Graph module installed.
-# Command to run in Powershell shell: Install-Module Microsoft.Graph -Scope CurrentUser -Repository PSGallery -Force
+# Command to run in Powershell shell: Install-Module Microsoft.Graph.Authentication, Microsoft.Graph.Applications, Microsoft.Graph.Identity.SignIns
 # Check if installed: Get-InstalledModule -Name Microsoft.Graph
 
 Import-Module Microsoft.Graph.Authentication
@@ -724,8 +745,7 @@ Disconnect-MgGraph | Out-Null
 Used in [Step 4b](#4b--create-and-assign-the-security-role). Creates the Dataverse security role, trims
 it to the four privileges the integration needs, and assigns it to the application user.
 
-Needs the Azure CLI for the sign-in (`az login --tenant {YourTenantId}`), or pass a token with
-`-accessToken`.
+Sign in first with `az login --tenant {YourTenantId}`, or pass a token with `-accessToken`.
 
 Save the following as `new-dataverse-role-for-app-user.ps1`:
 
@@ -982,7 +1002,7 @@ param (
 #Requires -Modules Microsoft.Graph.Authentication, Microsoft.Graph.Sites
 
 ## To run the cmdlets in this script, you need the Microsoft Graph module installed.
-# Install-Module Microsoft.Graph -Scope CurrentUser -Repository PSGallery -Force
+# Install-Module Microsoft.Graph.Authentication, Microsoft.Graph.Sites
 
 Import-Module Microsoft.Graph.Authentication
 Import-Module Microsoft.Graph.Sites

@@ -239,129 +239,87 @@ seconds.
 ## Step 4 — Create the application user in Dataverse
 
 The application identity needs a Dataverse user in your environment, bound to the **AndMoney Dynamics
-Access** client ID.
+Access** client ID, and a security role that bounds what it can reach.
 
-1. **Power Platform admin centre → Environments → {your environment} → Settings → Users + permissions
-   → Application users → New app user.**
-2. Select the application by its client ID — `{DynamicsAccessAppClientId}` — and choose a business unit.
-3. Create a **custom security role** and assign it — then trim it. Dataverse has no empty role: a new
-   custom role arrives carrying around 80 privileges, and *Copy role* clones an equally large one.
-   See [Trimming the new role](#trimming-the-new-role), which is not an optional tidy-up.
+### 4a — Create the application user
 
-You exercise this application later, from the Management Portal: the **Test** button in
-[Step 6c](#6c--test-the-connection) authenticates as it and calls your environment. There is nothing to
-run here yourself, because its credential never leaves &money. Note that the test confirms the
-application *user* — not the role you assign it below, which has to be verified separately.
+**Power Platform admin centre → Environments → {your environment} → Settings → Users + permissions →
+Application users → New app user.** Select the application by its client ID —
+`{DynamicsAccessAppClientId}` — and choose a business unit.
 
-### The exact privileges
+Leave it without a role for now; Step 4b creates and assigns one.
 
-Four, and nothing else:
+### 4b — Create and assign the security role
 
-| Group in the role editor | Privilege | Level |
-|---|---|---|
-| Business Management | **Organization** | Read — Organization |
-| Customization | **Entity** | Read |
-| Customization | **Attribute** | Read |
-| Customization | **Relationship** | Read |
+Use [`new-dataverse-role-for-app-user.ps1`](#new-dataverse-role-for-app-userps1). Run it as a **System
+Administrator** of the environment — the application user cannot modify its own role.
 
-- **Organization** — the Dataverse client's connection handshake. Without it the integration fails when
-  it connects, before it reads anything.
-- **Entity, Attribute, Relationship** — reading your schema. These are metadata reads: they expose the
-  *shape* of your data, not its contents.
+```powershell
+az login --tenant {YourTenantId}
 
-Privileges that look like they belong here and do **not**: *User*, *Option Set* (Engage reads an
-attribute's type but never its option values), *Business Unit* and *User Settings*. All are in the
-default set and all can go.
+./new-dataverse-role-for-app-user.ps1 `
+  -environmentUrl https://yourorg.crm4.dynamics.com `
+  -applicationId  {DynamicsAccessAppClientId}
+```
+
+It creates the role, captures its existing privileges to a file, replaces them with the four below,
+reads the role back and prints what it carries by name, then assigns it to the application user. It is
+idempotent: re-running re-trims rather than duplicating.
+
+{: .note }
+> **Create the role with the script rather than the role editor.** A role created in the editor arrives
+> carrying around eighty privileges — including creating and activating workflows, and creating,
+> changing and deleting business process flows — and *Copy role* clones an equally large one. Trimming
+> that by hand is about eighty toggles with no way to confirm the result. A role created over the Web
+> API does not get that template: it starts with nine privileges, and the script replaces them.
+
+### The privileges the role ends up with
+
+Four, all at **Organization** level (`Global` in the API), and nothing else:
+
+| Privilege | What it is for |
+|---|---|
+| `prvReadEntity` | Reading your schema — which tables exist |
+| `prvReadAttribute` | Reading your schema — which columns exist |
+| `prvReadRelationship` | Reading your schema — how they relate |
+| `prvReadOrganization` | The Dataverse client's connection handshake. Without it the integration fails when it connects, before it reads anything |
+
+These are metadata reads: they expose the *shape* of your data, not its contents.
 
 {: .important }
 > **No access to customer records is required, and none should be granted.** No `account`, `contact`,
 > `appointment` or `annotation` privileges belong on this role. All record work runs as the advisor
-> under their own role. If Engage ever appears to need record privileges here, ask &money before
-> granting them.
-
-### Trimming the new role
-
-The privileges a new role starts with are not a safe default. They include, at organization level, the
-ability to **create and activate workflows**, **create, change and delete business process flows**, and
-**write SharePoint document data** — none of which this integration uses.
-
-Reducing it in the role editor means setting roughly eighty privileges back to none with no way to
-confirm the result. Two Dataverse Web API calls do it precisely and can be verified. Run them **as a
-System Administrator of the environment** — the application user cannot modify its own role.
-
-**1. Find the role.** Roles are per business unit, so match on the business unit you chose above:
-
-```http
-GET {EnvironmentUrl}/api/data/v9.2/roles?$select=roleid,name&$filter=name eq 'YOUR ROLE NAME'
-```
-
-**2. Capture what it currently has, before changing anything.** This is your rollback:
-
-```http
-GET {EnvironmentUrl}/api/data/v9.2/RetrieveRolePrivilegesRole(RoleId={roleid})
-```
-
-Save the response. Restoring is the same replace call in step 4, passing back this list.
-
-**3. Resolve the four privilege ids by name:**
-
-```http
-GET {EnvironmentUrl}/api/data/v9.2/privileges?$select=privilegeid,name&$filter=name eq 'prvReadEntity'
-```
-
-Repeat for `prvReadAttribute`, `prvReadRelationship` and `prvReadOrganization`.
-
-**4. Replace the role's privileges with exactly those four.** `Depth` is `Global` for all four — that is
-the API's name for the **Organization** level shown in the role editor:
-
-```http
-POST {EnvironmentUrl}/api/data/v9.2/roles({roleid})/Microsoft.Dynamics.CRM.ReplacePrivilegesRole
-Content-Type: application/json
-
-{
-  "Privileges": [
-    { "PrivilegeId": "<prvReadEntity id>",       "Depth": "Global" },
-    { "PrivilegeId": "<prvReadAttribute id>",    "Depth": "Global" },
-    { "PrivilegeId": "<prvReadRelationship id>", "Depth": "Global" },
-    { "PrivilegeId": "<prvReadOrganization id>", "Depth": "Global" }
-  ]
-}
-```
-
-{: .warning }
-> **`ReplacePrivilegesRole` discards everything not listed.** It is not additive, and there is no undo
-> beyond the list you captured in step 2. Capture first.
-
-**5. Read the role back** with the same call as step 2 and confirm it carries the four privileges you
-listed — and, if your environment has server-based SharePoint document management enabled, four
-SharePoint privileges alongside them. See the note below.
+> under their own role, so anything added here would widen the integration's reach without enabling any
+> feature. If Engage ever appears to need record privileges here, ask &money before granting them.
 
 {: .note }
-> **If your environment uses server-based SharePoint document management, four privileges reappear and
-> that is expected.** Dataverse attaches `prvReadSharePointDocument`, `prvReadSharePointData`,
-> `prvCreateSharePointData` and `prvWriteSharePointData` to the role, and deleting them only lasts until
-> the role is next saved in the editor. They are imposed by the platform, not requested by Engage, and
-> govern Dataverse's own document-location records rather than the contents of your SharePoint sites.
+> **If your environment uses server-based SharePoint document management, the role will read back with
+> eight privileges, not four.** Dataverse re-attaches `prvReadSharePointDocument`,
+> `prvReadSharePointData`, `prvCreateSharePointData` and `prvWriteSharePointData` on any privilege
+> write — removing them does not stick. They are imposed by the platform, not requested by Engage, and
+> they govern Dataverse's own document-location records rather than the contents of your SharePoint
+> sites; access to those is granted separately, per site, in Step 5.
 >
-> So a correctly trimmed role shows **four** privileges without that feature, or **eight** with it.
-> Either is correct; anything more is not. If you are unsure which applies, read the role back and tell
-> your &money contact what you see.
+> So **four** privileges without that feature, **eight** with it. Either is correct; anything more is
+> not. If you are unsure which applies, send your &money contact what the script printed.
 
-{: .warning }
-> **Re-saving the role in the editor can reintroduce privileges.** If anyone opens this role in the
-> Power Platform UI and saves it, read it back with step 5 afterwards and re-run the replace if needed.
+### Doing it by hand instead
+
+If you would rather not run the script, the same result over the Web API. Capture first —
+`ReplacePrivilegesRole` discards everything not listed, and that capture is the only way back:
+
+```http
+GET  {EnvironmentUrl}/api/data/v9.2/roles?$select=roleid,name&$filter=name eq 'YOUR ROLE NAME'
+GET  {EnvironmentUrl}/api/data/v9.2/RetrieveRolePrivilegesRole(RoleId={roleid})
+GET  {EnvironmentUrl}/api/data/v9.2/privileges?$select=privilegeid,name&$filter=name eq 'prvReadEntity'
+
+POST {EnvironmentUrl}/api/data/v9.2/roles({roleid})/Microsoft.Dynamics.CRM.ReplacePrivilegesRole
+{ "Privileges": [ { "PrivilegeId": "…", "Depth": "Global" } ] }
+```
+
+Then read the role back with `RetrieveRolePrivilegesRole` and confirm it carries what you intended.
 
 If a step fails with a privilege error, send the error to &money rather than broadening the role.
-
-### Verifying the application user
-
-The check that matters — acquiring a token as the application and calling `WhoAmI` against your
-environment — **is run by &money, not by you**, because the application's credential never leaves
-&money. Tell your contact when the application user and its role are in place and they will confirm it
-from their side.
-
-What you can confirm yourself: the application user exists in **Users + permissions → Application
-users**, shows as **Enabled**, and has the custom role assigned.
 
 ## Step 5 — Prepare the SharePoint site and grant access to it
 
@@ -465,8 +423,8 @@ wrong client ID.
 > all eighty in place. It cannot tell you that you granted too little — that surfaces later, when
 > Engage first reads your schema — and it will never tell you that you granted too much.
 >
-> Verify the role the way [Step 4](#trimming-the-new-role) describes: read it back and check it carries
-> what you intended, and nothing else.
+> Verify the role the way [Step 4b](#4b--create-and-assign-the-security-role) describes: the script reads
+> it back and prints what it carries, by name. Check that list against the four above.
 
 - **The list shows only environments your signed-in account can reach.** A short or empty list is a
   statement about your own access, not a fault in Engage.
@@ -759,6 +717,214 @@ if ($null -ne $undo) {
 }
 
 Disconnect-MgGraph | Out-Null
+```
+
+### new-dataverse-role-for-app-user.ps1
+
+Used in [Step 4b](#4b--create-and-assign-the-security-role). Creates the Dataverse security role, trims
+it to the four privileges the integration needs, and assigns it to the application user.
+
+Needs the Azure CLI for the sign-in (`az login --tenant {YourTenantId}`), or pass a token with
+`-accessToken`.
+
+Save the following as `new-dataverse-role-for-app-user.ps1`:
+
+```powershell
+param (
+    [Parameter(Mandatory = $true, HelpMessage = "Dataverse environment URL, e.g. https://org12345.crm4.dynamics.com")]
+    [string]$environmentUrl,
+
+    [Parameter(Mandatory = $true, HelpMessage = "AppId (client id) the Dataverse application user is bound to.")]
+    [guid]$applicationId,
+
+    [Parameter(HelpMessage = "Name of the security role to create or update.")]
+    [string]$roleName = "Engage Present - schema read",
+
+    [Parameter(HelpMessage = "Business unit for the role. Defaults to the environment's root business unit.")]
+    [guid]$businessUnitId,
+
+    [Parameter(HelpMessage = "Bearer token for the environment. Omit to acquire one interactively via Azure CLI.")]
+    [string]$accessToken
+)
+
+# Creates (or re-trims) the Dataverse security role the Engage application user needs, and
+# assigns it. The role carries exactly four privileges, all at Global depth:
+#
+#   prvReadEntity, prvReadAttribute, prvReadRelationship  - reading the schema
+#   prvReadOrganization                                   - the SDK client's connect handshake
+#
+# No privilege on any business table: all record work runs as the signed-in advisor under
+# their own role, so the application identity needs none.
+#
+# Why a script rather than the role editor: a role created in the modern editor arrives
+# carrying ~80 privileges (and "Copy role" clones an equally large one), including workflow
+# creation and SharePoint document writes. Trimming that by hand is ~80 toggles with no way
+# to confirm the result. Creating the role through the Web API avoids the editor's template
+# entirely, and the read-back below states what the role actually carries.
+#
+# Idempotent: an existing role of the same name in the same business unit is re-trimmed
+# rather than duplicated, and an already-assigned role is left alone.
+#
+# Run as a System Administrator of the environment. The application user cannot modify its
+# own role.
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+$envUrl  = $environmentUrl.TrimEnd('/')
+$apiRoot = "$envUrl/api/data/v9.2"
+
+#################################################################################################################
+# Token
+#################################################################################################################
+if ([string]::IsNullOrWhiteSpace($accessToken)) {
+    # The Azure CLI's first-party client can obtain a delegated Dataverse token for the
+    # signed-in admin, which avoids adding an app registration just to run this once.
+    Write-Host -ForegroundColor Cyan "Acquiring a token for $envUrl via Azure CLI..."
+    $accessToken = (az account get-access-token --resource $envUrl --query accessToken -o tsv)
+    if ([string]::IsNullOrWhiteSpace($accessToken)) {
+        Write-Host -ForegroundColor Red "Could not acquire a token. Run 'az login --tenant <tenant>' first,"
+        Write-Host -ForegroundColor Red "or pass one with -accessToken."
+        exit 1
+    }
+}
+
+$headers = @{
+    Authorization      = "Bearer $accessToken"
+    'OData-MaxVersion' = '4.0'
+    'OData-Version'    = '4.0'
+    Accept             = 'application/json'
+}
+
+function Invoke-Dv {
+    param([string]$Method, [string]$Path, $Body)
+    $uri = if ($Path -match '^https?://') { $Path } else { "$apiRoot/$Path" }
+    $args = @{ Method = $Method; Uri = $uri; Headers = $headers }
+    if ($null -ne $Body) {
+        $args.Body = ($Body | ConvertTo-Json -Depth 6)
+        $args.ContentType = 'application/json'
+    }
+    return Invoke-RestMethod @args
+}
+
+#################################################################################################################
+# Business unit
+#################################################################################################################
+if (-not $PSBoundParameters.ContainsKey('businessUnitId')) {
+    $root = Invoke-Dv GET 'businessunits?$select=businessunitid,name&$filter=_parentbusinessunitid_value eq null'
+    if ($root.value.Count -ne 1) {
+        Write-Host -ForegroundColor Red "Expected exactly one root business unit, found $($root.value.Count)."
+        Write-Host -ForegroundColor Red "Pass -businessUnitId explicitly."
+        exit 1
+    }
+    $businessUnitId = $root.value[0].businessunitid
+    Write-Host -ForegroundColor Cyan -NoNewline "Business unit: "
+    Write-Host -ForegroundColor Yellow "$($root.value[0].name) ($businessUnitId)"
+}
+
+#################################################################################################################
+# Role - find or create
+#################################################################################################################
+$escaped  = $roleName.Replace("'", "''")
+$existing = Invoke-Dv GET "roles?`$select=roleid,name&`$filter=name eq '$escaped' and _businessunitid_value eq $businessUnitId"
+
+if ($existing.value.Count -gt 1) {
+    Write-Host -ForegroundColor Red "More than one role named '$roleName' in this business unit. Resolve by hand."
+    exit 1
+}
+
+if ($existing.value.Count -eq 1) {
+    $roleId = $existing.value[0].roleid
+    Write-Host -ForegroundColor Yellow "Role '$roleName' already exists ($roleId) - its privileges will be replaced."
+} else {
+    $created = Invoke-Dv POST 'roles' @{
+        name                        = $roleName
+        'businessunitid@odata.bind' = "/businessunits($businessUnitId)"
+    }
+    # A create returns no body by default; read the role back by name rather than assume.
+    $lookup = Invoke-Dv GET "roles?`$select=roleid,name&`$filter=name eq '$escaped' and _businessunitid_value eq $businessUnitId"
+    if ($lookup.value.Count -ne 1) {
+        Write-Host -ForegroundColor Red "Role was not created, or is ambiguous. Check the environment before re-running."
+        exit 1
+    }
+    $roleId = $lookup.value[0].roleid
+    Write-Host -ForegroundColor Green "SUCCESS >>> Role '$roleName' created ($roleId)."
+}
+
+#################################################################################################################
+# Capture what the role carries now, before replacing it
+#################################################################################################################
+$before = Invoke-Dv GET "RetrieveRolePrivilegesRole(RoleId=$roleId)"
+$beforeCount = @($before.RolePrivileges).Count
+Write-Host -ForegroundColor Cyan -NoNewline "Privileges before: "
+Write-Host -ForegroundColor Yellow "$beforeCount"
+$backupPath = Join-Path (Get-Location) "role-$roleId-privileges-before.json"
+$before | ConvertTo-Json -Depth 6 | Set-Content -Path $backupPath
+Write-Host -ForegroundColor Cyan -NoNewline "Captured to:       "
+Write-Host -ForegroundColor Yellow "$backupPath"
+
+#################################################################################################################
+# Replace with exactly the four the integration needs
+#################################################################################################################
+$wanted = @('prvReadEntity', 'prvReadAttribute', 'prvReadRelationship', 'prvReadOrganization')
+$privileges = @()
+foreach ($name in $wanted) {
+    $p = Invoke-Dv GET "privileges?`$select=privilegeid,name&`$filter=name eq '$name'"
+    if ($p.value.Count -ne 1) {
+        Write-Host -ForegroundColor Red "Privilege '$name' did not resolve to exactly one row."
+        exit 1
+    }
+    $privileges += @{ PrivilegeId = $p.value[0].privilegeid; Depth = 'Global' }
+}
+
+Invoke-Dv POST "roles($roleId)/Microsoft.Dynamics.CRM.ReplacePrivilegesRole" @{ Privileges = $privileges } | Out-Null
+Write-Host -ForegroundColor Green "SUCCESS >>> Privileges replaced."
+
+#################################################################################################################
+# Read the role back, so the run ends on observed state
+#################################################################################################################
+$after = Invoke-Dv GET "RetrieveRolePrivilegesRole(RoleId=$roleId)"
+$afterIds = @($after.RolePrivileges | ForEach-Object { $_.PrivilegeId })
+Write-Host
+Write-Host -ForegroundColor Cyan "Privileges now on the role ($($afterIds.Count)):"
+foreach ($id in $afterIds) {
+    $n = Invoke-Dv GET "privileges($id)?`$select=name"
+    Write-Host -ForegroundColor Yellow "  $($n.name)"
+}
+Write-Host
+Write-Host -ForegroundColor Cyan "Expected: the four above. Four SharePoint privileges may also appear if the"
+Write-Host -ForegroundColor Cyan "environment uses server-based SharePoint document management - those are imposed"
+Write-Host -ForegroundColor Cyan "by the platform, not requested here."
+
+#################################################################################################################
+# Assign to the application user
+#################################################################################################################
+$appUser = Invoke-Dv GET "systemusers?`$select=systemuserid,fullname,isdisabled&`$filter=applicationid eq $applicationId"
+if ($appUser.value.Count -ne 1) {
+    Write-Host
+    Write-Host -ForegroundColor Red "No application user bound to $applicationId in this environment."
+    Write-Host -ForegroundColor Red "Create it first (Power Platform admin centre > Users + permissions > Application users),"
+    Write-Host -ForegroundColor Red "then re-run - the role above is already in place."
+    exit 1
+}
+$userId = $appUser.value[0].systemuserid
+Write-Host
+Write-Host -ForegroundColor Cyan -NoNewline "Application user:  "
+Write-Host -ForegroundColor Yellow "$($appUser.value[0].fullname) ($userId), disabled=$($appUser.value[0].isdisabled)"
+
+$assigned = Invoke-Dv GET "systemusers($userId)/systemuserroles_association?`$select=roleid"
+if (@($assigned.value | Where-Object { $_.roleid -eq $roleId }).Count -gt 0) {
+    Write-Host -ForegroundColor Green "Role already assigned - nothing to do."
+} else {
+    Invoke-Dv POST "systemusers($userId)/systemuserroles_association/`$ref" @{ '@odata.id' = "$apiRoot/roles($roleId)" } | Out-Null
+    Write-Host -ForegroundColor Green "SUCCESS >>> Role assigned to the application user."
+}
+
+Write-Host
+Write-Host -ForegroundColor Cyan -NoNewline "Role id:   "
+Write-Host -ForegroundColor Yellow "$roleId"
+Write-Host -ForegroundColor Cyan -NoNewline "Undo:      "
+Write-Host -ForegroundColor Yellow "restore from $backupPath via ReplacePrivilegesRole, or delete the role"
 ```
 
 ### add-site-permission-for-app.ps1

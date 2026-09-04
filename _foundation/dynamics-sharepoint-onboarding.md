@@ -420,15 +420,6 @@ valid against your tenant, and the Dataverse application user exists and is enab
 almost always one of those — most often an application user that is missing, disabled, or bound to the
 wrong client ID.
 
-{: .warning }
-> **It does not prove the security role is right.** `WhoAmI` needs no privilege at all beyond an
-> enabled application user, so the test passes whether you trimmed the role to four privileges or left
-> all eighty in place. It cannot tell you that you granted too little — that surfaces later, when
-> Engage first reads your schema — and it will never tell you that you granted too much.
->
-> Verify the role the way [Step 4b](#4b--create-and-assign-the-security-role) describes: the script reads
-> it back and prints what it carries, by name. Check that list against the four above.
-
 - **The list shows only environments your signed-in account can reach.** A short or empty list is a
   statement about your own access, not a fault in Engage.
 - **Changing the environment later is possible but not free.** The Portal warns you when you try, and

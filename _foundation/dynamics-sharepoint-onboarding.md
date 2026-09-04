@@ -75,7 +75,7 @@ You:      Steps 1-5   Entra, Dataverse, SharePoint
               |
 &money:   registers your organisation, links your tenant, enables Present
               |
-You:      Steps 6-7   Management Portal: choose environment, set SharePoint destination
+You:      Steps 6-7   Management Portal: connect Dynamics, set SharePoint destination
               |
 You:      Step 8      embed Present in the Dynamics form
               |
@@ -119,12 +119,16 @@ configuration are all per-environment. Nothing carries across.
 
 Your own tenant ID is written below as `{YourTenantId}`.
 
-The Management Portal, used in Steps 6 and 7:
+### The Management Portal
+
+Used in Steps 6 and 7, and by your staff afterwards:
 
 | Environment | URL |
 |---|---|
 | Test | `https://management.test-env.andmoney.dk` |
 | Production | `https://management.andmoney.dk` |
+
+Sign in with a Microsoft work account holding the `Admin` app role from Step 2.
 
 ## Step 1 — Approve the Engage applications
 
@@ -244,6 +248,11 @@ Access** client ID.
    custom role arrives carrying around 80 privileges, and *Copy role* clones an equally large one.
    See [Trimming the new role](#trimming-the-new-role), which is not an optional tidy-up.
 
+You exercise this application later, from the Management Portal: the **Test** button in
+[Step 6c](#6c--test-the-connection) authenticates as it and calls your environment. There is nothing to
+run here yourself, because its credential never leaves &money. Note that the test confirms the
+application *user* — not the role you assign it below, which has to be verified separately.
+
 ### The exact privileges
 
 Four, and nothing else:
@@ -360,7 +369,8 @@ users**, shows as **Enabled**, and has the custom role assigned.
 
 Create or nominate a site and add the advisors who will use Present as members. Note the **host name**,
 the **server-relative site path**, and the **document library** if it should not be the site's default —
-for example `bank.sharepoint.com`, `/sites/decks`, default library. You enter these yourself in Step 7.
+for example `bank.sharepoint.com`, `/sites/present`, default library. You enter these yourself in
+Step 7.
 
 Site paths containing `:`, `#`, `%`, `?` or `;` cannot be used; they collide with the way Microsoft
 Graph addresses sites.
@@ -377,7 +387,7 @@ Use [`add-site-permission-for-app.ps1`](#add-site-permission-for-appps1):
 ./add-site-permission-for-app.ps1 `
   -tenantId     {YourTenantId} `
   -siteHostname bank.sharepoint.com `
-  -sitePath     /sites/decks `
+  -sitePath     /sites/present `
   -clientAppId  {MgmtApiAppClientId}
 ```
 
@@ -406,19 +416,57 @@ tolerates files being removed.
 > **Steps 6 and 7 need &money to have registered your organisation first.** Confirm with your &money
 > contact before starting them. Both require the `Admin` role from Step 2.
 
-## Step 6 — Select your Dynamics environment
+## Step 6 — Connect your Dynamics environment
 
-Engage does not hardcode your environment URL. You choose it, and Engage lists the options by asking
-Microsoft which Dataverse environments **you** can see — so sign in as someone with access to the
-intended environment.
+In the [Management Portal](#the-management-portal), go to **Admin → CRM Settings**. This is two choices:
+which CRM system your organisation runs on, and which environment within it.
 
-1. Sign in to the Management Portal with an account holding the `Admin` role.
-2. Go to **Admin → CRM**.
-3. Choose the environment — the sandbox during the integration phase, production at go-live.
-4. Save.
+### 6a — Choose Dynamics 365
 
-{: .note }
-> *Screenshots pending: the Admin → CRM screen, the environment list, and the saved state.*
+![Choosing the CRM system under Admin → CRM Settings]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-system.png)
+
+Select **Dynamics 365** and press **Continue**.
+
+Only the integrations enabled for your organisation are listed, so if Dynamics 365 does not appear,
+tell your &money contact — it means Present has not been enabled against your organisation yet.
+
+{: .warning }
+> **Choose the system your organisation actually runs on.** Changing the CRM system later stops the
+> current connection being used. This is not a preference you toggle while exploring.
+
+### 6b — Choose the environment
+
+![Choosing the Dataverse environment]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-environment.png)
+
+The **Environment** list is populated live by asking Microsoft which Dataverse environments *you* can
+reach — so sign in as someone with access to the intended one. Each entry shows its name and region.
+Pick the sandbox during the integration phase, production at go-live.
+
+The environment's URL appears under the heading once selected, so you can confirm you picked the right
+one before going further.
+
+### 6c — Test the connection
+
+Press **Test**. The status badge next to the environment name goes from **Not tested** to a result.
+
+The test authenticates as the **application identity** from Step 4 — a freshly minted token, so a
+cached one cannot report a stale success — and calls `WhoAmI` against the environment you selected.
+Because that credential never leaves &money, this button is how you exercise it; there is nothing for
+you to run yourself.
+
+**A green result proves three things:** the environment is reachable, the application's credentials are
+valid against your tenant, and the Dataverse application user exists and is enabled. A failure is
+almost always one of those — most often an application user that is missing, disabled, or bound to the
+wrong client ID.
+
+{: .warning }
+> **It does not prove the security role is right.** `WhoAmI` needs no privilege at all beyond an
+> enabled application user, so the test passes whether you trimmed the role to four privileges or left
+> all eighty in place. It cannot tell you that you granted too little — that surfaces later, when
+> Engage first reads your schema — and it will never tell you that you granted too much.
+>
+> Verify the role the way [Step 4](#trimming-the-new-role) describes: read it back and check it carries
+> what you intended, and nothing else.
 
 - **The list shows only environments your signed-in account can reach.** A short or empty list is a
   statement about your own access, not a fault in Engage.
@@ -428,31 +476,33 @@ intended environment.
 
 ## Step 7 — Configure your SharePoint destination
 
-Using the values from Step 5a:
+In the [Management Portal](#the-management-portal), go to **Admin → Microsoft** and open the
+**SharePoint** tab.
 
-1. In the Management Portal, go to **Admin → Microsoft → SharePoint**.
-2. Add a destination with:
+![The SharePoint destinations list]({{ site.baseurl }}/assets/images/foundation/dynamics/microsoft-sharepoint-destinations.png)
 
-| Field | Value | Rule |
+Press **Create**, and fill in the values from Step 5a:
+
+![The Create SharePoint destination dialog]({{ site.baseurl }}/assets/images/foundation/dynamics/microsoft-sharepoint-create-destination.png)
+
+| Field | Value | Notes |
 |---|---|---|
 | Key | **`present`** | Must be exactly this — see below |
-| Site hostname | `bank.sharepoint.com` | A bare host name — no `https://`, no path, no port |
-| Site path | `/sites/decks` | Server-relative, starting with `/`, containing none of `: # % ? ;` |
-| Document library | *(leave empty)* | Empty selects the site's default document library |
+| Site address | `bank.sharepoint.com` | Host name only — no `https://`, no path, no port |
+| Site path | `/sites/present` | Server-relative, starting with `/` |
+| Document library | *(leave empty)* | Empty uses the site's default document library |
 
 {: .warning }
-> **The key must be exactly `present`** — lower-case, no spaces. It is not a label you choose. Present
-> selects its destination by this key. A destination saved under any other name fails at the upload step
-> with a destination-not-found error rather than anything that mentions naming.
+> **The key must be exactly `present`** — lower-case, and **it cannot be changed after creation**. It is
+> not a label you choose. Present selects its destination by this key, so a destination saved under any
+> other name fails at the upload step with a destination-not-found error rather than anything that
+> mentions naming. Getting it wrong means deleting the destination and creating it again.
 
 {: .note }
-> *Screenshots pending: the Microsoft → SharePoint screen, the add-destination dialog, and a saved
-> destination.*
-
-{: .warning }
 > **There is no default destination.** Until one exists here, Present cannot write to SharePoint at all.
-> Saving a destination does not grant access — the per-site permission from Step 5b does that, and the
-> two are checked at different moments. If a deck fails to save, confirm both.
+> Saving a destination does not grant access either — the per-site permission from
+> [Step 5b](#5b--grant-the-bookingplatform-mgmt-api-application-access-to-that-one-site) does that, and
+> the two are checked at different moments. If a deck fails to save, confirm both.
 
 ## Step 8 — Embed Present in Dynamics
 

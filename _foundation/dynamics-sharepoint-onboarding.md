@@ -969,6 +969,9 @@ param (
     [Parameter(Mandatory = $true, HelpMessage = "AppId (client id) of the application receiving access to the site.")]
     [guid]$clientAppId,
 
+    [Parameter(HelpMessage = "Label recorded next to the app on the permission. Defaults to the application's display name, falling back to its app id.")]
+    [string]$clientAppDisplayName,
+
     [Parameter(HelpMessage = "Role to grant on the site. Default: write.")]
     [ValidateSet('read', 'write')]
     [string]$role = 'write'
@@ -1033,11 +1036,32 @@ if (-not $trimmedPath.StartsWith('/') -or $trimmedPath.IndexOfAny(@(':', '#', '%
 }
 
 $siteAddress = "$($siteHostname):$trimmedPath"
-$site = Get-MgSite -SiteId $siteAddress -ErrorAction SilentlyContinue
-if ($null -eq $site) {
-    Write-Host -ForegroundColor Red "No SharePoint site at '$siteAddress' in tenant $tenantId."
-    Write-Host -ForegroundColor Red "Check the host name and the server-relative path, and that the site exists."
+# The underlying error is reported rather than swallowed: a site that does not exist
+# and a lookup refused for want of consent are different problems, and reporting both
+# as "no such site" sends the reader after the wrong one.
+try {
+    $site = Get-MgSite -SiteId $siteAddress -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Could not read a SharePoint site at '$siteAddress' in tenant $tenantId."
+    Write-Host -ForegroundColor Red $_.Exception.Message
+    Write-Host -ForegroundColor Red "Check the host name and server-relative path, that the site exists, and that Sites.FullControl.All was consented."
     exit 1
+}
+
+# SharePoint rejects the create call below with a bare 400 'invalidRequest' when the
+# application identity carries no displayName, so a label is always sent. Reading the
+# service principal keeps the site's permission list legible, but needs directory read
+# access this script does not ask for, so the app id stands in when that read fails.
+if ([string]::IsNullOrWhiteSpace($clientAppDisplayName)) {
+    try {
+        $spQuery = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=appId eq '$clientAppId'&`$select=displayName"
+        $clientAppDisplayName = (Invoke-MgGraphRequest -Method GET -Uri $spQuery -ErrorAction Stop).value[0].displayName
+    } catch {
+        $clientAppDisplayName = $null
+    }
+    if ([string]::IsNullOrWhiteSpace($clientAppDisplayName)) {
+        $clientAppDisplayName = $clientAppId.ToString()
+    }
 }
 
 Write-Host
@@ -1046,7 +1070,7 @@ Write-Host -ForegroundColor Yellow "$tenantId"
 Write-Host -ForegroundColor Cyan -NoNewline "Site:     "
 Write-Host -ForegroundColor Yellow "$($site.DisplayName) ($($site.WebUrl))"
 Write-Host -ForegroundColor Cyan -NoNewline "App:      "
-Write-Host -ForegroundColor Yellow "$clientAppId"
+Write-Host -ForegroundColor Yellow "$clientAppDisplayName ($clientAppId)"
 Write-Host -ForegroundColor Cyan -NoNewline "Role:     "
 Write-Host -ForegroundColor Yellow "$role"
 Write-Host
@@ -1076,7 +1100,7 @@ if ($null -ne $existing) {
     $body = @{
         roles = @($role)
         grantedToIdentities = @(
-            @{ application = @{ id = $clientAppId.ToString() } }
+            @{ application = @{ id = $clientAppId.ToString(); displayName = $clientAppDisplayName } }
         )
     }
     $new = New-MgSitePermission -SiteId $site.Id -BodyParameter $body -ErrorAction Stop

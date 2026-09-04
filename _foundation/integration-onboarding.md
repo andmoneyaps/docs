@@ -731,9 +731,11 @@ What you create is the Dataverse identity it maps to, and the role that bounds i
 1. Take the application's **client ID** from the Engage platform team. This is an identifier, not a secret, and needs no secure channel.
 2. Create a **Dataverse Application User** in your target Dynamics environment, bound to that client ID.
    - Power Platform admin centre → Environments → {your env} → Settings → Users + permissions → Application users → New app user.
-3. Assign a **security role** to the Application User. The role is your enforcement point for what this flow can read or write. Start from a copy of a built-in role and narrow it to what the escalation scenarios in scope actually require — not the full set of entities the integration touches, since the per-employee OBO flow handles those under each employee's own role.
+3. Assign a **security role** to the Application User. The role is your enforcement point for what this flow can read or write, and it should carry only what the scenarios in scope actually require — not the full set of entities the integration touches, since the per-employee OBO flow handles those under each employee's own role.
 
-For the concrete starting role and a walk-through of the whole sequence, see [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/).
+**Do not build it by copying a built-in role.** A copied role, and a role created in the role editor, arrive carrying around eighty privileges — including creating and activating workflows and writing SharePoint document data — which then have to be removed by hand.
+
+The privileges required depend on which Engage product you are onboarding. For Present, [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#4b--create-and-assign-the-security-role) states the exact set and provides a script that creates the role, trims it and assigns it.
 
 #### Step 2 — Configure Entity Definitions and Entity Patterns
 
@@ -750,14 +752,14 @@ Engage therefore provides a script your Entra administrator runs in your tenant:
 ```powershell
 ./add-delegated-grant-to-service-principal.ps1 `
   -tenantId    {YourTenantId} `
-  -clientAppId {EngageApiClientId}
+  -clientAppId {MgmtApiAppClientId}
 ```
 
 The Dataverse resource and the `user_impersonation` permission are the script's defaults. **Application Administrator** is sufficient — Global Administrator is not required. The script is idempotent, takes effect within seconds, and prints an Undo command specific to what it found; keep that command, because removing the permission by hand can revoke unrelated grants.
 
 Because the grant lives on the service principal rather than in the application manifest, it is scoped to your tenant alone and is revocable independently of your §2a consent.
 
-Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Dynamics 365 and SharePoint Onboarding]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#step-3--authorise-engage-to-act-as-your-advisors).
+Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#step-3--authorise-engage-to-act-as-your-advisors).
 
 #### Validation
 

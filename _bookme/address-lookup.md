@@ -18,7 +18,7 @@ Address suggestions come from **Adressevælgeren**, the national address service
 
 Adressevælgeren replaces DAWA (Danmarks Adressers Web API), the provider BookMe used before. Klimadatastyrelsen retires DAWA on 1 October 2026.
 
-The lookup runs in the advisor's browser in two steps: a search that returns matching addresses, then a lookup of the chosen address that returns its position. Adressevælgeren reports positions in the Danish national grid (ETRS89 / EPSG:25832). BookMe converts them to WGS84 longitude and latitude before the travel-time calculation. No configuration is needed on your side.
+The lookup runs in the advisor's browser: a search that returns matching addresses, then a lookup of the chosen address that returns its position. No BookMe configuration is needed. Your organisation may need to allow the host, see below.
 
 ## What your organisation needs to know
 
@@ -26,7 +26,7 @@ The lookup runs in the advisor's browser in two steps: a search that returns mat
 > Advisors' browsers must be able to reach `https://adressevaelger.dk`. If your organisation restricts outbound browser traffic, add this host to the allow list.
 
 - **No credentials to manage.** BookMe accesses Adressevælgeren with a shared access key that Klimadatastyrelsen prescribes for the transition period. Klimadatastyrelsen plans per-organisation access management later (expected late 2026 or early 2027). BookMe will absorb that change; no action is needed from you now.
-- **What leaves the browser.** Only the address text the advisor types is sent to Adressevælgeren. It carries no customer name, meeting details, or other data.
+- **What leaves the browser.** The request to Adressevælgeren carries the address text the advisor types and the shared access key. It carries no customer name, meeting details, or other data.
 
 ## How it behaves
 

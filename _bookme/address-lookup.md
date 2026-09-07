@@ -1,31 +1,37 @@
+---
+layout: default
+title: Address Lookup for Offsite Meetings
+parent: BookMe
+nav_order: 12.5
+collection: bookme
+---
+
 # Address Lookup for Offsite Meetings
 
-This page describes which address service BookMe Schedule uses, what it returns, and how the travel-time calculation depends on it.
+When an advisor books an out-of-office meeting ("ude af huset"), they type part of an address and pick it from a suggestion list. BookMe uses the chosen start and end addresses to calculate travel time and to add travel slots to the advisor's calendar.
 
-## Overview
+This page explains which service answers those address lookups, what your organisation needs to allow, and how the feature behaves in day-to-day use.
 
-When an advisor books an 'ude af huset'/offsite meeting, they type part of an address and pick it from a suggestion list. The chosen start and end addresses feed the travel-time calculation, which adds travel slots to the advisor's calendar.
+## The address provider
 
-## Provider
+Address suggestions come from **Adressevælgeren**, the national address service run by the Danish Climate Data Agency (Klimadatastyrelsen), at `https://adressevaelger.dk`.
 
-Address search uses **Adressevælgeren**, Klimadatastyrelsen's address API, at `https://adressevaelger.dk`.
+Adressevælgeren replaces DAWA (Danmarks Adressers Web API), the provider BookMe used before. Klimadatastyrelsen retires DAWA on 1 October 2026.
 
-Adressevælgeren replaced DAWA (Danmarks Adressers Web API), which closed permanently on 1 October 2026.
+The lookup runs in the advisor's browser in two steps: a search that returns matching addresses, then a lookup of the chosen address that returns its position. Adressevælgeren reports positions in the Danish national grid (ETRS89 / EPSG:25832). BookMe converts them to WGS84 longitude and latitude before the travel-time calculation. No configuration is needed on your side.
 
-The lookup runs in two steps:
+## What your organisation needs to know
 
-1. **Search** — `GET /adresser/soeg?tekst={query}&token={token}` returns candidate addresses. Each candidate has an id and a display title, but **no coordinates**. The UI shows only results of type `adresse`; street-name results are ignored.
-2. **Lookup by id** — `GET /adresser/{id}?token={token}` returns the full record. The position sits in `adgangspunkt.koordinater` as **ETRS89/EPSG:25832** easting and northing in metres.
+{: .note }
+> Advisors' browsers must be able to reach `https://adressevaelger.dk`. If your organisation restricts outbound browser traffic, add this host to the allow list.
 
-BookMe Schedule converts the EPSG:25832 position to WGS84 longitude and latitude before it enters the booking flow, because the travel-time calculation (Azure Maps) expects degrees.
+- **No credentials to manage.** BookMe accesses Adressevælgeren with a shared access key that Klimadatastyrelsen prescribes for the transition period. Klimadatastyrelsen plans per-organisation access management later (expected late 2026 or early 2027). BookMe will absorb that change; no action is needed from you now.
+- **What leaves the browser.** Only the address text the advisor types is sent to Adressevælgeren. It carries no customer name, meeting details, or other data.
 
-## Authentication
+## How it behaves
 
-Every call carries a `token` query parameter. Until Klimadatastyrelsen's user management arrives (expected late 2026 or early 2027), all callers use the shared token that their documentation prescribes. It is not a secret.
-
-## Behavior notes
-
-- Typing three or more characters produces suggestions; fewer produces none.
-- A saved advisor start/end address is stored as text and re-resolved on page load. It receives a position when the search returns exactly one result, or when exactly one result's title equals the stored text. Otherwise the address keeps its text without a position, and no travel time is calculated for it.
-- A failure of the address service shows an error message in the address picker. An address with no matches shows an empty list. The two cases are distinct on purpose.
-- **Place-name search is no longer available.** DAWA also searched Danske Stednavne, so an advisor could find a place such as "Tivoli" by name. Adressevælgeren only offers addresses and street names, and the data supplier does not offer a replacement.
+- **Suggestions appear after three characters.** Shorter input gives no suggestions.
+- **Street names narrow the search.** The list can include a street name without a house number. Choosing it fills the field with the street and shows the addresses on that street. Only a complete address gets a position.
+- **Saved advisor addresses.** An advisor's saved start and end addresses are stored as text. When the booking page opens, BookMe looks the text up again to find its position. The position is found when the search returns exactly one match, or when exactly one match reads the same as the saved text. Otherwise the address keeps its text without a position, and BookMe calculates no travel time for it until the advisor picks it from the list again.
+- **Service failure and no match look different.** If Adressevælgeren cannot be reached or answers with an error, the address picker shows an error message. If the service answers but finds nothing, the list is simply empty.
+- **Place-name search is no longer available.** DAWA also searched Danish place names (Danske Stednavne), so an advisor could type "Tivoli" and get a suggestion. Adressevælgeren offers addresses and street names only, and Klimadatastyrelsen offers no replacement. Advisors must type the street address of such places.

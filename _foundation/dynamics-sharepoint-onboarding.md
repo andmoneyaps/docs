@@ -633,7 +633,7 @@ param (
 
 ## To run the cmdlets in this script, you need the Microsoft Graph module installed.
 # Command to run in Powershell shell: Install-Module Microsoft.Graph.Authentication, Microsoft.Graph.Applications, Microsoft.Graph.Identity.SignIns
-# Check if installed: Get-InstalledModule -Name Microsoft.Graph
+# Check if installed: Get-InstalledModule -Name Microsoft.Graph.Authentication, Microsoft.Graph.Applications, Microsoft.Graph.Identity.SignIns
 
 Import-Module Microsoft.Graph.Authentication
 Import-Module Microsoft.Graph.Applications
@@ -950,7 +950,9 @@ Write-Host
 Write-Host -ForegroundColor Cyan -NoNewline "Role id:   "
 Write-Host -ForegroundColor Yellow "$roleId"
 Write-Host -ForegroundColor Cyan -NoNewline "Undo:      "
-Write-Host -ForegroundColor Yellow "restore from $backupPath via ReplacePrivilegesRole, or delete the role"
+Write-Host -ForegroundColor Yellow "delete the role if this run created it - its assignments go with it."
+Write-Host -ForegroundColor Yellow "           Otherwise restore from $backupPath via ReplacePrivilegesRole,"
+Write-Host -ForegroundColor Yellow "           and drop the assignment separately if this run added it."
 ```
 
 ### add-site-permission-for-app.ps1
@@ -1026,6 +1028,7 @@ $context = Get-MgContext
 if ($null -eq $context -or [guid]$context.TenantId -ne $tenantId) {
     Write-Host -ForegroundColor Red "Signed in to tenant '$($context.TenantId)', expected '$tenantId'."
     Write-Host -ForegroundColor Red "Sign in as an admin of the target tenant and re-run."
+    Disconnect-MgGraph | Out-Null
     exit 1
 }
 
@@ -1038,6 +1041,7 @@ if ($null -eq $context -or [guid]$context.TenantId -ne $tenantId) {
 $trimmedPath = $sitePath.TrimEnd('/')
 if (-not $trimmedPath.StartsWith('/') -or $trimmedPath.IndexOfAny(@(':', '#', '%', '?', ';')) -ge 0) {
     Write-Host -ForegroundColor Red "sitePath must be server-relative, start with '/', and contain none of : # % ? ;"
+    Disconnect-MgGraph | Out-Null
     exit 1
 }
 
@@ -1051,6 +1055,7 @@ try {
     Write-Host -ForegroundColor Red "Could not read a SharePoint site at '$siteAddress' in tenant $tenantId."
     Write-Host -ForegroundColor Red $_.Exception.Message
     Write-Host -ForegroundColor Red "Check the host name and server-relative path, that the site exists, and that Sites.FullControl.All was consented."
+    Disconnect-MgGraph | Out-Null
     exit 1
 }
 
@@ -1113,6 +1118,7 @@ if ($null -ne $existing) {
     if ($null -eq $new -or [string]::IsNullOrWhiteSpace($new.Id)) {
         Write-Host -ForegroundColor Red "The create call returned no permission id, so no permission was written."
         Write-Host -ForegroundColor Red "Check the state with Get-MgSitePermission before re-running."
+        Disconnect-MgGraph | Out-Null
         exit 1
     }
     $permissionId = $new.Id

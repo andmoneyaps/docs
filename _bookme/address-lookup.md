@@ -10,8 +10,6 @@ collection: bookme
 
 When an advisor books an out-of-office meeting ("ude af huset"), they type part of an address and pick it from a suggestion list. BookMe uses the chosen start and end addresses to calculate travel time and to add travel slots to the advisor's calendar.
 
-This page explains which service answers those address lookups, what your organisation needs to allow, and how the feature behaves in day-to-day use.
-
 ## The address provider
 
 Address suggestions come from **Adressevælgeren**, the national address service run by the Danish Climate Data Agency (Klimadatastyrelsen), at `https://adressevaelger.dk`.

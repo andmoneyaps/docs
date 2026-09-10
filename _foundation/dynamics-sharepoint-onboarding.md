@@ -105,12 +105,34 @@ configuration are all per-environment. Nothing carries across.
 | BookingPlatform Mgmt API | `{MgmtApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
 | AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | `de5dd77b-f082-4895-abe5-3f5f6020cba8` | `e9059d5a-7aeb-4f1a-a98d-7d8e1d4d23f3` |
 
-| Application | What it is | Used in |
-|---|---|---|
-| **AndMoney UWC** | The sign-in surface your **advisors** use to reach Present | Step 1 |
-| **BookingPlatform Mgmt UI** | The sign-in surface your **administrators** use to reach the Management Portal | Step 1 |
-| **BookingPlatform Mgmt API** | The API behind both, carrying the app roles | Steps 1, 2, 3, 5b |
-| **AndMoney Dynamics Access** | The application identity that reads your Dataverse schema | Steps 1, 4 |
+| Application | What it is | Used in | Entra API permissions |
+|---|---|---|---|
+| **AndMoney UWC** | The sign-in surface your **advisors** use to reach Present | Step 1 | Microsoft Graph: `openid`, `profile`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` |
+| **BookingPlatform Mgmt UI** | The sign-in surface your **administrators** use to reach the Management Portal | Step 1 | Microsoft Graph: `openid`, `profile`, `email`, `User.Read`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` |
+| **BookingPlatform Mgmt API** | The API behind both, carrying the app roles | Steps 1, 2, 3, 5b | **At consent** — Microsoft Graph: `openid`, `profile`, `email`, `User.Read`<br>**Added in Step 3** — Dataverse: `user_impersonation` · Microsoft Graph: `Sites.Selected` |
+| **AndMoney Dynamics Access** | The application identity that reads your Dataverse schema | Steps 1, 4 | Dataverse: `user_impersonation` |
+
+{: .important }
+> **Every permission above is delegated. None of the four applications holds an application permission**
+> — nothing runs without a signed-in user, and nothing acts beyond what that user can already do.
+>
+> The one exception to "delegated" is not an Entra permission at all: the application identity's
+> **app-only** access to Dataverse is authorised by the **application user and its security role** you
+> create in [Step 4](#step-4--create-the-application-user-in-dataverse), inside your own environment.
+> Entra grants it nothing.
+
+The two permissions marked **Added in Step 3** are the ones the authorisation script records, and the
+only ones that are not part of an admin-consent prompt. They are recorded against the
+**BookingPlatform Mgmt API** service principal in your tenant, tenant-wide (`AllPrincipals`), and are
+revocable independently of the Step 1 consents — see
+[Step 3](#step-3--authorise-engage-to-act-as-your-advisors).
+
+Microsoft resource IDs, for cross-checking against what you see in Entra:
+
+| Resource | Application ID |
+|---|---|
+| Microsoft Graph | `00000003-0000-0000-c000-000000000000` |
+| Dataverse (Dynamics CRM) | `00000007-0000-0000-c000-000000000000` |
 
 {: .note }
 > **The two sign-in surfaces are separate applications and both are required.** Approving only one

@@ -107,7 +107,7 @@ configuration are all per-environment. Nothing carries across.
 
 | Application | What it is | Used in | Entra API permissions |
 |---|---|---|---|
-| **AndMoney UWC** | The sign-in surface your **advisors** use to reach Present | Step 1 | Microsoft Graph: `openid`, `profile`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` |
+| **AndMoney UWC** | The sign-in surface your **advisors** use to reach Present | Step 1 | Microsoft Graph: `User.Read`<br>BookingPlatform Mgmt API: `access_as_user` |
 | **BookingPlatform Mgmt UI** | The sign-in surface your **administrators** use to reach the Management Portal | Step 1 | Microsoft Graph: `openid`, `profile`, `email`, `User.Read`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` |
 | **BookingPlatform Mgmt API** | The API behind both, carrying the app roles | Steps 1, 2, 3, 5b | **At consent** — Microsoft Graph: `openid`, `profile`, `email`, `User.Read`<br>**Added in Step 3** — Dataverse: `user_impersonation` · Microsoft Graph: `Sites.Selected` |
 | **AndMoney Dynamics Access** | The application identity that reads your Dataverse schema | Steps 1, 4 | Dataverse: `user_impersonation` |

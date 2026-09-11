@@ -543,13 +543,106 @@ Throughout the onboarding, your &money contact is available to help with any ste
 
 ## Verifying it works
 
-Together, at the end:
+Both tests below use a **starter &money template** — a small set of slides we can add to your
+environment on request, so verification does not wait on your own slide design. Ask your &money contact
+for it before you start.
 
-- An advisor signs in and opens Present from an appointment.
-- They see the customer data they expect — and an advisor **without** access to a given record does not
-  see it.
-- A generated deck lands in the SharePoint site and opens in PowerPoint on the web.
-- An advisor without access to the SharePoint site fails visibly rather than silently.
+Each test needs an advisor account, an appointment record in Dynamics, and the embedding from
+[Step 8](#step-8--embed-present-in-dynamics).
+
+### Smoke test — generate an empty presentation
+
+No tag mapping is involved, so nothing on the slides comes from Dynamics. What this exercises is the
+plumbing: sign-in, the appointment reaching Present, the deck being built, and the files arriving where
+they belong.
+
+Open an appointment in Dynamics and open Present from the form. It opens on **Trin 01 — Dagsorden**:
+
+![Present open on an appointment, on the agenda step]({{ site.baseurl }}/assets/images/foundation/dynamics/present-agenda-empty.png)
+
+Name an agenda item — anything will do — and press **Videre**:
+
+![An agenda item named on the agenda step]({{ site.baseurl }}/assets/images/foundation/dynamics/present-agenda-item.png)
+
+On **Trin 02 — Slides**, press **Tilføj slides** under the agenda item and pick any slide from the
+starter &money template, for example the *dagsorden* slide. Then press **Videre**:
+
+![A slide added under the agenda item]({{ site.baseurl }}/assets/images/foundation/dynamics/present-slides-selected.png)
+
+**Trin 03 — Kundepræsentation** reports that the selected slides use no tags, so there is nothing to fill
+in. Leave both **PowerPoint** and **PDF** ticked and press **Generér**:
+
+![The generate step, with PowerPoint and PDF selected]({{ site.baseurl }}/assets/images/foundation/dynamics/present-generate.png)
+
+Both files are uploaded to your SharePoint site, and a `sharepointdocumentlocation` record is created
+against the appointment for each of them — which is what puts them on the appointment's document view.
+You should see two: a `.pptx` and a `.pdf`, named by an identifier rather than a title, each with the
+appointment under **Regarding** and an absolute URL into your site:
+
+![The generated files listed against the appointment]({{ site.baseurl }}/assets/images/foundation/dynamics/appointment-related-documents.png)
+
+Open one and check it contains the slide you chose, with your agenda text on it.
+
+The upload and the document location are separate mechanisms. Writing the file is Engage; creating the
+`sharepointdocumentlocation` depends on server-based SharePoint integration and document management
+being enabled on the `appointment` table, as described in
+[Step 8](#step-8--embed-present-in-dynamics). If the files are in SharePoint but the appointment lists
+nothing, that is where to look.
+
+### Advisor test — generate a presentation with your own data
+
+This is the flow an advisor will actually use: a tag mapped once by a configurator, then filled from the
+Dynamics record every time a presentation is generated.
+
+#### Upload a template
+
+A `Configurator` or `Admin` uploads the presentation the advisors will build from, under
+**Present → Setup → Templates → Upload**. How a template is built — sections, slide names, and the tags
+that get filled in — is covered in the
+[Present super-user guide]({{ site.baseurl }}/business-implementation/present/en/superbrugerguide/#prepare-your-master-template-powerpoint).
+
+The starter &money template already contains tags, so it can be used here instead.
+
+#### Map a tag to a Dynamics field
+
+In the [Management Portal](#the-management-portal), go to **Present → Setup → Tags** and press
+**Create**. The dialog asks two things: which tag you are filling, and where its value comes from.
+
+![The Create tag configuration dialog]({{ site.baseurl }}/assets/images/foundation/dynamics/present-tag-create-dialog.png)
+
+Choose the tag, then build the path to the value. The path starts on the **Appointment** and you either
+pick a field on it to finish, or step out to a linked record and keep going. The list names each hop —
+`account` *via regardingobjectid*, for example — and gives each field its Dataverse type:
+
+![Choosing where the tag's value comes from]({{ site.baseurl }}/assets/images/foundation/dynamics/present-tag-choose-source.png)
+
+**The mapping** panel on the right shows the path as it stands, and it is the path that is saved — it
+runs against every appointment, not only the one you are looking at. Press **Create** when it reads the
+way you intend:
+
+![The finished mapping path, from Appointment to account name]({{ site.baseurl }}/assets/images/foundation/dynamics/present-tag-mapping-path.png)
+
+**Find a meeting** at the top is worth using while you map: it sets an example appointment, and every
+field list then shows the value that record actually holds. This is the quickest way to confirm you have
+picked the right field before saving.
+
+#### Generate as an advisor
+
+Work through the same three steps as the smoke test, this time choosing a slide that uses the tag you
+mapped. **Trin 03** now separates the two kinds of tag:
+
+![Trin 03 showing filled and unfilled tags]({{ site.baseurl }}/assets/images/foundation/dynamics/present-filled-tags.png)
+
+- **Udfyldte tags** — expand it and the mapped tag shows the value read from Dynamics, marked
+  **FRA CRM**, with a thumbnail of the slide it appears on.
+- Anything still unmapped is listed as **IKKE UDFYLDT** with *tom — indsættes blank*, and the step header
+  counts them. These never block generation; the advisor can type a value or let the tag come out blank.
+
+Generate, and confirm the value is on the slide in the finished deck.
+
+A value arriving here proves the data path in one go: the advisor's own permissions were used to read
+Dataverse, the path resolved from the appointment to the field, and the value reached the slide. An
+advisor who cannot open that record in Dynamics cannot produce it here either.
 
 ## Scripts
 

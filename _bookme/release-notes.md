@@ -18,7 +18,7 @@ Here is what's new in release 1.30.0 of &bookme.
 > Remember to use your org's URL instead of https://login.salesforce.com.
 
 {: .note }
-> Releases 1.29.0 and 1.30.0 read location display names from a new BookMe backend service. That backend update is live in production as of 14 September 2026, so both releases are safe to install. Install 1.30.0 rather than 1.29.0. It contains the same feature plus the fixes below.
+> Releases 1.29.0 and 1.30.0 read location display names from a new Schedule backend service. That backend update is live in production as of 14 September 2026, so both releases are safe to install. Install 1.30.0 rather than 1.29.0. It contains the same feature plus the fixes below.
 
 ### Fixed
 - **The location display name stays visible after the advisor selects a location**
@@ -37,11 +37,11 @@ Here is what's new in release 1.29.0 of &bookme.
 > Remember to use your org's URL instead of https://login.salesforce.com.
 
 {: .note }
-> This release reads location display names from a new BookMe backend service. That backend update is live in production as of 14 September 2026, so this release is safe to install. Release 1.30.0 contains the same feature plus a fix for the selected location, so install that version instead.
+> This release reads location display names from a new Schedule backend service. That backend update is live in production as of 14 September 2026, so this release is safe to install. Release 1.30.0 contains the same feature plus a fix for the selected location, so install that version instead.
 
 ### Added
 - **The advisor booking flow shows the location's display name**
-  - Each location in BookMe has a technical name that comes from your directory sync (SCIM) and an optional display name. You set the display name in Management UI under **Meeting setup → Locations**, in the field **Display name (Name in meeting booking)**, "Visningsnavn" in the Danish interface. See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
+  - Each location in Schedule has a technical name that comes from your directory sync (SCIM) and an optional display name. You set the display name in Management UI under **Meeting setup → Locations**, in the field **Display name (Name in meeting booking)**, "Visningsnavn" in the Danish interface. See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
   - The advisor booking flow now shows the display name in the location picker and in the account's location field. If a location has no display name, the technical name is shown as before.
   - The location field in the customer booking flow shows the display name as well.
   - If your organisation already overrides location names inside the Salesforce package, those names keep priority over the display name.

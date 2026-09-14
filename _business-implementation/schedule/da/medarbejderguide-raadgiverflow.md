@@ -125,7 +125,7 @@ Skærmen hedder **Book mødet**.
 - Giv evt. mødet en **Mødetitel**.
 - Skriv en **uddybelse** af, hvad kunden gerne vil tale om. Teksten kommer med i mødet.
 - Tilføj kundens deltagere med **Søg i kundekontakter** eller **Tilføj kundedeltager**. Under **Bankens deltagere** ser du de rådgivere, der deltager.
-- Lad **Send mødebekræftelse til kundedeltagere** være markeret, hvis kunden skal have besked efter jeres opsætning.
+- Lad **Send mødebekræftelse til kundedeltagere** være markeret, hvis kunden skal have besked. Schedule gemmer kun dit valg på mødet. Det er jeres egen opsætning i Salesforce, der sender beskeden ud fra det felt.
 
 <!-- screenshot: skærmen "Book mødet" med "Vælg mødetype", "Mødetitel", "Mødelokale", uddybelsesfeltet, deltagere og knappen "Book møde" -->
 
@@ -163,7 +163,7 @@ Under feltet fortæller Schedule dig, hvor langt du er:
 
 ### Trin 6 · Book og bekræft
 
-_Hvorfor: Først når du klikker **Book møde**, reserverer Schedule tiden og opretter mødet i Salesforce._
+_Hvorfor: Når du vælger en tid, holder Schedule den for dig i fem minutter, så ingen andre kan booke den imens. Klikker du ikke **Book møde** inden da, bliver tiden ledig igen. **Book møde** bekræfter tiden og opretter mødet i Salesforce._
 
 - Tjek, at **Lokation**, **Dato**, **Tid** og **Emne for mødet** øverst er rigtige.
 - Vil du vælge en anden tid, så klik **Vælg et andet møde**.
@@ -206,7 +206,7 @@ Her er, hvad de enkelte valg styrer, så du ved, hvad du vælger:
 | Startaddresse / Slutaddresse | Kørsel ved møde ude af huset | Køretid beregnes, når adressen er valgt fra listen. Slutadressen er obligatorisk. |
 | Mødetitel | Mødets navn | Bruges som titel på mødet i Salesforce. |
 | Uddybelse | Hvad kunden vil tale om | Kommer med i mødets beskrivelse. |
-| Send mødebekræftelse til kundedeltagere | Besked til kunden | Om kunden skal have besked. Afhænger af jeres opsætning. |
+| Send mødebekræftelse til kundedeltagere | Besked til kunden | Gemmer, om kunden skal have besked. Schedule sender ikke selv beskeden; det gør jeres egen opsætning i Salesforce. |
 | Book møde | Reserverer tiden | Opretter mødet i din kalender og i Salesforce. |
 
 

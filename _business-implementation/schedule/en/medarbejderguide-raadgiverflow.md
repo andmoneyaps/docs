@@ -125,7 +125,7 @@ The screen is called **Book the Meeting**.
 - Give the meeting a **Meeting Title** if you like.
 - Write a **description** of what the customer wants to talk about. The text goes into the meeting.
 - Add the customer's participants with **Search in Customer Contacts** or **Add Customer Participant**. Under **Bank's Participants** you see the advisors who take part.
-- Leave **Send meeting confirmation to customer participants** ticked if the customer should be notified according to your setup.
+- Leave **Send meeting confirmation to customer participants** ticked if the customer should be notified. Schedule only stores your choice on the meeting. Your organisation's own Salesforce setup sends the notification based on that field.
 
 <!-- screenshot: the "Book the Meeting" screen with "Choose Meeting Type", "Meeting Title", "Meeting Room", the description field, participants and the "Book Meeting" button -->
 
@@ -163,7 +163,7 @@ Below the field Schedule tells you how far you are:
 
 ### Step 6 · Book and confirm
 
-_Why: Only when you click **Book Meeting** does Schedule reserve the time and create the meeting in Salesforce._
+_Why: When you pick a time, Schedule holds it for you for five minutes, so nobody else can book it meanwhile. If you do not click **Book Meeting** within that time, the slot becomes available again. **Book Meeting** confirms the time and creates the meeting in Salesforce._
 
 - Check that **Location**, **Date**, **Time** and **Meeting Theme** at the top are correct.
 - If you want a different time, click **Choose a Different Meeting**.
@@ -201,12 +201,12 @@ Here is what each choice controls, so you know what you are choosing:
 | Select Location | Where the meeting is held | Decides advisors and rooms. Shown with the display name. |
 | Select Time Slot | Available times or a manual time | **Select Available Time** follows your rules. **Custom** lets you enter the time yourself. |
 | Filters | Which times you see | E.g. only times with an available room, or only times the customer would see. |
-| Choose Meeting Type | How the meeting is held | In person gives a room. Out of office gives address fields and travel time. |
+| Choose Meeting Type | How the meeting is held | In-person meetings use a room. Out-of-office meetings add address fields and travel time. |
 | Meeting Room | The room for an in-person meeting | The room is reserved together with the meeting. |
 | Start address / End address | Travel for an out-of-office meeting | Travel time is calculated once the address is picked from the list. The end address is mandatory. |
 | Meeting Title | The meeting's name | Used as the title of the meeting in Salesforce. |
 | Description | What the customer wants to talk about | Goes into the meeting's description. |
-| Send meeting confirmation to customer participants | Notification to the customer | Whether the customer should be notified. Depends on your setup. |
+| Send meeting confirmation to customer participants | Notification to the customer | Stores whether the customer should be notified. Schedule does not send the notification itself; your organisation's own Salesforce setup does. |
 | Book Meeting | Reserves the time | Creates the meeting in your calendar and in Salesforce. |
 
 

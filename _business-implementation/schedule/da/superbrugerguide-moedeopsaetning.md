@@ -138,7 +138,7 @@ Fysiske steder og deres lokaler.
 | Felt | Hvad du reelt indstiller |
 |---|---|
 | Navn | Internt navn — skal matche ⟦SCIM⟧-lokationen ⟦præcist⟧ (versalfølsomt!), ellers findes ingen medarbejdere. |
-| Visningsnavn (Navn i mødebooking) | Det navn, kunden ser ved booking. Fra BookMe Salesforce-pakke 1.29.0 ser rådgiveren også dette navn i bookingflowet i Salesforce. Er feltet tomt, vises det interne navn. |
+| Visningsnavn (Navn i mødebooking) | Det navn, kunden ser ved booking. Fra Schedule Salesforce-pakke 1.29.0 ser rådgiveren også dette navn i bookingflowet i Salesforce. Er feltet tomt, vises det interne navn. |
 | Kræv ledigt mødelokale for at kunne booke fysisk møde | ★ Kun tider med et ledigt lokale vises for fysiske møder. |
 | Tilføj lokale til det bookede møde | Lokale-vælger vises, og lokalet sættes på bookingen. |
 | Lokaler på lokationen | Read-only — synkroniseres fra SCIM/M365. |

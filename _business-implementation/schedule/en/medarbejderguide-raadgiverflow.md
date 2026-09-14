@@ -183,7 +183,7 @@ When you choose a location, Schedule shows the **display name** your super-user 
 
 The display name follows the meeting all the way: in the location picker, at the top of **Book the Meeting** and on **Confirmation**. Behind the screen Schedule still uses the internal name, so the meeting lands in the right place.
 
-Requires BookMe package 1.29.0 or newer.
+Requires BookMe package 1.30.0 or later.
 
 {: .note }
 > **Note:** If you still see internal names, your super-user may not have set up display names yet. The super-user does that under **Meeting setup → Locations** in Schedule.

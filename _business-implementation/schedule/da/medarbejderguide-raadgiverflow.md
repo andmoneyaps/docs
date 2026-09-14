@@ -183,7 +183,7 @@ Når du vælger en lokation, viser Schedule det **visningsnavn**, jeres superbru
 
 Visningsnavnet følger med hele vejen: i lokationsvælgeren, øverst på **Book mødet** og på **Bekræftelse**. Bag skærmen bruger Schedule stadig det interne navn, så mødet lander det rigtige sted.
 
-Kræver BookMe-pakke 1.29.0 eller nyere.
+Kræver BookMe-pakke 1.30.0 eller nyere.
 
 {: .note }
 > **Bemærk:** Ser du stadig interne navne, kan det være, at jeres superbruger ikke har sat visningsnavne op endnu. Superbrugeren gør det under **Mødeopsætning → Lokationer** i Schedule.

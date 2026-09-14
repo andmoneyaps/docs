@@ -41,7 +41,7 @@ Here is what's new in release 1.29.0 of &bookme.
 
 ### Added
 - **The advisor booking flow shows the location's display name**
-  - Each location in BookMe has a technical name that comes from your directory sync (SCIM) and an optional display name. You set the display name in Management UI under **Meeting setup → Locations** ("Visningsnavn"). See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
+  - Each location in BookMe has a technical name that comes from your directory sync (SCIM) and an optional display name. You set the display name in Management UI under **Meeting setup → Locations**, in the field **Display name (Name in meeting booking)**, "Visningsnavn" in the Danish interface. See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
   - The advisor booking flow now shows the display name in the location picker and in the account's location field. If a location has no display name, the technical name is shown as before.
   - The location field in the customer booking flow shows the display name as well.
   - If your organisation already overrides location names inside the Salesforce package, those names keep priority over the display name.
@@ -71,7 +71,7 @@ Here is what's new in release 1.28.0 of &bookme.
 - **The address picker shows an error when the address service is unavailable**
   - Before, a service failure showed the same empty list as "no address found". The picker now shows an error message, so advisors can tell an outage from a missing address.
 - **Saved advisor addresses keep their travel-time calculation**
-  - Saved start and end addresses on an advisor's profile still resolve to a position after the change of address provider, also when the new service returns several rows for the same text.
+  - Saved start and end addresses on an advisor's profile still resolve to a position after the change of address provider, in nearly all cases. When the new service returns several rows for the same text, the one whose title matches the saved text exactly is used. A saved address with no exact match keeps its text and gets no travel time.
 - **A slow answer from the address service no longer overwrites a newer suggestion list**
   - Before, a late answer to an earlier search could replace the list for what the advisor had typed since, or blank it. Each search now keeps only its latest answer.
 - **Two suggestions with the same text select the right address**

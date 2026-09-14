@@ -5,7 +5,7 @@ nav_order: 2
 ---
 ## September 2026
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.30 Release**: The location display name stays visible after the advisor selects a location, in the picker, the booking summary and the confirmation. Install this version instead of 1.29. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).
 - **Version 1.29 Release**: The advisor booking flow shows the location display name set in Management UI under Meeting setup → Locations, instead of the technical directory name. Both 1.29 and 1.30 need the Schedule backend update that is live in production as of 14 September 2026.

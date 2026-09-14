@@ -7,6 +7,76 @@ parent: BookMe
 
 # Release Notes—BookMe
 
+## Release 1.30.0 (10-09-2026)
+Here is what's new in release 1.30.0 of &bookme.
+
+> **Managed Package Version ID**: `04tP7000003Up9pIAC`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000003Up9pIAC`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+{: .note }
+> Releases 1.29.0 and 1.30.0 read location display names from a new BookMe backend service. That backend update is live in production as of 14 September 2026, so both releases are safe to install. Install 1.30.0 rather than 1.29.0. It contains the same feature plus the fixes below.
+
+### Fixed
+- **The location display name stays visible after the advisor selects a location**
+  - In release 1.29.0, the location picker showed the display name in the list but switched back to the technical location name as soon as the advisor selected it. The display name now stays in the picker, in the booking summary and in the booking confirmation.
+- **The booking summary shows the location for physical meetings**
+  - Fixed an issue where the booking summary and the booking confirmation could leave out the location of a physical meeting.
+
+## Release 1.29.0 (09-09-2026)
+Here is what's new in release 1.29.0 of &bookme.
+
+> **Managed Package Version ID**: `04tP7000003UTAvIAO`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000003UTAvIAO`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+{: .note }
+> This release reads location display names from a new BookMe backend service. That backend update is live in production as of 14 September 2026, so this release is safe to install. Release 1.30.0 contains the same feature plus a fix for the selected location, so install that version instead.
+
+### Added
+- **The advisor booking flow shows the location's display name**
+  - Each location in BookMe has a technical name that comes from your directory sync (SCIM) and an optional display name. You set the display name in Management UI under **Meeting setup → Locations** ("Visningsnavn"). See the [Meeting setup super-user guide]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/).
+  - The advisor booking flow now shows the display name in the location picker and in the account's location field. If a location has no display name, the technical name is shown as before.
+  - The location field in the customer booking flow shows the display name as well.
+  - If your organisation already overrides location names inside the Salesforce package, those names keep priority over the display name.
+
+## Release 1.28.0 (07-09-2026)
+Here is what's new in release 1.28.0 of &bookme.
+
+> **Managed Package Version ID**: `04tP7000003TofdIAC`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000003TofdIAC`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+{: .warning }
+> DAWA, the Danish address service that earlier releases use for address lookup, is retired by Klimadatastyrelsen on 1 October 2026. Install release 1.28.0 or newer before that date to keep address lookup for out-of-office meetings working. Advisors' browsers must be able to reach `https://adressevaelger.dk`. See [Address Lookup for Offsite Meetings]({{ site.baseurl }}/bookme/address-lookup/).
+
+### Changed
+- **Address lookup for out-of-office meetings now uses Adressevælgeren**
+  - When an advisor books an out-of-office meeting ("ude af huset"), the address suggestions now come from Adressevælgeren, the national address service run by Klimadatastyrelsen. Before, they came from DAWA. No BookMe configuration is needed.
+- **The end address is now required for out-of-office meetings**
+  - The book button stays disabled until the end address field holds a value. This applies to all banks. Before, the end address was optional, and templates that use the end address came up empty.
+- **Street names appear as suggestions**
+  - When an advisor types a street name, the list now offers the street itself. Choosing it fills the field with the street and lists the addresses on that street, so the advisor picks the house number with one more click.
+- **Place-name search is no longer available**
+  - DAWA also searched Danish place names, so an advisor could type "Tivoli" and get a suggestion. Adressevælgeren offers addresses and street names only. Advisors must type the street address of such places.
+
+### Fixed
+- **The address picker shows an error when the address service is unavailable**
+  - Before, a service failure showed the same empty list as "no address found". The picker now shows an error message, so advisors can tell an outage from a missing address.
+- **Saved advisor addresses keep their travel-time calculation**
+  - Saved start and end addresses on an advisor's profile still resolve to a position after the change of address provider, also when the new service returns several rows for the same text.
+- **Two suggestions with the same text select the right address**
+  - Fixed an issue where two suggestions that read the same, for example the same street name in two towns, both selected the first one.
+
 ## Release 1.26.0 (28-04-2026)
 Here is what's new in release 1.26.0 of &bookme.
 

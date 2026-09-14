@@ -32,6 +32,10 @@ matches your bank. Ask your &money contact if you are not sure which your bank h
 
 Each row shows a mapped tag, the path its value is read from, and the templates the tag appears in.
 
+{: .note }
+> **Mapping is for administrators.** On Dynamics 365 the page reads the CRM as you, so you also need
+> administrator rights in the Dynamics environment itself.
+
 ## Map a tag
 
 1. Click **Create**.

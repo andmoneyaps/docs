@@ -564,8 +564,8 @@ Name an agenda item — anything will do — and press **Videre**:
 
 ![An agenda item named on the agenda step]({{ site.baseurl }}/assets/images/foundation/dynamics/present-agenda-item.png)
 
-On **Trin 02 — Slides**, press **Tilføj slides** under the agenda item and pick any slide from the
-starter &money template, for example the *dagsorden* slide. Then press **Videre**:
+On **Trin 02 — Slides**, press **Tilføj slides** under the agenda item and pick the *dagsorden* slide
+from the starter &money template. Then press **Videre**:
 
 ![A slide added under the agenda item]({{ site.baseurl }}/assets/images/foundation/dynamics/present-slides-selected.png)
 
@@ -629,7 +629,10 @@ picked the right field before saving.
 #### Generate as an advisor
 
 Work through the same three steps as the smoke test, this time choosing a slide that uses the tag you
-mapped. **Trin 03** now separates the two kinds of tag:
+mapped. Pick an appointment where the mapped field holds a value, and note what it is — a blank slide
+otherwise leaves you unable to tell an empty field from a mapping that does not resolve.
+
+**Trin 03** now separates the two kinds of tag:
 
 ![Trin 03 showing filled and unfilled tags]({{ site.baseurl }}/assets/images/foundation/dynamics/present-filled-tags.png)
 
@@ -638,7 +641,7 @@ mapped. **Trin 03** now separates the two kinds of tag:
 - Anything still unmapped is listed as **IKKE UDFYLDT** with *tom — indsættes blank*, and the step header
   counts them. These never block generation; the advisor can type a value or let the tag come out blank.
 
-Generate, and confirm the value is on the slide in the finished deck.
+Generate, and confirm the slide in the finished deck carries the value you noted.
 
 A value arriving here proves the data path in one go: the advisor's own permissions were used to read
 Dataverse, the path resolved from the appointment to the field, and the value reached the slide. An

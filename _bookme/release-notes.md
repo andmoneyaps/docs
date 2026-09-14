@@ -61,11 +61,9 @@ Here is what's new in release 1.28.0 of &bookme.
 
 ### Changed
 - **Address lookup for out-of-office meetings now uses Adressevælgeren**
-  - When an advisor books an out-of-office meeting ("ude af huset"), the address suggestions now come from Adressevælgeren, the national address service run by Klimadatastyrelsen. Before, they came from DAWA. No BookMe configuration is needed.
+  - When an advisor books an out-of-office meeting ("ude af huset"), the address suggestions now come from Adressevælgeren, the national address service run by Klimadatastyrelsen. Before, they came from DAWA. Street suggestions work as before: type a street name, pick the street, then pick the house number. No BookMe configuration is needed.
 - **The end address is now required for out-of-office meetings**
   - The book button stays disabled until the end address field holds a value. This applies to all banks. Before, the end address was optional, and templates that use the end address came up empty.
-- **Street names appear as suggestions**
-  - When an advisor types a street name, the list now offers the street itself. Choosing it fills the field with the street and lists the addresses on that street, so the advisor picks the house number with one more click.
 - **Place-name search is no longer available**
   - DAWA also searched Danish place names, so an advisor could type "Tivoli" and get a suggestion. Adressevælgeren offers addresses and street names only. Advisors must type the street address of such places.
 
@@ -74,6 +72,8 @@ Here is what's new in release 1.28.0 of &bookme.
   - Before, a service failure showed the same empty list as "no address found". The picker now shows an error message, so advisors can tell an outage from a missing address.
 - **Saved advisor addresses keep their travel-time calculation**
   - Saved start and end addresses on an advisor's profile still resolve to a position after the change of address provider, also when the new service returns several rows for the same text.
+- **A slow answer from the address service no longer overwrites a newer suggestion list**
+  - Before, a late answer to an earlier search could replace the list for what the advisor had typed since, or blank it. Each search now keeps only its latest answer.
 - **Two suggestions with the same text select the right address**
   - Fixed an issue where two suggestions that read the same, for example the same street name in two towns, both selected the first one.
 

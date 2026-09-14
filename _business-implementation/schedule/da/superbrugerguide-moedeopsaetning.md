@@ -7,7 +7,7 @@ nav_order: 203
 lang: "da"
 ---
 # Schedule – superbrugerguide: Mødeopsætning
-_De seks faner, indstillingerne og de fire bookingflows · v1.0 · 12.06.2026_
+_De seks faner, indstillingerne og de fire bookingflows · v1.1 · 14.09.2026_
 
 
 
@@ -138,7 +138,7 @@ Fysiske steder og deres lokaler.
 | Felt | Hvad du reelt indstiller |
 |---|---|
 | Navn | Internt navn — skal matche ⟦SCIM⟧-lokationen ⟦præcist⟧ (versalfølsomt!), ellers findes ingen medarbejdere. |
-| Visningsnavn (Navn i mødebooking) | Det navn, kunden ser ved booking. |
+| Visningsnavn (Navn i mødebooking) | Det navn, kunden ser ved booking. Fra Schedule Salesforce-pakke 1.29.0 ser rådgiveren også dette navn i bookingflowet i Salesforce. Er feltet tomt, vises det interne navn. |
 | Kræv ledigt mødelokale for at kunne booke fysisk møde | ★ Kun tider med et ledigt lokale vises for fysiske møder. |
 | Tilføj lokale til det bookede møde | Lokale-vælger vises, og lokalet sættes på bookingen. |
 | Lokaler på lokationen | Read-only — synkroniseres fra SCIM/M365. |
@@ -213,6 +213,7 @@ Bestemmer prioriteringen, når flere medarbejdere er ledige (Eksplicit valgt →
 
 ## Seneste opdatering
 
+- 14.09.2026 (v1.1) — Visningsnavn vises nu også for rådgivere i Salesforce (kræver pakke 1.29.0 eller nyere).
 - 12.06.2026 (v1.0) — Første version (alle faner + bookingflow-matrix).
 
 
@@ -221,4 +222,4 @@ Bestemmer prioriteringen, når flere medarbejdere er ledige (Eksplicit valgt →
 
 
 ---
-_&money · support: info@andmoney.dk · andmoney.dk · v1.0 · 12.06.2026_
+_&money · support: info@andmoney.dk · andmoney.dk · v1.1 · 14.09.2026_

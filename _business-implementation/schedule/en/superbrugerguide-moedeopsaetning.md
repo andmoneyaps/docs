@@ -7,7 +7,7 @@ nav_order: 208
 lang: "en"
 ---
 # Schedule – super-user guide: Meeting setup
-_The six tabs, the settings and the four booking flows · v1.0 · 12.06.2026_
+_The six tabs, the settings and the four booking flows · v1.1 · 14.09.2026_
 
 
 
@@ -138,7 +138,7 @@ Physical places and their rooms.
 | Field | What you actually set |
 |---|---|
 | Name | Internal name — must match the ⟦SCIM⟧ location ⟦exactly⟧ (case-sensitive!), otherwise no employees are found. |
-| Display name (Name in meeting booking) | The name the customer sees when booking. |
+| Display name (Name in meeting booking) | The name the customer sees when booking. From BookMe Salesforce package 1.29.0, the advisor also sees this name in the Salesforce booking flow. If the field is empty, the internal name is shown. |
 | Require an available meeting room to book a physical meeting | ★ Only times with an available room are shown for physical meetings. |
 | Add room to the booked meeting | A room picker is shown, and the room is set on the booking. |
 | Rooms at the location | Read-only — synchronised from SCIM/M365. |
@@ -207,6 +207,7 @@ Determines the prioritisation when several employees are available (Explicitly s
 
 ## Latest update
 
+- 14.09.2026 (v1.1) — The display name is now also shown to advisors in Salesforce (requires package 1.29.0 or later).
 - 12.06.2026 (v1.0) — First version (all tabs + booking-flow matrix).
 
 
@@ -215,4 +216,4 @@ Determines the prioritisation when several employees are available (Explicitly s
 
 
 ---
-_&money · support: info@andmoney.dk · andmoney.dk · v1.0 · 12.06.2026_
+_&money · support: info@andmoney.dk · andmoney.dk · v1.1 · 14.09.2026_

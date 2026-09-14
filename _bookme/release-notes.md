@@ -2,13 +2,13 @@
 layout: default
 title: Release Notes
 nav_order: 13
-parent: BookMe
+parent: Schedule
 ---
 
 # Release Notes—BookMe
 
 ## Release 1.30.0 (10-09-2026)
-Here is what's new in release 1.30.0 of &bookme.
+Here is what's new in release 1.30.0:
 
 > **Managed Package Version ID**: `04tP7000003Up9pIAC`.
 >
@@ -27,7 +27,7 @@ Here is what's new in release 1.30.0 of &bookme.
   - Fixed an issue where the booking summary and the booking confirmation could leave out the location of a physical meeting.
 
 ## Release 1.29.0 (09-09-2026)
-Here is what's new in release 1.29.0 of &bookme.
+Here is what's new in release 1.29.0:
 
 > **Managed Package Version ID**: `04tP7000003UTAvIAO`.
 >
@@ -61,7 +61,7 @@ Here is what's new in release 1.28.0 of &bookme.
 
 ### Changed
 - **Address lookup for out-of-office meetings now uses Adressevælgeren**
-  - When an advisor books an out-of-office meeting ("ude af huset"), the address suggestions now come from Adressevælgeren, the national address service run by Klimadatastyrelsen. Before, they came from DAWA. Street suggestions work as before: type a street name, pick the street, then pick the house number. No BookMe configuration is needed.
+  - When an advisor books an out-of-office meeting ("Møde ude af huset"), the address suggestions now come from Adressevælgeren, the national address service run by Klimadatastyrelsen. Before, they came from DAWA. Street suggestions work as before: type a street name, pick the street, then pick the house number. No Schedule configuration is needed.
 - **The end address is now required for out-of-office meetings**
   - The book button stays disabled until the end address field holds a value. This applies to all banks. Before, the end address was optional, and templates that use the end address came up empty.
 - **Place-name search is no longer available**

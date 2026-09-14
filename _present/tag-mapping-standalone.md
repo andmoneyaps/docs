@@ -22,6 +22,7 @@ advisors create decks inside Salesforce with the Present package, your mappings 
 | CRM | Salesforce or Dynamics 365 | Salesforce |
 | Who can map tags | Administrators | Configurators and administrators |
 | The Tags page shows | **Try it out**, and a mapping that starts on the meeting | An *Object type* choice: Account, Contact, Event or Specifik |
+| `Specifik` tags | Not supported yet — they cannot be mapped at all | Supported |
 | Guide | This page | [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/) |
 
 Both kinds are mapped under **Management UI → Present → Setup → Tags**, and the page shows the one that
@@ -91,8 +92,9 @@ mapping tells you why.
 - **The field is empty** on that meeting's record.
 - **A step in the path is missing** for that meeting — for example, a meeting without an account leaves
   every tag that goes through the account blank.
-- **It is a `Specifik` tag.** The `agenda` tag is filled from the agenda you build in Engage. The
-  advisor fills in other Specifik tags.
+- **It is a `Specifik` tag.** These are not supported yet: they cannot be mapped at all, so the advisor
+  fills them in when creating the deck. The one exception is the `agenda` tag, which Engage fills from
+  the agenda you build there.
 
 If every mapped tag is suddenly blank, contact &money support and say which tags are affected.
 

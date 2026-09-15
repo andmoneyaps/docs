@@ -7,6 +7,28 @@ parent: Schedule
 
 # Release Notes—BookMe
 
+## Release 1.31.0 (15-09-2026)
+Here is what's new in release 1.31.0:
+
+> **Managed Package Version ID**: `04tP7000003WGkgIAG`.
+>
+> **Install link**:
+> - `https://login.salesforce.com/packaging/installPackage.apexp?p0=04tP7000003WGkgIAG`.
+>
+> Remember to use your org's URL instead of https://login.salesforce.com.
+
+{: .note }
+> Banks on release 1.29.0 or 1.30.0 should install 1.31.0. It completes the location display name feature, so the name you set in Schedule management shows on every booking screen.
+
+### Fixed
+- **The location display name shows on every screen that names a location**
+  - In releases 1.29.0 and 1.30.0, the display name showed in the location picker, the booking summary and the booking confirmation, but the meeting list, the meeting view, the confirmation after a reschedule, advisor search results and the location options for a service group still showed the technical location name. All of them now show the display name. A location without a display name still shows its technical name.
+- **The location field can be searched again after a location is picked**
+  - Before, the field kept the display name of the picked location, and typing added to that name, so the search found nothing until the advisor cleared the field. The field now empties when the advisor clicks into it, and shows the picked name again if the advisor leaves without typing.
+
+{: .note }
+> Banks that name locations through their own Location override in Meeting Configuration keep those names on every screen. The display name is used only where no override is configured.
+
 ## Release 1.30.0 (10-09-2026)
 Here is what's new in release 1.30.0:
 

@@ -5,6 +5,13 @@ nav_order: 2
 ---
 ## September 2026
 
+### _Playbooks: PowerPoint presentations_
+
+- **Template block, Kind PowerPoint (pptx)**: A Template block can now build a PowerPoint presentation from Present slides. Set **Kind** to **PowerPoint (pptx)**, send the slides and the tag-values for their tags, straight from the trigger or from earlier blocks, and the block returns a reference to the finished file. See [PowerPoint Presentations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#powerpoint-presentations).
+- **New Convert block**: Turns a PowerPoint file into a PDF. The file can be one a Template block just built, or one that is already stored and has a contentRef.
+- **PresentGenerate trigger**: A trigger that takes the slides and tag-values as input and passes them straight to the Template block. It is used by the generate playbook in the Present playbook bundle. Playbooks that build presentations can also use any other trigger.
+- **Nothing changes for existing setups**: Template blocks with Kind **Liquid (text)** and the templates under Admin > Templates work as before. The Present Lightning Web Component in Salesforce is not affected. No migration is needed.
+
 ### _Schedule_
 
 - **Version 1.30 Release**: The location display name stays visible after the advisor selects a location, in the picker, the booking summary and the confirmation. Install this version instead of 1.29. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).

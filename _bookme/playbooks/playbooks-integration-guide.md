@@ -121,20 +121,27 @@ Each EntityPatternRead block makes a network call to the CRM. Minimize the numbe
 
 ### How Playbooks Use Templates
 
-Template blocks format data into structured text using a predefined **template** managed under **Admin > Templates**. Templates contain variables (placeholders) that get replaced with actual data at runtime.
+A Template block has a **Kind** setting with two options:
+
+- **Liquid (text)** formats data into structured text using a predefined **template** managed under **Admin > Templates**. Templates contain variables (placeholders) that get replaced with actual data at runtime.
+- **PowerPoint (pptx)** builds a presentation from Present slides and fills in their tags. See [PowerPoint Presentations](#powerpoint-presentations) below.
+
+The data for a Template block can come straight from the trigger or from earlier blocks.
 
 Common uses:
 - **Customer reports** — format AI analysis results into a readable document
 - **Email bodies** — combine meeting details and advisor info into a draft email
 - **CRM notes** — structure data before writing it back to a CRM record
+- **Customer presentations** — build a PowerPoint deck, and optionally a PDF, with customer details filled in
 
 ### Template Block Configuration
 
-When configuring a Template block:
+When configuring a Template block with Kind **Liquid (text)**:
 
 1. Set **Block type** to **Template**
-2. Select the template from the **Value** dropdown
-3. Connect input relations to provide values for the template's variables
+2. Set **Kind** to **Liquid (text)**
+3. Select the template from the **Value** dropdown
+4. Connect input relations from the trigger or earlier blocks to provide values for the template's variables
 
 **Example — formatting an AI summary into a report:**
 
@@ -149,6 +156,119 @@ The Relation Builder shows which variables the selected template expects. Map yo
 
 {: .hint }
 Templates are managed separately from playbooks. If you need a new template, create it under **Admin > Templates** first, then select it in your playbook's Template block. For a full guide on creating and managing templates, see [Templates]({{ site.baseurl }}/bookme/templates/).
+
+### PowerPoint Presentations
+
+A playbook can build a PowerPoint presentation from Present slides with a **Template** block with **Kind** set to **PowerPoint (pptx)**. Building the presentation and stopping there is a complete playbook.
+
+If you also need a PDF, add a **Convert** block. It turns a PowerPoint file into a PDF. The file can be the one the Template block just built, or one that is already stored and has a contentRef.
+
+Present slides can contain **[tags]({{ site.baseurl }}/present/tag-mapping/)**, such as `[tag:account_name]`. A tag is a placeholder. The **tag-value** is the real value that is put in the tag's place when the presentation is built.
+
+Neither block passes the file itself. Each produces a **contentRef**, which is a short-lived reference to the stored file. The next block uses the contentRef to read, convert or store the file.
+
+**Build a presentation:**
+
+```text
+Trigger
+  → Template (Kind: PowerPoint (pptx))
+    Input: templates (slides in order), tags (tag-values)
+    Output: contentRef (the .pptx)
+```
+
+**Build a presentation and a PDF of it:**
+
+```text
+Trigger
+  → Template (Kind: PowerPoint (pptx))
+    Input: templates (slides in order), tags (tag-values)
+    Output: contentRef (the .pptx)
+  → Convert
+    Input: contentRef (the .pptx)
+    Output: contentRef (the .pdf)
+```
+
+In these examples the Template block's inputs come straight from the trigger. They can also come from earlier blocks. A playbook that builds a presentation can use any trigger. See [Example: the PresentGenerate trigger](#example-the-presentgenerate-trigger) for the simplest case.
+
+#### Configuring a Template block with Kind PowerPoint (pptx)
+
+1. Set **Block type** to **Template**
+2. Set **Kind** to **PowerPoint (pptx)**
+3. Optionally, add **Template names** to limit which Present templates the block may use. Leave it empty to allow any template. Only templates [uploaded to Present]({{ site.baseurl }}/present/How-to-upload-new-templates/) can be chosen.
+4. Connect the inputs, from the trigger or from earlier blocks:
+   - **templates** (required) — a list of slides in the order they should appear, each written as `templateName:slideName`. See [How to write a slide](#how-to-write-a-slide).
+   - **tags** — the tag-values, as a list where each entry is `{ "name": "<tag>", "values": ["<tag-value>"] }`. Only leave it out, or send an empty list, if the selected slides have no tags.
+   - One input per tag is also available if you prefer to connect tag-values one by one. If a tag gets a tag-value both ways, the one from **tags** is used.
+5. Connect the **contentRef** output to where the presentation should go: a block that stores the file, the playbook's output, or a Convert block if you also need a PDF
+
+{: .warning }
+**Every tag on the selected slides must get a tag-value.** A tag-value may be empty, for example `{ "name": "account_name", "values": [""] }`, and the tag is then replaced with nothing. But the tag must be supplied. If any tag on the selected slides has no tag-value, the presentation is not built and the block fails with an error that names the missing tags.
+
+The block fails, and does not build a partial presentation, when:
+
+- **templates** is missing or empty
+- a slide is not written as `templateName:slideName`
+- a slide comes from a template that is not in **Template names**
+- a tag on the selected slides has no tag-value
+- a connected **tags** input has no value at all, or a tag in it has an empty `values` list (use `[""]` for an empty tag-value)
+
+#### How to write a slide
+
+Each entry in **templates** points to one slide as `templateName:slideName`, for example `welcome-deck:cover`.
+
+- **templateName** is the name of the template in Present. These are the same names the **Template names** field offers.
+- **slideName** is the name given to the slide in its notes section as `[slide:<slide-name>]`. See [How to set up Master Templates in Present]({{ site.baseurl }}/present/Present-Usage/#how-to-set-up-master-templates-in-present).
+
+Rules:
+
+- The entry is split at the **first** colon. A slide name may contain colons, but a template name may not.
+- Spaces around each name are removed. Neither name may be blank.
+- Template names must be spelled exactly as in Present, including upper and lower case. If **Template names** is set on the block, the spelling is corrected to match that list.
+- The order of the entries is the order of the slides in the presentation.
+
+#### Configuring a Convert block
+
+1. Set **Block type** to **Convert**
+2. Connect the **contentRef** of a PowerPoint file to the `contentRef` input. It can come from:
+   - a Template block with Kind **PowerPoint (pptx)** that just built the file
+   - a PowerPoint file that is already stored and has a contentRef, for example passed in through the trigger
+3. Connect the `contentRef` output to the next block
+
+The block produces a new contentRef for the PDF. The original PowerPoint file is not changed. The Convert block has no other settings.
+
+A playbook that only converts an already stored file needs no Template block:
+
+```text
+Trigger
+    Input: contentRef (a stored .pptx)
+  → Convert
+    Input: contentRef (the .pptx)
+    Output: contentRef (the .pdf)
+```
+
+#### Example: the PresentGenerate trigger
+
+A playbook that builds a presentation does not need a special trigger. Any trigger works, as long as the Template block gets its **templates** and tag-values from the trigger or from earlier blocks.
+
+The simplest case is the **PresentGenerate** trigger. It is the trigger used by the generate playbook in the Present playbook bundle. It takes the slides and the tag-values as input, so it can be connected straight to the Template block: `templates` → `templates` and `tags` → `tags`. Its input must have exactly this shape:
+
+```json
+{
+  "templates": ["welcome-deck:cover", "welcome-deck:agenda"],
+  "tags": [
+    { "name": "account_name", "values": ["Jane Doe"] }
+  ]
+}
+```
+
+- `templates` must contain at least one slide.
+- `tags` must be present. It must have a tag-value for every tag on the selected slides. A tag-value may be empty (`[""]`), but it must be supplied. It can only be an empty list when the selected slides have no tags.
+- Any other field is rejected.
+
+Whatever the trigger, building a presentation can take a while. Start the playbook as a job and check its status until it is done. Do not use the synchronous endpoint for this, because it stops after 30 seconds.
+
+{: .note }
+The two kinds of the Template block are separate. A Template block with Kind **Liquid (text)** never uses Present. A Template block with Kind **PowerPoint (pptx)** never uses the templates under **Admin > Templates**. The Present Lightning Web Component in Salesforce does not use the Template or Convert block.
 
 ---
 

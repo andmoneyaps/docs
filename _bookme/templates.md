@@ -9,7 +9,7 @@ nav_order: 7.6
 
 Templates are reusable text formatting definitions that turn structured data into human-readable output. They are used by playbook Template blocks to produce reports, email bodies, CRM notes, and other formatted text at runtime.
 
-Templates are managed under **Admin > Templates** in the Management UI.
+Templates are managed under **Admin > Templates** in the Management UI. All templates here are Liquid text templates. PowerPoint presentations are not configured here: they use a Template block with **Kind** set to **PowerPoint (pptx)**, slides from Present, and tag-values for the tags on those slides. See [PowerPoint Presentations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#powerpoint-presentations).
 
 ![Templates list showing configured templates]({{ site.baseurl }}/assets/images/bookme/templates/templates-list.png)
 
@@ -17,7 +17,7 @@ Templates are managed under **Admin > Templates** in the Management UI.
 
 ## How Templates Work
 
-A template is a piece of text with **variable placeholders** written in [Liquid syntax](https://shopify.github.io/liquid/). When a playbook runs, the Template block replaces the placeholders with actual data from earlier blocks and produces the final formatted text.
+A template is a piece of text with **variable placeholders** written in [Liquid syntax](https://shopify.github.io/liquid/). When a playbook runs, the Template block replaces the placeholders with actual data from the trigger or earlier blocks and produces the final formatted text.
 
 ```text
 Template text (with variables)  +  Input data  →  Rendered output
@@ -127,8 +127,9 @@ The full Liquid syntax is supported. For a complete reference, see the [Liquid d
 When you add a **Template** block to a playbook:
 
 1. Set **Block type** to **Template**
-2. Select the template from the **Value** dropdown — this lists all templates configured under Admin > Templates
-3. Connect input relations from earlier blocks to provide values for the template's variables
+2. Set **Kind** to **Liquid (text)**
+3. Select the template from the **Value** dropdown — this lists all templates configured under Admin > Templates
+4. Connect input relations from the trigger or earlier blocks to provide values for the template's variables
 
 ### How variables are mapped
 
@@ -137,9 +138,11 @@ Each input relation's **destination field** maps to a template variable name. Fo
 - If your template contains `{% raw %}{{ customerName }}{% endraw %}`, you need an input relation where the destination field is `customerName`
 - The Relation Builder's field picker for the destination side shows all variables detected in the selected template
 
+You can also send all variables through one input called **tags**, as a list of `{ "name": "...", "values": ["..."] }`. If a variable comes in both ways, the value from **tags** is used. If your template has its own `{% raw %}{{ tags }}{% endraw %}` variable, **tags** is treated as that variable instead.
+
 ### What the block outputs
 
-The Template block produces a single output: the **rendered text**. Downstream blocks can use this output via relations — for example, an EntityPatternCreate block might write the rendered text into a CRM note field.
+A Template block with Kind **Liquid (text)** produces the **rendered text**. Downstream blocks can use this output via relations — for example, an EntityPatternCreate block might write the rendered text into a CRM note field.
 
 For step-by-step instructions on configuring Template blocks in the editor, see [Step 5: Select the Block Type]({{ site.baseurl }}/bookme/playbooks/playbooks-user-guide/#step-5-select-the-block-type) in the playbook user guide.
 

@@ -38,7 +38,7 @@ Event happens  →  Trigger fires  →  Blocks execute in order  →  Result wri
 
 ## Block Types
 
-Each block in a playbook performs a single task. When you add a block, you choose its **type** (what it does) and its **value** (which specific resource it uses). Here are the seven block types and what they connect to.
+Each block in a playbook performs a single task. When you add a block, you choose its **type** (what it does) and its **value** (which specific resource it uses). Here are the main block types and what they connect to.
 
 ### Trigger
 
@@ -100,15 +100,50 @@ An EntityPatternUpdate block updates an **existing CRM record**.
 
 ### Template
 
-A Template block formats data into structured text using a predefined **[template]({{ site.baseurl }}/bookme/templates/)**.
+A Template block fills a template with data. The data can come straight from the trigger or from earlier blocks. The block has a **Kind** setting with two options:
+
+- **Liquid (text)** turns data into formatted text using a predefined **[template]({{ site.baseurl }}/bookme/templates/)**.
+- **PowerPoint (pptx)** builds a PowerPoint presentation from Present slides.
+
+#### Kind: Liquid (text)
 
 **What's behind it:** Templates are managed under **Admin > Templates**. Each template is written in [Liquid syntax](https://shopify.github.io/liquid/) with variable placeholders (e.g., `{% raw %}{{ customerName }}{% endraw %}`, `{% raw %}{{ summary }}{% endraw %}`) that get replaced with actual data at runtime. The editor automatically detects variables and shows them as chips, so you can verify the template before using it in a playbook.
 
-**In a playbook:** Connect input relations to provide values for the template's variables. The block produces formatted text as its output — ready to be stored in the CRM, included in an email, or displayed as a report.
+**In a playbook:** Connect input relations from the trigger or earlier blocks to provide values for the template's variables. The block produces formatted text as its output — ready to be stored in the CRM, included in an email, or displayed as a report.
 
 **Example use cases:** Format an AI summary into a customer-facing report, structure meeting details into a CRM note, generate an email body.
 
+#### Kind: PowerPoint (pptx)
+
+**What's behind it:** The slides come from PowerPoint templates [uploaded to Present]({{ site.baseurl }}/present/How-to-upload-new-templates/). A slide can contain **[tags]({{ site.baseurl }}/present/tag-mapping/)**, such as `[tag:account_name]`. A tag is a placeholder. The **tag-value** is the real value that is put in the tag's place. The block can optionally be limited to a list of template names. If the list is empty, any Present template can be used.
+
+**In a playbook:** Connect two inputs, straight from the trigger or from earlier blocks:
+
+- **templates** — the slides to include, in order, written as `templateName:slideName` (see [How to write a slide]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#how-to-write-a-slide))
+- **tags** — the tag-values for the tags on those slides
+
+**Every tag on the selected slides must get a tag-value.** A tag-value may be empty, but it must be supplied. If a slide has tags and no tag-values are supplied for them, the presentation is not built and the block fails.
+
+You can also connect a single tag-value to the input named after its tag. The block produces a **contentRef**, which is a reference to the finished presentation. It does not pass the file itself. You can stop there and use the presentation as it is, for example by storing the file. If you also need a PDF, connect the contentRef to a [Convert](#convert) block.
+
+**Example use cases:** Build a customer presentation with the advisor's chosen slides and the customer's tag-values filled in.
+
+The two kinds are separate. A Template block with Kind **Liquid (text)** never uses Present. A Template block with Kind **PowerPoint (pptx)** never uses the templates under **Admin > Templates**.
+
 For the full template guide, see [Templates]({{ site.baseurl }}/bookme/templates/). For playbook integration details, see [Template Integration]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#template-integration).
+
+### Convert
+
+A Convert block turns a PowerPoint presentation into a PDF.
+
+**In a playbook:** Connect the **contentRef** of a PowerPoint file to its `contentRef` input. The PowerPoint file can come from:
+
+- a Template block with Kind **PowerPoint (pptx)** that just built it
+- a PowerPoint file that is already stored and has a contentRef, for example passed in through the trigger
+
+The block produces a new `contentRef` for the PDF. The original PowerPoint file is not changed. The block has no settings.
+
+**Example use cases:** Produce a PDF copy of a generated presentation, or of a presentation that was stored earlier, to share with the customer or store on the meeting.
 
 ---
 

@@ -131,11 +131,14 @@ Click the **Block type** dropdown to see the available types:
 | **Ai** | Send data to an AI capability for processing (summarization, extraction, classification, etc.) |
 | **EntityPatternRead** | Fetch records from the CRM using a configured entity pattern |
 | **EntityPatternFilter** | Add filter conditions (e.g., "where email equals X") for CRM queries |
-| **Template** | Format data into a structured output using a predefined template |
+| **Template** | Format data into text using a predefined template (Kind: Liquid (text)), or build a PowerPoint presentation from Present slides and tag-values (Kind: PowerPoint (pptx)) |
+| **Convert** | Turn a PowerPoint file into a PDF — one a Template block just built, or one already stored with a contentRef |
 | **EntityPatternCreate** | Create a new record in the CRM |
 | **EntityPatternUpdate** | Update an existing CRM record |
 
 After selecting a type, a **Value** dropdown appears where you choose the specific resource — for example, which AI capability, which entity pattern, or which template this block should use.
+
+A **Template** block also has a **Kind** field. Choose **Liquid (text)** to pick a template from the Value dropdown, or **PowerPoint (pptx)** to build a presentation. See [PowerPoint Presentations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#powerpoint-presentations). A **Convert** block has no Value to choose.
 
 Fill in all three fields:
 1. **Block type** — e.g., *EntityPatternRead*

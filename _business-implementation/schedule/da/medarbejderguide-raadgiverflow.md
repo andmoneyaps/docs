@@ -70,7 +70,7 @@ Skærmen hedder **Tilpas hvilke ledige tider du ser**.
 <!-- screenshot: skærmen "Tilpas hvilke ledige tider du ser" med "Valg af rådgiver", "Vælg lokation" (med visningsnavn), "Valg af tidspunkt" og listen af ledige tider -->
 
 {: .note }
-> **Bemærk:** Lokationer vises med det navn, I bruger til daglig, fx “Filial Aarhus C”. Det er jeres superbruger, der sætter navnet op under **Mødeopsætning → Lokationer**. Er der ikke sat et navn, ser du det interne navn. Kræver Schedule-pakke 1.30.0 eller nyere.
+> **Bemærk:** Lokationer vises med det navn, I bruger til daglig, fx “Filial Aarhus C”. Det er jeres superbruger, der sætter navnet op under **Mødeopsætning → Lokationer**. Er der ikke sat et navn, ser du det interne navn. Navnet følger med til mødelisten og mødevisningen. Kræver Schedule-pakke 1.31.0 eller nyere.
 
 
 ### Trin 4 · Vælg mødetype og udfyld mødet

@@ -70,7 +70,7 @@ The screen is called **Customize which available times you see**.
 <!-- screenshot: the "Customize which available times you see" screen with "Advisor Selection", "Select Location" (showing a display name), "Select Time Slot" and the list of available times -->
 
 {: .note }
-> **Note:** Locations are shown with the name you use every day, e.g. “Branch Aarhus C”. Your super-user sets that name under **Meeting setup → Locations**. If no name is set, you see the internal name. Requires Schedule package 1.30.0 or later.
+> **Note:** Locations are shown with the name you use every day, e.g. “Branch Aarhus C”. Your super-user sets that name under **Meeting setup → Locations**. If no name is set, you see the internal name. The name follows the meeting into the meeting list and the meeting view. Requires Schedule package 1.31.0 or later.
 
 
 ### Step 4 · Choose meeting type and fill in the meeting

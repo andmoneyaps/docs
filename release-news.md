@@ -14,6 +14,7 @@ nav_order: 2
 
 ### _Schedule_
 
+- **Version 1.31 Release**: The location display name now shows on every booking screen, including the meeting list, the meeting view and the confirmation after a reschedule. The location field can be searched again after a location is picked. Banks on 1.29 or 1.30 should install 1.31. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).
 - **Version 1.30 Release**: The location display name stays visible after the advisor selects a location, in the picker, the booking summary and the confirmation. Install this version instead of 1.29. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).
 - **Version 1.29 Release**: The advisor booking flow shows the location display name set in Management UI under Meeting setup → Locations, instead of the technical directory name. Both 1.29 and 1.30 need the Schedule backend update that is live in production as of 14 September 2026.
 - **Version 1.28 Release**: Address lookup for out-of-office meetings now uses Adressevælgeren instead of DAWA, which is retired on 1 October 2026. Install this version or newer before that date. The end address is now required for out-of-office bookings, and place-name search is no longer available. See [Address Lookup for Offsite Meetings]({{ site.baseurl }}/bookme/address-lookup/).

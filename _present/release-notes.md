@@ -8,18 +8,6 @@ collection: present
 
 # Release Notes—Present
 
-## September 2026
-
-### Content size limit
-
-**Maximum size for templates and generated slide decks** — Present now enforces a maximum size of **200 MB** for uploaded templates and for the slide decks it generates (PowerPoint and PDF).
-
-- **Template upload** — A template larger than 200 MB is rejected when it is validated or uploaded. The validation results in the Management UI show a template-level finding with the file's actual size and the limit, and the upload stays blocked until the template is reduced.
-- **Generated slide decks** — A presentation that would exceed 200 MB when generated is not delivered. The request fails with an error that states the actual size and the limit.
-- **What to do** — Templates most often exceed the limit because of large embedded images or videos. Compress or replace the media and upload the template again.
-
----
-
 ## Version 1.34
 
 **Release Date:** May 2026

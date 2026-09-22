@@ -10,6 +10,11 @@ collection: present
 Tag mapping is useful for mapping data from Salesforce objects to the tags that are used throughout the uploaded templates.
 It is possible to map fields and nested fields from Account, Contact, and Event to the tags in templates.
 
+{: .note }
+> In the new Present experience (UWC Present), the forms of address and the agenda are
+> [reserved tags]({{ site.baseurl }}/present/reserved-tags/): Present fills them in, and they cannot
+> be mapped.
+
 ## Tag Mapping
 To start mapping between tags and SObject fields, go to the Management UI and select the Tags tab.
 This will lead you to the following page:

@@ -104,7 +104,7 @@ _Hvorfor: Skabelonens opbygning bestemmer, hvilke slides medarbejderen kan vælg
 > **Husk:** Et tag, der ikke mappes i Trin 2, vises som et **tomt felt**, medarbejderen selv kan udfylde — det er bevidst, men gennemgå dine tags, så intet vigtigt glemmes.
 
 {: .hint }
-> **Bemærk:** Begrænsninger for filstørrelse: Den samlede PowerPoint-fil må **ikke overstige 10 MB** — ellers fejler upload. Videoer understøttes, men tæller med i størrelsen. Pr. billede er den anbefalede grænse **1 MB** (systemet advarer ved større billeder). Gør derfor præsentationen så let som muligt — komprimér billeder (se quickguiden nedenfor).
+> **Bemærk:** Begrænsninger for filstørrelse: Hold den samlede PowerPoint-fil **under ca. 10 MB** for hurtig upload og generering. Filer over **200 MB** afvises ved upload. Videoer understøttes, men tæller med i størrelsen. Pr. billede er den anbefalede grænse **1 MB** (systemet advarer ved større billeder). Gør derfor præsentationen så let som muligt — komprimér billeder (se quickguiden nedenfor).
 
 {: .note }
 > **Bemærk:** Layouts: layouts importeret fra Templafy, andre systemer eller ældre præsentationer kan indeholde formateringer, der giver fejl i Present. Sørg derfor for at: ① undgå layouts med **tal i navnet** (kan give fejl under upload); ② brug altid **entydige og genkendelige layout-navne**; ③ er du i tvivl, brug layoutet **Tom**, som giver fuld kontrol over opsætningen.
@@ -159,7 +159,7 @@ Store billeder fylder hurtigt meget. Sådan komprimerer du dem i PowerPoint:
 - Tjek til sidst filstørrelsen (**Filer → Oplysninger**) — mål: samlet under 10 MB, ca. 1 MB pr. billede.
 
 {: .hint }
-> **Anbefalet:** Komprimér før upload — det giver hurtigere upload og generering og holder dig under 10 MB-grænsen.
+> **Anbefalet:** Komprimér før upload — det giver hurtigere upload og generering og holder dig under de anbefalede 10 MB.
 
 
 ## Trin-for-trin (Management UI)

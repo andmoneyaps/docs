@@ -122,7 +122,7 @@ Undgå layouts med tal i navnet, brug entydige layout-navne, og brug layoutet �
 
 **Hvad er den maksimale filstørrelse?**
 
-Den samlede PowerPoint-fil må ikke overstige 10 MB (ellers fejler upload). Pr. billede er ca. 1 MB anbefalet.
+Hold den samlede PowerPoint-fil under ca. 10 MB for hurtig upload og generering. Filer over 200 MB afvises ved upload. Pr. billede er ca. 1 MB anbefalet.
 
 
 **Hvordan komprimerer jeg billeder?**

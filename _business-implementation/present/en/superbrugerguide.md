@@ -100,7 +100,7 @@ _Why: The template's structure determines which slides the employee can choose, 
 > **Remember:** A tag that is not mapped in Step 2 shows as an **empty field** the employee can fill in themselves — this is intentional, but review your tags so nothing important is forgotten.
 
 {: .note }
-> **Note:** File-size limits: the total PowerPoint file must **not exceed 10 MB** — otherwise upload fails. Videos are supported but count towards the size. Per image the recommended limit is **1 MB** (the system warns for larger images). So make the presentation as light as possible — compress images (see the quick guide below).
+> **Note:** File-size limits: keep the total PowerPoint file **under about 10 MB** for fast upload and generation. Files above **200 MB** are rejected on upload. Videos are supported but count towards the size. Per image the recommended limit is **1 MB** (the system warns for larger images). So make the presentation as light as possible — compress images (see the quick guide below).
 
 {: .note }
 > **Note:** Layouts: layouts imported from Templafy, other systems or older presentations can contain formatting that causes errors in Present. So make sure to: ① avoid layouts with **numbers in the name** (can cause errors during upload); ② always use **clear, recognisable layout names**; ③ if in doubt, use the **Blank** layout, which gives full control over the setup.
@@ -155,7 +155,7 @@ Large images add up quickly. Here's how to compress them in PowerPoint:
 - Finally check the file size (**File → Info**) — target: total under 10 MB, about 1 MB per image.
 
 {: .hint }
-> **Recommended:** Compress before upload — it makes upload and generation faster and keeps you under the 10 MB limit.
+> **Recommended:** Compress before upload — it makes upload and generation faster and keeps you under the recommended 10 MB.
 
 
 ## Step-by-step (Management UI)

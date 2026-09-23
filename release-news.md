@@ -12,6 +12,10 @@ nav_order: 2
 - **PresentGenerate trigger**: A trigger that takes the slides and tag-values as input and passes them straight to the Template block. It is used by the generate playbook in the Present playbook bundle. Playbooks that build presentations can also use any other trigger.
 - **Nothing changes for existing setups**: Template blocks with Kind **Liquid (text)** and the templates under Admin > Templates work as before. The Present Lightning Web Component in Salesforce is not affected. No migration is needed.
 
+### _Present_
+
+- **200 MB size limit for templates and generated slide decks**: Present now enforces a maximum size of 200 MB for uploaded templates and for the slide decks it generates (PowerPoint and PDF). A template over the limit is rejected at validation or upload, and the Management UI shows a template-level validation finding with the file's actual size and the limit. A presentation that would exceed the limit is not generated, and the generation fails. Templates most often exceed the limit because of embedded images or video; compress or replace the media and upload again.
+
 ### _Schedule_
 
 - **Version 1.31 Release**: The location display name now shows on every booking screen, including the meeting list, the meeting view and the confirmation after a reschedule. The location field can be searched again after a location is picked. Banks on 1.29 or 1.30 should install 1.31. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).

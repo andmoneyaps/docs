@@ -118,7 +118,7 @@ Avoid layouts with numbers in the name, use clear layout names, and use the “B
 
 **What is the maximum file size?**
 
-The total PowerPoint file must not exceed 10 MB (otherwise upload fails). Per image, about 1 MB is recommended.
+Keep the total PowerPoint file under about 10 MB for fast upload and generation. Files above 200 MB are rejected on upload. Per image, about 1 MB is recommended.
 
 
 **How do I compress images?**

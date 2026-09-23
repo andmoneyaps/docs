@@ -136,16 +136,17 @@ Engage publishes its applications as multi-tenant apps; you approve them rather 
 Approving creates a **service principal** in your directory, which is what lets each application
 authenticate against your tenant.
 
-All four are required. Open each link as an administrator:
+All four are required, **in this order** — the sign-in surfaces cannot be installed before the API they
+depend on:
 
 ```text
-https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={UwcAppClientId}
-https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtUiAppClientId}
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtApiAppClientId}
+https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtUiAppClientId}
+https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={UwcAppClientId}
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={DynamicsAccessAppClientId}
 ```
 
-Review the summary Microsoft shows, then **Accept**.
+Open each link as an administrator, review the summary Microsoft shows, then **Accept**.
 
 {: .note }
 > **You may see "Sorry, but we're having trouble signing you in" afterwards.** That is expected — the

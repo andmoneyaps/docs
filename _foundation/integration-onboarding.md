@@ -298,11 +298,11 @@ Tokens issued by your Entra tenant carry your tenant ID as the issuer claim. Eng
 Engage provides two admin-consent URLs per environment:
 
 ```text
-https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtUiAppClientId}
 https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtApiAppClientId}
+https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={MgmtUiAppClientId}
 ```
 
-Open each link while signed in as a tenant admin with the required role. Once consent is granted, both apps appear in your tenant under **Enterprise Applications**, ready for role assignment.
+Open them in that order — the Mgmt UI cannot be installed before the API it depends on — while signed in as a tenant admin with the required role. Once consent is granted, both apps appear in your tenant under **Enterprise Applications**, ready for role assignment.
 
 ##### Step 2 — Map users and groups to app roles
 

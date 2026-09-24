@@ -34,7 +34,6 @@ Background: [MC1393806](https://mc.merill.net/message/MC1393806) and [Manage tra
 param (
   [string] $ExpectedTenantId, # Abort unless the signed-in tenant matches.
   [switch] $DryRun, # Report current values and exit without changing tenant settings. Prerequisites are still installed.
-  [switch] $Force, # Skip the confirmation prompt.
   [switch] $UseDeviceAuthentication # Default on non-Windows hosts.
 )
 
@@ -121,14 +120,11 @@ Write-Host -ForegroundColor Yellow "This admits every app and agent already hold
 Write-Host -ForegroundColor Yellow "Engage - and lets them read speaker identities. Each caller remains bounded by its own"
 Write-Host -ForegroundColor Yellow "permissions and application access policy."
 
-if (-not $Force)
+# No change is applied without a literal "yes"; a non-interactive host errors out here instead.
+if ((Read-Host "Type 'yes' to apply") -ne "yes")
 {
-  # No change is applied without a literal "yes"; a non-interactive host errors out here instead.
-  if ((Read-Host "Type 'yes' to apply") -ne "yes")
-  {
-    Write-Host -ForegroundColor Yellow "Aborted - no changes made"
-    return
-  }
+  Write-Host -ForegroundColor Yellow "Aborted - no changes made"
+  return
 }
 
 Set-CsTeamsMeetingConfiguration -Identity Global -EnableGraphTranscriptAccess $true -EnableAttributedTranscripts $true

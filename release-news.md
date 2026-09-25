@@ -5,6 +5,10 @@ nav_order: 2
 ---
 ## September 2026
 
+### _Present_
+
+- **Forms of address fill themselves in**: In engage-web, the tags `du_i`, `dig_jer`, `din_jeres`, `dit_jeres` and `dine_jeres` are now reserved. They are filled in when the advisor builds a presentation, singular or plural, and nothing has to be mapped. The form is preset from the number of customers on the meeting; the advisor can always change it with one switch in the tags step. The Tags page shows the reserved tags as **Filled out automatically**. See [Reserved Tags]({{ site.baseurl }}/present/reserved-tags/).
+
 ### _Playbooks: PowerPoint presentations_
 
 - **Template block, Kind PowerPoint (pptx)**: A Template block can now build a PowerPoint presentation from Present slides. Set **Kind** to **PowerPoint (pptx)**, send the slides and the tag-values for their tags, straight from the trigger or from earlier blocks, and the block returns a reference to the finished file. See [PowerPoint Presentations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#powerpoint-presentations).

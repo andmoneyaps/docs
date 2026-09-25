@@ -10,6 +10,11 @@ collection: present
 Tag mapping is useful for mapping data from Salesforce objects to the tags that are used throughout the uploaded templates.
 It is possible to map fields and nested fields from Account, Contact, and Event to the tags in templates.
 
+{: .note }
+> This page covers **legacy** tag mappings, for banks whose advisors create decks in Salesforce with the
+> Present package. If your bank uses Present **standalone**, where advisors create decks in Engage, see
+> [Tag Mapping (Standalone)]({{ site.baseurl }}/present/tag-mapping-standalone/) instead.
+
 ## Tag Mapping
 To start mapping between tags and SObject fields, go to the Management UI and select the Tags tab.
 This will lead you to the following page:

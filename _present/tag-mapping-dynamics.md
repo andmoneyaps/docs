@@ -1,34 +1,25 @@
 ---
 layout: default
-title: Tag Mapping (Standalone)
+title: Tag Mapping (Dynamics)
 nav_order: 6
 parent: Present
 collection: present
 ---
 
-# Tag Mapping (Standalone)
+# Tag Mapping (Dynamics)
 
 A tag mapping tells Present where a tag in your templates gets its value: which field in your CRM,
 reached from the meeting the deck is created for. Tags nobody has mapped are left for the advisor to
 fill in.
 
-This page is for banks that use Present **standalone**, where advisors create decks in Engage. If your
-advisors create decks inside Salesforce with the Present package, your mappings are **legacy** mappings
-— see [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/) instead.
+This page is for banks whose advisors create decks in **Engage**. If your advisors create decks inside
+Salesforce with the **Present package**, see [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/)
+instead.
 
-| | Standalone | Legacy |
-|---|---|---|
-| Advisors create decks in | Engage | Salesforce, with the Present package |
-| CRM | Salesforce or Dynamics 365 | Salesforce |
-| Who can map tags | Administrators | Configurators and administrators |
-| The Tags page shows | **Try it out**, and a mapping that starts on the meeting | An *Object type* choice: Account, Contact, Event or Specifik |
-| `Specifik` tags | Not supported yet — they cannot be mapped at all | Supported |
-| Guide | This page | [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/) |
+Tags are mapped under **Management UI → Present → Setup → Tags**. Ask your &money contact if you are
+not sure where your advisors create decks.
 
-Both kinds are mapped under **Management UI → Present → Setup → Tags**, and the page shows the one that
-matches your bank. Ask your &money contact if you are not sure which your bank has.
-
-![The Tags page for a standalone bank]({{ site.baseurl }}/assets/images/present/platform_tags_overview.png)
+![The Tags page]({{ site.baseurl }}/assets/images/present/platform_tags_overview.png)
 
 Each row shows a mapped tag, the path its value is read from, and the templates the tag appears in.
 
@@ -107,18 +98,6 @@ If every mapped tag is suddenly blank, contact &money support and say which tags
 A mapping that goes through the people invited to a meeting has one value per person. Engage joins them
 into one text, in Danish: *Anna, Bo og Carl*.
 
-## Salesforce and Dynamics 365
-
-Mapping works the same way on both CRMs. The differences you will notice:
-
-| | Salesforce | Dynamics 365 |
-|---|---|---|
-| The meeting | Event | Appointment |
-| The people invited | Event Relation | Activity Party |
-| A path that ends on a linked record | Shows that record's name | Most record types have no name field, so pick a field on the linked record |
-| Pasting a meeting's record id | The 15- or 18-character Salesforce id | The appointment's GUID |
-| What the Tags page can show you | What your bank's Salesforce connection can read | Only what your own Dynamics security role allows |
-
 ## Good to know
 
 - **Saving one mapping rewrites all of them.** If two administrators save at the same time, the last
@@ -127,13 +106,13 @@ Mapping works the same way on both CRMs. The differences you will notice:
   it is fixed or deleted.
 - **Tag names that differ only in capitalisation** (`Advisor` and `advisor`) count as the same tag here.
   Only one of them can be mapped.
-- **Tag modifiers** such as `[tag:name:uppercase]` work the same way as with legacy mappings — see
+- **Tag modifiers** such as `[tag:name:uppercase]` work the same way as with the Present package — see
   [Tag Modifiers]({{ site.baseurl }}/present/tag-mapping/#tag-modifiers-new-feature).
 
 ## Related
 
-- [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/) — legacy mappings, tag modifiers and unmapped
-  tags
+- [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/) — mappings for the Present package, tag modifiers
+  and unmapped tags
 - [Template Creation Guide]({{ site.baseurl }}/present/Present-Usage/) — how tags are written in a
   template
 - [Reporting]({{ site.baseurl }}/present/trouble-shooting/) — how to report a problem

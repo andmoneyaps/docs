@@ -5,6 +5,10 @@ nav_order: 2
 ---
 ## September 2026
 
+### _Present_
+
+- **Reserved tags fill themselves in**: In Engage, the tags `du_i`, `dig_jer`, `din_jeres`, `dit_jeres`, `dine_jeres`, `agenda` and `dagsorden` are now reserved, and nothing has to be mapped for them. The forms of address are filled in when the advisor builds a presentation, singular or plural. The form is preset from the number of accounts on the meeting; the advisor can always change it with one switch in the tags step when generating the presentation. `agenda` and `dagsorden` are both filled with the meeting agenda. The Tags page shows the reserved tags as **Filled out automatically**. See [Reserved tags]({{ site.baseurl }}/present/tag-mapping-dynamics/#reserved-tags).
+
 ### _Playbooks: PowerPoint presentations_
 
 - **Template block, Kind PowerPoint (pptx)**: A Template block can now build a PowerPoint presentation from Present slides. Set **Kind** to **PowerPoint (pptx)**, send the slides and the tag-values for their tags, straight from the trigger or from earlier blocks, and the block returns a reference to the finished file. See [PowerPoint Presentations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#powerpoint-presentations).

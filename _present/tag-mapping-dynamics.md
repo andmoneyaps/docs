@@ -10,7 +10,7 @@ collection: present
 
 A tag mapping tells Present where a tag in your templates gets its value: which field in your CRM,
 reached from the meeting the deck is created for. Tags nobody has mapped are left for the advisor to
-fill in.
+fill in, apart from the [reserved tags](#reserved-tags), which are filled in automatically.
 
 This page is for banks whose advisors create decks in **Engage**. If your advisors create decks inside
 Salesforce with the **Present package**, see [Tag Mapping]({{ site.baseurl }}/present/tag-mapping/)
@@ -30,7 +30,8 @@ Each row shows a mapped tag, the path its value is read from, and the templates 
 ## Map a tag
 
 1. Click **Create**.
-2. **Which tag are you mapping?** Choose a tag. The list holds every tag in your uploaded templates.
+2. **Which tag are you mapping?** Choose a tag. The list holds every tag in your uploaded templates,
+   except the [reserved tags](#reserved-tags).
 3. **Where does its value come from?** Every mapping starts on the meeting. Pick a field to finish, or
    pick a linked record to keep going. The list offers the meeting's fields, the records it points to,
    and the records that point back to it — such as the people invited to the meeting.
@@ -87,9 +88,8 @@ mapping tells you why.
 - **The field is empty** on that meeting's record.
 - **A step in the path is missing** for that meeting — for example, a meeting without an account leaves
   every tag that goes through the account blank.
-- **It is a `Specifik` tag.** These are not supported yet: they cannot be mapped at all, so the advisor
-  fills them in when creating the deck. The one exception is the `agenda` tag, which Engage fills from
-  the agenda you build there.
+- **It is a form of address or the agenda under another name.** Only the
+  [reserved names](#reserved-tags) are filled in automatically.
 
 If every mapped tag is suddenly blank, contact &money support and say which tags are affected.
 
@@ -97,6 +97,75 @@ If every mapped tag is suddenly blank, contact &money support and say which tags
 
 A mapping that goes through the people invited to a meeting has one value per person. Engage joins them
 into one text, in Danish: *Anna, Bo og Carl*.
+
+## Reserved tags
+
+Seven tag names are reserved. When a slide uses one of them, the value is filled in automatically when
+the advisor builds the presentation. A reserved tag is not mapped to a CRM field on the Tags page. The
+advisor can still change the value in the step where the tag values are filled in.
+
+Five of them are the Danish forms of address, so a slide can say *din opsparing* to one customer and
+*jeres opsparing* to a couple. The other two, `agenda` and `dagsorden`, both stand for the meeting
+agenda, which the advisor writes in the first step of the presentation. A template may use either.
+
+### The reserved tags
+
+| Tag | Én person | Flere personer |
+|---|---|---|
+| `[tag:du_i]` | du | I |
+| `[tag:dig_jer]` | dig | jer |
+| `[tag:din_jeres]` | din | jeres |
+| `[tag:dit_jeres]` | dit | jeres |
+| `[tag:dine_jeres]` | dine | jeres |
+| `[tag:agenda]` | the agenda the advisor wrote | |
+| `[tag:dagsorden]` | the agenda the advisor wrote | |
+
+The words are lowercase, except *I*, which is always a capital. For a form of address at the start
+of a sentence, add the `capitalize` modifier: `[tag:din_jeres:capitalize]` gives *Din* or *Jeres*.
+
+### When you build templates
+
+- Use the names as spelled above. Capital letters do not matter: `Dagsorden` works like `dagsorden`.
+  Any other spelling is an ordinary tag and comes out blank.
+- If your templates use other names for the forms of address, rename those tags to the five above.
+  Present does not translate one name into another.
+- You do not need to do anything else. The tags work as soon as a template with them is uploaded.
+- Put `agenda` or `dagsorden` in a bulleted text box. The agenda is written as bullet points, and each point
+  becomes a bullet on the slide.
+
+### When you build presentations
+
+In step 3, **Kundepræsentation**, the reserved tags are already filled in based on the meeting. At the
+top of the step, under **Præsentationen henvender sig til**, two buttons choose who the presentation
+addresses:
+
+![Præsentationen henvender sig til: Én person / Flere personer]({{ site.baseurl }}/assets/images/present/reserved_tags_number_toggle.png)
+
+- **Én person** gives the singular forms, **Flere personer** the plural ones. The choice applies to
+  every form of address at once, and you can change it at any time.
+- To begin with, the choice follows the number of accounts on the meeting: one account gives
+  **Én person**, more than one gives **Flere personer**. Your own colleagues on the meeting are not
+  counted.
+- A contact on the meeting counts as its account, so several contacts from one account count once. A
+  contact without an account counts on its own.
+- If you are addressing several people from one account, such as a household, choose
+  **Flere personer**.
+- If the number of accounts could not be fetched, the line *Antallet af kunder kunne ikke hentes
+  — vælg selv.* appears under the buttons and **Én person** is chosen to begin with.
+- Every field can also be edited by hand, like any other tag. A field you have typed into keeps your
+  text when you change the choice.
+
+The two buttons are shown on every presentation, also one whose slides use none of these tags.
+
+### When you set up tags in the Management UI
+
+There is nothing to set up for the reserved tags. On **Present → Setup → Tags** they are simply not
+in the list of tags you can map, because there is no CRM field to point them at. An info icon next
+to the tag field names the ones your templates use and says they are filled out automatically.
+
+The table still shows each reserved tag your templates use, with the templates that use it and the
+text **Filled out automatically** where other tags show a CRM field. It has no edit or delete
+buttons, and needs none.
 
 ## Good to know
 

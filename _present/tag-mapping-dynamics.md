@@ -100,15 +100,15 @@ into one text, in Danish: *Anna, Bo og Carl*.
 
 ## Reserved tags
 
-Six tag names are reserved. When a slide uses one of them, the value is filled in automatically when
+Seven tag names are reserved. When a slide uses one of them, the value is filled in automatically when
 the advisor builds the presentation. A reserved tag is not mapped to a CRM field on the Tags page. The
 advisor can still change the value in the step where the tag values are filled in.
 
 Five of them are the Danish forms of address, so a slide can say *din opsparing* to one customer and
-*jeres opsparing* to a couple. The sixth is the meeting agenda, which the advisor writes in the first
-step of the presentation.
+*jeres opsparing* to a couple. The other two, `agenda` and `dagsorden`, both stand for the meeting
+agenda, which the advisor writes in the first step of the presentation. A template may use either.
 
-### The six tags
+### The reserved tags
 
 | Tag | Én person | Flere personer |
 |---|---|---|
@@ -118,18 +118,19 @@ step of the presentation.
 | `[tag:dit_jeres]` | dit | jeres |
 | `[tag:dine_jeres]` | dine | jeres |
 | `[tag:agenda]` | the agenda the advisor wrote | |
+| `[tag:dagsorden]` | the agenda the advisor wrote | |
 
 The words are lowercase, except *I*, which is always a capital. For a form of address at the start
 of a sentence, add the `capitalize` modifier: `[tag:din_jeres:capitalize]` gives *Din* or *Jeres*.
 
 ### When you build templates
 
-- Use the names exactly as spelled above, in lowercase. Any other spelling is an ordinary tag and
-  comes out blank.
-- If your templates use other names for the forms of address, rename those tags to the six above.
+- Use the names as spelled above. Capital letters do not matter: `Dagsorden` works like `dagsorden`.
+  Any other spelling is an ordinary tag and comes out blank.
+- If your templates use other names for the forms of address, rename those tags to the five above.
   Present does not translate one name into another.
 - You do not need to do anything else. The tags work as soon as a template with them is uploaded.
-- Put the agenda tag in a bulleted text box. The agenda is written as bullet points, and each point
+- Put `agenda` or `dagsorden` in a bulleted text box. The agenda is written as bullet points, and each point
   becomes a bullet on the slide.
 
 ### When you build presentations

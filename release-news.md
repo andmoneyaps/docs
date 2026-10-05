@@ -7,7 +7,7 @@ nav_order: 2
 
 ### _Present_
 
-- **Forms of address fill themselves in**: In Engage, the tags `du_i`, `dig_jer`, `din_jeres`, `dit_jeres` and `dine_jeres` are now reserved. They are filled in when the advisor builds a presentation, singular or plural, and nothing has to be mapped. The form is preset from the number of accounts on the meeting; the advisor can always change it with one switch in the tags step. The agenda tag can also be written `dagsorden`. The Tags page shows the reserved tags as **Filled out automatically**. See [Reserved tags]({{ site.baseurl }}/present/tag-mapping-dynamics/#reserved-tags).
+- **Reserved tags fill themselves in**: In Engage, the tags `du_i`, `dig_jer`, `din_jeres`, `dit_jeres`, `dine_jeres`, `agenda` and `dagsorden` are now reserved, and nothing has to be mapped for them. The forms of address are filled in when the advisor builds a presentation, singular or plural. The form is preset from the number of accounts on the meeting; the advisor can always change it with one switch in the tags step when generating the presentation. `agenda` and `dagsorden` are both filled with the meeting agenda. The Tags page shows the reserved tags as **Filled out automatically**. See [Reserved tags]({{ site.baseurl }}/present/tag-mapping-dynamics/#reserved-tags).
 
 ### _Playbooks: PowerPoint presentations_
 

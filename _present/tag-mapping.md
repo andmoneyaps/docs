@@ -14,11 +14,6 @@ It is possible to map fields and nested fields from Account, Contact, and Event 
 > This page is for banks whose advisors create decks in Salesforce with the **Present package**. If your
 > advisors create decks in **Engage**, see [Tag Mapping (Dynamics)]({{ site.baseurl }}/present/tag-mapping-dynamics/) instead.
 
-{: .note }
-> In engage-web, the forms of address and the agenda are
-> [reserved tags]({{ site.baseurl }}/present/reserved-tags/): they are filled in automatically and
-> cannot be mapped.
-
 ## Tag Mapping
 To start mapping between tags and SObject fields, go to the Management UI and select the Tags tab.
 This will lead you to the following page:

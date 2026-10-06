@@ -105,8 +105,8 @@ In **Enterprise applications → BookingPlatform Mgmt API → Users and groups**
 This lets Engage read and write Dynamics records as the signed-in advisor, limited by their own
 Dynamics security roles.
 
-Run [`add-delegated-grant-to-service-principal.ps1`]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#add-delegated-grant-to-service-principalps1)
-after installing [its modules]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#before-you-run-any-of-them):
+Run [`add-delegated-grant-to-service-principal.ps1`]({{ site.baseurl }}/foundation/scripts/#add-delegated-grant-to-service-principalps1)
+after installing [its modules]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them):
 
 ```powershell
 ./add-delegated-grant-to-service-principal.ps1 `
@@ -128,7 +128,7 @@ Application users → New app user.** Select `{DynamicsAccessAppClientId}` and a
 <!-- TODO: add the Schedule privilege set to the script and show the matching invocation here. -->
 
 As a **System Administrator** of the environment, run
-[`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#new-dataverse-role-for-app-userps1):
+[`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/#new-dataverse-role-for-app-userps1):
 
 ```powershell
 az login --tenant {YourTenantId}
@@ -163,23 +163,23 @@ as well.
 ### 5a — Create the SCIM applications
 
 Get your **SCIM token** from your &money contact, then run
-[`Enable-SCIM-Provisioning.ps1`](#enable-scim-provisioningps1):
+[`enable-scim-provisioning.ps1`]({{ site.baseurl }}/foundation/scripts/#enable-scim-provisioningps1) after installing
+[its module]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them). It asks for the token:
 
 ```powershell
-./Enable-SCIM-Provisioning.ps1 `
-  -TenantId    {YourTenantId} `
-  -Environment test `
-  -ScimToken   {YourScimToken} `
-  -SkipGraphAppRegistration
+./enable-scim-provisioning.ps1 `
+  -tenantId    {YourTenantId} `
+  -environment test
 ```
 
-Use `-Environment prod` for production.
+Use `-environment prod` for production. The script creates the **Advisors** and **Rooms** applications,
+sets their attribute mappings and starts provisioning. Keep the **Undo** commands it prints.
 
-### 5b — Map attributes and assign
+### 5b — Assign advisors and rooms
 
-For both the **Advisors** and **Rooms** applications, set the attribute mappings as described in
-[SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/#application-configuration-and-attribute-mapping),
-then assign your advisors to **Advisors** and your meeting rooms to **Rooms**.
+In **Enterprise applications**, assign your advisors to **AndMoney SCIM - Advisors** and your meeting
+rooms to **AndMoney SCIM - Rooms**, under **Users and groups**. Only assigned users and rooms are
+provisioned.
 
 ---
 
@@ -261,253 +261,8 @@ Use an advisor who has completed SCIM provisioning and has the `Employee` role.
 
 ## Scripts
 
-`add-delegated-grant-to-service-principal.ps1` and `new-dataverse-role-for-app-user.ps1` are listed in
-[Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#scripts).
-
-### Enable-SCIM-Provisioning.ps1
-
-Used in [Step 5](#step-5--provision-employees-and-rooms-with-scim). Save the following as
-`Enable-SCIM-Provisioning.ps1`:
-
-```powershell
-param (
-  [string] $ApplicationName, # The name of the application to create. Choose a name that are easily distinguishable from other applications (Default: andmoney-scim)
-  [string] $TenantId, # The tenant ID to use - this should be the bank's tenant ID (required)
-  [string] $Environment, # The environment to use (dev, test, prod, Default: Test)
-  [string] $ScimToken, # The SCIM token from &money. This is a secret token that is used to authenticate the SCIM requests and is specific to the TenantId (required)
-  [string] $ConnectionType = "User", # If set to "ManagedIdentity", the script will connect using a managed identity.
-  [switch] $SkipGraphAppRegistration # Skip the app registration the Graph proxy uses for calendar and meeting access. Only the SCIM provisioning apps are created.
-)
-
-$ErrorActionPreference = "Stop"
-$DeploymentScriptOutputs = @{}
-
-if (Get-Module -ListAvailable -Name Microsoft.Graph.Applications && Get-Module -ListAvailable -Name Microsoft.Graph.Authentication)
-{
-  Write-Host "Modules for Microsoft.Graph.Applications and Microsoft.Graph.Authentication are imported"
-} else
-{
-  Install-Module Microsoft.Graph.Applications -Force
-  Install-Module Microsoft.Graph.Authentication -Force
-  Import-Module Microsoft.Graph.Applications
-  Import-Module Microsoft.Graph.Authentication
-}
-
-function New-AppRegistration
-{
-  param (
-    [string] $ApplicationName = "andmoney-bookme",
-    [string] $Environment,
-    [string] $TenantId
-  )
-
-  $CalendarsReadWriteScope = Find-MgGraphPermission -SearchString Calendars.ReadWrite -PermissionType Application -ExactMatch -ErrorAction Stop
-  $OnlineMeetingsReadWriteScope = Find-MgGraphPermission -SearchString OnlineMeetings.ReadWrite.All -PermissionType Application -ExactMatch -ErrorAction Stop
-  $OnlineMeetingTranscriptReadScope = Find-MgGraphPermission -SearchString OnlineMeetingTranscript.Read.All -PermissionType Application -ExactMatch -ErrorAction Stop
-
-  Write-Host "Creating AppRegistraiton with the following permissions:"
-  Write-Host $CalendarsReadWriteScope
-  Write-Host $OnlineMeetingsReadWriteScope
-  Write-Host $OnlineMeetingTranscriptReadScope
-
-  $CreateAppParams = @{
-    DisplayName            = "$($ApplicationName) - $($Environment)"
-    RequiredResourceAccess = @{
-      ResourceAppId  = "00000003-0000-0000-c000-000000000000"
-      ResourceAccess = @(
-        @{
-          Id   = $CalendarsReadWriteScope.Id
-          Type = "Role"
-        },
-        @{
-          Id   = $OnlineMeetingsReadWriteScope.Id
-          Type = "Role"
-        },
-        @{
-          Id   = $OnlineMeetingTranscriptReadScope.Id
-          Type = "Role"
-        }
-      )
-    }
-  }
-
-  $appRegistration = New-MgApplication @CreateAppParams -ErrorAction Stop
-
-  $clientSecret = Add-MgApplicationPassword -ApplicationId $appRegistration.Id `
-    -PasswordCredential @{ DisplayName = "Automated" } -ErrorAction Stop
-
-  Write-Host
-  Write-Host -ForegroundColor Gray "Created App registration '$($CreateAppParams.DisplayName)' >>"
-  Write-Host -ForegroundColor Cyan -NoNewline "Application ID: "
-  Write-Host -ForegroundColor Yellow $appRegistration.AppId
-
-  Write-Host -ForegroundColor Cyan -NoNewline "Client ID: "
-  Write-Host -ForegroundColor Yellow $appRegistration.AppId
-
-  if ($null -ne $clientSecret)
-  {
-    Write-Host -ForegroundColor Cyan -NoNewline "Client secret: "
-    Write-Host -ForegroundColor Yellow $clientSecret.SecretText " (Expires: $($clientSecret.EndDateTime))"
-  }
-
-  Write-Host -ForegroundColor Green "SUCCESS >> App registration '$($CreateAppParams.DisplayName)' created <<"
-  Write-Host
-
-  # Set the outputs for the deployment script to be used in Bicep
-  $DeploymentScriptOutputs['clientId'] = $appRegistration.AppId
-  $DeploymentScriptOutputs['clientSecret'] = $clientSecret.SecretText
-}
-
-function Add-ScimServicePrincipal
-{
-  param (
-    [string] $ApplicationName,
-    [string] $Environment,
-    [string] $TenantId,
-    [string] $ScimUrl,
-    [string] $ScimToken
-  )
-
-  # A uniqiue identifier for the application template
-  $applicationTemplateId = "8adf8e6e-67b2-4cf2-a259-e3dc5476c621"
-
-  $params = @{
-    displayName = "$($ApplicationName) - $(Get-Date)"
-  }
-
-  $servicePrincipal = Invoke-MgInstantiateApplicationTemplate -ApplicationTemplateId $applicationTemplateId -BodyParameter $params
-
-  Write-Host -ForegroundColor Cyan "Service principal for SCIM Provisioning Jobs created $($servicePrincipal.ServicePrincipal.Id)"
-  Write-Host
-    
-  $timeout = 120 # Timeout in seconds
-  $interval = 5 # Interval to check in seconds
-  $startTime = Get-Date
-  $extraDelay = 60 # Extra delay in seconds
-
-  Write-Host -ForegroundColor Gray "Waiting for the service principal and its permissions to fully propagate..."
-    
-  while ($true)
-  {
-    $spExists = Get-MgServicePrincipal -Filter "id eq '$($servicePrincipal.ServicePrincipal.Id)'" -ErrorAction SilentlyContinue
-    if ($spExists)
-    {
-      Write-Host -ForegroundColor Cyan "Service principal is now available."
-      break
-    }
-    
-    if ((Get-Date) -gt $startTime.AddSeconds($timeout))
-    {
-      Write-Error "Timed out waiting for the service principal to propagate."
-      Exit
-    }
-    
-    Start-Sleep -Seconds $interval
-  }
-
-  $jobParams = @{
-    templateId = "scim"
-  }
-
-  Write-Host -ForegroundColor Gray "Waiting an additional $extraDelay seconds for full propagation before creating SynchronizationJob"
-  Write-Host
-  Start-Sleep -Seconds $extraDelay
-    
-  $syncJob = New-MgServicePrincipalSynchronizationJob -ServicePrincipalId $servicePrincipal.ServicePrincipal.Id -BodyParameter $jobParams
-    
-  $params = @{
-    value = @(
-      @{
-        key   = "BaseAddress"
-        value = $ScimUrl
-      }
-      @{
-        key   = "SecretToken"
-        value = $ScimToken
-      }
-      @{
-        key   = "SyncNotificationSettings"
-        value = '{"Enabled":false,"DeleteThresholdEnabled":false}'
-      }
-      @{
-        key   = "SyncAll"
-        value = "false"
-      }
-    )
-  }
-
-  Set-MgServicePrincipalSynchronizationSecret -ServicePrincipalId $servicePrincipal.ServicePrincipal.Id -BodyParameter $params
-
-  Write-Host -ForegroundColor Gray "SynchronizationJob created: $($syncJob.Id)"
-  Write-Host -ForegroundColor Gray "Waiting $extraDelay seconds for full propagation of SynchronizationJob"
-  Start-Sleep -Seconds $extraDelay
-
-  Write-Host -ForegroundColor Gray "Starting SynchronizationJob..."
-  Start-MgServicePrincipalSynchronizationJob -ServicePrincipalId $servicePrincipal.ServicePrincipal.Id -SynchronizationJobId $syncJob.Id
-}
-
-function Enable-SCIM-Provisioning
-{
-  param (
-    [string] $ApplicationName = "andmoney-scim",
-    [string] $Environment = "Test",
-    [string] $TenantId,
-    [string] $ScimToken
-  )
-
-  if ($ApplicationName -eq "")
-  {
-    $ApplicationName = "andmoney-scim"
-  }
-
-  $envName = $Environment.ToLowerInvariant()
-  $scimAdvisorUrl = "https://api.dev-env.booking.andmoney.dk/advisors/scim"
-  $scimRoomUrl = "https://api.dev-env.booking.andmoney.dk/rooms/scim"
-
-  if ($envName -eq 'dev')
-  {
-    $scimAdvisorUrl = "https://api.dev-env.booking.andmoney.dk/advisors/scim"
-    $scimRoomUrl = "https://api.dev-env.booking.andmoney.dk/rooms/scim"
-  } elseif ($envName -eq 'test')
-  {
-    $scimAdvisorUrl = "https://api.test-env.booking.andmoney.dk/advisors/scim"
-    $scimRoomUrl = "https://api.test-env.booking.andmoney.dk/rooms/scim"
-  } elseif ($envName -eq 'prod')
-  {
-    $scimAdvisorUrl = "https://api.booking.andmoney.dk/advisors/scim"
-    $scimRoomUrl = "https://api.booking.andmoney.dk/rooms/scim"
-  } else
-  {
-    Write-Host -ForegroundColor Red "Invalid environment name: $envName"
-    exit 1
-  }
-
-  if ($ConnectionType -eq "ManagedIdentity") {
-    Write-Host -ForegroundColor Yellow "Connecting with Managed Identity"
-    Connect-MgGraph -Identity
-  } else {
-    Write-Host -ForegroundColor Yellow "Connecting with Tenant ID: $TenantId"
-    Connect-MgGraph -Scopes "Application.ReadWrite.All,Synchronization.ReadWrite.All" -TenantId $TenantId -NoWelcome
-  }
-
-  # The app registration and its client secret exist for the Graph proxy. Without a proxy
-  # they have no consumer, so they are not created.
-  if ($SkipGraphAppRegistration)
-  {
-    Write-Host -ForegroundColor Yellow "Skipping the Graph app registration - only the SCIM provisioning apps are created"
-  } else
-  {
-    New-AppRegistration -ApplicationName "andmoney-bookme" -Environment $Environment -TenantId $TenantId
-  }
-
-  Add-ScimServicePrincipal -Environment $Environment -TenantId $TenantId -ApplicationName "$($ApplicationName) - Advisors" -ScimUrl $scimAdvisorUrl -ScimToken $ScimToken
-  Add-ScimServicePrincipal -Environment $Environment -TenantId $TenantId -ApplicationName "$($ApplicationName) - Rooms" -ScimUrl $scimRoomUrl -ScimToken $ScimToken
-}
-
-Enable-SCIM-Provisioning -ApplicationName $ApplicationName -Environment $Environment -TenantId $TenantId -ScimToken $ScimToken
-
-Write-Host -ForegroundColor Green "Done!"
-```
+The scripts used in this guide are kept on the [Scripts]({{ site.baseurl }}/foundation/scripts/) page, with download links and the
+modules each one needs.
 
 ## Related
 

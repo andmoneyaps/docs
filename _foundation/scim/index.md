@@ -27,7 +27,7 @@ You can configure, ramp, and operate the two independently.
 | Page | When to read |
 |---|---|
 | [SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) | Step-by-step configuration of the SCIM enterprise apps in Entra: tenant URLs per environment, attribute mappings, user/group assignment, and how to enable failure email alerts |
-| [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/) | PowerShell script reference used by the multi-tenant Marketplace deployment to create the SCIM service principals automatically |
+| [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/#enable-scim-provisioningps1-marketplace-offer) | PowerShell script reference used by the multi-tenant Marketplace deployment to create the SCIM service principals automatically |
 
 ## Related
 

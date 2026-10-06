@@ -85,7 +85,7 @@ If your CRM is Salesforce rather than Dynamics 365, refer to the existing Engage
 
 ## Conventions
 
-- "The Engage platform" refers to the &Money customer-engagement platform suite (Schedule scheduling, Present, Insights, and supporting services).
+- "The Engage platform" refers to the &Money customer-engagement platform suite (Schedule, Present, Insights, and supporting services).
 - "Engage platform team" refers to the &Money-side technical contacts who deliver and operate the platform on your behalf.
 - "You" / "your tenant" / "the customer" refers to the integrating entity being onboarded to the Engage platform. Where the Entra or Azure technical concept of a tenant is meant, it is explicitly called an "Entra tenant" or "Azure tenant".
 - "Employee" refers to a user from the integrating tenant's directory (typically what other systems may call an advisor, agent, or staff user).

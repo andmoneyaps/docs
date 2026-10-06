@@ -12,8 +12,8 @@ Welcome to the &Money Embeddable UI documentation. This section covers embeddabl
 
 ## Available Pages
 
-### BookMe Iframe Component
-The BookMe iframe component enables seamless integration of meeting booking functionality into Salesforce and other platforms. This component allows users to:
+### Schedule Iframe Component
+The Schedule iframe component enables seamless integration of meeting booking functionality into Salesforce and other platforms. This component allows users to:
 
 - Schedule meetings directly within their CRM
 - View and manage existing bookings
@@ -21,7 +21,7 @@ The BookMe iframe component enables seamless integration of meeting booking func
 
 #### Access Requirements
 
-To use the BookMe iframe component, users must have proper access configured in your organization's identity provider:
+To use the Schedule iframe component, users must have proper access configured in your organization's identity provider:
 
 - **User Access**: Bank employees need to be assigned the **'Employee'** role in the BookingPlatform Management API application
 - **Authentication**: Users must be authenticated through Microsoft Entra ID (Azure AD)

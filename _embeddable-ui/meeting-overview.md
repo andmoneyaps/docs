@@ -7,7 +7,7 @@ nav_order: 3
 
 # Meeting Overview
 
-The meeting overview is the landing page component shown when the BookMe embeddable loads on a Salesforce record page. It displays the employee's upcoming and past meetings for the current Account, and provides entry points for booking new meetings.
+The meeting overview is the landing page component shown when the Schedule embeddable loads on a Salesforce record page. It displays the employee's upcoming and past meetings for the current Account, and provides entry points for booking new meetings.
 
 ---
 
@@ -27,7 +27,7 @@ When the employee is authenticated, the landing page shows two action buttons:
 | Both buttons shown | Employee is authenticated via Entra ID | Both buttons visible |
 | Not signed in | Employee not authenticated | Welcome message with "not signed in" text; no buttons or meeting list |
 | "Book Meeting" disabled | Component placed on an unsupported sObject type | Button is grayed out. Supported types: Account, Event, Opportunity |
-| Auto-redirect | `disableCustomerMeetings` set to `true` in [configOverride]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) | Landing page is skipped; employee is redirected to the LWC booking flow |
+| Auto-redirect | `disableCustomerMeetings` set to `true` in [configOverride]({{ site.baseurl }}/schedule/salesforce-iframe-lwc/) | Landing page is skipped; employee is redirected to the LWC booking flow |
 | Error banner | Account resolution fails | Sticky error banner at top of page with error code. Buttons remain visible below the banner. |
 
 ---
@@ -71,6 +71,6 @@ When no meetings exist for the current Account, the meeting overview shows an em
 
 ## Related Documentation
 
-- [Internal Meetings Deployment Guide]({{ site.baseurl }}/bookme/internal-meetings-deployment-guide/) — configuration guide for the internal meeting flow
-- [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/bookme/salesforce-iframe-lwc/) — configOverride property reference
+- [Internal Meetings Deployment Guide]({{ site.baseurl }}/schedule/internal-meetings-deployment-guide/) — configuration guide for the internal meeting flow
+- [Salesforce Iframe LWC Configuration]({{ site.baseurl }}/schedule/salesforce-iframe-lwc/) — configOverride property reference
 - [Setup in Salesforce]({{ site.baseurl }}/embeddable-ui/setup-in-salesforce/) — placing the component on record pages

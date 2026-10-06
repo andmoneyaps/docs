@@ -281,7 +281,7 @@ const BASE_URL = `https://apim-public-api-prod.azure-api.net/api/${API_VERSION}`
 
 ## Additional Resources
 
-- [V3 BookMe API Documentation]({{ site.baseurl }}/api/bookme)
+- [V3 Schedule API Documentation]({{ site.baseurl }}/api/schedule)
 - [V3 Present API Documentation]({{ site.baseurl }}/api/present)
 - [V3 OpenAPI Specification](https://apim-public-api-prod.azure-api.net/api/v3/openapi.yaml)
 - [V2 OpenAPI Specification](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml)

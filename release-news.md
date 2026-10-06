@@ -11,7 +11,7 @@ nav_order: 2
 
 ### _Playbooks: PowerPoint presentations_
 
-- **Template block, Kind PowerPoint (pptx)**: A Template block can now build a PowerPoint presentation from Present slides. Set **Kind** to **PowerPoint (pptx)**, send the slides and the tag-values for their tags, straight from the trigger or from earlier blocks, and the block returns a reference to the finished file. See [PowerPoint Presentations]({{ site.baseurl }}/bookme/playbooks/playbooks-integration-guide/#powerpoint-presentations).
+- **Template block, Kind PowerPoint (pptx)**: A Template block can now build a PowerPoint presentation from Present slides. Set **Kind** to **PowerPoint (pptx)**, send the slides and the tag-values for their tags, straight from the trigger or from earlier blocks, and the block returns a reference to the finished file. See [PowerPoint Presentations]({{ site.baseurl }}/schedule/playbooks/playbooks-integration-guide/#powerpoint-presentations).
 - **New Convert block**: Turns a PowerPoint file into a PDF. The file can be one a Template block just built, or one that is already stored and has a contentRef.
 - **PresentGenerate trigger**: A trigger that takes the slides and tag-values as input and passes them straight to the Template block. It is used by the generate playbook in the Present playbook bundle. Playbooks that build presentations can also use any other trigger.
 - **Nothing changes for existing setups**: Template blocks with Kind **Liquid (text)** and the templates under Admin > Templates work as before. The Present Lightning Web Component in Salesforce is not affected. No migration is needed.
@@ -22,10 +22,10 @@ nav_order: 2
 
 ### _Schedule_
 
-- **Version 1.31 Release**: The location display name now shows on every booking screen, including the meeting list, the meeting view and the confirmation after a reschedule. The location field can be searched again after a location is picked. Banks on 1.29 or 1.30 should install 1.31. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).
-- **Version 1.30 Release**: The location display name stays visible after the advisor selects a location, in the picker, the booking summary and the confirmation. Install this version instead of 1.29. See [Schedule Release Notes]({{ site.baseurl }}/bookme/release-notes/).
+- **Version 1.31 Release**: The location display name now shows on every booking screen, including the meeting list, the meeting view and the confirmation after a reschedule. The location field can be searched again after a location is picked. Banks on 1.29 or 1.30 should install 1.31. See [Schedule Release Notes]({{ site.baseurl }}/schedule/release-notes/).
+- **Version 1.30 Release**: The location display name stays visible after the advisor selects a location, in the picker, the booking summary and the confirmation. Install this version instead of 1.29. See [Schedule Release Notes]({{ site.baseurl }}/schedule/release-notes/).
 - **Version 1.29 Release**: The advisor booking flow shows the location display name set in Management UI under Meeting setup → Locations, instead of the technical directory name. Both 1.29 and 1.30 need the Schedule backend update that is live in production as of 14 September 2026.
-- **Version 1.28 Release**: Address lookup for out-of-office meetings now uses Adressevælgeren instead of DAWA, which is retired on 1 October 2026. Install this version or newer before that date. The end address is now required for out-of-office bookings, and place-name search is no longer available. See [Address Lookup for Offsite Meetings]({{ site.baseurl }}/bookme/address-lookup/).
+- **Version 1.28 Release**: Address lookup for out-of-office meetings now uses Adressevælgeren instead of DAWA, which is retired on 1 October 2026. Install this version or newer before that date. The end address is now required for out-of-office bookings, and place-name search is no longer available. See [Address Lookup for Offsite Meetings]({{ site.baseurl }}/schedule/address-lookup/).
 
 ## August 2026
 
@@ -54,14 +54,14 @@ nav_order: 2
 
 ## March 2026
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.25 Release**: Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
 - **Version 1.24 Release**: Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
 
 ## February 2026
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.23 Release**: Fixed customer email not displaying when editing meetings in the advisor flow. The issue was specific to the managed package context where sObject field names include the namespace prefix.
 
@@ -79,7 +79,7 @@ nav_order: 2
 - **navigatetorecord event**: Emits Salesforce Event ID when a user clicks the "Åbn" button on a meeting card
 - **close event**: Notifies parent view when user returns to meeting overview, clearing session data
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.19 Release**: Fixed an issue where removing an additional advisor could affect other meeting participants
 
@@ -87,9 +87,9 @@ nav_order: 2
 
 - **Duration-Based Daily Meeting Time Limits**: Administrators can now configure maximum meeting time per advisor per day using duration-based limits instead of meeting counts. This feature provides:
   - **Configuration levels** (most specific wins):
-    - **Organization-wide default**: Set in Management UI under BookMe/Meeting Setup tab (applies to all advisors)
-    - **Service Group override**: Configure on Service Groups under the BookMe/Service Groups tab (applies to group members)
-    - **Advisor-specific override**: Set on advisor availability under the BookMe/Availaibility (Employees) tab (applies to individual advisor)
+    - **Organization-wide default**: Set in Management UI under Schedule/Meeting Setup tab (applies to all advisors)
+    - **Service Group override**: Configure on Service Groups under the Schedule/Service Groups tab (applies to group members)
+    - **Advisor-specific override**: Set on advisor availability under the Schedule/Availaibility (Employees) tab (applies to individual advisor)
   - **How it works**: System tracks total booked meeting duration per advisor per day. When an advisor reaches their limit, they are automatically excluded from available time slot searches
   - **Benefits**:
     - More accurate capacity management (30-minute and 2-hour meetings now count differently)
@@ -105,7 +105,7 @@ nav_order: 2
 
 ## August 2025
 
-### _BookMe Insights_
+### _Schedule Insights_
 
 - Enhanced meeting analytics documentation with comprehensive data analysis capabilities
 - Historic meetings integration for CRM analytics reporting
@@ -151,7 +151,7 @@ nav_order: 2
 
 ## June 2025
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.16 Release**: Fixed advisor search functionality in advisor flow
 - Enhanced advisor as meeting owner search capabilities
@@ -165,7 +165,7 @@ nav_order: 2
 - Removed validation rule restrictions allowing inactive templates to be reactivated
 - Improved template management flexibility
 
-### _BookMe Insights_
+### _Schedule Insights_
 
 - New technical flow documentation for insights generation
 - Enhanced meeting analytics with constraint pattern identification
@@ -207,7 +207,7 @@ nav_order: 2
 
 ## February 2025
 
-### _BookMe_
+### _Schedule_
 
 - **Version 1.15 Release**: Advisor flow redesigned with Salesforce standard components
 - External Client App integration for improved OAuth management

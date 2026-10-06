@@ -138,7 +138,7 @@ _Schedule holds the chosen time for you for five minutes. If you do not click **
 
 
 ### See also
-- [Address Lookup for Offsite Meetings]({{ site.baseurl }}/bookme/address-lookup/) — technical description of the address search.
+- [Address Lookup for Offsite Meetings]({{ site.baseurl }}/schedule/address-lookup/) — technical description of the address search.
 - **Schedule – super-user guide: Meeting setup** — locations, display names and meeting types.
 
 

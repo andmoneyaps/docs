@@ -57,7 +57,7 @@ From the confirmation screen, users can:
 
 The confirmation screen displays both:
 
-- **Customer meetings** – Scheduled through the BookMe booking system
+- **Customer meetings** – Scheduled through the Schedule booking system
 - **Internal meetings** – Case processing appointments and calendar reservations
 
 Each type is visually distinguished with a different icon.

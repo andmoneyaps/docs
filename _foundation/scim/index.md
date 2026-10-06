@@ -11,14 +11,14 @@ permalink: /foundation/scim/
 
 SCIM is the standard provisioning protocol Microsoft Entra exposes natively. The Engage platform consumes it to keep employee and meeting-room records synchronised from your Entra tenant automatically. Entra's SCIM service pushes user and group changes to the Engage SCIM endpoint on a ~40-minute cycle whenever your directory changes.
 
-Provisioning is **push-from-the-source**: Engage receives writes from your tenant. Engage holds no standing credentials in your directory, and no scheduled job on the Engage side reaches into your tenant. The integration is platform-wide — once SCIM is configured, every product (BookMe, Meet, Present, Insights) sees the same directory data.
+Provisioning is **push-from-the-source**: Engage receives writes from your tenant. Engage holds no standing credentials in your directory, and no scheduled job on the Engage side reaches into your tenant. The integration is platform-wide — once SCIM is configured, every product (Schedule, Meet, Present, Insights) sees the same directory data.
 
 ## Resource model
 
 Two SCIM-enabled enterprise applications are created in your Entra tenant, targeting separate endpoints:
 
 - **Employees** — your staff who will use the platform (formerly "advisors" in earlier endpoint naming)
-- **Rooms** — meeting-room resource accounts used by BookMe
+- **Rooms** — meeting-room resource accounts used by Schedule
 
 You can configure, ramp, and operate the two independently.
 

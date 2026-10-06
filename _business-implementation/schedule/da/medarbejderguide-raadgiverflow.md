@@ -138,7 +138,7 @@ _Schedule holder den valgte tid for dig i fem minutter. Klikker du ikke **Book m
 
 
 ### Se også
-- [Address Lookup for Offsite Meetings]({{ site.baseurl }}/bookme/address-lookup/) — teknisk beskrivelse af adressesøgningen (engelsk).
+- [Address Lookup for Offsite Meetings]({{ site.baseurl }}/schedule/address-lookup/) — teknisk beskrivelse af adressesøgningen (engelsk).
 - **Schedule – superbrugerguide: Mødeopsætning** — lokationer, visningsnavne og mødetyper.
 
 

@@ -202,5 +202,5 @@ Additional European locales (`sv-SE`, `nb-NO`, `de-DE`, `de-AT`, `fr-FR`, `fr-BE
 
 ## Related
 
-- [BookMe API Documentation]({{ site.baseurl }}/api/bookme)
+- [Schedule API Documentation]({{ site.baseurl }}/api/schedule)
 - [V2 to V3 Migration Guide]({{ site.baseurl }}/api/migration-guide-v3)

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Add-Teams-Access-Policy.ps1
-nav_order: 2
+nav_order: 1
 parent: Microsoft 365
 grand_parent: Scripts
 ---

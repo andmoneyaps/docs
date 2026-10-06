@@ -86,7 +86,7 @@ In multi-tenant installations, only the Azure part (including the Graph-Proxy) i
    - Sign in with a user account that has the following permissions:
      - `Application.ReadWrite.All`
      - `Synchronization.ReadWrite.All`
-   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/) to deploy the Entra ID components.
+   - Execute the PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) to deploy the Entra ID components.
    - Once the script completes, note the generated **ClientID** and **ClientSecret** for the App Registration configured with **Calendar Access** and **Online Meeting** permissions.
 
 2. **Configure Teams access policy**

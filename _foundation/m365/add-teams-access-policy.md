@@ -9,8 +9,8 @@ grand_parent: Foundation
 
 # Add-Teams-Access-Policy.ps1
 
-This script has moved to the [Scripts]({{ site.baseurl }}/foundation/scripts/#add-teams-access-policyps1) page.
+This script has moved to the [Scripts]({{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/) page.
 
 <script>
-  window.location.replace("{{ site.baseurl }}/foundation/scripts/#add-teams-access-policyps1");
+  window.location.replace("{{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/");
 </script>

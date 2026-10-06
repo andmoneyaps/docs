@@ -226,8 +226,8 @@ Neither can be granted through a consent link: Microsoft's consent endpoint only
 application advertises in its manifest, and Engage advertises neither — so customers using neither
 Dynamics nor SharePoint are never asked to approve them.
 
-Use [`add-delegated-grant-to-service-principal.ps1`]({{ site.baseurl }}/foundation/scripts/#add-delegated-grant-to-service-principalps1), run
-**twice**. Install [its modules]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them) first, or it stops at startup:
+Use [`add-delegated-grant-to-service-principal.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/add-delegated-grant-to-service-principal/), run
+**twice**. Install [its modules]({{ site.baseurl }}/foundation/scripts/dynamics/add-delegated-grant-to-service-principal/#before-you-run-it) first, or it stops at startup:
 
 ```powershell
 # Dataverse - the script's defaults
@@ -277,8 +277,8 @@ Leave it without a role for now; Step 4b creates and assigns one.
 
 ### 4b — Create and assign the security role
 
-Use [`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/#new-dataverse-role-for-app-userps1). It needs the
-[Azure CLI]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them), and must run as a **System Administrator** of the environment
+Use [`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/). It needs the
+[Azure CLI]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/#before-you-run-it), and must run as a **System Administrator** of the environment
 — the application user cannot modify its own role.
 
 ```powershell
@@ -366,8 +366,8 @@ Graph addresses sites.
 cannot reach any other SharePoint site in your tenant. The permission goes to the same application you
 granted `Sites.Selected` to: **BookingPlatform Mgmt API** (`{MgmtApiAppClientId}`), not the Dynamics one.
 
-Use [`add-site-permission-for-app.ps1`]({{ site.baseurl }}/foundation/scripts/#add-site-permission-for-appps1). Install
-[its modules]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them) first, or it stops at startup:
+Use [`add-site-permission-for-app.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/add-site-permission-for-app/). Install
+[its modules]({{ site.baseurl }}/foundation/scripts/dynamics/add-site-permission-for-app/#before-you-run-it) first, or it stops at startup:
 
 ```powershell
 ./add-site-permission-for-app.ps1 `
@@ -679,22 +679,22 @@ modules each one needs.
 
 ### Before you run any of them
 
-See [Before you run any of them]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them).
+Each script's page lists the modules and tools it needs under *Before you run it*.
 
 ### add-delegated-grant-to-service-principal.ps1
 
 Used in [Step 3](#step-3--authorise-engage-to-act-as-your-advisors). See
-[add-delegated-grant-to-service-principal.ps1]({{ site.baseurl }}/foundation/scripts/#add-delegated-grant-to-service-principalps1).
+[add-delegated-grant-to-service-principal.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/add-delegated-grant-to-service-principal/).
 
 ### new-dataverse-role-for-app-user.ps1
 
 Used in [Step 4b](#4b--create-and-assign-the-security-role). See
-[new-dataverse-role-for-app-user.ps1]({{ site.baseurl }}/foundation/scripts/#new-dataverse-role-for-app-userps1).
+[new-dataverse-role-for-app-user.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/).
 
 ### add-site-permission-for-app.ps1
 
 Used in [Step 5b](#5b--grant-the-bookingplatform-mgmt-api-application-access-to-that-one-site). See
-[add-site-permission-for-app.ps1]({{ site.baseurl }}/foundation/scripts/#add-site-permission-for-appps1).
+[add-site-permission-for-app.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/add-site-permission-for-app/).
 
 ## Related
 

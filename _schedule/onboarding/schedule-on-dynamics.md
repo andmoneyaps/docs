@@ -163,11 +163,11 @@ as well.
 ### 5a — Create the SCIM applications
 
 Get your **SCIM token** from your &money contact, then run
-[`enable-scim-provisioning.ps1`]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning/) after installing
-[its module]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning/#before-you-run-it). It asks for the token:
+[`new-scim-provisioning-apps.ps1`]({{ site.baseurl }}/foundation/scripts/entra/new-scim-provisioning-apps/) after installing
+[its module]({{ site.baseurl }}/foundation/scripts/entra/new-scim-provisioning-apps/#before-you-run-it). It asks for the token:
 
 ```powershell
-./enable-scim-provisioning.ps1 `
+./new-scim-provisioning-apps.ps1 `
   -tenantId    {YourTenantId} `
   -environment test
 ```

@@ -1,12 +1,12 @@
 ---
 layout: default
-title: enable-scim-provisioning.ps1
+title: new-scim-provisioning-apps.ps1
 nav_order: 1
-parent: SCIM
+parent: Entra
 grand_parent: Scripts
 ---
 
-# enable-scim-provisioning.ps1
+# new-scim-provisioning-apps.ps1
 
 Creates the Advisors and Rooms SCIM provisioning applications, points them at Engage with your SCIM token, sets their attribute mappings, and starts provisioning. Safe to re-run: it reuses the applications it finds.
 
@@ -14,7 +14,7 @@ Creates the Advisors and Rooms SCIM provisioning applications, points them at En
 |---|---|
 | Used in | [Schedule on Dynamics, Step 5]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#step-5--provision-employees-and-rooms-with-scim) |
 | Run as | *Application Administrator* or *Cloud Application Administrator* |
-| Download | [enable-scim-provisioning.ps1]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning.ps1) |
+| Download | [new-scim-provisioning-apps.ps1]({{ site.baseurl }}/foundation/scripts/entra/new-scim-provisioning-apps.ps1) |
 
 ## Before you run it
 
@@ -33,5 +33,5 @@ A missing module stops the script at startup, before it changes anything. Ask yo
 ## Script
 
 ```powershell
-{% include_relative enable-scim-provisioning.ps1 %}
+{% include_relative new-scim-provisioning-apps.ps1 %}
 ```

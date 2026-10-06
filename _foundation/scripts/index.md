@@ -27,16 +27,16 @@ Invoke-WebRequest https://andmoneyaps.github.io/docs/foundation/scripts/<area>/<
 | [new-dataverse-role-for-app-user.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/) | Creates the Dataverse security role for the Engage application user, trims it to the privileges the integration needs, and assigns it. |
 | [add-site-permission-for-app.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/add-site-permission-for-app/) | Grants an application access to a single SharePoint site, which is what `Sites.Selected` needs before it reaches any site at all. |
 
-## [SCIM]({{ site.baseurl }}/foundation/scripts/scim/)
+## [Entra]({{ site.baseurl }}/foundation/scripts/entra/)
 
 | Script | What it does |
 |---|---|
-| [enable-scim-provisioning.ps1]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning/) | Creates the Advisors and Rooms SCIM provisioning applications, points them at Engage with your SCIM token, sets their attribute mappings, and starts provisioning. |
+| [new-scim-provisioning-apps.ps1]({{ site.baseurl }}/foundation/scripts/entra/new-scim-provisioning-apps/) | Creates the Advisors and Rooms SCIM provisioning applications, points them at Engage with your SCIM token, sets their attribute mappings, and starts provisioning. |
+| [Enable-SCIM-Provisioning.ps1 (Marketplace)]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) | Creates the app registration the Graph proxy uses and the two SCIM provisioning applications. Used only when installing the Azure Marketplace offer in multi-tenant mode. |
 
 ## [Microsoft 365]({{ site.baseurl }}/foundation/scripts/m365/)
 
 | Script | What it does |
 |---|---|
-| [Enable-SCIM-Provisioning.ps1 (Marketplace)]({{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/) | Creates the app registration the Graph proxy uses and the two SCIM provisioning applications. |
 | [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/) | Creates the Teams application access policy that lets the app registration read online meetings. |
 | [Enable-Graph-Transcript-Access.ps1]({{ site.baseurl }}/foundation/scripts/m365/enable-graph-transcript-access/) | Turns on the tenant settings that let Microsoft Graph read Teams meeting transcripts. |

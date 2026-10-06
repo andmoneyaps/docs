@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Enable-Graph-Transcript-Access.ps1
-nav_order: 3
+nav_order: 2
 parent: Microsoft 365
 grand_parent: Scripts
 ---

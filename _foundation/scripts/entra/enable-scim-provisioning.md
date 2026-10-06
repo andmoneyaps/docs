@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Enable-SCIM-Provisioning.ps1 (Marketplace)
-nav_order: 1
-parent: Microsoft 365
+nav_order: 2
+parent: Entra
 grand_parent: Scripts
 ---
 
@@ -14,7 +14,7 @@ Creates the app registration the Graph proxy uses and the two SCIM provisioning 
 |---|---|
 | Used in | [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/) |
 | Run as | *Application Administrator* or *Cloud Application Administrator* |
-| Download | [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/m365/Enable-SCIM-Provisioning.ps1) |
+| Download | [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/entra/Enable-SCIM-Provisioning.ps1) |
 
 ## Before you run it
 

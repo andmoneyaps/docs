@@ -9,8 +9,8 @@ grand_parent: Foundation
 
 # Enable-SCIM-Provisioning.ps1
 
-This script has moved to the [Scripts]({{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/) page.
+This script has moved to the [Scripts]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) page.
 
 <script>
-  window.location.replace("{{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/");
+  window.location.replace("{{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/");
 </script>

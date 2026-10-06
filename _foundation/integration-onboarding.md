@@ -204,7 +204,7 @@ In Graph-Proxy mode, two topologies are supported. The runtime behaviour is the 
 
 The access mode decision is locked first (as part of the [Starting inputs](#starting-inputs)). Once locked, follow the relevant installation guide:
 
-- **Proxy mode** — see [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/) for the full single-tenant and multi-tenant install procedures, including the PowerShell scripts ([Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/) and [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/)) that provision the Entra ID part.
+- **Proxy mode** — see [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/) for the full single-tenant and multi-tenant install procedures, including the PowerShell scripts ([Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) and [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/)) that provision the Entra ID part.
 - **Direct mode** — provision the equivalent Entra resources directly in your tenant (Entra app registration with Calendar + Teams permissions, client secret, security group, Teams access policy, SCIM service principal). The Engage platform team confirms the specific Graph scopes during onboarding.
 
 #### Validation
@@ -476,7 +476,7 @@ Two SCIM-enabled enterprise applications are created in your Entra tenant — on
 - **Attribute mappings** — how Entra attributes translate into the customappsso schema Engage understands.
 - **Users and groups** — the set of identities to provision (typically Entra security groups you maintain).
 
-They are typically created by the PowerShell script [`Enable-SCIM-Provisioning.ps1`]({{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/) covered in section 1's multi-tenant flow, but can be created manually if you prefer.
+They are typically created by the PowerShell script [`Enable-SCIM-Provisioning.ps1`]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) covered in section 1's multi-tenant flow, but can be created manually if you prefer.
 
 ### Deployment prerequisites
 

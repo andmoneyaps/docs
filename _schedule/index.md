@@ -13,6 +13,8 @@ redirect_from:
 
 Schedule is our booking and scheduling solution designed for the financial sector. This section covers Schedule's product-specific configuration: portals, playbooks, CRM-driven booking flows, employee schedules, and the day-to-day features.
 
+> **Naming.** Schedule was previously called BookMe. The Salesforce managed package is still named `bookme`, so these pages call it the BookMe package.
+
 > **Looking for platform-wide setup?** Microsoft 365, Entra identity, and SCIM provisioning are platform-wide foundations used by every Engage product. They live under [Foundation]({{ site.baseurl }}/foundation/), not here.
 
 ## Where to start

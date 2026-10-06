@@ -142,7 +142,7 @@ The &money Portal component exists in two variants. The variant is selected in t
 
 | Variant | When to use | Behavior |
 |---------|-------------|----------|
-| **With managed package** | The bank has the Schedule managed package installed. The managed package handles customer bookings via its own LWC components. | The Portal iframe handles internal meetings and the meeting overview. Customer bookings are handled by the managed package. The "Book Meeting" button switches from the iframe to the managed package's LWC. `disablecustomermeetings` is hardcoded to `true`. |
+| **With managed package** | The bank has the BookMe managed package installed. The managed package handles customer bookings via its own LWC components. | The Portal iframe handles internal meetings and the meeting overview. Customer bookings are handled by the managed package. The "Book Meeting" button switches from the iframe to the managed package's LWC. `disablecustomermeetings` is hardcoded to `true`. |
 | **Standalone** | The bank does **not** have the managed package. All booking is done through the Portal iframe. | The Portal iframe handles both internal meetings and customer bookings. The landing page shows both buttons, and employees stay within the iframe for both flows. `disablecustomermeetings` is configurable via `configOverride`. |
 
 {: .note }

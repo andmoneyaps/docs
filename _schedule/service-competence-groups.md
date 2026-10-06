@@ -15,8 +15,8 @@ redirect_from:
 
 To fully utilize the functions, your company must:
 
-- Use the latest managed Schedule package 
-- Run on package 1.12 - 1.13 in Schedule's unmanaged package
+- Use the latest managed BookMe package 
+- Run on package 1.12 - 1.13 in BookMe's unmanaged package
 
 **Note:** If your company has not installed any of the aforementioned packages, you will only be able to offer extended service levels via service groups for "Online" meetings.
 
@@ -40,7 +40,7 @@ We recommend that you start by creating your Competence Groups (Groups).
 
 ### Service Groups in the availability search
 
-Service Groups take effect when a customer searches for a time: the availability search can draw an available advisor from a configured Service Group rather than a named individual: this is how "any available advisor from this group" booking works. For how to request this through the Public API (the availability search's employee-type parameter), see the [Schedule (Schedule) Public API]({{ site.baseurl }}/api/schedule/).
+Service Groups take effect when a customer searches for a time: the availability search can draw an available advisor from a configured Service Group rather than a named individual: this is how "any available advisor from this group" booking works. For how to request this through the Public API (the availability search's employee-type parameter), see the [Schedule Public API]({{ site.baseurl }}/api/schedule/).
 
 ---
 

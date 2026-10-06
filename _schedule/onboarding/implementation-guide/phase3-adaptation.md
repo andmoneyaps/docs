@@ -204,7 +204,7 @@ In Schedule, 3 different location concepts are used.
 | Customer location  | Advisor location  | Meeting room location  |
 
 
-When booking a meeting for a given customer through Schedule – Scheduler, the **customer's location** determines the availability of advisors and meeting rooms in the booking process.
+When booking a meeting for a given customer through Schedule, the **customer's location** determines the availability of advisors and meeting rooms in the booking process.
 
 The **customer's location** is retrieved by default via the customer's Salesforce account. An example of such a string could be "Finans Allé 1-3".
 When the flow then displays available advisors under "department" or "global", these advisors are filtered down to advisors who either have the same location as the customer, or are marked as global advisors.

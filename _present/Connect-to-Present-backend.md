@@ -76,7 +76,7 @@ To allow the Backend to upload the created slide decks etc. The backend needs ac
 A new simplified setup for present has been implemented, making it possible to set up automatic connection between a Salesforce org through the Management UI.
 
 First, connection from our backend to Salesforce must be configured, as that allows automated provisioning of connection from the org to the backend.
-If the respective bank that is being configured is on Schedule package version 1.14 or above, a new External Client App is included, which replaces the Connect App setup.
+If the respective bank that is being configured is on BookMe package version 1.14 or above, a new External Client App is included, which replaces the Connect App setup.
 
 Navigate to the External Client App Manager in the salesforce setup menu.
 Find the App named `BookMe External Client App`, click edit policies, find the OAuth Policies section, Click `Enable Client Credentials Flow` and add a user that can be used for integration.

@@ -10,7 +10,7 @@ redirect_from:
 
 
 ## Introduction
-BookMe-Salesforce integration enables seamless booking capabilities within your Salesforce organization. This integration allows you to configure meeting settings, manage bookings, and customize the booking experience according to your organization's needs.
+The Salesforce Schedule integration enables seamless booking capabilities within your Salesforce organization. This integration allows you to configure meeting settings, manage bookings, and customize the booking experience according to your organization's needs.
 
 ## Prerequisites
 - Salesforce Developer/Admin account with appropriate permissions

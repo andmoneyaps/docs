@@ -29,7 +29,7 @@ Because provisioning *creates Salesforce setup records*, it runs with the **inte
 
 ## Prerequisites
 
-- Schedule managed package installed in your Salesforce org (the External Client App connection flow requires a recent package version — check with &money if unsure).
+- BookMe managed package installed in your Salesforce org (the External Client App connection flow requires a recent package version — check with &money if unsure).
 - Administrator access to **both** Salesforce and the Schedule Management UI.
 - An integration user account in Salesforce. A dedicated service account is recommended.
 
@@ -39,7 +39,7 @@ The integration user has **two distinct permission needs**. They are easy to con
 
 ### 1. Runtime permissions (ongoing) — keep these assigned
 
-For day-to-day operation (reading and writing meetings, contacts, etc.), assign the **`BookingPlatformIntegration`** permission set that ships with the Schedule package. It grants the object/field access Schedule needs plus **API Enabled**.
+For day-to-day operation (reading and writing meetings, contacts, etc.), assign the **`BookingPlatformIntegration`** permission set that ships with the BookMe package. It grants the object/field access Schedule needs plus **API Enabled**.
 
 > The `BookingPlatformIntegration` permission set is intentionally least-privilege: it grants **data access only**. It does **not** include the setup permissions required to provision the connection (see below). Assigning it alone is **not** enough to run the Provision step.
 
@@ -71,7 +71,7 @@ All five must return `true`.
 
 ### Step 1: Configure the BookMe External Client App in Salesforce
 
-The Schedule package includes an External Client App that enables secure communication between Schedule and Salesforce.
+The BookMe package includes an External Client App that enables secure communication between Schedule and Salesforce.
 
 1. In Salesforce Setup, open **External Client App Manager**.
 2. Find **`BookMe External Client App`** in the list.

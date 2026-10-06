@@ -9,6 +9,8 @@ redirect_from:
 
 # Release Notes—Schedule
 
+> **Naming.** These are the release notes for the Salesforce managed package, which is still named `bookme`. The product is now called Schedule.
+
 ## Release 1.31.0 (15-09-2026)
 Here is what's new in release 1.31.0:
 
@@ -71,7 +73,7 @@ Here is what's new in release 1.29.0:
   - If your organisation already overrides location names inside the Salesforce package, those names keep priority over the display name.
 
 ## Release 1.28.0 (07-09-2026)
-Here is what's new in release 1.28.0 of Schedule.
+Here is what's new in release 1.28.0 of BookMe.
 
 > **Managed Package Version ID**: `04tP7000003TofdIAC`.
 >
@@ -102,7 +104,7 @@ Here is what's new in release 1.28.0 of Schedule.
   - Fixed an issue where two suggestions that read the same, for example the same street name in two towns, both selected the first one.
 
 ## Release 1.26.0 (28-04-2026)
-Here is what's new in release 1.26.0 of Schedule.
+Here is what's new in release 1.26.0 of BookMe.
 
 > **Managed Package Version ID**: `04tP7000002qN7RIAU`.
 >
@@ -116,7 +118,7 @@ Here is what's new in release 1.26.0 of Schedule.
   - The email field in the booking contact form is now locked to prevent advisors from editing it.
 
 ## Release 1.25.0 (25-03-2026)
-Here is what's new in release 1.25.0 of Schedule.
+Here is what's new in release 1.25.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000002giWXIAY`.
 >
 > **Install link**:
@@ -129,7 +131,7 @@ Here is what's new in release 1.25.0 of Schedule.
   - Fixed an issue where cancelling a meeting that had already been removed from Salesforce could cause an error.
 
 ## Release 1.24.0 (10-03-2026)
-Here is what's new in release 1.24.0 of Schedule.
+Here is what's new in release 1.24.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000002d6kLIAQ`.
 >
 > **Install link**:
@@ -142,7 +144,7 @@ Here is what's new in release 1.24.0 of Schedule.
   - Fixed an issue where unchecking "Send meeting confirmation to customer participants" had no effect.
 
 ## Release 1.23.0 (09-02-2026)
-Here is what's new in release 1.23.0 of Schedule.
+Here is what's new in release 1.23.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000002WqITIA0`.
 >
 > **Install link**:
@@ -157,7 +159,7 @@ Here is what's new in release 1.23.0 of Schedule.
   - This fix supersedes the incomplete fix in 1.21.0.
 
 ## Release 1.21.0 (02-02-2026)
-Here is what's new in release 1.21.0 of Schedule.
+Here is what's new in release 1.21.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000002UiQfIAK`.
 >
 > **Install link**:
@@ -172,7 +174,7 @@ Here is what's new in release 1.21.0 of Schedule.
   - Affected flows: Advisor planner, Customer planner, and Rescheduling.
 
 ## Release 1.19.0 (14-01-2026)
-Here is what's new in release 1.19.0 of Schedule.
+Here is what's new in release 1.19.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000002Qwf7IAC`.
 >
 > **Install link**:
@@ -184,7 +186,7 @@ Here is what's new in release 1.19.0 of Schedule.
   - Removing an additional advisor no longer affects other meeting participants.
 
 ## Release 1.18.0 (24-09-2025)
-Here is what's new in release 1.18.0 of Schedule.
+Here is what's new in release 1.18.0 of BookMe.
 > **Managed Package Version ID**: `04tP70000020PZxIAM`.
 >
 > **Install link**:
@@ -198,7 +200,7 @@ Here is what's new in release 1.18.0 of Schedule.
 ## Release 1.16.0 (22-05-2025)
 
 ### 1.16.0 — New features and improvements
-Here is what's new in release 1.16.0 of Schedule.
+Here is what's new in release 1.16.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000001XAWHIA4`.
 >
 > **Install link**:
@@ -216,7 +218,7 @@ Here is what's new in release 1.16.0 of Schedule.
 ## Release 1.15.0 (10-02-2025)
 
 ### 1.15.0 — New features and improvements
-Here is what's new in release 1.15.0 of Schedule.
+Here is what's new in release 1.15.0 of BookMe.
 > **Managed Package Version ID**: `04tP7000001CxtNIAS`.
 >
 > **Install link**:
@@ -236,7 +238,7 @@ Here is what's new in release 1.15.0 of Schedule.
     This integration allows the app to be packaged and distributed to subscriber orgs with greater ease, ensuring that OAuth credentials and integration settings remain isolated and manageable.
 
 ## Release 1.13.0 (22-05-2024)
-Here is what's new in release 1.13.0 of Schedule.
+Here is what's new in release 1.13.0 of BookMe.
 
 > **Managed Package Version ID**: `04tP7000000K6SfIAK`.
 >
@@ -247,7 +249,7 @@ Here is what's new in release 1.13.0 of Schedule.
 
 ### 1.13.0 — New for developers
 
-- **Opening the Teams-link in Schedule customer-flow now emits a "startmeeting" event.**
+- **Opening the Teams-link in BookMe customer-flow now emits a "startmeeting" event.**
     - The event is emitted when the user clicks the Teams link in the booking flow.
     - The event can be listened to in the parent component of the booking flow e.g. a wrapper component.
 - **Better Lead support.**
@@ -263,7 +265,7 @@ Here is what's new in release 1.13.0 of Schedule.
     - The travel time is added as an extra time slot in the employee's calendar.
     - The address search uses DAWA (Danmarks Adressers Web API) to find addresses.
 - **It is now possible to choose (optional) a meeting room before you select the meeting date/time.**
-- **Forwarding meetings created via Schedule will now create/update the custom meeting participant object in Salesforce.**
+- **Forwarding meetings created via BookMe will now create/update the custom meeting participant object in Salesforce.**
     - `AMB_Meeting_Participant` is now populated with forwarded invitees with a status; Accepted, Tentative, Declined.
     - Contact Schedule support to activate this feature.
 
@@ -282,7 +284,7 @@ Here is what's new in release 1.13.0 of Schedule.
 - **Issue where the Allowed Options for Employees did not in some cases respect Service Group assignments.**
 - **Issue with Location Configurations that caused the meetings without a room to not show physical meetings.**
 - **`AMBAdvisorCompetencesDTO` is now a Callable class.**
-    - The `AMBAdvisorCompetencesDTO` class was previously a private class in the managed package which made it impossible to use outside the Schedule.
+    - The `AMBAdvisorCompetencesDTO` class was previously a private class in the managed package which made it impossible to use outside the BookMe package.
 
 ### Breaking changes
 
@@ -301,11 +303,11 @@ No breaking changes in this release.
 - Standard implementations of providers have been removed from the package
     - The functionality from our standard implementations of providers have been moved elsewhere
     - There is fallback to any custom implementation of the provider interfaces, so custom providers are still supported.
-    - It is recommended to start using the AMB_Config setup that was introduced in v.1.10, which is further documented in the bookme onboarding/implementation guide.
+    - It is recommended to start using the AMB_Config setup that was introduced in v.1.10, which is further documented in the Schedule onboarding/implementation guide.
     - However, to continue using custom provider implementations, go to the `AMB_Booking_Platform_DI_Implementations__mdt` custom metadata object and create a record with `DeveloperName` set to `CRUD_Provider_Implementation` and `Apex_Class_Name__c` set to `AMBFallbackCRUDProvider` (Remove this record again once the new Config setup is to be used).
 - New search apex interface is now available
     - The search methods are now configurable by creating a custom class that implements the `Callable` interface, and implements the two actions `findContacts` and `getCloseContacts` in the `call` method.
-    - `findcontacts` is called whenever Contacts are searched in the bookme flow.
+    - `findcontacts` is called whenever Contacts are searched in the Schedule flow.
     - `getCloseContacts` is called when default contacts are added to a meeting, during the Schedule flow.
     - To configure this, go to the `AMB_Booking_Platform_DI_Implementations__mdt` custom metadata object and create a record with `DeveloperName` set to `Search_Provider_Implementation` and `Apex_Class_Name__c` set to `{YOUR_CLASS_NAME}`.
 - New configuration based override function of meeting title, location pretty is now available
@@ -366,7 +368,7 @@ No breaking changes in this release.
     - AMB_Config__Mdt must have relations (AMB_Config_Relation__Mdt) between itself and an AMB_SObject_Config__Mdt, and must relate to a configuration for an activity (Event) and either an activity object or participant (eg. Opportunity or Lead).
     - Each AMB_Config_Field_Mapping__mdt defines which value is assigned to which field on the SObject creation/update.
     - The usage of the configurations is further described in detail in the deployment guide.
-- Dependency Injection Metadata for standard providers no longer needs to be explicitly specified. Instead, Schedule will default to the standard implementations if no dependency injection provider is specified.
+- Dependency Injection Metadata for standard providers no longer needs to be explicitly specified. Instead, BookMe will default to the standard implementations if no dependency injection provider is specified.
 - Added infinite scroll to planner screen
     - Available times can be fetched through a "Hent flere tider" button, shown at the bottom of the page
 - Added a rule that, when activated, disables the "book meeting" button until either a Contact or an external participant is added to the meeting

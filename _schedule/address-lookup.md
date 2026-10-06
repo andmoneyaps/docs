@@ -38,4 +38,4 @@ The lookup runs in the advisor's browser: a search that returns matching address
 
 ## The end address is required
 
-From Schedule package 1.28.0, an out-of-office meeting cannot be booked without an end address. The **Book** button stays disabled until the end address field holds an address, and it also waits while a chosen suggestion is being looked up. Schedule needs the destination to calculate travel time and to add travel slots to the advisor's calendar, and templates read the end address to plan the drive. The start address is not required, and meetings of other types are not affected.
+From BookMe package 1.28.0, an out-of-office meeting cannot be booked without an end address. The **Book** button stays disabled until the end address field holds an address, and it also waits while a chosen suggestion is being looked up. Schedule needs the destination to calculate travel time and to add travel slots to the advisor's calendar, and templates read the end address to plan the drive. The start address is not required, and meetings of other types are not affected.

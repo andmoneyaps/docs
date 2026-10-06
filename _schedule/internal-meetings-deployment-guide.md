@@ -69,7 +69,7 @@ When the Schedule component is placed on a Salesforce record page, the employee 
 
 Before configuring internal meetings, ensure these are in place:
 
-- [ ] Schedule package **v1.14+** installed in Salesforce
+- [ ] BookMe package **v1.14+** installed in Salesforce
 - [ ] [Salesforce connection established]({{ site.baseurl }}/schedule/onboarding/salesforce-connection-setup/) (External Client App configured, Named Credential provisioned and authenticated)
 - [ ] [SCIM provisioning active]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/) — employees and rooms synced from Entra ID
 - [ ] [Embeddable UI deployed]({{ site.baseurl }}/schedule/salesforce-iframe-lwc-deployment/) — Portal component pushed to Salesforce via Management UI
@@ -370,7 +370,7 @@ For internal meetings, the key requirement is: the signed-in employee's **Entra 
 
 ### 6c. Custom Metadata
 
-The Schedule package includes default field mapping configurations for Event and Opportunity sObjects. Internal meetings use these defaults automatically to create Event records in Salesforce.
+The BookMe package includes default field mapping configurations for Event and Opportunity sObjects. Internal meetings use these defaults automatically to create Event records in Salesforce.
 
 For custom field mappings or additional sObject configurations, see [Salesforce Schedule Integration Setup]({{ site.baseurl }}/schedule/onboarding/salesforce-setup/).
 

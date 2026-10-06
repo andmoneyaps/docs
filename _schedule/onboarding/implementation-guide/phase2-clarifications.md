@@ -134,10 +134,10 @@ parent: Implementation Guide
 
 ## Salesforce Package Installation
 Schedule is a solution that is delivered via Salesforce AppExchange packages and can be easily installed.
-The Schedule package consists of a project package and a dependency on an internal &money package. Dependencies must currently be installed before the primary project package, according to AppExchange guidelines.
+The BookMe package consists of a project package and a dependency on an internal &money package. Dependencies must currently be installed before the primary project package, according to AppExchange guidelines.
 Deployment is thus divided into 2 steps:
 1. Installation of the &money Component package
-2. Installation of the Schedule.
+2. Installation of the BookMe project package.
 
 The creation of the integration user has the following requirements:
 

@@ -39,7 +39,7 @@ These app registrations are designed to work across different customer tenants:
 
 These app registrations exist within the Schedule tenant:
 
-#### Schedule API System Integration
+#### BookMe API System Integration
 - Exposes API permission scopes
 - Includes System app role
 - Used for system-level integrations

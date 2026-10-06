@@ -15,8 +15,8 @@ redirect_from:
 
 To fully utilize the function, your company must:
 
-- Use the latest managed Schedule package 
-- Run on package 1.12 - 1.13 in Schedule's unmanaged package
+- Use the latest managed BookMe package 
+- Run on package 1.12 - 1.13 in BookMe's unmanaged package
 
 {: .note }
 > If your company has not installed any of the mentioned packages, you will only be able to offer the basic functionality.

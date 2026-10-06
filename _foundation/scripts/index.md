@@ -14,7 +14,7 @@ shows how to call a script; this page holds the script itself.
 Download a script with:
 
 ```powershell
-Invoke-WebRequest https://andmoneyaps.github.io/docs/foundation/scripts/<script-name>.ps1 -OutFile <script-name>.ps1
+Invoke-WebRequest https://andmoneyaps.github.io/docs/foundation/scripts/<folder>/<script-name>.ps1 -OutFile <script-name>.ps1
 ```
 
 {: .note }
@@ -55,10 +55,10 @@ admin-consent link cannot do.
 |---|---|
 | Used in | [Present on Dynamics, Step 3]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#step-3--authorise-engage-to-act-as-your-advisors) · [Schedule on Dynamics, Step 3]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#step-3--authorise-engage-to-act-as-your-advisors-in-dynamics) |
 | Run as | *Application Administrator* or *Cloud Application Administrator* |
-| Download | [add-delegated-grant-to-service-principal.ps1]({{ site.baseurl }}/foundation/scripts/add-delegated-grant-to-service-principal.ps1) |
+| Download | [add-delegated-grant-to-service-principal.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/add-delegated-grant-to-service-principal.ps1) |
 
 ```powershell
-{% include_relative add-delegated-grant-to-service-principal.ps1 %}
+{% include_relative dynamics/add-delegated-grant-to-service-principal.ps1 %}
 ```
 
 ## new-dataverse-role-for-app-user.ps1
@@ -70,10 +70,10 @@ integration needs, and assigns it.
 |---|---|
 | Used in | [Present on Dynamics, Step 4b]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#4b--create-and-assign-the-security-role) · [Schedule on Dynamics, Step 4b]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#4b--create-and-assign-the-security-role) |
 | Run as | *System Administrator* of the Dataverse environment |
-| Download | [new-dataverse-role-for-app-user.ps1]({{ site.baseurl }}/foundation/scripts/new-dataverse-role-for-app-user.ps1) |
+| Download | [new-dataverse-role-for-app-user.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user.ps1) |
 
 ```powershell
-{% include_relative new-dataverse-role-for-app-user.ps1 %}
+{% include_relative dynamics/new-dataverse-role-for-app-user.ps1 %}
 ```
 
 ## add-site-permission-for-app.ps1
@@ -85,10 +85,10 @@ it reaches any site at all.
 |---|---|
 | Used in | [Present on Dynamics, Step 5b]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#5b--grant-the-bookingplatform-mgmt-api-application-access-to-that-one-site) |
 | Run as | *SharePoint Administrator* or *Global Administrator* |
-| Download | [add-site-permission-for-app.ps1]({{ site.baseurl }}/foundation/scripts/add-site-permission-for-app.ps1) |
+| Download | [add-site-permission-for-app.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/add-site-permission-for-app.ps1) |
 
 ```powershell
-{% include_relative add-site-permission-for-app.ps1 %}
+{% include_relative dynamics/add-site-permission-for-app.ps1 %}
 ```
 
 ## enable-scim-provisioning.ps1
@@ -100,18 +100,56 @@ token, sets their attribute mappings, and starts provisioning.
 |---|---|
 | Used in | [Schedule on Dynamics, Step 5]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#step-5--provision-employees-and-rooms-with-scim) |
 | Run as | *Application Administrator* or *Cloud Application Administrator* |
-| Download | [enable-scim-provisioning.ps1]({{ site.baseurl }}/foundation/scripts/enable-scim-provisioning.ps1) |
+| Download | [enable-scim-provisioning.ps1]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning.ps1) |
 
 ```powershell
-{% include_relative enable-scim-provisioning.ps1 %}
+{% include_relative scim/enable-scim-provisioning.ps1 %}
 ```
 
-## Azure Marketplace offer scripts
+## Microsoft 365 integration
 
-Used only when installing the Azure Marketplace offer in multi-tenant mode, as described in
+Scripts for the Microsoft 365 integration delivered through the Azure Marketplace offer. The first two
+are used only when installing the offer in multi-tenant mode, as described in
 [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/).
 
-| Script | Download |
+### Enable-SCIM-Provisioning.ps1 (Marketplace offer)
+
+Creates the app registration the Graph proxy uses and the two SCIM provisioning applications.
+
+| | |
 |---|---|
-| [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/) | [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/Enable-SCIM-Provisioning.ps1) |
-| [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/) | [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/Add-Teams-Access-Policy.ps1) |
+| Used in | [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/) |
+| Run as | *Application Administrator* or *Cloud Application Administrator* |
+| Download | [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/m365/Enable-SCIM-Provisioning.ps1) |
+
+```powershell
+{% include_relative m365/Enable-SCIM-Provisioning.ps1 %}
+```
+
+### Add-Teams-Access-Policy.ps1
+
+Creates the Teams application access policy that lets the app registration read online meetings.
+
+| | |
+|---|---|
+| Used in | [Marketplace Installation]({{ site.baseurl }}/foundation/m365/marketplace-installation/) |
+| Run as | *Teams Communications Administrator* or *Teams Administrator* |
+| Download | [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/scripts/m365/Add-Teams-Access-Policy.ps1) |
+
+```powershell
+{% include_relative m365/Add-Teams-Access-Policy.ps1 %}
+```
+
+### Enable-Graph-Transcript-Access.ps1
+
+Turns on the tenant settings that let Microsoft Graph read Teams meeting transcripts.
+
+| | |
+|---|---|
+| Used in | [Enable Graph transcript access]({{ site.baseurl }}/foundation/m365/enable-graph-transcript-access/) |
+| Run as | *Teams Administrator* |
+| Download | [Enable-Graph-Transcript-Access.ps1]({{ site.baseurl }}/foundation/scripts/m365/Enable-Graph-Transcript-Access.ps1) |
+
+```powershell
+{% include_relative m365/Enable-Graph-Transcript-Access.ps1 %}
+```

@@ -8,8 +8,8 @@ grand_parent: Foundation
 
 # Add-Teams-Access-Policy.ps1
 
-[Download Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/scripts/marketplace/Add-Teams-Access-Policy.ps1)
+[Download Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/Add-Teams-Access-Policy.ps1)
 
 ```powershell
-{% include scripts/marketplace/Add-Teams-Access-Policy.ps1 %}
+{% include_relative Add-Teams-Access-Policy.ps1 %}
 ```

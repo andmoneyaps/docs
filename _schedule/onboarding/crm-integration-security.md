@@ -57,7 +57,7 @@ You as the customer then use the Management UI to map the data from the Schedule
 
 | Requirement     | Description                                                                                                                |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------|
-| Permission Sets | The integration user must have the standard Schedule Integration User permission set installed in the CRM platform.|
+| Permission Sets | The integration user must have the `BookingPlatformIntegration` permission set (label *Booking platform - Integration*), which ships with the BookMe package.|
 | Object CRUD     | The integration user must have the necessary permissions to at least create the necessary objects in the CRM platform. |
 | FLS             | The integration user must have the necessary permissions to at least read the necessary fields in the CRM platform.    |
 

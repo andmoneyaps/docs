@@ -7,8 +7,8 @@ grand_parent: Foundation
 ---
 # Enable-SCIM-Provisioning.ps1
 
-[Download Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/scripts/marketplace/Enable-SCIM-Provisioning.ps1)
+[Download Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/Enable-SCIM-Provisioning.ps1)
 
 ```powershell
-{% include scripts/marketplace/Enable-SCIM-Provisioning.ps1 %}
+{% include_relative Enable-SCIM-Provisioning.ps1 %}
 ```

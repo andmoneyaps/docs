@@ -31,7 +31,7 @@ Invoke-WebRequest https://andmoneyaps.github.io/docs/foundation/scripts/<area>/<
 
 | Script | What it does |
 |---|---|
-| [new-scim-provisioning-apps.ps1]({{ site.baseurl }}/foundation/scripts/entra/new-scim-provisioning-apps/) | Creates the Advisors and Rooms SCIM provisioning applications, points them at Engage with your SCIM token, sets their attribute mappings, and starts provisioning. |
+| [setup-scim-provisioning-standalone.ps1]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/) | Creates the Advisors and Rooms SCIM provisioning applications, points them at Engage with your SCIM token, sets their attribute mappings, and starts provisioning. |
 | [Enable-SCIM-Provisioning.ps1 (Marketplace)]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) | Creates the app registration the Graph proxy uses and the two SCIM provisioning applications. Used only when installing the Azure Marketplace offer in multi-tenant mode. |
 
 ## [Microsoft 365]({{ site.baseurl }}/foundation/scripts/m365/)

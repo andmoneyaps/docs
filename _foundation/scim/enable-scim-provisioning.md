@@ -9,8 +9,8 @@ grand_parent: Foundation
 
 # Enable-SCIM-Provisioning.ps1
 
-This script has moved to the [Scripts]({{ site.baseurl }}/foundation/scripts/#enable-scim-provisioningps1-marketplace-offer) page.
+This script has moved to the [Scripts]({{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/) page.
 
 <script>
-  window.location.replace("{{ site.baseurl }}/foundation/scripts/#enable-scim-provisioningps1-marketplace-offer");
+  window.location.replace("{{ site.baseurl }}/foundation/scripts/m365/enable-scim-provisioning/");
 </script>

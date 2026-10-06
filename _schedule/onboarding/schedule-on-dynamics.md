@@ -173,8 +173,8 @@ In **Enterprise applications → BookingPlatform Mgmt API → Users and groups**
 This lets Engage read and write Dynamics records as the signed-in advisor, limited by their own
 Dynamics security roles.
 
-Run [`add-delegated-grant-to-service-principal.ps1`]({{ site.baseurl }}/foundation/scripts/#add-delegated-grant-to-service-principalps1)
-after installing [its modules]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them):
+Run [`add-delegated-grant-to-service-principal.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/add-delegated-grant-to-service-principal/)
+after installing [its modules]({{ site.baseurl }}/foundation/scripts/dynamics/add-delegated-grant-to-service-principal/#before-you-run-it):
 
 ```powershell
 ./add-delegated-grant-to-service-principal.ps1 `
@@ -232,7 +232,7 @@ unit:
 <!-- TODO: add the Schedule privilege set to the script and show the matching invocation here. -->
 
 As a **System Administrator** of the environment, run
-[`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/#new-dataverse-role-for-app-userps1):
+[`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/):
 
 ```powershell
 az login --tenant {YourTenantId}
@@ -272,8 +272,8 @@ as well.
 ### 5a — Create the SCIM applications
 
 Get your **SCIM token** from your &money contact, then run
-[`enable-scim-provisioning.ps1`]({{ site.baseurl }}/foundation/scripts/#enable-scim-provisioningps1) after installing
-[its module]({{ site.baseurl }}/foundation/scripts/#before-you-run-any-of-them). It asks for the token:
+[`enable-scim-provisioning.ps1`]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning/) after installing
+[its module]({{ site.baseurl }}/foundation/scripts/scim/enable-scim-provisioning/#before-you-run-it). It asks for the token:
 
 ```powershell
 ./enable-scim-provisioning.ps1 `

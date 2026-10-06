@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Enable-Graph-Transcript-Access.ps1
+title: Enable Graph transcript access
 nav_order: 8
 parent: Microsoft 365
 grand_parent: Foundation
 ---
 
-# Enable-Graph-Transcript-Access.ps1
+# Enable Graph transcript access
 
 Microsoft Graph API access to Teams meeting transcripts is governed by a tenant-level setting that is **off by default**. While it is off, Engage cannot create or renew a transcript change-notification subscription — Graph returns `403 Forbidden` with the `GraphAccessToTranscriptsDisabled` inner-error code — and meeting summaries stop being produced. The app registration's Graph permissions and its Teams application access policy have no bearing on this; the tenant setting overrides both.
 
@@ -18,4 +18,4 @@ Teams administrators can apply the same change without PowerShell in the Teams a
 
 Background: [MC1393806](https://mc.merill.net/message/MC1393806) and [Manage transcript API access for Teams meetings](https://learn.microsoft.com/en-us/microsoftteams/meeting-transcript-api-access).
 
-Run [`Enable-Graph-Transcript-Access.ps1`]({{ site.baseurl }}/foundation/scripts/#enable-graph-transcript-accessps1) as a *Teams Administrator*.
+Run [`Enable-Graph-Transcript-Access.ps1`]({{ site.baseurl }}/foundation/scripts/m365/enable-graph-transcript-access/) as a *Teams Administrator*.

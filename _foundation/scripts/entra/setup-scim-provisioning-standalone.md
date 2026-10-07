@@ -12,7 +12,7 @@ Creates the Advisors and Rooms SCIM provisioning applications, points them at En
 
 | | |
 |---|---|
-| Used in | [Schedule on Dynamics, Step 5]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#step-5--provision-employees-and-rooms-with-scim) |
+| Used in | [Schedule on Dynamics, Step 4]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#step-4--provision-employees-and-rooms-with-scim) |
 | Run as | *Application Administrator* or *Cloud Application Administrator* |
 | Download | [setup-scim-provisioning-standalone.ps1]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone.ps1) |
 

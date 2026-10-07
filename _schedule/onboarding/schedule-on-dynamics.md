@@ -14,33 +14,33 @@ from a Dynamics account; the meeting lands in their Outlook calendar and as an a
 
 {: .important }
 > Already onboarded to [Present on Dynamics 365]({{ site.baseurl }}/present/onboarding/present-on-dynamics/)?
-> Steps 2, 3, 4a and 6 are already done. In Step 1, only AndMoney Graph Access is new.
+> Steps 2, 3, 5a and 7 are already done. In Step 1, only AndMoney Graph Access is new.
 
 ## Who needs to be involved
 
-| Role | Steps |
-|---|---|
-| Microsoft Entra administrator (*Application Administrator*) | 1, 2, 3, 5 |
-| Dynamics 365 / Power Platform administrator | 4 |
-| An Engage `Admin` from your organisation, with access to the Dynamics environment | 6, 7 |
-| Dynamics customisation | 8 |
+| Section | Who | Steps |
+|---|---|---|
+| [Microsoft Entra](#microsoft-entra) | Microsoft Entra administrator (*Application Administrator*) | 1–4 |
+| [Dynamics 365](#dynamics-365) | Dynamics 365 / Power Platform administrator | 5 |
+| | Dynamics customisation | 6 |
+| [Engage Management Portal](#engage-management-portal) | An Engage `Admin` from your organisation, with access to the Dynamics environment | 7, 8 |
 
 ## Before you start
 
 - Send your **tenant ID** to your &money contact.
 - A Dynamics 365 environment on Dataverse Web API v9.2 — sandbox and production.
 - Each advisor has the **same email address in Entra and in Dynamics**.
+- **Every step is performed once per environment** — test and production are set up separately.
 
 ## The order things happen in
 
 ```text
-You:      Steps 1-5   Entra, Dataverse, SCIM
+You:      Microsoft Entra    Steps 1-4   applications, roles, Dynamics authorisation, SCIM
+          Dynamics 365       Steps 5-6   application user and role, embedding
               |
 &money:   registers your organisation and enables Schedule
               |
-You:      Steps 6-7   Management Portal
-              |
-You:      Step 8      embed Schedule in the Dynamics form
+You:      Engage Management Portal   Steps 7-8
               |
 Together: verification
 ```
@@ -49,11 +49,13 @@ Tell your &money contact when Steps 1 to 5 are done.
 
 ---
 
-## Application IDs you will need
+## Microsoft Entra
 
-**Every step is performed once per environment**, using that environment's column.
+For your **Microsoft Entra administrator**: the applications you approve, what they are permitted to do, and Steps 1 to 4.
 
-<!-- TODO: AndMoney Graph Access does not exist yet. Fill in its client ids once provisioned. -->
+### Applications and permissions
+
+<!-- TODO: fill in the AndMoney Graph Access client ids once the app is provisioned. -->
 
 | Application | Written as | Test | Production |
 |---|---|---|---|
@@ -61,16 +63,62 @@ Tell your &money contact when Steps 1 to 5 are done.
 | BookingPlatform Mgmt UI | `{MgmtUiAppClientId}` | `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` | `261ae34b-4de9-4c4a-9d70-1df1c024c91e` |
 | BookingPlatform Mgmt API | `{MgmtApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
 | AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | `de5dd77b-f082-4895-abe5-3f5f6020cba8` | `e9059d5a-7aeb-4f1a-a98d-7d8e1d4d23f3` |
-| AndMoney Graph Access | `{GraphAccessAppClientId}` | *to follow* | *to follow* |
+| AndMoney Graph Access | `{GraphAccessAppClientId}` | *To be supplied* | *To be supplied* |
+
+{: .note }
+> **AndMoney Graph Access is new.** It connects Engage to Microsoft 365 directly, replacing the Graph
+> proxy that earlier customers ran in their own Azure. Your &money contact supplies its client IDs.
 
 Your tenant ID is written as `{YourTenantId}`.
 
-| Management Portal | URL |
-|---|---|
-| Test | `https://management.test-env.andmoney.dk` |
-| Production | `https://management.andmoney.dk` |
+#### Permissions each application holds
 
-## Step 1 — Approve the Engage applications
+| Application | Used for | Permissions |
+|---|---|---|
+| **AndMoney UWC** | The sign-in your **advisors** use to reach Schedule | Microsoft Graph delegated: `openid`, `profile`, `User.Read`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` *(our own scope)* |
+| **BookingPlatform Mgmt UI** | The sign-in your **administrators** use to reach the Management Portal | Microsoft Graph delegated: `openid`, `profile`, `email`, `User.Read`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` *(our own scope)* |
+| **BookingPlatform Mgmt API** | The API behind both, carrying the app roles in Step 2 | **At consent** — Microsoft Graph delegated: `openid`, `profile`, `email`, `User.Read`<br>**Added by script in Step 3** — Dataverse delegated: `user_impersonation` |
+| **AndMoney Dynamics Access** | The application identity in Dataverse | Dataverse delegated: `user_impersonation` |
+| **AndMoney Graph Access** | Calendars and Teams meetings | Microsoft Graph **application**: `Calendars.ReadWrite`, `OnlineMeetings.ReadWrite.All`, `OnlineMeetingTranscript.Read.All` |
+
+**Why AndMoney Graph Access needs application permissions.** Its work runs without a signed-in user.
+Schedule and Outlook are kept in step in the background, in both directions: bookings are written to the
+calendars, and meetings moved or cancelled in Outlook flow back to Schedule. Every other permission in
+the table is delegated and acts as the signed-in user, within that user's own access.
+
+**Teams meetings and transcripts.** AndMoney Graph Access holds the permissions for the whole Engage
+platform, so you approve them once. Schedule uses only `Calendars.ReadWrite`. The two Teams permissions
+are for [Assist]({{ site.baseurl }}/meet/), which summarises online meetings from their Teams
+transcripts, and they do nothing until you allow it in Teams:
+
+- **Online meetings** need a [Teams application access policy]({{ site.baseurl }}/general/m365-audit-guide/#31-teams-application-access-policy)
+  that names AndMoney Graph Access, granted to the users whose meetings it may reach.
+- **Transcripts** also need [Graph transcript access]({{ site.baseurl }}/foundation/m365/enable-graph-transcript-access/)
+  enabled for your tenant. It is off by default.
+
+You set these up when you onboard Assist.
+
+**Outside the consent prompts.** The permission the Step 3 script adds is not part of any consent
+prompt: it is recorded against the BookingPlatform Mgmt API service principal, tenant-wide, and can be
+revoked on its own. And the Dataverse application user's access is not an Entra permission at all: it
+comes from the security role in [Step 5b](#5b--create-and-assign-the-security-role).
+
+The scripts in Steps 3 and 4 sign in through Microsoft's *Microsoft Graph Command Line Tools*
+application, which asks for:
+
+| Step | Microsoft Graph delegated |
+|---|---|
+| 3 | `Application.Read.All`, `DelegatedPermissionGrant.ReadWrite.All` |
+| 4 | `Application.ReadWrite.All`, `Synchronization.ReadWrite.All` |
+
+Microsoft resource IDs, for cross-checking against what you see in Entra:
+
+| Resource | Application ID |
+|---|---|
+| Microsoft Graph | `00000003-0000-0000-c000-000000000000` |
+| Dataverse (Dynamics CRM) | `00000007-0000-0000-c000-000000000000` |
+
+### Step 1 — Approve the Engage applications
 
 Open each link as an administrator and press **Accept**, in this order:
 
@@ -89,18 +137,18 @@ A "trouble signing you in" page afterwards is expected. Confirm all five appear 
 > If your policy requires it, you can limit AndMoney Graph Access to specific mailboxes with
 > [Exchange RBAC for Applications](https://learn.microsoft.com/exchange/permissions-exo/application-rbac).
 
-## Step 2 — Assign people to roles
+### Step 2 — Assign people to roles
 
 In **Enterprise applications → BookingPlatform Mgmt API → Users and groups**, assign:
 
 | Role | Who |
 |---|---|
-| `Admin` | At least one person with access to the Dynamics environment — needed for Steps 6 and 7 |
+| `Admin` | At least one person with access to the Dynamics environment — needed for Steps 7 and 8 |
 | `Configurator` | Meeting configuration |
 | `Manager` | Service and competence groups |
 | `Employee` | Every advisor who books |
 
-## Step 3 — Authorise Engage to act as your advisors in Dynamics
+### Step 3 — Authorise Engage to act as your advisors in Dynamics
 
 This lets Engage read and write Dynamics records as the signed-in advisor, limited by their own
 Dynamics security roles.
@@ -116,14 +164,49 @@ after installing [its modules]({{ site.baseurl }}/foundation/scripts/dynamics/ad
 
 Keep the **Undo** command it prints.
 
-## Step 4 — Create the application user in Dataverse
+### Step 4 — Provision employees and rooms with SCIM
 
-### 4a — Create the application user
+#### 4a — Create the SCIM applications
+
+Get your **SCIM token** from your &money contact, then run
+[`setup-scim-provisioning-standalone.ps1`]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/) after installing
+[its module]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/#before-you-run-it). It asks for the token:
+
+```powershell
+./setup-scim-provisioning-standalone.ps1 `
+  -tenantId    {YourTenantId} `
+  -environment test
+```
+
+Use `-environment prod` for production. The script creates the **Advisors** and **Rooms** applications,
+sets their attribute mappings and starts provisioning. Keep the **Undo** commands it prints.
+
+#### 4b — Assign advisors and rooms
+
+In **Enterprise applications**, assign your advisors to **AndMoney SCIM - Advisors (Test)** and your
+meeting rooms to **AndMoney SCIM - Rooms (Test)**, under **Users and groups**. In production the
+applications end in **(Production)**. Only assigned users and rooms are provisioned.
+
+---
+
+## Dynamics 365
+
+For your **Dynamics 365 / Power Platform administrator** (Step 5) and whoever customises your Dynamics forms (Step 6).
+
+### Step 5 — Create the application user in Dataverse
+
+#### 5a — Create the application user
 
 **Power Platform admin centre → Environments → {your environment} → Settings → Users + permissions →
-Application users → New app user.** Select `{DynamicsAccessAppClientId}` and a business unit.
+Application users → New app user.** Select the **AndMoney Dynamics Access** application and a business
+unit:
 
-### 4b — Create and assign the security role
+| Environment | AndMoney Dynamics Access client ID |
+|---|---|
+| Test | `de5dd77b-f082-4895-abe5-3f5f6020cba8` |
+| Production | `e9059d5a-7aeb-4f1a-a98d-7d8e1d4d23f3` |
+
+#### 5b — Create and assign the security role
 
 As a **System Administrator** of the environment, run
 [`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/):
@@ -136,6 +219,8 @@ az login --tenant {YourTenantId}
   -applicationId  {DynamicsAccessAppClientId} `
   -product        Schedule
 ```
+
+`{DynamicsAccessAppClientId}` is the client ID from Step 5a, and `{YourTenantId}` your Entra tenant ID.
 
 It creates the **Engage Schedule** role and assigns it. If Present on Dynamics is already onboarded, the
 application user keeps its Present role alongside it.
@@ -160,60 +245,7 @@ The role ends up with these privileges, all at **Organization** level:
 With server-based SharePoint document management, four `SharePoint` privileges are added by Dataverse
 as well.
 
-## Step 5 — Provision employees and rooms with SCIM
-
-### 5a — Create the SCIM applications
-
-Get your **SCIM token** from your &money contact, then run
-[`setup-scim-provisioning-standalone.ps1`]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/) after installing
-[its module]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/#before-you-run-it). It asks for the token:
-
-```powershell
-./setup-scim-provisioning-standalone.ps1 `
-  -tenantId    {YourTenantId} `
-  -environment test
-```
-
-Use `-environment prod` for production. The script creates the **Advisors** and **Rooms** applications,
-sets their attribute mappings and starts provisioning. Keep the **Undo** commands it prints.
-
-### 5b — Assign advisors and rooms
-
-In **Enterprise applications**, assign your advisors to **AndMoney SCIM - Advisors** and your meeting
-rooms to **AndMoney SCIM - Rooms**, under **Users and groups**. Only assigned users and rooms are
-provisioned.
-
----
-
-{: .important }
-> Steps 6 and 7 need &money to have registered your organisation first.
-
-## Step 6 — Connect your Dynamics environment
-
-In the Management Portal, go to **Admin → CRM Settings**.
-
-1. Select **Dynamics 365** and press **Continue**.
-
-   ![Choosing the CRM system under Admin → CRM Settings]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-system.png)
-
-2. Choose the environment — the sandbox during the integration phase, production at go-live.
-
-   ![Choosing the Dataverse environment]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-environment.png)
-
-3. Press **Test**. It should turn green.
-
-## Step 7 — Configure Schedule
-
-<!-- TODO: confirm the Management Portal screens once direct Graph access and the Dynamics schedule
-     playbooks ship; add screenshots. -->
-
-1. **Admin → Microsoft:** press **Test connection** with an advisor's address.
-2. Set up meeting themes, customer types and advisors, as described in the super-user guides for
-   [meeting setup]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/),
-   [employees]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-medarbejdere/) and
-   [service groups]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-servicegrupper/).
-
-## Step 8 — Embed Schedule in Dynamics
+### Step 6 — Embed Schedule in Dynamics
 
 Add a **web resource or PCF component** to the **account** form that opens Schedule with these
 parameters:
@@ -230,22 +262,65 @@ parameters:
 A standard IFRAME control cannot pass `user_email`, and advisors then get a sign-in pop-up every time.
 A component built for Present's appointment form can be reused.
 
-**Test the embedding** against the identity endpoint, which reports each parameter as pass or fail,
-**then point it at Schedule**:
+**Test the embedding** against the identity endpoint now, which reports each parameter as pass or fail.
+**Point it at Schedule** once Step 8 is done:
 
 | Environment | Identity endpoint | Schedule |
 |---|---|---|
 | Test | `https://engage.test-env.andmoney.dk/identity` | `https://engage.test-env.andmoney.dk/advisor` |
 | Production | `https://engage.andmoney.dk/identity` | `https://engage.andmoney.dk/advisor` |
 
+---
+
+## Engage Management Portal
+
+For an Engage `Admin` from your organisation, with access to the Dynamics environment.
+
+{: .important }
+> Steps 7 and 8 need &money to have registered your organisation first. Sign in with an account holding
+> the `Admin` role from Step 2.
+
+| Environment | Management Portal |
+|---|---|
+| Test | `https://management.test-env.andmoney.dk` |
+| Production | `https://management.andmoney.dk` |
+
+### Step 7 — Connect your Dynamics environment
+
+In the Management Portal, go to **Admin → CRM Settings**.
+
+1. Select **Dynamics 365** and press **Continue**.
+
+   ![Choosing the CRM system under Admin → CRM Settings]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-system.png)
+
+2. Choose the environment — the sandbox during the integration phase, production at go-live.
+
+   ![Choosing the Dataverse environment]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-environment.png)
+
+3. Press **Test**. It should turn green.
+
+### Step 8 — Configure Schedule
+
+<!-- TODO: confirm the Management Portal screens once direct Graph access and the Dynamics schedule
+     playbooks ship; add screenshots. -->
+
+1. **Admin → Microsoft:** press **Test connection** with an advisor's address.
+2. Set up meeting themes, customer types and advisors, as described in the super-user guides for
+   [meeting setup]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/),
+   [employees]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-medarbejdere/) and
+   [service groups]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-servicegrupper/).
+
+---
+
 ## What &money does
 
-- Issues your SCIM token (before Step 5).
-- Registers your organisation and enables Schedule (before Step 6).
+- Issues your SCIM token (before Step 4).
+- Registers your organisation and enables Schedule (before Step 7).
 
 ## Verifying it works
 
-<!-- TODO: add screenshots once the Dynamics booking flow ships. -->
+<!-- TODO: add screenshots once the Dynamics booking flow ships, and a test that a change made in
+     Outlook reaches the appointment once calendar-to-appointment sync exists. -->
 
 Use an advisor who has completed SCIM provisioning and has the `Employee` role.
 
@@ -253,13 +328,12 @@ Use an advisor who has completed SCIM provisioning and has the `Employee` role.
    meeting is in the advisor's Outlook calendar with a Teams link, and that Dynamics has an appointment
    with the account under **Regarding**.
 2. **Book a physical meeting with a room.** Check that the room's calendar shows it.
-3. **Move the meeting in Outlook.** Within a few minutes, the appointment in Dynamics shows the new time.
 
 | If | Check |
 |---|---|
-| The advisor or room is missing in Schedule | Step 5 |
+| The advisor or room is missing in Schedule | Step 4 |
 | The meeting is in Outlook but not in Dynamics | Step 3, and the advisor's Dynamics role |
-| The new time from Outlook does not reach Dynamics | Step 4b |
+| Schedule does not open from the account form | Step 6, against the identity endpoint |
 
 ## Scripts
 

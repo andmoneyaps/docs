@@ -18,7 +18,7 @@ Technical foundations that every Engage platform product — Schedule, Meet, Pre
 | [Identity]({{ site.baseurl }}/foundation/identity/) | Microsoft Entra ID setup, app registrations, portal authentication (Management Portal, Customer Portal). The identity backbone for staff and customers. | Azure / Entra admin |
 | [SCIM Provisioning]({{ site.baseurl }}/foundation/scim/) | Push-from-source synchronisation of employees and meeting rooms from your Entra tenant into the platform. Runs on a ~40-minute cycle. | Azure / Entra admin |
 | [Microsoft 365]({{ site.baseurl }}/foundation/m365/) | Microsoft Graph integration for Teams meetings, Outlook calendar free/busy, and employee calendar operations. Delivered through the Azure Marketplace App Offer (Graph-Proxy mode) or via direct Graph API access. | Azure / Entra admin |
-| [Scripts]({{ site.baseurl }}/foundation/scripts/) | The PowerShell scripts the onboarding guides ask you to run in your own tenant, in one place with download links. | Azure / Entra admin |
+| [Scripts]({{ site.baseurl }}/foundation/scripts/) | The PowerShell scripts the onboarding guides ask you to run in your own tenant, in one place with download links. | Azure / Entra and Dataverse admins |
 | [Engage Platform Integration Onboarding]({{ site.baseurl }}/foundation/integration-onboarding/) | The customer-facing onboarding reference. Architecture overview and prerequisites for every integration surface — Foundation surfaces here, plus product-specific surfaces in Schedule/Meet/Present. Start here if you are onboarding a new tenant. | Cross-functional |
 
 ## How to use this section

@@ -20,27 +20,32 @@ from a Dynamics account; the meeting lands in their Outlook calendar and as an a
 
 | Section | Who | Steps |
 |---|---|---|
-| [Microsoft Entra](#microsoft-entra) | Microsoft Entra administrator (*Application Administrator*) | 1–4 |
+| [Microsoft Entra](#microsoft-entra) | Microsoft Entra administrator: *Application Administrator*, and a *Privileged Role Administrator* to approve AndMoney Graph Access | 1–4 |
 | [Dynamics 365](#dynamics-365) | Dynamics 365 / Power Platform administrator | 5 |
 | | Dynamics customisation | 6 |
 | [Engage Management Portal](#engage-management-portal) | An Engage `Admin` from your organisation, with access to the Dynamics environment | 7, 8 |
 
 ## Before you start
 
-- Send your **tenant ID** to your &money contact.
+- Send your **tenant ID** to your &money contact. &money registers your organisation and sends you your
+  **SCIM token**, which Step 4 needs.
 - A Dynamics 365 environment on Dataverse Web API v9.2 — sandbox and production.
-- Each advisor has the **same email address in Entra and in Dynamics**.
+- Each advisor's Entra **user principal name** matches the **Primary Email** on their Dynamics user.
+  Engage matches advisors to Dynamics users this way.
 - **Every step is performed once per environment** — test and production are set up separately.
 
 ## The order things happen in
 
 ```text
-You:      Microsoft Entra    Steps 1-4   applications, roles, Dynamics authorisation, SCIM
-          Dynamics 365       Steps 5-6   application user and role, embedding
+&money:   registers your organisation and sends your SCIM token
               |
-&money:   registers your organisation and enables Schedule
+You:      Microsoft Entra    Steps 1-4   applications, roles, Dynamics authorisation, SCIM
+          Dynamics 365       Steps 5-6   application user and role, embedding tested against /identity
+              |
+&money:   links your Entra tenant and enables Schedule
               |
 You:      Engage Management Portal   Steps 7-8
+          Dynamics 365       Step 6      point the embedding at Schedule
               |
 Together: verification
 ```
@@ -134,6 +139,11 @@ https://login.microsoftonline.com/{YourTenantId}/adminconsent?client_id={GraphAc
 A "trouble signing you in" page afterwards is expected. Confirm all five appear under
 **Enterprise applications**.
 
+{: .important }
+> **Approving AndMoney Graph Access needs a *Privileged Role Administrator*** (or Global Administrator),
+> because it requests Microsoft Graph application permissions. The other four need only an *Application
+> Administrator*.
+
 {: .note }
 > If your policy requires it, you can limit AndMoney Graph Access to specific mailboxes with
 > [Exchange RBAC for Applications](https://learn.microsoft.com/exchange/permissions-exo/application-rbac).
@@ -193,6 +203,9 @@ applications end in **(Production)**. Only assigned users and rooms are provisio
 ## Dynamics 365
 
 For your **Dynamics 365 / Power Platform administrator** (Step 5) and whoever customises your Dynamics forms (Step 6).
+
+Each advisor's **Primary Email** in Dynamics must match their Entra user principal name — that is how
+Engage finds their Dynamics user.
 
 ### Step 5 — Create the application user in Dataverse
 
@@ -278,8 +291,9 @@ A component built for Present's appointment form can be reused.
 For an Engage `Admin` from your organisation, with access to the Dynamics environment.
 
 {: .important }
-> Steps 7 and 8 need &money to have registered your organisation first. Sign in with an account holding
-> the `Admin` role from Step 2.
+> Steps 7 and 8 need &money to have linked your Entra tenant and enabled Schedule first. Your account
+> needs the `Admin` role on the **BookingPlatform Mgmt API** enterprise application, assigned by your
+> Entra administrator in Step 2.
 
 | Environment | Management Portal |
 |---|---|
@@ -315,8 +329,8 @@ In the Management Portal, go to **Admin → CRM Settings**.
 
 ## What &money does
 
-- Issues your SCIM token (before Step 4).
-- Registers your organisation and enables Schedule (before Step 7).
+- Registers your organisation and sends your SCIM token (before Step 1).
+- Links your Entra tenant and enables Schedule (before Step 7).
 
 ## Verifying it works
 

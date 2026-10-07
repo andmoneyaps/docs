@@ -248,10 +248,10 @@ az login --tenant {YourTenantId}
      them once attendee sync runs end to end on Dynamics, then revisit the note below. -->
 
 {: .note }
-> **Confirmed with you during onboarding.** The privileges below cover Dynamics' standard tables for
-> appointments, contacts and users. If your environment keeps meetings, customers or advisors in other
-> tables, the role needs the same access on those instead. Your &money contact confirms the final list
-> with you, based on your data model, before you go live.
+> **Still being finalised.** The privileges below reflect what Schedule needs as it stands today, and
+> may change before release. They cover Dynamics' standard tables for appointments, contacts and users;
+> if your environment keeps meetings, customers or advisors in other tables, the role needs the same
+> access on those instead. Your &money contact confirms the final list with you before you go live.
 
 The role ends up with these privileges, all at **Organization** level:
 

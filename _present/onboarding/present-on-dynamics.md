@@ -16,7 +16,7 @@ stored in **SharePoint**. The architecture behind it is in
 {: .important }
 > This guide covers Present on Dynamics 365 with SharePoint storage, and nothing else. Other Engage
 > products bring their own configuration. If your CRM is Salesforce, see
-> [Schedule onboarding]({{ site.baseurl }}/schedule/onboarding/) instead.
+> [Customer Onboarding]({{ site.baseurl }}/present/Onboarding-of-new-customer/) instead.
 
 ## What this is
 

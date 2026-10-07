@@ -229,8 +229,6 @@ unit:
 
 #### 5b — Create and assign the security role
 
-<!-- TODO: add the Schedule privilege set to the script and show the matching invocation here. -->
-
 As a **System Administrator** of the environment, run
 [`new-dataverse-role-for-app-user.ps1`]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user/):
 
@@ -239,10 +237,12 @@ az login --tenant {YourTenantId}
 
 ./new-dataverse-role-for-app-user.ps1 `
   -environmentUrl https://yourorg.crm4.dynamics.com `
-  -applicationId  {DynamicsAccessAppClientId}
+  -applicationId  {DynamicsAccessAppClientId} `
+  -product        Schedule
 ```
 
-`{DynamicsAccessAppClientId}` is the client ID from Step 5a, and `{YourTenantId}` your Entra tenant ID.
+It creates the **Engage Schedule** role and assigns it. If Present on Dynamics is already onboarded, the
+application user keeps its Present role alongside it.
 
 <!-- TODO: the record privileges are derived from the crm-integration code, not yet measured. Confirm
      them once attendee sync runs end to end on Dynamics, then revisit the note below. -->

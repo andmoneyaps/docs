@@ -8,7 +8,7 @@ grand_parent: Scripts
 
 # new-dataverse-role-for-app-user.ps1
 
-Creates the Dataverse security role for the Engage application user, trims it to the privileges the integration needs, and assigns it.
+Creates the Dataverse security role for the Engage application user, trims it to the privileges the integration needs, and assigns it. Run it with `-product Present` (the default) or `-product Schedule`; each product gets its own role.
 
 | | |
 |---|---|

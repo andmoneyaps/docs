@@ -5,8 +5,12 @@ param (
     [Parameter(Mandatory = $true, HelpMessage = "AppId (client id) the Dataverse application user is bound to.")]
     [guid]$applicationId,
 
-    [Parameter(HelpMessage = "Name of the security role to create or update.")]
-    [string]$roleName = "Engage Present - schema read",
+    [Parameter(HelpMessage = "Engage product the role is for: Present or Schedule. Default: Present.")]
+    [ValidateSet('Present', 'Schedule')]
+    [string]$product = 'Present',
+
+    [Parameter(HelpMessage = "Name of the security role to create or update. Defaults to a name per product.")]
+    [string]$roleName,
 
     [Parameter(HelpMessage = "Business unit for the role. Defaults to the environment's root business unit.")]
     [guid]$businessUnitId,
@@ -16,13 +20,26 @@ param (
 )
 
 # Creates (or re-trims) the Dataverse security role the Engage application user needs, and
-# assigns it. The role carries exactly four privileges, all at Global depth:
+# assigns it. Every privilege is at Global depth.
+#
+# Present - four privileges, and none on any business table:
 #
 #   prvReadEntity, prvReadAttribute, prvReadRelationship  - reading the schema
 #   prvReadOrganization                                   - the SDK client's connect handshake
 #
-# No privilege on any business table: all record work runs as the signed-in advisor under
-# their own role, so the application identity needs none.
+# Schedule - the same four, plus the record access the application identity itself uses:
+#
+#   prvReadUser                                           - matching advisors to their Dynamics users
+#   prvReadActivity                                       - finding a booking's appointment
+#   prvReadContact                                        - resolving customer attendees
+#   prvWriteActivity, prvAppendActivity,
+#   prvAppendToContact, prvAppendToUser                   - adding attendees to the appointment
+#
+# Everything else - creating, changing and cancelling bookings - runs as the signed-in
+# advisor under their own role, so the application identity needs nothing more.
+#
+# Each product gets its own role name, so on an application user both products share, the
+# two roles sit side by side and re-running one never trims the other.
 #
 # Why a script rather than the role editor: a role created in the modern editor arrives
 # carrying ~80 privileges (and "Copy role" clones an equally large one), including workflow
@@ -38,6 +55,22 @@ param (
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+
+$schemaPrivileges = @('prvReadEntity', 'prvReadAttribute', 'prvReadRelationship', 'prvReadOrganization')
+$productPrivileges = @{
+    Present  = $schemaPrivileges
+    Schedule = $schemaPrivileges + @(
+        'prvReadUser', 'prvReadActivity', 'prvReadContact',
+        'prvWriteActivity', 'prvAppendActivity', 'prvAppendToContact', 'prvAppendToUser'
+    )
+}
+$defaultRoleNames = @{
+    Present  = 'Engage Present - schema read'
+    Schedule = 'Engage Schedule'
+}
+if ([string]::IsNullOrWhiteSpace($roleName)) {
+    $roleName = $defaultRoleNames[$product]
+}
 
 $envUrl  = $environmentUrl.TrimEnd('/')
 $apiRoot = "$envUrl/api/data/v9.2"
@@ -132,9 +165,9 @@ Write-Host -ForegroundColor Cyan -NoNewline "Captured to:       "
 Write-Host -ForegroundColor Yellow "$backupPath"
 
 #################################################################################################################
-# Replace with exactly the four the integration needs
+# Replace with exactly the privileges the product needs
 #################################################################################################################
-$wanted = @('prvReadEntity', 'prvReadAttribute', 'prvReadRelationship', 'prvReadOrganization')
+$wanted = $productPrivileges[$product]
 $privileges = @()
 foreach ($name in $wanted) {
     $p = Invoke-Dv GET "privileges?`$select=privilegeid,name&`$filter=name eq '$name'"
@@ -160,7 +193,7 @@ foreach ($id in $afterIds) {
     Write-Host -ForegroundColor Yellow "  $($n.name)"
 }
 Write-Host
-Write-Host -ForegroundColor Cyan "Expected: the four above. Four SharePoint privileges may also appear if the"
+Write-Host -ForegroundColor Cyan "Expected: the $($wanted.Count) for $product. Four SharePoint privileges may also appear if the"
 Write-Host -ForegroundColor Cyan "environment uses server-based SharePoint document management - those are imposed"
 Write-Host -ForegroundColor Cyan "by the platform, not requested here."
 

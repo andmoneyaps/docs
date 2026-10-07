@@ -138,8 +138,8 @@ az login --tenant {YourTenantId}
   -applicationId  {DynamicsAccessAppClientId}
 ```
 
-<!-- TODO: the record privileges are estimated, not measured. Measure against a test environment before
-     publishing. -->
+<!-- TODO: the record privileges are derived from the crm-integration code, not yet measured. Confirm
+     them once attendee sync runs end to end on Dynamics, then drop the warning below. -->
 
 {: .warning }
 > **Work in progress.** The privileges below are provisional and subject to change.
@@ -151,8 +151,9 @@ The role ends up with these privileges, all at **Organization** level:
 | `prvReadEntity`, `prvReadAttribute`, `prvReadRelationship` | Reading your schema |
 | `prvReadOrganization` | Connecting |
 | `prvReadUser` | Matching advisors to their Dynamics users |
-| `prvReadContact` | Resolving attendees |
-| `prvReadActivity`, `prvWriteActivity` | Keeping appointments in step with Outlook |
+| `prvReadActivity` | Finding a booking's appointment |
+| `prvReadContact` | Resolving customer attendees |
+| `prvWriteActivity`, `prvAppendActivity`, `prvAppendToContact`, `prvAppendToUser` | Adding attendees to the appointment |
 
 With server-based SharePoint document management, four `SharePoint` privileges are added by Dataverse
 as well.

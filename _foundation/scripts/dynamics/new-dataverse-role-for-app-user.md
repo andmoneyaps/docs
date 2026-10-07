@@ -12,7 +12,7 @@ Creates the Dataverse security role for the Engage application user, trims it to
 
 | | |
 |---|---|
-| Used in | [Present on Dynamics, Step 4b]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#4b--create-and-assign-the-security-role) · [Schedule on Dynamics, Step 4b]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#4b--create-and-assign-the-security-role) |
+| Used in | [Present on Dynamics, Step 4b]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#4b--create-and-assign-the-security-role) · [Schedule on Dynamics, Step 5b]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/#5b--create-and-assign-the-security-role) |
 | Run as | *System Administrator* of the Dataverse environment |
 | Download | [new-dataverse-role-for-app-user.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/new-dataverse-role-for-app-user.ps1) |
 

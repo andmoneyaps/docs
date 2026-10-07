@@ -187,23 +187,23 @@ after installing [its modules]({{ site.baseurl }}/foundation/scripts/dynamics/ad
 #### 4a — Create the SCIM applications
 
 Get your **SCIM token** from your &money contact, then run
-[`Enable-SCIM-Provisioning.ps1`](#enable-scim-provisioningps1):
+[`setup-scim-provisioning-standalone.ps1`]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/) after installing
+[its module]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/#before-you-run-it). It asks for the token:
 
 ```powershell
-./Enable-SCIM-Provisioning.ps1 `
-  -TenantId    {YourTenantId} `
-  -Environment test `
-  -ScimToken   {YourScimToken} `
-  -SkipGraphAppRegistration
+./setup-scim-provisioning-standalone.ps1 `
+  -tenantId    {YourTenantId} `
+  -environment test
 ```
 
-Use `-Environment prod` for production.
+Use `-environment prod` for production. The script creates the **Advisors** and **Rooms** applications,
+sets their attribute mappings and starts provisioning.
 
-#### 4b — Map attributes and assign
+#### 4b — Assign advisors and rooms
 
-For both the **Advisors** and **Rooms** applications, set the attribute mappings as described in
-[SCIM Provisioning Setup]({{ site.baseurl }}/foundation/scim/scim-provisioning-setup/#application-configuration-and-attribute-mapping),
-then assign your advisors to **Advisors** and your meeting rooms to **Rooms**.
+In **Enterprise applications**, assign your advisors to **AndMoney SCIM - Advisors (Test)** and your
+meeting rooms to **AndMoney SCIM - Rooms (Test)**, under **Users and groups**. In production the
+applications end in **(Production)**. Only assigned users and rooms are provisioned.
 
 ---
 
@@ -241,6 +241,8 @@ az login --tenant {YourTenantId}
   -product        Schedule
 ```
 
+`{DynamicsAccessAppClientId}` is the client ID from Step 5a, and `{YourTenantId}` your Entra tenant ID.
+
 It creates the **Engage Schedule** role and assigns it. If Present on Dynamics is already onboarded, the
 application user keeps its Present role alongside it.
 
@@ -267,60 +269,7 @@ The role ends up with these privileges, all at **Organization** level:
 With server-based SharePoint document management, four `SharePoint` privileges are added by Dataverse
 as well.
 
-## Step 5 — Provision employees and rooms with SCIM
-
-### 5a — Create the SCIM applications
-
-Get your **SCIM token** from your &money contact, then run
-[`setup-scim-provisioning-standalone.ps1`]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/) after installing
-[its module]({{ site.baseurl }}/foundation/scripts/entra/setup-scim-provisioning-standalone/#before-you-run-it). It asks for the token:
-
-```powershell
-./setup-scim-provisioning-standalone.ps1 `
-  -tenantId    {YourTenantId} `
-  -environment test
-```
-
-Use `-environment prod` for production. The script creates the **Advisors** and **Rooms** applications,
-sets their attribute mappings and starts provisioning. Keep the **Undo** commands it prints.
-
-### 5b — Assign advisors and rooms
-
-In **Enterprise applications**, assign your advisors to **AndMoney SCIM - Advisors** and your meeting
-rooms to **AndMoney SCIM - Rooms**, under **Users and groups**. Only assigned users and rooms are
-provisioned.
-
----
-
-{: .important }
-> Steps 6 and 7 need &money to have registered your organisation first.
-
-## Step 6 — Connect your Dynamics environment
-
-In the Management Portal, go to **Admin → CRM Settings**.
-
-1. Select **Dynamics 365** and press **Continue**.
-
-   ![Choosing the CRM system under Admin → CRM Settings]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-system.png)
-
-2. Choose the environment — the sandbox during the integration phase, production at go-live.
-
-   ![Choosing the Dataverse environment]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-environment.png)
-
-3. Press **Test**. It should turn green.
-
-## Step 7 — Configure Schedule
-
-<!-- TODO: confirm the Management Portal screens once direct Graph access and the Dynamics schedule
-     playbooks ship; add screenshots. -->
-
-1. **Admin → Microsoft:** press **Test connection** with an advisor's address.
-2. Set up meeting themes, customer types and advisors, as described in the super-user guides for
-   [meeting setup]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-moedeopsaetning/),
-   [employees]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-medarbejdere/) and
-   [service groups]({{ site.baseurl }}/business-implementation/schedule/en/superbrugerguide-servicegrupper/).
-
-## Step 8 — Embed Schedule in Dynamics
+### Step 6 — Embed Schedule in Dynamics
 
 Add a **web resource or PCF component** to the **account** form that opens Schedule with these
 parameters:

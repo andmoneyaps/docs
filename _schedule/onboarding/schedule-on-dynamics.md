@@ -43,16 +43,15 @@ flowchart LR
     D1["<b>Dynamics 365</b><br/>Steps 5–6<br/><i>test embedding</i>"]
     M2["#38;money<br/>links tenant,<br/>enables Schedule"]
     P["<b>Management<br/>Portal</b><br/>Steps 7–8"]
-    D2["<b>Dynamics 365</b><br/>Step 6<br/><i>go live</i>"]
     V["<b>Verify</b><br/>together"]
 
-    M1 --> E --> D1 --> M2 --> P --> D2 --> V
+    M1 --> E --> D1 --> M2 --> P --> V
 
     classDef money fill:#eef2ff,stroke:#5c6bc0,color:#1a237e
     classDef you fill:#f1f8e9,stroke:#7cb342,color:#1b5e20
     classDef together fill:#fff8e1,stroke:#f9a825,color:#4e342e
     class M1,M2 money
-    class E,D1,P,D2 you
+    class E,D1,P you
     class V together
 ```
 

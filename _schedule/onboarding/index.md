@@ -27,6 +27,7 @@ If you are onboarding a brand-new tenant, the [Integration Onboarding Guide]({{ 
 
 | Page | When to read |
 |---|---|
+| [Schedule on Dynamics 365]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/) | Your CRM is Microsoft Dynamics 365. The complete step-by-step setup |
 | [Salesforce Schedule Integration Setup]({{ site.baseurl }}/schedule/onboarding/salesforce-setup/) | First page for the Salesforce CRM integration. Covers the metadata model, BookMe-Salesforce repository setup, and field-mapping concepts |
 | [Salesforce Connection Setup]({{ site.baseurl }}/schedule/onboarding/salesforce-connection-setup/) | Walk-through for establishing the OAuth2 client-credentials connection between Schedule and your Salesforce org via the Management UI |
 | [CRM Integration Security]({{ site.baseurl }}/schedule/onboarding/crm-integration-security/) | Security model for Schedule-CRM data access — authentication, authorisation, and scoping |
@@ -36,4 +37,4 @@ If you are onboarding a brand-new tenant, the [Integration Onboarding Guide]({{ 
 
 - [Foundation: Integration Onboarding]({{ site.baseurl }}/foundation/integration-onboarding/) — cross-cutting onboarding reference covering Foundation surfaces and product-specific integration points.
 - [Schedule]({{ site.baseurl }}/schedule/) — top-level Schedule documentation. Once onboarding is complete, the rest of the Schedule collection covers day-to-day feature configuration (portals, employee schedules, playbooks, etc.).
-- If your CRM is Dynamics 365 rather than Salesforce, see [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/) for the step-by-step configuration, and [section 5 of the Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration) for the architecture behind it.
+- If your CRM is Dynamics 365 rather than Salesforce, see [Schedule on Dynamics 365]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/) for the step-by-step configuration, and [section 5 of the Integration Onboarding Guide]({{ site.baseurl }}/foundation/integration-onboarding/#5-dynamics-365-crm-integration) for the architecture behind it.

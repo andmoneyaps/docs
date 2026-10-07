@@ -18,6 +18,7 @@ Technical foundations that every Engage platform product — Schedule, Meet, Pre
 | [Identity]({{ site.baseurl }}/foundation/identity/) | Microsoft Entra ID setup, app registrations, portal authentication (Management Portal, Customer Portal). The identity backbone for staff and customers. | Azure / Entra admin |
 | [SCIM Provisioning]({{ site.baseurl }}/foundation/scim/) | Push-from-source synchronisation of employees and meeting rooms from your Entra tenant into the platform. Runs on a ~40-minute cycle. | Azure / Entra admin |
 | [Microsoft 365]({{ site.baseurl }}/foundation/m365/) | Microsoft Graph integration for Teams meetings, Outlook calendar free/busy, and employee calendar operations. Delivered through the Azure Marketplace App Offer (Graph-Proxy mode) or via direct Graph API access. | Azure / Entra admin |
+| [Scripts]({{ site.baseurl }}/foundation/scripts/) | The PowerShell scripts the onboarding guides ask you to run in your own tenant, in one place with download links. | Azure / Entra and Dataverse admins |
 | [Engage Platform Integration Onboarding]({{ site.baseurl }}/foundation/integration-onboarding/) | The customer-facing onboarding reference. Architecture overview and prerequisites for every integration surface — Foundation surfaces here, plus product-specific surfaces in Schedule/Meet/Present. Start here if you are onboarding a new tenant. | Cross-functional |
 
 ## How to use this section
@@ -28,7 +29,8 @@ If you are onboarding a new tenant:
 2. Drill into each Foundation surface ([Identity]({{ site.baseurl }}/foundation/identity/), [SCIM]({{ site.baseurl }}/foundation/scim/), [Microsoft 365]({{ site.baseurl }}/foundation/m365/)) for the step-by-step configuration.
 3. Once Foundation surfaces are configured, move on to product-specific onboarding:
    - [Schedule Onboarding]({{ site.baseurl }}/schedule/onboarding/) — CRM (Salesforce) setup and Schedule implementation phases
-   - [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/) — if your CRM is Dynamics 365 rather than Salesforce
+   - [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/) — Present where your CRM is Dynamics 365
+   - [Schedule on Dynamics 365]({{ site.baseurl }}/schedule/onboarding/schedule-on-dynamics/) — Schedule where your CRM is Dynamics 365
    - [Public API]({{ site.baseurl }}/api/) — programmatic access for your bespoke systems
 
 ## Foundation vs product-specific

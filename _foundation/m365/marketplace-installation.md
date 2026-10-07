@@ -114,7 +114,7 @@ The following PowerShell scripts are provided to facilitate the setup of SCIM pr
 
 #### 1) SCIM Provisioning Script
 
-The provided script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/) performs the following key actions:
+The provided script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the required Microsoft Graph modules are installed. 
@@ -146,7 +146,7 @@ The script is parameterized so that you can specify:
 - Sign in using a user with the following permissions:
     - `Application.ReadWrite.All`
     - `Synchronization.ReadWrite.All`
-- Execute PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scim/enable-scim-provisioning/)
+- Execute PowerShell script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation/scripts/entra/enable-scim-provisioning/)
 - Verify that the following resources are created
   - App Registration for Calendar Access
   - Service Principal for SCIM provisioning
@@ -154,7 +154,7 @@ The script is parameterized so that you can specify:
 
 #### 2) Teams Access Policy Script
 
-The provided script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/) performs the following key actions:
+The provided script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/) performs the following key actions:
 
 1. **Module Check and Import:**  
    It checks if the Microsoft Teams module is installed. If not, it installs and imports it.
@@ -182,4 +182,4 @@ The script is parameterized so that you can specify:
  
 **Executing the script:**
 - Ensure that the requirements are met, including the Teams role.
-- Execute PowerShell script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/m365/add-teams-access-policy/)
+- Execute PowerShell script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/scripts/m365/add-teams-access-policy/)

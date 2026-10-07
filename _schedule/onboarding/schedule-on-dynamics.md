@@ -65,10 +65,10 @@ For your **Microsoft Entra administrator**: the applications you approve, what t
 | AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | `de5dd77b-f082-4895-abe5-3f5f6020cba8` | `e9059d5a-7aeb-4f1a-a98d-7d8e1d4d23f3` |
 | AndMoney Graph Access | `{GraphAccessAppClientId}` | *To be supplied* | *To be supplied* |
 
-{: .warning }
-> **Work in progress.** AndMoney Graph Access is new and subject to change. It simplifies onboarding:
-> Engage now connects to Microsoft 365 directly, so there is no Graph proxy to deploy and run in your own
-> Azure, as earlier customers had to. Your &money contact supplies its client IDs.
+{: .note }
+> **Now rolling out.** AndMoney Graph Access is the simpler way Engage connects to Microsoft 365:
+> directly, with no Graph proxy to deploy and run in your own Azure, as earlier customers had to. Your
+> &money contact supplies its client IDs and confirms its final setup before you start Step 1.
 
 Your tenant ID is written as `{YourTenantId}`.
 

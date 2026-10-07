@@ -678,7 +678,7 @@ The integration uses a **dual-flow** approach against Dynamics. **On-Behalf-Of (
 
 A single flow could not serve both correctly: OBO alone cannot reach data outside the employee's role, and client-credentials alone cannot attribute actions to the acting employee for audit and downstream automation.
 
-Both flows are backed by Engage-owned multi-tenant applications that you consent into your tenant; you create no app registration of your own, and no credential is exchanged in either direction. The applications and the consents they require are listed in [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#application-ids-you-will-need).
+Both flows are backed by Engage-owned multi-tenant applications that you consent into your tenant; you create no app registration of your own, and no credential is exchanged in either direction. The applications and the consents they require are listed in [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#application-ids-you-will-need).
 
 #### Entity surface — typical baseline
 
@@ -735,7 +735,7 @@ What you create is the Dataverse identity it maps to, and the role that bounds i
 
 **Do not build it by copying a built-in role.** A copied role, and a role created in the role editor, arrive carrying around eighty privileges — including creating and activating workflows and writing SharePoint document data — which then have to be removed by hand.
 
-The privileges required depend on which Engage product you are onboarding. For Present, [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#4b--create-and-assign-the-security-role) states the exact set and provides a script that creates the role, trims it and assigns it.
+The privileges required depend on which Engage product you are onboarding. For Present, [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#4b--create-and-assign-the-security-role) states the exact set and provides a script that creates the role, trims it and assigns it.
 
 #### Step 2 — Configure Entity Definitions and Entity Patterns
 
@@ -759,7 +759,7 @@ The Dataverse resource and the `user_impersonation` permission are the script's 
 
 Because the grant lives on the service principal rather than in the application manifest, it is scoped to your tenant alone and is revocable independently of your §2a consent.
 
-Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/foundation/dynamics-sharepoint-onboarding/#step-3--authorise-engage-to-act-as-your-advisors).
+Full detail, including what the script's own sign-in leaves behind in your tenant, is in [Present on Dynamics 365 and SharePoint]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#step-3--authorise-engage-to-act-as-your-advisors).
 
 #### Validation
 

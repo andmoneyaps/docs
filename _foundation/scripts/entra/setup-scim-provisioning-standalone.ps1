@@ -228,8 +228,10 @@ function Enable-ScimApplication {
     #############################################################################################################
     # Start provisioning
     #############################################################################################################
-    $status = (Invoke-Graph GET "servicePrincipals/$servicePrincipalId/synchronization/jobs/$($job.id)").status.code
-    if ($status -eq 'Active') {
+    # The schedule state says whether provisioning has been started; the last-run status
+    # stays "NotRun" until a cycle completes, and starting a running job again can stop it.
+    $schedule = (Invoke-Graph GET "servicePrincipals/$servicePrincipalId/synchronization/jobs/$($job.id)").schedule.state
+    if ($schedule -eq 'Active') {
         Write-Host -ForegroundColor Green "  Provisioning already running."
     } else {
         Invoke-Graph POST "servicePrincipals/$servicePrincipalId/synchronization/jobs/$($job.id)/start" | Out-Null

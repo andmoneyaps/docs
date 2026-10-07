@@ -245,10 +245,13 @@ az login --tenant {YourTenantId}
 `{DynamicsAccessAppClientId}` is the client ID from Step 5a, and `{YourTenantId}` your Entra tenant ID.
 
 <!-- TODO: the record privileges are derived from the crm-integration code, not yet measured. Confirm
-     them once attendee sync runs end to end on Dynamics, then drop the warning below. -->
+     them once attendee sync runs end to end on Dynamics, then revisit the note below. -->
 
-{: .warning }
-> **Work in progress.** The privileges below are provisional and subject to change.
+{: .note }
+> **Confirmed with you during onboarding.** The privileges below cover Dynamics' standard tables for
+> appointments, contacts and users. If your environment keeps meetings, customers or advisors in other
+> tables, the role needs the same access on those instead. Your &money contact confirms the final list
+> with you, based on your data model, before you go live.
 
 The role ends up with these privileges, all at **Organization** level:
 

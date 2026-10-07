@@ -40,18 +40,21 @@ from a Dynamics account; the meeting lands in their Outlook calendar and as an a
 flowchart LR
     M1["#38;money<br/>registers you,<br/>sends SCIM token"]
     E["<b>Entra</b><br/>Steps 1–4"]
-    D1["<b>Dynamics 365</b><br/>Steps 5–6<br/><i>test embedding</i>"]
+    D5["<b>Dynamics 365</b><br/>Step 5"]
+    T["Tell #38;money<br/>Steps 1–5 are done"]
     M2["#38;money<br/>links tenant,<br/>enables Schedule"]
     P["<b>Management<br/>Portal</b><br/>Steps 7–8"]
-    V["<b>Verify</b><br/>together"]
+    D6["<b>Dynamics 365</b><br/>Step 6<br/><i>build embedding</i>"]
+    V["<b>Go live</b><br/>and verify<br/>together"]
 
-    M1 --> E --> D1 --> M2 --> P --> V
+    M1 --> E --> D5 --> T --> M2 --> P --> V
+    D5 --> D6 --> V
 
     classDef money fill:#eef2ff,stroke:#5c6bc0,color:#1a237e
     classDef you fill:#f1f8e9,stroke:#7cb342,color:#1b5e20
     classDef together fill:#fff8e1,stroke:#f9a825,color:#4e342e
     class M1,M2 money
-    class E,D1,P you
+    class E,D5,T,P,D6 you
     class V together
 ```
 
@@ -65,30 +68,11 @@ For your **Microsoft Entra administrator**: the applications you approve, what t
 
 ### Applications and permissions
 
-<!-- TODO: fill in the AndMoney Graph Access client ids once the app is provisioned. -->
-
-| Application | Written as | Test | Production |
-|---|---|---|---|
-| AndMoney UWC | `{UwcAppClientId}` | `ea486ddc-1a1e-4837-967b-f975fdcf1ed7` | `cbac67da-6529-4411-821c-746888abee84` |
-| BookingPlatform Mgmt UI | `{MgmtUiAppClientId}` | `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` | `261ae34b-4de9-4c4a-9d70-1df1c024c91e` |
-| BookingPlatform Mgmt API | `{MgmtApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
-| AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | `de5dd77b-f082-4895-abe5-3f5f6020cba8` | `e9059d5a-7aeb-4f1a-a98d-7d8e1d4d23f3` |
-| AndMoney Graph Access | `{GraphAccessAppClientId}` | *To be supplied* | *To be supplied* |
-
-{: .note }
-> **Now rolling out.** AndMoney Graph Access is the simpler way Engage connects to Microsoft 365:
-> directly, with no Graph proxy to deploy and run in your own Azure, as earlier customers had to. Your
-> &money contact supplies its client IDs and confirms its final setup before you start Step 1.
-
-Your tenant ID is written as `{YourTenantId}`.
-
-#### Permissions each application holds
-
 | Application | Used for | Permissions |
 |---|---|---|
 | **AndMoney UWC** | The sign-in your **advisors** use to reach Schedule | Microsoft Graph delegated: `openid`, `profile`, `User.Read`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` *(our own scope)* |
 | **BookingPlatform Mgmt UI** | The sign-in your **administrators** use to reach the Management Portal | Microsoft Graph delegated: `openid`, `profile`, `email`, `User.Read`, `offline_access`<br>BookingPlatform Mgmt API: `access_as_user` *(our own scope)* |
-| **BookingPlatform Mgmt API** | The API behind both, carrying the app roles in Step 2 | **At consent** — Microsoft Graph delegated: `openid`, `profile`, `email`, `User.Read`<br>**Added by script in Step 3** — Dataverse delegated: `user_impersonation` |
+| **BookingPlatform Mgmt API** | The API behind both, carrying the app roles in Step 2 | **Granted when you approve it in Step 1** — Microsoft Graph delegated: `openid`, `profile`, `email`, `User.Read`<br>**Added by the script in Step 3** — Dataverse delegated: `user_impersonation` |
 | **AndMoney Dynamics Access** | The application identity in Dataverse | Dataverse delegated: `user_impersonation` |
 | **AndMoney Graph Access** | Calendars and Teams meetings | Microsoft Graph **application**: `Calendars.ReadWrite`, `OnlineMeetings.ReadWrite.All`, `OnlineMeetingTranscript.Read.All` |
 
@@ -99,7 +83,7 @@ the table is delegated and acts as the signed-in user, within that user's own ac
 
 **Teams meetings and transcripts.** AndMoney Graph Access holds the permissions for the whole Engage
 platform, so you approve them once. Schedule uses only `Calendars.ReadWrite`. The two Teams permissions
-are for [Assist]({{ site.baseurl }}/meet/), which summarises online meetings from their Teams
+are for Assist, which summarises online meetings from their Teams
 transcripts, and they do nothing until you allow it in Teams:
 
 - **Online meetings** need a [Teams application access policy]({{ site.baseurl }}/general/m365-audit-guide/#31-teams-application-access-policy)
@@ -130,6 +114,26 @@ Microsoft resource IDs, for cross-checking against what you see in Entra:
 | Dataverse (Dynamics CRM) | `00000007-0000-0000-c000-000000000000` |
 
 ### Step 1 — Approve the Engage applications
+
+Each &money application is identified in Entra by its **application (client) ID**. The consent links
+below use them:
+
+<!-- TODO: fill in the AndMoney Graph Access client ids once the app is provisioned. -->
+
+| Application | Client ID written as | Test | Production |
+|---|---|---|---|
+| AndMoney UWC | `{UwcAppClientId}` | `ea486ddc-1a1e-4837-967b-f975fdcf1ed7` | `cbac67da-6529-4411-821c-746888abee84` |
+| BookingPlatform Mgmt UI | `{MgmtUiAppClientId}` | `8d9cb59c-e0cd-4630-9e6e-efeb3f7aea6b` | `261ae34b-4de9-4c4a-9d70-1df1c024c91e` |
+| BookingPlatform Mgmt API | `{MgmtApiAppClientId}` | `f100d6c7-bbee-405b-9231-7e1c05c4b944` | `642f0f04-31f9-4641-a1cb-793f31496bd3` |
+| AndMoney Dynamics Access | `{DynamicsAccessAppClientId}` | `de5dd77b-f082-4895-abe5-3f5f6020cba8` | `e9059d5a-7aeb-4f1a-a98d-7d8e1d4d23f3` |
+| AndMoney Graph Access | `{GraphAccessAppClientId}` | *To be supplied* | *To be supplied* |
+
+{: .note }
+> **Now rolling out.** AndMoney Graph Access is the simpler way Engage connects to Microsoft 365:
+> directly, with no Graph proxy to deploy and run in your own Azure, as earlier customers had to. Your
+> &money contact supplies its client IDs and confirms its final setup before you approve it below.
+
+Your tenant ID is written as `{YourTenantId}`.
 
 Open each link as an administrator and press **Accept**, in this order:
 
@@ -177,8 +181,6 @@ after installing [its modules]({{ site.baseurl }}/present/onboarding/present-on-
   -tenantId    {YourTenantId} `
   -clientAppId {MgmtApiAppClientId}
 ```
-
-Keep the **Undo** command it prints.
 
 ### Step 4 — Provision employees and rooms with SCIM
 
@@ -279,13 +281,12 @@ parameters:
 A standard IFRAME control cannot pass `user_email`, and advisors then get a sign-in pop-up every time.
 A component built for Present's appointment form can be reused.
 
-**Test the embedding** against the identity endpoint now, which reports each parameter as pass or fail.
-**Point it at Schedule** once Step 8 is done:
+**Test the embedding** against the identity endpoint, which reports each parameter as pass or fail:
 
-| Environment | Identity endpoint | Schedule |
-|---|---|---|
-| Test | `https://engage.test-env.andmoney.dk/identity` | `https://engage.test-env.andmoney.dk/advisor` |
-| Production | `https://engage.andmoney.dk/identity` | `https://engage.andmoney.dk/advisor` |
+| Environment | Identity endpoint |
+|---|---|
+| Test | `https://engage.test-env.andmoney.dk/identity` |
+| Production | `https://engage.andmoney.dk/identity` |
 
 ---
 
@@ -311,11 +312,16 @@ In the Management Portal, go to **Admin → CRM Settings**.
 
    ![Choosing the CRM system under Admin → CRM Settings]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-system.png)
 
-2. Choose the environment — the sandbox during the integration phase, production at go-live.
+2. Choose the environment: your Dynamics sandbox in the test Management Portal, your production
+   environment in the production portal.
 
    ![Choosing the Dataverse environment]({{ site.baseurl }}/assets/images/foundation/dynamics/crm-settings-choose-environment.png)
 
-3. Press **Test**. It should turn green.
+3. Press **Test**. It should turn green. If it doesn't:
+   - Check that the application user from Step 5a exists, is enabled, and uses this environment's
+     AndMoney Dynamics Access client ID.
+   - If your environment isn't in the list, your account has no access to it in Dynamics.
+   - If it still fails, send the error to your &money contact.
 
 ### Step 8 — Configure Schedule
 
@@ -342,10 +348,17 @@ In the Management Portal, go to **Admin → CRM Settings**.
 
 Use an advisor who has completed SCIM provisioning and has the `Employee` role.
 
-1. **Book an online meeting.** Open an account in Dynamics, open Schedule, and book. Check that the
+1. **Point the embedding from Step 6 at Schedule:**
+
+   | Environment | Schedule |
+   |---|---|
+   | Test | `https://engage.test-env.andmoney.dk/advisor` |
+   | Production | `https://engage.andmoney.dk/advisor` |
+
+2. **Book an online meeting.** Open an account in Dynamics, open Schedule, and book. Check that the
    meeting is in the advisor's Outlook calendar with a Teams link, and that Dynamics has an appointment
    with the account under **Regarding**.
-2. **Book a physical meeting with a room.** Check that the room's calendar shows it.
+3. **Book a physical meeting with a room.** Check that the room's calendar shows it.
 
 | If | Check |
 |---|---|

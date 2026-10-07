@@ -259,8 +259,6 @@ seconds.
 
 - **It is idempotent**, but allow a few seconds between the two runs — Microsoft's read of the
   permission list lags writes, and an immediate second run can attempt a duplicate.
-- **It prints an Undo command each time. Keep both.** Deleting the permission record by hand would
-  revoke every other delegated permission that application holds in your tenant.
 
 ## Step 4 — Create the application user in Dataverse
 

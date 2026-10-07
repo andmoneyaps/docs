@@ -117,7 +117,7 @@ To Monitor that the SCIM provisioning is working as intended continuously it is 
 This will need to be configured for each Enterprise Application Registration that needs to be monitored. 
 More Advanced monitoring scenarios can be achieved by integrating the Enterprise Application Registrations with Azure Log Analytics.  
 
-![Monitoring]({{ site.baseurl }}/assets/images/bookme/onboarding/implementation-guide/monitoring.png)
+![Monitoring]({{ site.baseurl }}/assets/images/schedule/onboarding/implementation-guide/monitoring.png)
 
 
 ---

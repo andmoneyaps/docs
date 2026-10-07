@@ -52,7 +52,7 @@ The matching logic is:
 
 **Check these in order**:
 
-1. **UPN / email mismatch**: Verify the employee's Entra ID UPN matches the email synced via SCIM. Check the employee record in **BookMe → Advisors → Manage Availability** in the Management UI to confirm the SCIM-synced email.
+1. **UPN / email mismatch**: Verify the employee's Entra ID UPN matches the email synced via SCIM. Check the employee record in **Schedule → Advisors → Manage Availability** in the Management UI to confirm the SCIM-synced email.
 
 2. **Employee not provisioned via SCIM**: Verify SCIM provisioning has synced the employee from Entra ID.
 

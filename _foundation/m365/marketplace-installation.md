@@ -67,7 +67,7 @@ A single tenant installation is needed when the Azure part and Entra ID part sho
 **App Offer:**
 - Can be installed from here [Azure Marketplace - App Offer](https://portal.azure.com/#view/Microsoft_Azure_Marketplace/GalleryItemDetailsBladeNopdl/id/andmoneyaps1687867534123.andmoney_azure/selectionMode~/false/resourceGroupId//resourceGroupLocation//dontDiscardJourney~/false/selectedMenuId/home/launchingContext~/%7B%22galleryItemId%22%3A%22andmoneyaps1687867534123.andmoney_azureadmin1%22%2C%22source%22%3A%5B%22GalleryFeaturedMenuItemPart%22%2C%22VirtualizedTileDetails%22%5D%2C%22menuItemId%22%3A%22home%22%2C%22subMenuItemId%22%3A%22Search%20results%22%2C%22telemetryId%22%3A%22ff9d9c27-b409-42b8-808d-bb1455b07a7c%22%7D/searchTelemetryId/29f00a5a-8606-4c7b-b9c1-f770f21c5515)
 - SCIM Token: Obtain your SCIM token from the &money system. This token is used to authenticate SCIM requests.
-- Security Group: Specify a security group Object ID from your Entra setup to which the Teams Access Policy will be applied. The security group should contain the users that will be using the BookMe solution. The Teams access policy will allow the BookMe solution to access and modify Teams meetings for the users in this group.
+- Security Group: Specify a security group Object ID from your Entra setup to which the Teams Access Policy will be applied. The security group should contain the users that will be using the Schedule solution. The Teams access policy will allow the Schedule solution to access and modify Teams meetings for the users in this group.
 - Select a Managed Identity with the proper permissions.
 - Press Deploy in the App Offer
 
@@ -76,7 +76,7 @@ A single tenant installation is needed when the Azure part and Entra ID part sho
 
 ## Multi-Tenant Installation
 A multi-tenant installation is needed when the two following conditions are met:
-- The BookMe solution will be maintained over multiple tenants by an administrator,
+- The Schedule solution will be maintained over multiple tenants by an administrator,
 - and where one or more tenants do not have subscriptions to install the App Offer through Marketplace. 
 
 Using this installation means that the Entra ID resources need to be created by executing additional PowerShell scripts.
@@ -110,7 +110,7 @@ The script checks for these modules and installs/imports them if necessary.
 - **Environment Details:** Know which environment you are targeting (e.g., `dev`, `test`, or `prod`) as the SCIM endpoints differ by environment.
 
 ### Overview of the Powershell scrips. 
-The following PowerShell scripts are provided to facilitate the setup of SCIM provisioning and Teams access policies for the BookMe solution. They must be executed in the specified order as the output from the first script should be used in the next script.
+The following PowerShell scripts are provided to facilitate the setup of SCIM provisioning and Teams access policies for the Schedule solution. They must be executed in the specified order as the output from the first script should be used in the next script.
 
 #### 1) SCIM Provisioning Script
 
@@ -130,7 +130,7 @@ The provided script [Enable-SCIM-Provisioning.ps1]({{ site.baseurl }}/foundation
    The main function, `Enable-SCIM-Provisioning`, sets the environment-specific SCIM endpoints, connects to Microsoft Graph with the necessary scopes, creates the app registration, and then creates two SCIM service principals (one for each endpoint).
 
 The script is parameterized so that you can specify:
-- **ApplicationName** (e.g., "BookMe - SCIM integration")
+- **ApplicationName** (e.g., "Schedule - SCIM integration")
 - **TenantId** (your Entra tenant ID)
 - **Environment** (dev, test, or prod)
 - **ScimToken** (your secret token from &money)
@@ -161,9 +161,9 @@ The provided script [Add-Teams-Access-Policy.ps1]({{ site.baseurl }}/foundation/
 2. **Connect to Microsoft Teams:**  
    It connects to Microsoft Teams.
 3. **Create Application Access Policy:**  
-   It creates a new application access policy for the BookMe solution using the specified app registration ID and environment.
+   It creates a new application access policy for the Schedule solution using the specified app registration ID and environment.
 4. **Grant Access Policy to Security Group:**  
-   It grants the created access policy to a specified security group. The security group should contain the users that will be using the BookMe solution. The Teams access policy will allow the BookMe solution to access and modify Teams meetings for the users in this group.
+   It grants the created access policy to a specified security group. The security group should contain the users that will be using the Schedule solution. The Teams access policy will allow the Schedule solution to access and modify Teams meetings for the users in this group.
 
 The script is parameterized so that you can specify:
 - **AppRegistrationId** (the ID of the application registration created in the previous step (Enable-SCIM-Provisioning.ps1). This can be found in the output of the previous script as the "Client ID")

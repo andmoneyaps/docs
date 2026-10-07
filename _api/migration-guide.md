@@ -298,6 +298,6 @@ if (useV2Features) {
 
 ## Additional Resources
 
-- [V2 API Documentation]({{ site.baseurl }}/api/bookme)
+- [V2 API Documentation]({{ site.baseurl }}/api/schedule)
 - [V2 OpenAPI Specification](https://apim-public-api-prod.azure-api.net/api/v2/openapi.yaml)
 - [V1 OpenAPI Specification](https://apim-public-api-prod.azure-api.net/api/v1/openapi.yaml) (deprecated)

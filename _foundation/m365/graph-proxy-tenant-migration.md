@@ -8,7 +8,7 @@ grand_parent: Foundation
 
 # Graph Proxy Tenant Migration Guide
 
-This guide walks you through migrating your &money Graph Proxies (BookMe Graph Proxy) from one Azure tenant to another. The Graph Proxies are deployed as Azure Container Apps via the Azure Marketplace and act as a secure proxy between Microsoft Graph API and &money's systems.
+This guide walks you through migrating your &money Graph Proxies (Schedule Graph Proxy) from one Azure tenant to another. The Graph Proxies are deployed as Azure Container Apps via the Azure Marketplace and act as a secure proxy between Microsoft Graph API and &money's systems.
 
 Each Graph Proxy deployment creates a Managed Application containing a [Container App (Graph-Proxy)]({{ site.baseurl }}/foundation/m365/graph-proxy/), a Key Vault (storing secrets), and a User-Assigned Managed Identity.
 

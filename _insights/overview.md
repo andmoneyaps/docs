@@ -6,11 +6,11 @@ parent: Insights
 collection: insights
 ---
 
-# BookMe Insights Overview
+# Schedule Insights Overview
 
 ## Business Value
 
-BookMe Insights transforms raw availability data into actionable business intelligence, enabling organizations to:
+Schedule Insights transforms raw availability data into actionable business intelligence, enabling organizations to:
 
 - Optimize advisor scheduling and resource allocation
 - Improve customer service through data-driven decisions

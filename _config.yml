@@ -1,5 +1,8 @@
 # Theme configuration
 theme: just-the-docs
+
+plugins:
+  - jekyll-redirect-from
 title: "&money Documentation"
 description: Public documentation for &money products and services
 baseurl: "/docs"
@@ -15,7 +18,7 @@ collections:
   foundation:
     permalink: "/:collection/:path/"
     output: true
-  bookme:
+  schedule:
     permalink: "/:collection/:path/"
     output: true
   present:
@@ -85,8 +88,8 @@ just_the_docs:
       # name: "Foundation"
       # nav_exclude: false
       # nav_fold: true
-    bookme:
-      # name: "BookMe"
+    schedule:
+      # name: "Schedule"
       # nav_exclude: false
       # nav_fold: true
     present:

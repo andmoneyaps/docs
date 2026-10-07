@@ -83,7 +83,7 @@ Find the App named `BookMe External Client App`, click edit policies, find the O
 
 ![External Client App]({{ site.baseurl }}/assets/images/external-client-app.png)
 
-When this is done, go to the BookMe Management UI, and navigate to the **Admin --> CRM --> CRM Configuration tab within the Management UI**.
+When this is done, go to the Schedule Management UI, and navigate to the **Admin --> CRM --> CRM Configuration tab within the Management UI**.
 Here, the domain name of the salesforce org must be entered. Click save, and then test the connection, by clicking the `Test` button on the **Test CRM Connection** card.
 
 ![CRM Configuration]({{ site.baseurl }}/assets/images/mgmt-ui-crm-configuration.png)

@@ -8,7 +8,7 @@ grand_parent: Foundation
 
 # Graph-Proxy
 
-The **Graph-Proxy** is a containerized application that acts as a secure intermediary between the BookMe solution and the Microsoft Graph API.
+The **Graph-Proxy** is a containerized application that acts as a secure intermediary between the Schedule solution and the Microsoft Graph API.
 It is an essential part of the Financial Booking Solutions and is deployed as part of the Azure resources included in the App Offer.
 
 ![Graph-Proxy and Key Vault Architecture]({{ site.baseurl }}/assets/images/graph-proxy-keyvault.png)

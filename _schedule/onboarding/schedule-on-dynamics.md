@@ -66,8 +66,9 @@ For your **Microsoft Entra administrator**: the applications you approve, what t
 | AndMoney Graph Access | `{GraphAccessAppClientId}` | *To be supplied* | *To be supplied* |
 
 {: .note }
-> **AndMoney Graph Access is new.** It connects Engage to Microsoft 365 directly, replacing the Graph
-> proxy that earlier customers ran in their own Azure. Your &money contact supplies its client IDs.
+> **AndMoney Graph Access is new.** It simplifies onboarding: Engage now connects to Microsoft 365
+> directly, so there is no Graph proxy to deploy and run in your own Azure, as earlier customers had to.
+> Your &money contact supplies its client IDs.
 
 Your tenant ID is written as `{YourTenantId}`.
 

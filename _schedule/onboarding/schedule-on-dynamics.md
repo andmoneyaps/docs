@@ -260,6 +260,7 @@ The role ends up with these privileges, all at **Organization** level:
 | Privilege | For |
 |---|---|
 | `prvReadEntity`, `prvReadAttribute`, `prvReadRelationship` | Reading your schema |
+| `prvReadSdkMessage` | Checking which operations each table allows, so attendees are written through their appointment |
 | `prvReadOrganization` | Connecting |
 | `prvReadUser` | Matching advisors to their Dynamics users |
 | `prvReadActivity` | Finding a booking's appointment |

@@ -3,6 +3,14 @@ layout: home
 title: Release news
 nav_order: 2
 ---
+## October 2026
+
+### _Cancelling customer meetings booked by an advisor (Public API V3)_
+
+- **`portalId` on delete meeting**: `DELETE /bookme/meetings/{id}` accepts an optional `portalId` query parameter. Send it when a customer cancels a meeting that an advisor booked. The cancellation then runs the active PortalMeetingCancelled playbooks that have that portal selected, and they can cancel the meeting in the CRM. If the portal has no such playbook, nothing is sent to the CRM and the request still succeeds. Before, these cancellations removed the meeting in Schedule but could not reach a playbook, so the CRM record stayed unchanged.
+- **Portal-booked meetings**: If the meeting was booked through a portal, `portalId` must match that portal, or the request is rejected with 400. Omitting it keeps today's behaviour.
+- **Additive on V3**: No version bump, and existing integrations are unaffected. See [Delete Meeting]({{ site.baseurl }}/api/schedule/#delete-meeting).
+
 ## September 2026
 
 ### _Present_

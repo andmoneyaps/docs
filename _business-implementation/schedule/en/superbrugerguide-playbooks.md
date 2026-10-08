@@ -183,7 +183,7 @@ On the playbook list you see whether a playbook is **Active** or **Deactivated**
 ## Triggers (events)
 
 - **PortalMeetings** — a customer books a meeting via a portal (the usual one for portals).
-- **PortalMeetingCancelled** — a portal booking is cancelled.
+- **PortalMeetingCancelled** — a portal booking is cancelled, or a customer meeting booked by an advisor is cancelled via the API with the portal's ID.
 - Others exist (e.g. customer overview, transcription ready, meeting finished) for other flows.
 
 

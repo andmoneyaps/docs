@@ -127,7 +127,25 @@ Cancel a meeting booking.
 DELETE /meetings/{id}
 ```
 
-**Response:** 204 No Content
+**Query Parameters (V3 only):**
+- `cancelledBy` (string, optional): Who cancelled the meeting (e.g., employee name, customer name, or system identifier)
+- `cancellationReason` (string, optional): The reason for cancellation
+- `portalId` (uuid, optional): Id of the portal whose cancellation playbooks should handle the cancellation. Send it when cancelling a customer meeting that an advisor booked, so a cancellation playbook can update the CRM. If the meeting was booked through a portal, the value must match that portal or the request is rejected with 400. Omit it to keep the meeting's own portal. Do not send it for internal meetings.
+
+**V3 example with cancellation details:**
+```http
+DELETE /meetings/{id}?cancelledBy=John%20Smith&cancellationReason=Customer%20requested%20reschedule
+```
+
+**V3 example cancelling a customer meeting booked by an advisor, through a portal's cancellation playbooks:**
+```http
+DELETE /meetings/{id}?portalId=6f1c0d0e-3b1a-4a4e-9c2d-1e2f3a4b5c6d&cancelledBy=Customer
+```
+
+{: .note }
+A customer meeting booked by an advisor has no portal. Without `portalId`, cancelling it removes the meeting in Schedule, but no [PortalMeetingCancelled playbook]({{ site.baseurl }}/schedule/playbooks/introduction-to-playbooks/#triggers) runs, so the CRM record is not updated. With `portalId`, every active PortalMeetingCancelled playbook that has that portal selected in its trigger runs; what it changes in the CRM, including the canceller and reason it records, depends on the playbook. If no such playbook exists, nothing is sent to the CRM. The playbooks run after the API has responded, so the response does not tell you whether a playbook ran or succeeded. Internal meetings are cancelled in the CRM without a playbook; sending `portalId` for them can cancel the CRM record twice.
+
+**Response:** 200 OK. 400 if `portalId` does not match the portal the meeting was booked through. 404 if the meeting does not exist.
 
 #### Generate iCal (V2 Only)
 Generate an iCal file for a meeting.

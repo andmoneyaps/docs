@@ -283,7 +283,7 @@ The two kinds of the Template block are separate. A Template block with Kind **L
 | Trigger type | When it fires |
 |-------------|---------------|
 | **PortalMeetings** | A customer books a meeting through a portal |
-| **PortalMeetingCancelled** | A portal meeting is cancelled |
+| **PortalMeetingCancelled** | A portal meeting is cancelled, or a customer meeting booked by an advisor is cancelled through the [Public API]({{ site.baseurl }}/api/schedule/#delete-meeting) with a portal ID |
 
 ### Portal Data Available to Playbooks
 

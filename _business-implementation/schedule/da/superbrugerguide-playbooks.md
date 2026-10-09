@@ -183,7 +183,7 @@ På playbook-listen ser du, om en playbook er **Aktiv** eller **Deaktiveret** (*
 ## Triggere (begivenheder)
 
 - **PortalMeetings** — en kunde booker et møde via en portal (det almindelige for portaler).
-- **PortalMeetingCancelled** — en portal-booking afbestilles.
+- **PortalMeetingCancelled** — en portal-booking afbestilles eller et kundemøde, som en rådgiver har booket, afbestilles via API'et med portalens ID.
 - Øvrige findes (fx kundeoverblik, transskription klar, møde afsluttet) til andre flows.
 
 

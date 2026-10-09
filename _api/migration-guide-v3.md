@@ -221,6 +221,30 @@ const updateTemplateLabels = async (templateId, labels) => {
 await updateTemplateLabels('template-uuid', ['Premium', 'Q1-2024', 'Marketing']);
 ```
 
+### Meeting Cancellation Details
+
+The delete meeting endpoint accepts optional query parameters on V3:
+- `cancelledBy`: Track who cancelled the meeting
+- `cancellationReason`: Record why the meeting was cancelled
+- `portalId`: Name the portal whose cancellation playbooks should handle a customer meeting that an advisor booked
+
+**Example: Cancel a customer meeting booked by an advisor, through a portal's cancellation playbooks**
+```javascript
+const cancelMeeting = async (meetingId, portalId) => {
+  const params = new URLSearchParams({ portalId, cancelledBy: 'Customer' });
+  const response = await fetch(`/api/v3/bookme/meetings/${meetingId}?${params}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Ocp-Apim-Subscription-Key': subscriptionKey
+    }
+  });
+  return response.ok;
+};
+```
+
+If the meeting was booked through a portal, `portalId` must match that portal or the request is rejected with 400. The CRM is only updated if the portal has an active PortalMeetingCancelled playbook that does so. See [Delete Meeting]({{ site.baseurl }}/api/schedule/#delete-meeting).
+
 ## JSON Patch Operations
 
 V3 PATCH endpoints for Competence Groups, Service Groups, and Portals use [RFC 6902 JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) format.
@@ -263,6 +287,7 @@ const updateServiceGroup = async (id) => {
 | Portals API | - | Full CRUD with label support |
 | Template label filtering | - | Query parameter support |
 | Template label updates | - | PATCH endpoint |
+| Meeting cancellation details | - | `cancelledBy`, `cancellationReason` and `portalId` on delete |
 
 ## Breaking Changes
 

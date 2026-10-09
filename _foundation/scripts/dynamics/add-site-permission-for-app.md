@@ -13,7 +13,7 @@ Grants an application access to a single SharePoint site, which is what `Sites.S
 | | |
 |---|---|
 | Used in | [Present on Dynamics, Step 5b]({{ site.baseurl }}/present/onboarding/present-on-dynamics/#5b--grant-the-bookingplatform-mgmt-api-application-access-to-that-one-site) |
-| Run as | *SharePoint Administrator* or *Global Administrator* |
+| Run as | *SharePoint Administrator* |
 | Download | [add-site-permission-for-app.ps1]({{ site.baseurl }}/foundation/scripts/dynamics/add-site-permission-for-app.ps1) |
 
 ## Before you run it
@@ -23,6 +23,12 @@ Install-Module Microsoft.Graph.Authentication, Microsoft.Graph.Sites
 ```
 
 A missing module stops the script at startup, before it changes anything.
+
+{: .note }
+> **Consent at first sign-in.** The script asks for `Sites.FullControl.All` (Microsoft Graph) for
+> *Microsoft Graph Command Line Tools*. An *Application Administrator* or *Cloud Application
+> Administrator* must approve it by signing in and ticking **Consent on behalf of your organization**.
+> Until then, a SharePoint Administrator sees "Need admin approval".
 
 {: .note }
 > **Signing in leaves a consent behind.** It consents Microsoft's own *Microsoft Graph Command Line

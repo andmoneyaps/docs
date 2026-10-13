@@ -9,6 +9,12 @@ permalink: /changelog/
 
 This changelog tracks significant updates and changes to the AndMoney documentation.
 
+## October 2026
+
+### Updated
+- [Meeting Goals]({{ site.baseurl }}/meet/meeting-goals/) — Assist now judges a meeting goal from its name and description only; AI instructions are removed from the page, and a new section explains how to write a good goal description and use **Evaluate description**
+- Assist super-user guide ([Danish]({{ site.baseurl }}/business-implementation/assist/da/superbrugerguide/), [English]({{ site.baseurl }}/business-implementation/assist/en/superbrugerguide/)) — same change for the meeting goals section
+
 ## June 2026
 
 ### Added

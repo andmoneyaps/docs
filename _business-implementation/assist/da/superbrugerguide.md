@@ -23,7 +23,7 @@ Assist er &moneys AI-mødeassistent. Den transskriberer kundemødet, følger jer
 - **Management UI**: &moneys administrationsside, hvor du som superbruger opsætter produkterne.
 - **Mødemål**: Mål for et møde (oprettes pr. mødeemne), som Assist følger og vurderer undervejs.
 - **Mødeemne**: Den kategori et møde hører under (fx Bank, Wealth Management) — mødemål oprettes pr. emne.
-- **AI-instruktion**: Den instruktion, du giver Assist for, hvornår et mødemål er nået.
+- **Beskrivelse (mødemål)**: Hvad I skal afklare med kunden — Assist vurderer mødemålet ud fra navn og beskrivelse.
 - **Rapportering**: Overblik over brugen af Assist — antal møder, mødemål og hvor mange der fuldføres.
 
 
@@ -96,12 +96,21 @@ Resultaterne vises i tre kategorier: **Fuldført** (målet er nået), **Berørt*
 {: .note }
 > **Bemærk:** **Kommer snart:** Mødemål er udviklet, men endnu ikke åbnet for kunder. Forhåndsvisningen nedenfor viser, hvad funktionen kommer til at kunne — knapper som **Opret** er endnu ikke aktive for jer.
 
-Når mødemål åbnes, kan du under **Assist → Mødemål** definere standard-mål pr. mødeemne, som Assist følger og vurderer på møderne. Hvert mål har et **Navn**, en **Beskrivelse** og en **AI-instruktion** (det, Assist vurderer målet ud fra), og grupperes pr. mødeemne (fx Bank, Wealth Management, Insurance).
+Når mødemål åbnes, kan du under **Assist → Mødemål** definere standard-mål pr. mødeemne, som Assist følger og vurderer på møderne. Hvert mål har et **Navn** og en **Beskrivelse** (det, Assist vurderer målet ud fra), og grupperes pr. mødeemne (fx Bank, Wealth Management, Insurance).
+
+**Sådan skriver du et godt mødemål**
+- Skriv, hvad I skal afklare med kunden, fx boligønsker, udbetaling eller lånetype.
+- Vil du have en bestemt betingelse, så slut med, hvornår målet er nået: "Målet er nået, når kunden …". Ellers er målet nået, når alt det, du har skrevet, er afklaret.
+- Det skal kunne høres i mødet: et svar, en oplysning eller en beslutning fra kunden. Interne trin (CRM, netbank, beregnere) kan Assist ikke se.
+
+Eksempel: "Afklar, hvor meget kunden selv kan lægge i udbetaling, og hvor pengene kommer fra. Målet er nået, når udbetalingens størrelse og kilde er afklaret."
+
+Klik på **Evaluer beskrivelse**, og følg anbefalingerne: du får en score fra 1 til 5 for, hvor godt målet kan følges i mødet, og op til tre anbefalinger, der hver slutter med en sætning, du kan sætte ind i beskrivelsen.
 
 
 ![Skærmbillede 2]({{ site.baseurl }}/assets/images/business-implementation/assist/da/superbrugerguide/assist_modemaal.png)
 
-*Skærmbillede 2 (Management UI) — Forhåndsvisning — Assist → Mødemål (kommer snart): mål pr. mødeemne med **Navn**, **Beskrivelse** og **AI-instruktion***
+*Skærmbillede 2 (Management UI) — Forhåndsvisning — Assist → Mødemål (kommer snart): mål pr. mødeemne med **Navn** og **Beskrivelse***
 
 
 ## Hvad betyder felterne?
@@ -113,7 +122,7 @@ Når mødemål åbnes, kan du under **Assist → Mødemål** definere standard-m
 | Kundetype (rapportering) | Segment (fx Privat/Erhverv) | Afgrænser rapporteringen til en bestemt kundetype. |
 | Mødeemne / Underemne (mødemål, kommer snart) | Hvor målet hører til | Grupperer mødemål pr. emne; medarbejderen får målene for det relevante emne. |
 | Navn (mødemål, kommer snart) | Målets titel | Vises til medarbejderen som mødemål. |
-| AI-instruktion (mødemål, kommer snart) | Hvornår målet er nået | Styrer, hvordan Assist vurderer, om målet er opfyldt på mødet. |
+| Beskrivelse (mødemål, kommer snart) | Hvad der skal afklares, og evt. hvornår målet er nået | Assist vurderer ud fra navn og beskrivelse, om målet er opfyldt på mødet. |
 
 
 ## Automatisk referat og opbevaring

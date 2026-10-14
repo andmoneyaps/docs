@@ -29,6 +29,7 @@ param (
 #
 # Schedule - the same four, plus the record access the application identity itself uses:
 #
+#   prvReadSdkMessage                                     - checking which operations each table allows
 #   prvReadUser                                           - matching advisors to their Dynamics users
 #   prvReadActivity                                       - finding a booking's appointment
 #   prvReadContact                                        - resolving customer attendees
@@ -60,7 +61,7 @@ $schemaPrivileges = @('prvReadEntity', 'prvReadAttribute', 'prvReadRelationship'
 $productPrivileges = @{
     Present  = $schemaPrivileges
     Schedule = $schemaPrivileges + @(
-        'prvReadUser', 'prvReadActivity', 'prvReadContact',
+        'prvReadSdkMessage', 'prvReadUser', 'prvReadActivity', 'prvReadContact',
         'prvWriteActivity', 'prvAppendActivity', 'prvAppendToContact', 'prvAppendToUser'
     )
 }

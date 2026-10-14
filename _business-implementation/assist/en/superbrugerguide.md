@@ -19,7 +19,7 @@ Assist is &money's AI meeting assistant. It transcribes the customer meeting and
 - **Management UI**: &money's administration site, where you as super-user set up the products.
 - **Meeting goal**: A goal for a meeting (created per meeting topic), which Assist tracks and assesses as the meeting progresses.
 - **Meeting topic**: The category a meeting belongs to (e.g. Bank, Wealth Management) — meeting goals are created per topic.
-- **AI-instruction**: The instruction you give Assist for when a meeting goal has been reached.
+- **Description (meeting goal)**: What you need to clarify with the customer — Assist assesses the meeting goal from its name and description.
 - **Reporting**: An overview of Assist usage — number of meetings, meeting goals and how many are completed.
 
 
@@ -92,12 +92,21 @@ Outcomes are shown in three categories: **Done** (the goal was reached), **Addre
 {: .note }
 > **Note:** **Coming soon:** Meeting goals have been developed, but are not yet open to customers. The preview below shows what the feature will be able to do — buttons such as **Create** are not yet active for you.
 
-When meeting goals are opened, you can, under **Assist → Meeting goals**, define standard goals per meeting topic, which Assist tracks and assesses during meetings. Each goal has a **Name**, a **Description** and an **AI-instruction** (what Assist assesses the goal against), and is grouped per meeting topic (e.g. Bank, Wealth Management, Insurance).
+When meeting goals are opened, you can, under **Assist → Meeting goals**, define standard goals per meeting topic, which Assist tracks and assesses during meetings. Each goal has a **Name** and a **Description** (what Assist assesses the goal against), and is grouped per meeting topic (e.g. Bank, Wealth Management, Insurance).
+
+**How to write a good meeting goal**
+- Write what you need to clarify with the customer, e.g. housing wishes, down payment or loan type.
+- If you want a specific condition, end with when the goal is met: "The goal is met when the customer …". Otherwise the goal is met when everything you wrote has been clarified.
+- It must be audible in the meeting: an answer, a piece of information or a decision from the customer. Assist can't see internal steps (CRM, online banking, calculators).
+
+Example: "Clarify how much the customer can put down themselves and where the money comes from. The goal is met when the size and source of the down payment are clear."
+
+Click **Evaluate description** and follow its recommendations: you get a score from 1 to 5 for how well the goal can be followed in the meeting, and up to three recommendations, each ending with a sentence you can paste into the description.
 
 
 ![Screenshot 2]({{ site.baseurl }}/assets/images/business-implementation/assist/en/superbrugerguide/assist_modemaal.png)
 
-*Screenshot 2 (Management UI) — Preview — Assist → Meeting goals (coming soon): goals per meeting topic with **Name**, **Description** and **AI-instruction***
+*Screenshot 2 (Management UI) — Preview — Assist → Meeting goals (coming soon): goals per meeting topic with **Name** and **Description***
 
 
 ## What do the fields mean?
@@ -109,7 +118,7 @@ When meeting goals are opened, you can, under **Assist → Meeting goals**, defi
 | Customer type (reporting) | Segment (e.g. Private/Business) | Limits reporting to a particular customer type. |
 | Meeting topic / Subtopic (meeting goals, coming soon) | Where the goal belongs | Groups meeting goals per topic; the employee gets the goals for the relevant topic. |
 | Name (meeting goals, coming soon) | The goal's title | Shown to the employee as a meeting goal. |
-| AI-instruction (meeting goals, coming soon) | When the goal is reached | Controls how Assist assesses whether the goal has been met in the meeting. |
+| Description (meeting goals, coming soon) | What to clarify, and optionally when the goal is reached | Assist assesses from the name and description whether the goal has been met in the meeting. |
 
 
 ## Automatic summary and storage

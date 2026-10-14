@@ -11,7 +11,7 @@ parent: Assist
 
 ## Overview
 
-Assist - Meeting Goals gives the Admin/configurators access to define the objectives that an employee should reach during a meeting. Each meeting goal is tied to a **Meeting Topic** (and optionally a **Meeting Subtopic**). The meeting's Topic is fixed when the meeting is booked, so the matching meeting goals load automatically when the employee opens the meeting — there is nothing for the employee to pick. Subtopics can inherit meeting goal from their parent topic by default, and each inherited goal can optionally be excluded on a per-subtopic basis. During the meeting, Assist's AI uses each goal's **AI Instruction** to judge in real time whether the goal has been reached, surfacing this back to the employee through the live insights and the post-meeting summary.
+Assist - Meeting Goals gives the Admin/configurators access to define the objectives that an employee should reach during a meeting. Each meeting goal is tied to a **Meeting Topic** (and optionally a **Meeting Subtopic**). The meeting's Topic is fixed when the meeting is booked, so the matching meeting goals load automatically when the employee opens the meeting — there is nothing for the employee to pick. Subtopics can inherit meeting goal from their parent topic by default, and each inherited goal can optionally be excluded on a per-subtopic basis. During the meeting, Assist's AI uses each goal's **Name** and **Description** to judge in real time whether the goal has been reached, surfacing this back to the employee through the live insights and the post-meeting summary.
 
 ---
 
@@ -21,8 +21,7 @@ Assist - Meeting Goals gives the Admin/configurators access to define the object
 |---------|-------------|
 | **Topic** | A top-level meeting category (for example *Investment*, *Homeloan advisory*). Meeting goals attached to a topic apply to every meeting in that topic. |
 | **Subtopic** | A child of a topic (for example *First-time mortgage*, *Refinancing*). Subtopics inherit every goal from their parent topic by default. |
-| **Goal** | A named objective with a description and an AI Instruction. Each meeting goal belongs to one topic or subtopic. If its owning topic or subtopic is deleted the goal persists as an orphan — still in the system, but no longer attached to any topic until it is reassigned or removed. |
-| **AI Instruction** | The natural-language rule sent to Assist's AI that tells it when the meeting goal is considered reached. |
+| **Goal** | A named objective with a description. Each meeting goal belongs to one topic or subtopic. If its owning topic or subtopic is deleted the goal persists as an orphan — still in the system, but no longer attached to any topic until it is reassigned or removed. |
 | **Inheritance** | Every meeting goal defined on a topic applies to all of its subtopics by default. Any individual goal can be excluded from any specific subtopic — exclusions are per-goal and per-subtopic, never global. |
 | **Orphaned goal** | A goal whose original topic was deleted. The goal still exists but no longer applies to any meeting until it is reassigned or deleted. |
 
@@ -67,8 +66,8 @@ The page renders one or more sections depending on the current filter:
 | Column | Description |
 |--------|-------------|
 | **Name** | The Meeting goal's display name. |
-| **Description** | A short description of the meeting goal. Shown to employee and also fed to the AI together with the **Name** when generating the AI Instruction via **Create instructions**. Its important, that the description also include your guidance to how the AI should see the meeting goal as reached, touched or not touched during the meeting. |
-| **AI Instruction** | Shows **Configured** (green check) when an AI Instruction is set or **Missing** (red cross) when it is not. If a meeting goal is **Missing** at meeting time, Assist falls back to using the **Description** as the AI Instruction — the goal is still evaluated, but with materially lower quality. Always configure an explicit AI Instruction in production. |
+| **Description** | A short description of what to clarify with the customer. Shown to the employee, and used by the AI together with the **Name** to judge whether the meeting goal has been reached. See [Writing a Good Goal Description](#writing-a-good-goal-description). |
+| **Evaluated** | Shows **Evaluated** (green check) when the description has been evaluated with **Evaluate description**, or **Needs evaluation** (red cross) when it has not. |
 | **Include** *(inherited only)* | Toggle that controls whether the inherited goal applies to the selected subtopic. On by default; switching it off creates an exclusion for that goal on that subtopic. |
 | **Actions** *(owned only)* | Edit and delete buttons. |
 
@@ -89,13 +88,22 @@ Selecting a specific topic narrows the view to the goals defined on that topic:
 | **Topic** | Yes | Pre-selected based on the section you opened the dialog from. Change to move the goal to a different topic. |
 | **Subtopic** | No | Leave empty to apply the meeting goal to *all* subtopics of the selected topic. Selecting a subtopic restricts the meeting goal to only that subtopic. |
 | **Name** | Yes | Must be unique within the topic hierarchy. |
-| **Description** | Yes | Max 500 characters. Not shown to employees in the meeting UI, but fed to the AI together with the **Name** as the source material for the auto-generated AI Instruction (**Create instructions**). |
-| **AI Instruction** | Yes | The instruction Assist's AI uses to judge whether the meeting goal has been reached. |
+| **Description** | Yes | Max 500 characters. Together with the **Name**, this is all Assist's AI uses to judge whether the meeting goal has been reached. See [Writing a Good Goal Description](#writing-a-good-goal-description). |
 
-4. (Recommended) Click **Create instructions** to auto-generate the AI Instruction from the Name and Description. The button is enabled once both fields are filled.
+4. Click **Evaluate description** (enabled once Name and Description are filled). Assist reviews the description and shows a score from 1 to 5 for how well the goal can be followed in a meeting, plus up to three recommendations. Each recommendation ends with a sentence you can paste into the description. Follow the recommendations and evaluate again.
 5. Click **Create**
 
 ![Create goal dialog]({{ site.baseurl }}/assets/images/meet/meeting-goals/04-create-modal.png)
+
+### Writing a Good Goal Description
+
+Assist judges a goal from its **Name** and **Description** only, so the description decides how well the goal can be followed in the meeting:
+
+- **Write what you need to clarify with the customer**, for example housing wishes, down payment or loan type. Assist treats each of these as a topic to clarify.
+- **Optionally, end with when the goal is met**: *"The goal is met when the customer …"*. Without such a sentence, the goal is met when everything in the description has been clarified with the customer.
+- **Make it audible in the meeting**: an answer, a piece of information or a decision from the customer. Assist only hears the conversation, so internal steps such as updating the CRM, checking online banking, using calculators or sending documents don't count.
+
+Example: *"Clarify how much the customer can put down themselves and where the money comes from. The goal is met when the size and source of the down payment are clear."*
 
 ### Inheritance Confirmation
 
@@ -112,8 +120,8 @@ If a meeting goal with the same name already exists in the topic hierarchy, the 
 ## Editing a Meeting Goal
 
 1. Click the **Edit** icon on the meeting goal's row
-2. Update any of the fields (Topic, Subtopic, Name, Description, AI Instruction)
-3. **Create instructions** can also be used in edit mode. If an existing AI Instruction is present, a confirmation prompts before it is overwritten.
+2. Update any of the fields (Topic, Subtopic, Name, Description)
+3. If you changed the Name or Description, click **Evaluate description** again and follow its recommendations
 4. Click **Save**
 
 Moving a Meeting Goal to a different topic by changing the **Topic** field will, on save, re-evaluate inheritance for the new owner topic and its subtopics.
@@ -206,7 +214,7 @@ Every Meeting Goal moves through three states. The AI assigns the state based on
 Assist evaluates goals in the background while the meeting runs. The advisor does not need to trigger anything.
 
 - **Evaluation cadence** — The AI re-evaluates the goal list roughly every 10 transcript messages, using a sliding window of the most recent ~20 messages as context. Quiet stretches in the conversation don't trigger an evaluation.
-- **Per-goal prompt** — For each goal, the AI is given the goal's **Name**, **Description**, and the **AI Instruction** configured in the Management UI. The AI Instruction is the authoritative rule for when the goal counts as reached. (If a goal's AI Instruction is **Missing**, Assist falls back to using its Description — the goal is still evaluated but with materially lower quality.)
+- **Per-goal prompt** — For each goal, the AI is given only the goal's **Name** and **Description**. It reads the description as the topics to clarify with the customer. If the description ends with a condition (*"The goal is met when …"*), that condition decides when the goal counts as reached; otherwise the goal is reached once everything in the description has been clarified in the conversation.
 - **Evidence** — Each time the AI judges that a goal has moved forward, it cites the conversational moments that drove the decision. These citations are preserved across the meeting and carry through into the post-meeting summary.
 - **Stops when complete** — Once every goal has reached *Completed*, evaluation stops for the rest of the meeting; there is nothing left to assess.
 
@@ -222,7 +230,6 @@ The final goal states — including the AI's evidence for each one — are inclu
 
 - **No goals configured for the topic.** The Meeting Goals card is hidden. The meeting still runs normally; everything else (transcription, summary, other insights) is unaffected.
 - **Uploaded transcripts.** Goal tracking is a live-only feature. Meetings created from an uploaded transcript do not show the tracker.
-- **Goals without an AI Instruction.** Assist falls back to the Description in place of the AI Instruction. The goal still appears in the tracker and is still evaluated, but accuracy is materially lower — always configure an explicit AI Instruction before going to production.
 
 ---
 
@@ -263,7 +270,7 @@ A row of four tiles sits at the top of the dashboard:
 |-------|---------------|
 | **Goal outcomes over the period** | Stacked bar of goal-evaluation outcomes (Done · Addressed · Not started) bucketed by ISO week of the meeting end. Lets you spot trends or sudden drops over time. |
 | **Outcomes overall** | Donut of the same Done/Addressed/Not started split for the entire period. The Done slice always matches the **Goal completion rate** KPI tile. |
-| **Outcomes by goal** | Horizontal stacked bar — one row per individual goal — showing how each goal performs across all meetings. Useful for spotting goals that are consistently *Not started* (poorly worded, irrelevant to the topic) or rarely *Done* (AI Instruction too strict). |
+| **Outcomes by goal** | Horizontal stacked bar — one row per individual goal — showing how each goal performs across all meetings. Useful for spotting goals that are consistently *Not started* (poorly worded, irrelevant to the topic) or rarely *Done* (completion condition too strict, or not audible in the meeting). |
 | **Outcomes by topic** | Stacked bar grouped by **Topic** rather than by individual goal. Useful for comparing how well goal sets perform across different meeting topics. |
 
 ![Outcomes by goal and Outcomes by topic charts]({{ site.baseurl }}/assets/images/meet/meeting-goals/10-reporting-by-goal-and-topic.png)
@@ -272,8 +279,8 @@ Across every chart and tile, **Done**, **Addressed**, and **Not started** carry 
 
 ### How the dashboard relates to configuration
 
-- A goal that never moves out of **Not started** across many meetings usually means it is not surfacing in the conversation. Consider whether the goal really belongs on that Topic, or whether the AI Instruction is too narrow.
-- A goal that reaches **Addressed** but rarely **Done** is being touched on but the AI is not seeing enough evidence to commit. Tightening the Description or relaxing the AI Instruction often helps.
+- A goal that never moves out of **Not started** across many meetings usually means it is not surfacing in the conversation. Consider whether the goal really belongs on that Topic, or whether its description is too narrow.
+- A goal that reaches **Addressed** but rarely **Done** is being touched on but the AI is not seeing enough evidence to commit. Check that the description names what to clarify with the customer and that any *"The goal is met when …"* condition can be heard in the meeting.
 - A low **Meetings with goals** percentage is a roll-out signal: advisors aren't turning the feature on. The dashboard surfaces this but does not enforce anything; the toggle stays per-meeting.
 
 ---
@@ -281,6 +288,6 @@ Across every chart and tile, **Done**, **Addressed**, and **Not started** carry 
 ## Recommended Configuration
 
 - **Keep goals focused.** One clear objective per goal works better than a single goal that tries to cover multiple outcomes — the AI evaluates each goal independently.
-- **Use the AI Instruction generator.** It produces consistent, well-structured prompts from the Name and Description; tweak the result rather than starting from scratch.
+- **Evaluate the description.** **Evaluate description** scores how well the goal can be followed in a meeting and suggests sentences to add; run it and follow its recommendations.
 - **Prefer topic-level goals.** Define goals on the parent topic when they apply broadly, then exclude on the few subtopics where they do not. This is easier to maintain than duplicating goals across subtopics.
 - **Review orphans after taxonomy changes.** Whenever topics are removed or restructured, check the Orphans view to reassign or clean up affected goals.

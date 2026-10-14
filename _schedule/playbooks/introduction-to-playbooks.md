@@ -168,12 +168,12 @@ The trigger block determines when the playbook runs and what data it starts with
 | Trigger | When it fires | What data you get |
 |---------|---------------|-------------------|
 | **PortalMeetings** | A customer books a meeting through a [Schedule portal]({{ site.baseurl }}/schedule/portals/) | Meeting title, dates, advisor info, attendees, theme, customer category, custom fields |
-| **PortalMeetingCancelled** | A portal meeting is cancelled | Meeting ID, portal ID, who cancelled, reason |
+| **PortalMeetingCancelled** | A portal meeting is cancelled, or a customer meeting booked by an advisor is cancelled through the [Public API]({{ site.baseurl }}/api/schedule/#delete-meeting) with a portal ID | Meeting ID, portal ID, who cancelled, reason |
 | **CustomerOverview** | A customer overview is requested | Account ID |
 | **TranscriptReady** | A recorded meeting's transcript becomes available | Meeting ID, transcript content, transcript ID |
 | **MeetMeetingEnded** | An [&Money Meet]({{ site.baseurl }}/meet/) video meeting ends | Meeting ID and meeting context |
 
-Portal-based triggers (PortalMeetings, PortalMeetingCancelled) can be scoped to specific portals — only meetings from selected portals will activate the playbook.
+Portal-based triggers (PortalMeetings, PortalMeetingCancelled) are scoped to specific portals — only meetings from selected portals will activate the playbook. A playbook with no portal selected does not run.
 
 ---
 

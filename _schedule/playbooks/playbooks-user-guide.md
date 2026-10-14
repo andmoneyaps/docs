@@ -96,12 +96,12 @@ Click the Trigger block to expand it and reveal the configuration form.
 
 1. **Trigger Type** — select the event that starts the playbook:
    - **PortalMeetings** — fires when a customer books a meeting through a Schedule portal
-   - **PortalMeetingCancelled** — fires when a portal meeting is cancelled
+   - **PortalMeetingCancelled** — fires when a portal meeting is cancelled, or when a customer meeting booked by an advisor is cancelled through the Public API with that portal's ID
    - **CustomerOverview** — fires when a customer overview report is requested
    - **TranscriptReady** — fires when a recorded meeting's transcript becomes available
    - **MeetMeetingEnded** — fires when an &Money Meet video meeting ends
 2. **Name** — give the trigger a descriptive name (e.g., *"Portal Meeting Trigger"*)
-3. **Portal selection** (PortalMeetings and PortalMeetingCancelled only) — choose which portals this playbook responds to. If none are selected, it responds to all portals.
+3. **Portal selection** (PortalMeetings and PortalMeetingCancelled only) — choose which portals this playbook responds to. Select at least one; if none are selected, the playbook does not run.
 
 {: .hint }
 The trigger block determines what data is available to the rest of the playbook. A PortalMeetings trigger provides meeting details (title, dates, advisor info, attendees, theme, customer category, custom fields), while a CustomerOverview trigger provides only an account ID. A TranscriptReady trigger provides the transcript content, meeting ID, and transcript ID. Use the Relation Builder to explore exactly which fields are available for each trigger type.

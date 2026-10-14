@@ -24,7 +24,7 @@ Assist is an AI-powered real-time meeting assistant designed for financial emplo
 
 ### Automatic Summary Generation
 - Customer-facing summary generated at meeting end
-- Zero manual work required
+- Summary saved to the CRM automatically, ready for the advisor's review
 - Immediate sync to CRM
 
 ### Session Recovery
